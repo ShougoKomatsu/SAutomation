@@ -1,0 +1,82 @@
+﻿
+LMouse Click(1080, 320)
+300
+LMouse Click(1080, 540)
+300
+LMouse Click(680, 1060)
+300
+
+500
+
+LMouse Click(1080, 462)
+300
+LMouse Click(1080, 682)
+300
+LMouse Click(680, 1060)
+300
+
+
+500
+
+LMouse Click(1080, 604)
+300
+LMouse Click(1080, 824)
+300
+LMouse Click(680, 1060)
+300
+
+500
+
+LMouse Click(1080, 746)
+300
+LMouse Click(1080, 966)
+300
+LMouse Click(680, 1060)
+300
+
+
+500
+LMouse Click(1080, 888)
+300
+LMouse Click(1080, 1108)
+300
+LMouse Click(680, 1060)
+300
+
+
+500
+LMouse Click(1080, 1030)
+300
+LMouse Click(1080, 1240)
+300
+LMouse Click(680, 1060)
+300
+
+500
+
+LMouse Click(1080, 1172)
+300
+LMouse Click(1080, 1382)
+300
+LMouse Click(680, 1060)
+300
+
+500
+
+LMouse Click(1080, 1314)
+300
+LMouse Click(1080, 1524)
+300
+LMouse Click(680, 1060)
+300
+
+500
+
+LMouse Click(1080, 1456)
+300
+LMouse Click(1080, 1666)
+300
+LMouse Click(680, 1060)
+300
+
+500

@@ -1,0 +1,7 @@
+Wait Ctrl On
+1000
+Wait Ctrl Off
+1000
+Wait Shift On
+1000
+Wait Shift Off

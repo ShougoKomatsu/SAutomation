@@ -1,0 +1,45 @@
+SAutomation.exeは、マウス操作、キーボード操作等を自動化するソフトウェアです。
+ホットキー登録でマクロを実行します。異なる種類のマクロを同時起動させることは可能ですが、相互作用（Ctrlキー押しっぱなしコマンド等）による誤作動に注意してください。キーボード入力コマンドでホットキーと一致するものがあれば、たぶん起動してしまいます。
+
+
+利用可能なコマンド
+
+
+●キーボード入力
+英数記号一文字, F1～F16, Ctrl, Shift, Alt, Tab, Space, Enter
+
+Down, Upを付けると押しっぱなしになる
+例：
+
+Alt Down
+Tab
+Alt Up
+
+●キーボード入力待ち
+Wait キー On
+Wait キー Off
+
+
+●ウェイト
+二桁以上の数字
+
+
+●マウス操作
+LMouse Click(整数, 整数)
+LMouse Down(整数, 整数)
+LMouse Up(整数, 整数)
+RMouse Click(整数, 整数)
+RMouse Down(整数, 整数)
+RMouse Up(整数, 整数)
+MousePos(整数, 整数)
+Wheel 整数
+
+
+●ウィンドウ操作
+Maximize
+Minimaize
+Mindowforward ウインドウ名
+WindowPos(整数, 整数)
+WindowSize(整数, 整数)
+
+
