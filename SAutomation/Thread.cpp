@@ -93,9 +93,23 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		iListLength =(int) saCommands.GetCount();
 		for(int i=0; i<iListLength; i++)
 		{
-			if(g_bHalt == TRUE){g_bHalt = FALSE;PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);return 0;}
+			if(g_bHalt == TRUE)
+			{
+				g_bHalt = FALSE;
+				PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+				TerminateThread(hGetKey, 0);
+				TerminateThread(hGetStepKey, 0);
+				return 0;
+			}
 			iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i));
-			if(iRet != 0){PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0); g_bHalt = FALSE; return 0;}
+			if(iRet != 0)
+			{
+				g_bHalt = FALSE;
+				PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+				TerminateThread(hGetKey, 0);
+				TerminateThread(hGetStepKey, 0);
+				return 0;
+			}
 			g_llStepOut=1;
 			g_llStepIn=0;
 		}

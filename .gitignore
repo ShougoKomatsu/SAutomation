@@ -16,3 +16,4 @@ SAutomation/Debug/Common.obj
 *.suo
 *.res
 SAutomation/Debug/SAutomation_manifest.rc
+*.opensdf

@@ -38,8 +38,9 @@ Wheel 整数
 ●ウィンドウ操作
 Maximize
 Minimaize
-Mindowforward ウインドウ名
+Mindowforward ウインドウ名(部分一致)
 WindowPos(整数, 整数)
 WindowSize(整数, 整数)
+Run 実行ファイルのパス
 
 
