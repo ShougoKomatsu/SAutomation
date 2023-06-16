@@ -606,6 +606,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	SetTimer(TIMER_DISP_MOUSPOS,200, NULL);
 	SetTimer(TIMER_THREAD_WATCH,200, NULL);
+	SetTimer(TIMER_WAKE_UP, 100, NULL);
 
 	TCHAR szData[MAX_PATH];
 	GetCurrentDirectory(sizeof(szData)/sizeof(TCHAR),szData);
@@ -685,7 +686,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 	//  Framework は、この設定を自動的に行います。
 	SetIcon(m_hIconStandby, TRUE);			// 大きいアイコンの設定
 	SetIcon(m_hIconStandby, FALSE);		// 小さいアイコンの設定
-	SetTimer(TIMER_WAKE_UP, 100, NULL);
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
 BOOL CSAutomationDlg::ChangeIcon(int iIcon)
