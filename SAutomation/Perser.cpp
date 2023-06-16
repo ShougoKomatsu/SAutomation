@@ -12,8 +12,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
-	if(sDataTrim.Right(4).CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
-	if(sDataTrim.Right(2).CompareNoCase(_T("up"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
 
 	if(sDataTrim.Left(12).CompareNoCase(_T("lmouse click"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK; 		return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("lmouse down"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
@@ -23,10 +21,13 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(11).CompareNoCase(_T("rmouse down"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("rmouse up"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
 
-	if(sDataTrim.Left(8).CompareNoCase(_T("mousepos"))==0){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("mouseposrel"))==0){*iCommandType=COMMAND_MOUSE_MOVE_REL; return TRUE;}
+	if((sDataTrim.Left(8).CompareNoCase(_T("mousepos"))==0) && (sDataTrim.Left(11).CompareNoCase(_T("mouseposrel"))!=0)){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
 	if(sDataTrim.Left(5).CompareNoCase(_T("wheel"))==0){*iCommandType=COMMAND_WHEEL; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
 
+	if(sDataTrim.Right(4).CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
+	if(sDataTrim.Right(2).CompareNoCase(_T("up"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
 	if((sDataTrim.Left(3).CompareNoCase(_T("run"))==0)){*iCommandType=COMMAND_RUN; return TRUE;}
 
 	if((sDataTrim.Left(4).CompareNoCase(_T("dim "))==0)){*iCommandType=COMMAND_DECRARE; return TRUE;}
@@ -250,6 +251,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			break;
 		}
 	case COMMAND_MOUSE_MOVE:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			saData->Add(sArg);
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			saData->Add(sArg);
+			*iCommandType = iType;
+			break;
+		}
+	case COMMAND_MOUSE_MOVE_REL:
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);

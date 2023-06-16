@@ -1,0 +1,15 @@
+﻿
+MouseMoveRel(100, 100)
+300
+MouseMoveRel(100, 100)
+300
+MouseMoveRel(100, 100)
+300
+MouseMoveRel(100, 100)
+300
+MouseMoveRel(100, 100)
+300
+MouseMoveRel(100, 100)
+300
+MouseMoveRel(100, 100)
+300

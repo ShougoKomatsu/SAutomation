@@ -32,6 +32,7 @@ RMouse Click(РоРФ, РоРФ)
 RMouse Down(РоРФ, РоРФ)
 RMouse Up(РоРФ, РоРФ)
 MousePos(РоРФ, РоРФ)
+MousePosRel(РоРФ, РоРФ)
 Wheel РоРФ
 
 

@@ -364,6 +364,9 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(&saData);}
 
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(&saData);}
+	case COMMAND_MOUSE_MOVE_REL:{
+		return MoveMouseRel(&saData);
+								}
 	case COMMAND_WHEEL:{return MouseVWheel(&saData);}
 
 	case COMMAND_KEY_DOWN_UP:{return KeyDownAndUp(&saData);}
