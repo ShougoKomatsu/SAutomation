@@ -816,24 +816,6 @@ BOOL CSAutomationDlg::MouseMoveAndDisp(DWORD dwMoveDirection, int iDistance)
 	return TRUE;
 }
 
-BOOL WaitUntilCtrlShiftReleased()
-{
-	short shCtrl;
-	short shShift;
-	while(1)
-	{
-		shShift = GetAsyncKeyState (VK_LSHIFT);
-		shCtrl = GetAsyncKeyState (VK_CONTROL);
-		if((shShift>=0)&&(shCtrl>=0)) 
-		{
-			return TRUE;
-		}
-
-		Sleep(1);
-	}
-	return FALSE;
-}
-
 BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: ここに特定なコードを追加するか、もしくは基本クラスを呼び出してください。
@@ -842,10 +824,10 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 		if(pMsg->wParam == VK_RETURN){return TRUE;}
 		if(pMsg->wParam == VK_ESCAPE){return TRUE;}
 		if(pMsg->wParam == VK_SPACE){return TRUE;}
-		if(pMsg->wParam == VK_LEFT){return MouseMoveAndDisp(VK_LEFT,10);}
-		if(pMsg->wParam == VK_RIGHT){return MouseMoveAndDisp(VK_RIGHT,10);}
-		if(pMsg->wParam == VK_UP){return MouseMoveAndDisp(VK_UP,10);}
-		if(pMsg->wParam == VK_DOWN){return MouseMoveAndDisp(VK_DOWN,10);}
+//		if(pMsg->wParam == VK_LEFT){return MouseMoveAndDisp(VK_LEFT,10);}
+//		if(pMsg->wParam == VK_RIGHT){return MouseMoveAndDisp(VK_RIGHT,10);}
+//		if(pMsg->wParam == VK_UP){return MouseMoveAndDisp(VK_UP,10);}
+//		if(pMsg->wParam == VK_DOWN){return MouseMoveAndDisp(VK_DOWN,10);}
 	}
 	if(pMsg->message == WM_HOTKEY)
 	{
@@ -1133,7 +1115,7 @@ void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
     {
 		if(m_bMinimizeToTaskTray==TRUE)
 		{
-        ShowWindow(SW_HIDE);
+		    ShowWindow(SW_HIDE);
 		}
     }
 }
