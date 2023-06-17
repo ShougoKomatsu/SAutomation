@@ -589,8 +589,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	if (dwExeProcessIds[0]>0)
 	{
-		AfxMessageBox(_T("多重起動はできません"));
-		return CDialogEx::DestroyWindow();
+		AfxMessageBox(_T("多重起動"));
+//		return CDialogEx::DestroyWindow();
 	}
 	
 
