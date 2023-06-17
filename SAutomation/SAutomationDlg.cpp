@@ -884,11 +884,6 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 		if(m_bAutoMinimize==TRUE)
 		{
 			ShowWindow( SW_MINIMIZE );
-
-			if(IsIconic()==TRUE)
-			{
-				KillTimer(TIMER_WAKE_UP);
-			}
 		}
 	}
 	CDialogEx::OnTimer(nIDEvent);
@@ -1116,6 +1111,7 @@ void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
 		if(m_bMinimizeToTaskTray==TRUE)
 		{
 		    ShowWindow(SW_HIDE);
+			KillTimer(TIMER_WAKE_UP);
 		}
     }
 }
