@@ -941,6 +941,9 @@ void CSAutomationDlg::FileSelect(CString *sFileName)
 
 BOOL CSAutomationDlg::DestroyWindow()
 {
+	g_bHalt = TRUE;
+	Sleep(1000);
+
 	if(g_hhook != NULL){UnhookWindowsHookEx(g_hhook);}
 	SaveSettings();
 	
