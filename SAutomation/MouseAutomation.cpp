@@ -75,14 +75,14 @@ int MouseLClick(CStringArray* saData)
 }
 
 
-int MoveMouseRel(int iX, int iY)
+int MoveMouseIncl(int iX, int iY)
 {
 	return MoveMouse(g_iC+iX, g_iR + iY);
 }
 
-int MoveMouseRel(CStringArray* saData)
+int MoveMouseIncl(CStringArray* saData)
 {
-	return MoveMouseRel(_ttoi(saData->GetAt(0)), _ttoi(saData->GetAt(1)));
+	return MoveMouseIncl(_ttoi(saData->GetAt(0)), _ttoi(saData->GetAt(1)));
 }
 
 int MouseRClick(UINT nX, UINT nY)

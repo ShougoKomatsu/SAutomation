@@ -32,8 +32,16 @@ RMouse Click(整数, 整数)
 RMouse Down(整数, 整数)
 RMouse Up(整数, 整数)
 MousePos(整数, 整数)
-MousePosRel(整数, 整数)
+MousePosIncl(整数, 整数)
 Wheel 整数
+
+現在の位置で動作
+LMouse Click
+LMouse Down
+LMouse Up
+RMouse Click
+RMouse Down
+RMouse Up
 
 
 ●ウィンドウ操作

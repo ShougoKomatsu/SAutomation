@@ -16,7 +16,7 @@
 #define COMMAND_MOUSE_L_CLICK (COMMAND_MOUSE+100+1)
 #define COMMAND_MOUSE_R_CLICK (COMMAND_MOUSE+100+2)
 
-#define COMMAND_MOUSE_MOVE_REL (COMMAND_MOUSE+100+3)
+#define COMMAND_MOUSE_MOVE_INCL (COMMAND_MOUSE+100+3)
 
 int MouseLDown(UINT nX, UINT nY);
 int MouseLDown(CStringArray* saData);
@@ -31,8 +31,8 @@ int MouseRUp(CStringArray* saData);
 int MoveMouse(UINT nX, UINT nY);
 int MoveMouse(CStringArray* saData);
 
-int MoveMouseRel(int iX, int iY);
-int MoveMouseRel(CStringArray* saData);
+int MoveMouseIncl(int iX, int iY);
+int MoveMouseIncl(CStringArray* saData);
 
 int MouseVWheel(int iWheel);
 int MouseVWheel(CStringArray* saData);
