@@ -545,8 +545,7 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 
 		GetModuleBaseName(hProcess, hMod, szProcessName,sizeof(szProcessName) / sizeof(TCHAR));
 
-		CString sProcName = CString(szProcessName);
-		if (sProcName.CompareNoCase(sTargetExeName)==0)
+		if (sTargetExeName.CompareNoCase(szProcessName)==0)
 		{
 			dwExeProcessIds[j] = dwAllProcessIds[i];
 			j++;
@@ -554,7 +553,7 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 		CloseHandle(hProcess);
 	}
 }
-
+#include "ImgProc.h"
 BOOL CSAutomationDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -583,6 +582,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwCurrentProcessId);
 	TCHAR szModuleName[MAX_PATH];
 	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
+//	AfxMessageBox(szModuleName);
 
 	DWORD dwExeProcessIds[1024] = { 0 };
 	GetExeOtherProcessIds(szModuleName, dwExeProcessIds, dwCurrentProcessId);
@@ -617,7 +617,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	CFileFind cf;
 	if(cf.FindFile(sMacroFolderPath) != TRUE){_tmkdir(sMacroFolderPath);}
-
+	test();
 	ReadSettings();
 
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
@@ -739,6 +739,7 @@ BOOL CSAutomationDlg::TrayNotifyIconMessage(DWORD dwMessage)
     
     return Shell_NotifyIcon(dwMessage, &nid);
 }
+
 void CSAutomationDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)

@@ -258,6 +258,36 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	return 0;
 }
 
+#include "ImgProc.h"
+
+int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+{
+
+	int iWaitOn;
+
+	BYTE byKey;
+	BOOL bUnicode;
+	TCHAR tch;
+	int iRet;
+	if(saData->GetCount()<6){return -1;}
+	CString sModel;
+	CString sR0, sC0, sR1, sC1;
+	sModel.Format(_T("%s"), saData->GetAt(0));
+	sC0.Format(_T("%s"), saData->GetAt(1));
+	sR0.Format(_T("%s"), saData->GetAt(2));
+	sC1.Format(_T("%s"), saData->GetAt(3));
+	sR1.Format(_T("%s"), saData->GetAt(4));
+
+
+	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	else{return -1;}
+
+	
+
+	return 0;
+}
+
 int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 
