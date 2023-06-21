@@ -163,17 +163,29 @@ BOOL ImgRGB::Assign(CString sFilePath)
 	f.Read(byData, ulSize);
 	f.Close();
 
+	for(int i=0; i<sizeof(bmfh); i++)
+	{
+		((BYTE*)&bmfh)[i]=byData[i];
+	}
+	if(bmfh.bfType != 0x4d42){return FALSE;}
+
+	for(int i=0; i<sizeof(bmih); i++)
+	{
+		((BYTE*)&bmih)[i]=byData[sizeof(bmfh)+i];
+	}
+
+
 	int iWidthLocal;
 	int iHeightLocal;
 
 	iWidthLocal = bmih.biWidth;
 	if(bmih.biHeight<0){iHeightLocal=-1*(bmih.biHeight);}
-	else{iHeightLocal=-1*(bmih.biHeight);}
+	else{iHeightLocal=(bmih.biHeight);}
 
 	this->Set(iWidthLocal, iHeightLocal, CHANNEL_3_8);
 
 	ULONG ulOffset;
-	ulOffset=0;
+	ulOffset=bmfh.bfOffBits;
 	if(bmih.biHeight<0)
 	{
 		for(int r=0; r<iHeightLocal; r++)
@@ -183,6 +195,18 @@ BOOL ImgRGB::Assign(CString sFilePath)
 				(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+0];
 				(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+1];
 				(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+2];
+			}
+		}
+	}
+	else
+	{
+		for(int r=0; r<iHeightLocal; r++)
+		{
+			for(int c=0; c< iWidthLocal; c++)
+			{
+				(this->byImgB)[(r) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+0];
+				(this->byImgG)[(r) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+1];
+				(this->byImgR)[(r) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+2];
 			}
 		}
 	}
