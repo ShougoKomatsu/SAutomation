@@ -133,17 +133,61 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	return FALSE;
 }
 
-BOOL Assign(CString sFilePath)
+BOOL ImgRGB::Assign(CString sFilePath)
 {
+
+	this->Init();
+
 	BITMAPINFOHEADER bmih;
 	CFileFind cf;
 	BOOL bRet;
+	
+	CFile f;
+	BITMAPFILEHEADER bmfh;
+	ULONGLONG ullSize;
+	ULONG ulSize;
+	BYTE* byData;
 
 	bRet = cf.FindFile(sFilePath);
+	if(bRet != TRUE){cf.Close(); return FALSE;}
+	cf.Close();
+
+	bRet = f.Open(sFilePath, CFile::modeRead);
 	if(bRet != TRUE){return FALSE;}
 
+	ullSize = f.SeekToEnd();
+	if(ullSize>=ULONG_MAX){f.Close(); return FALSE;}
+	ulSize = (ULONG)ullSize;
+	f.SeekToBegin();
+	byData = new BYTE[ulSize];
+	f.Read(byData, ulSize);
+	f.Close();
 
+	int iWidthLocal;
+	int iHeightLocal;
 
+	iWidthLocal = bmih.biWidth;
+	if(bmih.biHeight<0){iHeightLocal=-1*(bmih.biHeight);}
+	else{iHeightLocal=-1*(bmih.biHeight);}
+
+	this->Set(iWidthLocal, iHeightLocal, CHANNEL_3_8);
+
+	ULONG ulOffset;
+	ulOffset=0;
+	if(bmih.biHeight<0)
+	{
+		for(int r=0; r<iHeightLocal; r++)
+		{
+			for(int c=0; c< iWidthLocal; c++)
+			{
+				(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+0];
+				(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+1];
+				(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+2];
+			}
+		}
+	}
+
+	delete [] byData;
 
 	return TRUE;
 }
