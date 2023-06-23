@@ -185,15 +185,20 @@ BOOL ImgRGB::Assign(CString sFilePath)
 
 	ULONG ulOffset;
 	ulOffset=bmfh.bfOffBits;
+	int iFiller;
+
+	iFiller = iWidth%4;
+
 		for(int r=0; r<iHeightLocal; r++)
 		{
 			for(int c=0; c< iWidthLocal; c++)
 			{
-				(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+0];
-				(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+1];
-				(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+2];
+				(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+0];
+				(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+1];
+				(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+2];
 			}
 		}
+
 	delete [] byData;
 
 	return TRUE;
