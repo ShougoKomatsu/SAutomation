@@ -20,6 +20,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(12).CompareNoCase(_T("rmouse click"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK; 		return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("rmouse down"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("rmouse up"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("waitimage"))==0){*iCommandType=COMMAND_WAIT_IMG; return TRUE;}
 
 	if(sDataTrim.Left(12).CompareNoCase(_T("mouseposincl"))==0){*iCommandType=COMMAND_MOUSE_MOVE_INCL; return TRUE;}
 	if((sDataTrim.Left(8).CompareNoCase(_T("mousepos"))==0) && (sDataTrim.Left(11).CompareNoCase(_T("mouseposrel"))!=0)){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
@@ -391,6 +392,28 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
+		
+	case COMMAND_WAIT_IMG:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			break;
+		}
+
 	}
 
 	return TRUE;

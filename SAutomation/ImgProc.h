@@ -1,6 +1,5 @@
 #include "stdafx.h"
 
-void test();
 #define CHANNEL_UNDEFINED (0)
 #define CHANNEL_1_8 (1)
 #define CHANNEL_3_8 (3)
@@ -53,3 +52,6 @@ struct ImgRGB
 	~ImgRGB(){Init();}
 	BOOL Assign(CString sFilePath);
 };
+BOOL Screenshot(ImgRGB* imgRGB);
+
+BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1);

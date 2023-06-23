@@ -269,21 +269,50 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	BOOL bUnicode;
 	TCHAR tch;
 	int iRet;
-	if(saData->GetCount()<6){return -1;}
-	CString sModel;
+//	if(saData->GetCount()<7){return -1;}
+	CString sModelFilePath;
 	CString sR0, sC0, sR1, sC1;
-	sModel.Format(_T("%s"), saData->GetAt(0));
+	CString sTime;
+	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
 	sC0.Format(_T("%s"), saData->GetAt(1));
 	sR0.Format(_T("%s"), saData->GetAt(2));
 	sC1.Format(_T("%s"), saData->GetAt(3));
 	sR1.Format(_T("%s"), saData->GetAt(4));
 
-
+	CString sss;
+	sss.Format(_T("%s"),saData->GetAt(5)); 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return -1;}
 
-	
+	sTime.Format(_T("%s"), saData->GetAt(6));
+
+
+
+	ImgRGB imgModel;
+	ImgRGB imgTarget;
+	Screenshot(&imgTarget);
+	imgModel.Assign(sModelFilePath);
+
+
+
+	BOOL bRet;
+	while(1)
+	{
+		bRet = IsInRegion(&imgTarget, &imgModel, _ttoi(sR0), _ttoi(sC1), _ttoi(sR1), _ttoi(sC1));
+		if(iWaitOn==1)
+		{
+			if(bRet == TRUE) {return 0;}
+
+		}
+		else
+		{
+			if(bRet == FALSE) {return 0;}
+		}
+
+
+		if(K_Sleep(Halt, Suspend, 1)<0){return -1;}
+	}
 
 	return 0;
 }
@@ -404,6 +433,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_KEY_UP:{return KeyUp(&saData);}
 
 	case COMMAND_WAIT:{return WaitForKey(Halt, Suspend, &saData);}
+	case COMMAND_WAIT_IMG:{return WaitForImage(Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
 	case COMMAND_WINDOW_FORWARD:{return SetWindowForward(saData.GetAt(0));}

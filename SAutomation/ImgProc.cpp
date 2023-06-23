@@ -2,7 +2,7 @@
 #include "ImgProc.h"
 
 
-void test()
+BOOL Screenshot(ImgRGB* imgRGB)
 {
 	HWND hDesktop = GetDesktopWindow();
 	RECT rect;
@@ -27,16 +27,15 @@ void test()
 
 	BitBlt(hMemDC, 0, 0, rect.right, rect.bottom, hDC, 0, 0, SRCCOPY);
 
-	ImgRGB imgRGB;
-	imgRGB.Set((rect.right-rect.left+1), (rect.bottom-rect.top+1), CHANNEL_1_24);
-	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, imgRGB.byImgR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
+	imgRGB->Set((rect.right-rect.left+1), (rect.bottom-rect.top+1), CHANNEL_1_24);
+	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, imgRGB->byImgR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
 
 
 	ReleaseDC(hDesktop, hDC);
 	DeleteDC(hMemDC);
 	DeleteObject(hBitmap);
 
-	return ;
+	return TRUE;
 }
 
 BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1)

@@ -619,7 +619,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	CFileFind cf;
 	if(cf.FindFile(sMacroFolderPath) != TRUE){_tmkdir(sMacroFolderPath);}
-	test();
 	ReadSettings();
 
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
