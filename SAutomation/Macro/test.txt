@@ -1,2 +1,2 @@
 
-WaitImage(D:\GitHub\SAutomation\SAutomation\Macro\Model\aaa.bmp, 0, 0, 300, 300, on, 1000)
+WaitImage(D:\aaa.bmp, 0, 0, 300, 300, on, 1000)

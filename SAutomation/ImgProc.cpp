@@ -185,31 +185,15 @@ BOOL ImgRGB::Assign(CString sFilePath)
 
 	ULONG ulOffset;
 	ulOffset=bmfh.bfOffBits;
-	if(bmih.biHeight<0)
-	{
 		for(int r=0; r<iHeightLocal; r++)
 		{
 			for(int c=0; c< iWidthLocal; c++)
 			{
-				(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+0];
-				(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+1];
-				(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+2];
+				(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+0];
+				(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+1];
+				(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+2];
 			}
 		}
-	}
-	else
-	{
-		for(int r=0; r<iHeightLocal; r++)
-		{
-			for(int c=0; c< iWidthLocal; c++)
-			{
-				(this->byImgB)[(r) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+0];
-				(this->byImgG)[(r) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+1];
-				(this->byImgR)[(r) *this->iWidth+c]=byData[3*(ulOffset + r*iWidthLocal + c)+2];
-			}
-		}
-	}
-
 	delete [] byData;
 
 	return TRUE;
