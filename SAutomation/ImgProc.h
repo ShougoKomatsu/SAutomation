@@ -55,3 +55,4 @@ struct ImgRGB
 BOOL Screenshot(ImgRGB* imgRGB);
 
 BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1);
+BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath);

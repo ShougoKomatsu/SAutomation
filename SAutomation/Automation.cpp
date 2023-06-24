@@ -299,7 +299,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	BOOL bRet;
 	while(1)
 	{
-		bRet = IsInRegion(&imgTarget, &imgModel, _ttoi(sR0), _ttoi(sC1), _ttoi(sR1), _ttoi(sC1));
+		bRet = IsInRegion(&imgTarget, &imgModel, _ttoi(sR0), _ttoi(sC0), _ttoi(sR1), _ttoi(sC1));
 		if(iWaitOn==1)
 		{
 			if(bRet == TRUE) {return 0;}

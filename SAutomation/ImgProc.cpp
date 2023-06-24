@@ -1,7 +1,128 @@
 #include "stdafx.h"
 #include "ImgProc.h"
 
+BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
+{
+	BITMAPINFOHEADER bmih;
+	BOOL bRet;
+	
+	CFile f;
+	BITMAPFILEHEADER bmfh;
+	ULONGLONG ullSize;
+	ULONG ulSize;
+	BYTE* byData;
 
+
+	
+	bRet = f.Open(_T("d:\\aaa.bmp"), CFile::modeRead);
+	if(bRet != TRUE){return FALSE;}
+
+	ullSize = f.SeekToEnd();
+	if(ullSize>=ULONG_MAX){f.Close(); return FALSE;}
+
+	ulSize = (ULONG)ullSize;
+	f.SeekToBegin();
+	byData = new BYTE[ulSize];
+	f.Read(byData, ulSize);
+	f.Close();
+
+	
+	for(int i=0; i<sizeof(bmfh); i++)
+	{
+		((BYTE*)&bmfh)[i]=byData[i];
+	}
+	if(bmfh.bfType != 0x4d42){return FALSE;}
+
+	for(int i=0; i<sizeof(bmih); i++)
+	{
+		((BYTE*)&bmih)[i]=byData[sizeof(bmfh)+i];
+	}
+
+	int iBitSize;
+	if(((imgRGB->iWidth*3)%4)==0)
+	{
+		iBitSize = (imgRGB->iWidth*3)*(imgRGB->iHeight);
+	}
+	else
+	{
+		iBitSize = ((imgRGB->iWidth*3)+(4-((imgRGB->iWidth*3)%4)))*(imgRGB->iHeight);
+	}
+
+	bmfh.bfType=0x4d42;
+	bmfh.bfSize =  0x36+iBitSize;
+	bmfh.bfOffBits = 0x36;
+	bmfh.bfReserved1=0;
+	bmfh.bfReserved2 = 0;
+
+	bmih.biSize=0x00000028;
+	bmih.biWidth	=imgRGB->iWidth;
+	bmih.biHeight=imgRGB->iHeight;
+	bmih.biPlanes=1;
+	bmih.biBitCount=24;
+	bmih.biCompression=0;
+	bmih.biSizeImage	=iBitSize;
+	bmih.biXPelsPerMeter	=0;
+	bmih.biYPelsPerMeter	=0;
+	bmih.biClrUsed	=0;
+	bmih.biClrImportant		=0;
+
+
+	bRet = f.Open(sFilePath, CFile::modeCreate|CFile::modeWrite);
+	if(bRet != TRUE){return FALSE;}
+
+
+	f.Write((BYTE*)&bmfh,sizeof(bmfh));
+	f.Write((BYTE*)&bmih,sizeof(bmih));
+
+
+	if(bmfh.bfType != 0x4d42){return FALSE;}
+
+	BYTE* byOutBuf;
+
+	byOutBuf = new BYTE[iBitSize];
+
+	int iFiller;
+
+	if(((imgRGB->iWidth*3)%4)==0)
+	{
+		iFiller = 0;
+	}
+	else
+	{
+		iFiller = (4-((imgRGB->iWidth*3)%4));
+	}
+	if(imgRGB->iChannel==CHANNEL_3_8)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+0] = imgRGB->byImgB[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+1] = imgRGB->byImgG[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+2] = imgRGB->byImgR[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+			}
+		}
+	}
+
+	if(imgRGB->iChannel==CHANNEL_1_24)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+0] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+1] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+2] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
+			}
+		}
+	}
+
+
+	f.Write((void*)(byOutBuf),iBitSize);
+	f.Close();
+
+	return TRUE;
+}
 BOOL Screenshot(ImgRGB* imgRGB)
 {
 	HWND hDesktop = GetDesktopWindow();
@@ -27,7 +148,7 @@ BOOL Screenshot(ImgRGB* imgRGB)
 
 	BitBlt(hMemDC, 0, 0, rect.right, rect.bottom, hDC, 0, 0, SRCCOPY);
 
-	imgRGB->Set((rect.right-rect.left+1), (rect.bottom-rect.top+1), CHANNEL_1_24);
+	imgRGB->Set((rect.right-rect.left), (rect.bottom-rect.top), CHANNEL_1_24);
 	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, imgRGB->byImgR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
 
 

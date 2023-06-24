@@ -593,10 +593,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 //		return CDialogEx::DestroyWindow();
 	}
 	
-	ImgRGB imgRGB;
-	imgRGB.Assign(_T("d:\\aaa.bmp"));
-
-
 	g_hWnd = this->m_hWnd;
 
 	POINT p;
