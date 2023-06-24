@@ -265,27 +265,27 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	int iWaitOn;
 
-	BYTE byKey;
-	BOOL bUnicode;
 	TCHAR tch;
 	int iRet;
-//	if(saData->GetCount()<7){return -1;}
-	CString sModelFilePath;
-	CString sR0, sC0, sR1, sC1;
-	CString sTime;
-	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
-	sC0.Format(_T("%s"), saData->GetAt(1));
-	sR0.Format(_T("%s"), saData->GetAt(2));
-	sC1.Format(_T("%s"), saData->GetAt(3));
-	sR1.Format(_T("%s"), saData->GetAt(4));
+	int iTimeOut;
+	if(saData->GetCount()<=5){return -1;}
 
-	CString sss;
-	sss.Format(_T("%s"),saData->GetAt(5)); 
+	CString sModelFilePath;
+	int iR0, iC0, iR1, iC1;
+
+	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
+
+	iC0=_ttoi( saData->GetAt(1));
+	iR0=_ttoi( saData->GetAt(2));
+	iC1=_ttoi(saData->GetAt(3));
+	iR1=_ttoi( saData->GetAt(4));
+
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return -1;}
 
-	sTime.Format(_T("%s"), saData->GetAt(6));
+	if(saData->GetCount()==6){iTimeOut=-1;}
+	else {iTimeOut = _ttoi(saData->GetAt(6));}
 
 
 
@@ -294,13 +294,15 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	imgModel.Assign(sModelFilePath);
 
 
-	
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
 	BOOL bRet;
 
 	while(1)
 	{
-	Screenshot(&imgTarget);
-		bRet = IsInRegion(&imgTarget, &imgModel, _ttoi(sR0), _ttoi(sC0), _ttoi(sR1), _ttoi(sC1));
+		Screenshot(&imgTarget);
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1);
 		if(iWaitOn==1)
 		{
 			if(bRet == TRUE) {return 0;}
@@ -313,6 +315,10 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 
 		if(K_Sleep(Halt, Suspend, 1)<0){return -1;}
+		if(iTimeOut>=0)
+		{
+			if(GetTickCount64()>ullStartMilliSec+iTimeOut){return -1;}
+		}
 	}
 
 	return 0;
