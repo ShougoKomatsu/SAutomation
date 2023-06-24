@@ -592,7 +592,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 		AfxMessageBox(_T("‘½d‹N“®"));
 //		return CDialogEx::DestroyWindow();
 	}
-	
+	ImgRGB imgRGB;
+	Screenshot(&imgRGB);
+	WriteImage(&imgRGB, _T("d:\\test.bmp"));
+
 	g_hWnd = this->m_hWnd;
 
 	POINT p;

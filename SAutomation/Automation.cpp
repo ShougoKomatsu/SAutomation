@@ -265,9 +265,9 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
-	TCHAR tch;
-	int iRet;
 	int iTimeOut;
+	int iContinue;
+
 	if(saData->GetCount()<=6){return -1;}
 
 	CString sModelFilePath;
@@ -284,7 +284,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return -1;}
 
-	int iContinue;
+
 	iContinue = 0;
 	if(saData->GetCount()==6){iTimeOut=-1;}
 	else {iTimeOut = _ttoi(saData->GetAt(6));}
@@ -300,8 +300,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
 	BOOL bRet;
-	bRet = imgModel.Assign(sModelFilePath);
-	if(bRet != TRUE){AfxMessageBox(sModelFilePath);}
+	imgModel.Assign(sModelFilePath);
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();

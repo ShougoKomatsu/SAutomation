@@ -14,16 +14,21 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 
 
 	
+	int iFillerSize;
 
-	int iBitSize;
 	if(((imgRGB->iWidth*3)%4)==0)
 	{
-		iBitSize = (imgRGB->iWidth*3)*(imgRGB->iHeight);
+		iFillerSize = 0;
 	}
 	else
 	{
-		iBitSize = ((imgRGB->iWidth*3)+(4-((imgRGB->iWidth*3)%4)))*(imgRGB->iHeight);
+		iFillerSize = (4-((imgRGB->iWidth*3)%4));
 	}
+
+
+	int iBitSize;
+
+	iBitSize = ((imgRGB->iWidth*3)+iFillerSize)*(imgRGB->iHeight);
 
 	bmfh.bfType=0x4d42;
 	bmfh.bfSize =  0x36+iBitSize;
@@ -32,16 +37,16 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 	bmfh.bfReserved2 = 0;
 
 	bmih.biSize=0x00000028;
-	bmih.biWidth	=imgRGB->iWidth;
+	bmih.biWidth=imgRGB->iWidth;
 	bmih.biHeight=imgRGB->iHeight;
 	bmih.biPlanes=1;
 	bmih.biBitCount=24;
 	bmih.biCompression=0;
-	bmih.biSizeImage	=iBitSize;
-	bmih.biXPelsPerMeter	=0;
-	bmih.biYPelsPerMeter	=0;
-	bmih.biClrUsed	=0;
-	bmih.biClrImportant		=0;
+	bmih.biSizeImage=iBitSize;
+	bmih.biXPelsPerMeter=0;
+	bmih.biYPelsPerMeter=0;
+	bmih.biClrUsed=0;
+	bmih.biClrImportant	=0;
 
 
 	bRet = f.Open(sFilePath, CFile::modeCreate|CFile::modeWrite);
@@ -50,33 +55,21 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 
 	f.Write((BYTE*)&bmfh,sizeof(bmfh));
 	f.Write((BYTE*)&bmih,sizeof(bmih));
-
-
-	if(bmfh.bfType != 0x4d42){return FALSE;}
+	
 
 	BYTE* byOutBuf;
 
 	byOutBuf = new BYTE[iBitSize];
 
-	int iFiller;
-
-	if(((imgRGB->iWidth*3)%4)==0)
-	{
-		iFiller = 0;
-	}
-	else
-	{
-		iFiller = (4-((imgRGB->iWidth*3)%4));
-	}
 	if(imgRGB->iChannel==CHANNEL_3_8)
 	{
 		for(int r=0; r<imgRGB->iHeight; r++)
 		{
 			for(int c=0; c<imgRGB->iWidth; c++)
 			{
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+0] = imgRGB->byImgB[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+1] = imgRGB->byImgG[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+2] = imgRGB->byImgR[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgB[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgG[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
 			}
 		}
 	}
@@ -87,9 +80,9 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 		{
 			for(int c=0; c<imgRGB->iWidth; c++)
 			{
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+0] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+1] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFiller+2] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
 			}
 		}
 	}
@@ -97,6 +90,7 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 
 	f.Write((void*)(byOutBuf),iBitSize);
 	f.Close();
+	delete [] byOutBuf;
 
 	return TRUE;
 }
@@ -125,37 +119,42 @@ BOOL Screenshot(ImgRGB* imgRGB)
 
 	BitBlt(hMemDC, 0, 0, rect.right, rect.bottom, hDC, 0, 0, SRCCOPY);
 
-	imgRGB->Set((rect.right-rect.left), (rect.bottom-rect.top), CHANNEL_1_24);
+	int iWidth;
+	int iHeight;
+	iWidth = (rect.right-rect.left);
+	iHeight = (rect.bottom-rect.top);
 
-	if(((rect.right-rect.left)%4)==0)
+	imgRGB->Set(iWidth, iHeight, CHANNEL_1_24);
+
+	int iFillerSize;
+
+	if((iWidth%4)==0)
 	{
-		GetDIBits(hMemDC, hBitmap, 0, rect.bottom, imgRGB->byImgR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
+		iFillerSize = 0;
 	}
 	else
 	{
-		BYTE* byDataTemp;
-		int iWidth;
-		int iHeight;
-		iWidth = (rect.right-rect.left);
-		iHeight = (rect.bottom-rect.top);
-		int iBitSize;
-		int iFillerSize;
 		iFillerSize = 4-(iWidth*3)%4;
-		iBitSize = ((iWidth*3)+iFillerSize)*iHeight;
-		byDataTemp = new BYTE[iBitSize];
-		
-		GetDIBits(hMemDC, hBitmap, 0, rect.bottom, byDataTemp, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
-		for(int r=0; r<iHeight; r++)
-		{
-			for(int c=0; c<iWidth; c++)
-			{
-				imgRGB->byImgR[3*(r*iWidth+c)+0] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +0];
-				imgRGB->byImgR[3*(r*iWidth+c)+1] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +1];
-				imgRGB->byImgR[3*(r*iWidth+c)+2] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +2];
-			}
-		}
-		delete [] byDataTemp;
 	}
+
+	int iBitSize;
+	iBitSize = ((iWidth*3)+iFillerSize)*iHeight;
+	
+	BYTE* byDataTemp;
+	byDataTemp = new BYTE[iBitSize];
+
+	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, byDataTemp, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
+	for(int r=0; r<iHeight; r++)
+	{
+		for(int c=0; c<iWidth; c++)
+		{
+			imgRGB->byImgR[3*(r*iWidth+c)+0] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +0];
+			imgRGB->byImgR[3*(r*iWidth+c)+1] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +1];
+			imgRGB->byImgR[3*(r*iWidth+c)+2] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +2];
+		}
+	}
+	delete [] byDataTemp;
+
 
 	ReleaseDC(hDesktop, hDC);
 	DeleteDC(hMemDC);
@@ -182,7 +181,6 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 
 	iR1Local = iR1;
 	iC1Local = iC1;
-		CString sss;
 
 	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
 	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
@@ -192,16 +190,6 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	iScanHeight = iR1Local-iR0-iModelHeight + 2;
 	iScanWidth = iC1Local-iC0-iModelWidth + 2;
 	BOOL bRet;
-//	bRet = WriteImage(imgTarget,_T("C:\\Users\\PC5\\test.bmp"));
-	
-//	sss.Format(_T("bRet = %d"), bRet);
-//		AfxMessageBox(sss);
-
-//	sss.Format(_T("imgTarget->iWidth,imgTarget->iHeight)) - (%d, %d)"), imgTarget->iWidth,imgTarget->iHeight);
-//		AfxMessageBox(sss);
-
-//		sss.Format(_T("(iScanHeight, iScanWidth) - (%d, %d)"), iScanHeight,iScanWidth);
-//		AfxMessageBox(sss);
 
 	if(iScanHeight<=0){return FALSE;}
 	if(iScanWidth<=0){return FALSE;}
@@ -214,8 +202,6 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	
 	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
 	{
-	//	sss.Format(_T("(%d, %d) - (%d, %d)"), iR0,iC0,iREnd,iCEnd);
-	//	AfxMessageBox(sss);
 		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
 		{
 			for(int iTargetC = iC0; iTargetC<iCEnd; iTargetC++)
@@ -232,8 +218,6 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					if(bFound == FALSE){break;}
 				}
 				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; 
-	//			sss.Format(_T("(iFoundR, iTargetC) - (%d, %d)"), iTargetR,iTargetC);
-	//	AfxMessageBox(sss);
 				
 				return TRUE;}
 			}
