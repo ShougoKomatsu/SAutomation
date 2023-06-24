@@ -180,12 +180,19 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	if(iScanWidth<=0){return FALSE;}
 	
 	BOOL bFound;
+	int iREnd, iCEnd;
+
+	if(iR0+iScanHeight>=imgTarget->iHeight){iREnd = imgTarget->iHeight;}
+	else{iREnd = iR0+iScanHeight;}
+
+	if(iC0+iScanWidth>=imgTarget->iWidth){iCEnd = imgTarget->iWidth;}
+	else{iCEnd = iC0+iScanWidth;}
 
 	if((imgTarget->iChannel==CHANNEL_3_8) && (imgModel->iChannel == CHANNEL_3_8))
 	{
-		for(int iTargetR=iR0; iTargetR<iR0+iScanHeight; iTargetR++)
+		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
-			for(int iTargetC=iC0; iTargetC<iC0 + iScanWidth; iTargetC++)
+			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
 			{
 				bFound = TRUE;
 				for(int r=0; r<iModelHeight; r++)
@@ -206,9 +213,9 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	
 	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_1_24))
 	{
-		for(int iTargetR=iR0; iTargetR<iR0+iScanHeight; iTargetR++)
+		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
-			for(int iTargetC=iC0; iTargetC<iC0 + iScanWidth; iTargetC++)
+			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
 			{
 				bFound = TRUE;
 				for(int r=0; r<iModelHeight; r++)
@@ -229,9 +236,9 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	
 	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
 	{
-		for(int iTargetR=iR0; iTargetR<iR0+iScanHeight; iTargetR++)
+		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
-			for(int iTargetC=iC0; iTargetC<iC0 + iScanWidth; iTargetC++)
+			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
 			{
 				bFound = TRUE;
 				for(int r=0; r<iModelHeight; r++)
