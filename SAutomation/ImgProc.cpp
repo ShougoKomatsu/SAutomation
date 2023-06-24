@@ -14,29 +14,6 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 
 
 	
-	bRet = f.Open(_T("d:\\aaa.bmp"), CFile::modeRead);
-	if(bRet != TRUE){return FALSE;}
-
-	ullSize = f.SeekToEnd();
-	if(ullSize>=ULONG_MAX){f.Close(); return FALSE;}
-
-	ulSize = (ULONG)ullSize;
-	f.SeekToBegin();
-	byData = new BYTE[ulSize];
-	f.Read(byData, ulSize);
-	f.Close();
-
-	
-	for(int i=0; i<sizeof(bmfh); i++)
-	{
-		((BYTE*)&bmfh)[i]=byData[i];
-	}
-	if(bmfh.bfType != 0x4d42){return FALSE;}
-
-	for(int i=0; i<sizeof(bmih); i++)
-	{
-		((BYTE*)&bmih)[i]=byData[sizeof(bmfh)+i];
-	}
 
 	int iBitSize;
 	if(((imgRGB->iWidth*3)%4)==0)
@@ -149,8 +126,36 @@ BOOL Screenshot(ImgRGB* imgRGB)
 	BitBlt(hMemDC, 0, 0, rect.right, rect.bottom, hDC, 0, 0, SRCCOPY);
 
 	imgRGB->Set((rect.right-rect.left), (rect.bottom-rect.top), CHANNEL_1_24);
-	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, imgRGB->byImgR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
 
+	if(((rect.right-rect.left)%4)==0)
+	{
+		GetDIBits(hMemDC, hBitmap, 0, rect.bottom, imgRGB->byImgR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
+	}
+	else
+	{
+		BYTE* byDataTemp;
+		int iWidth;
+		int iHeight;
+		iWidth = (rect.right-rect.left);
+		iHeight = (rect.bottom-rect.top);
+		int iBitSize;
+		int iFillerSize;
+		iFillerSize = 4-(iWidth*3)%4;
+		iBitSize = ((iWidth*3)+iFillerSize)*iHeight;
+		byDataTemp = new BYTE[iBitSize];
+		
+		GetDIBits(hMemDC, hBitmap, 0, rect.bottom, byDataTemp, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
+		for(int r=0; r<iHeight; r++)
+		{
+			for(int c=0; c<iWidth; c++)
+			{
+				imgRGB->byImgR[3*(r*iWidth+c)+0] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +0];
+				imgRGB->byImgR[3*(r*iWidth+c)+1] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +1];
+				imgRGB->byImgR[3*(r*iWidth+c)+2] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +2];
+			}
+		}
+		delete [] byDataTemp;
+	}
 
 	ReleaseDC(hDesktop, hDC);
 	DeleteDC(hMemDC);
@@ -171,10 +176,32 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	iModelHeight = imgModel->iHeight;
 	iModelWidth = imgModel->iWidth;
 
+
+	int iR1Local;
+	int iC1Local;
+
+	iR1Local = iR1;
+	iC1Local = iC1;
+		CString sss;
+
+	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
+	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
+
 	int iScanHeight;
 	int iScanWidth;
-	iScanHeight = iR1-iR0-iModelHeight + 2;
-	iScanWidth = iC1-iC0-iModelWidth + 2;
+	iScanHeight = iR1Local-iR0-iModelHeight + 2;
+	iScanWidth = iC1Local-iC0-iModelWidth + 2;
+	BOOL bRet;
+//	bRet = WriteImage(imgTarget,_T("C:\\Users\\PC5\\test.bmp"));
+	
+//	sss.Format(_T("bRet = %d"), bRet);
+//		AfxMessageBox(sss);
+
+//	sss.Format(_T("imgTarget->iWidth,imgTarget->iHeight)) - (%d, %d)"), imgTarget->iWidth,imgTarget->iHeight);
+//		AfxMessageBox(sss);
+
+//		sss.Format(_T("(iScanHeight, iScanWidth) - (%d, %d)"), iScanHeight,iScanWidth);
+//		AfxMessageBox(sss);
 
 	if(iScanHeight<=0){return FALSE;}
 	if(iScanWidth<=0){return FALSE;}
@@ -182,11 +209,36 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	BOOL bFound;
 	int iREnd, iCEnd;
 
-	if(iR0+iScanHeight>=imgTarget->iHeight){iREnd = imgTarget->iHeight;}
-	else{iREnd = iR0+iScanHeight;}
-
-	if(iC0+iScanWidth>=imgTarget->iWidth){iCEnd = imgTarget->iWidth;}
-	else{iCEnd = iC0+iScanWidth;}
+	iREnd = iR0+iScanHeight;
+	iCEnd = iC0+iScanWidth;
+	
+	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	{
+	//	sss.Format(_T("(%d, %d) - (%d, %d)"), iR0,iC0,iREnd,iCEnd);
+	//	AfxMessageBox(sss);
+		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
+		{
+			for(int iTargetC = iC0; iTargetC<iCEnd; iTargetC++)
+			{
+				bFound = TRUE;
+				for(int r=0; r<iModelHeight; r++)
+				{
+					for(int c=0; c<iModelWidth; c++)
+					{
+						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+0] != (imgModel->byImgB[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
+						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+1] != (imgModel->byImgG[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
+						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+2] != (imgModel->byImgR[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
+					}
+					if(bFound == FALSE){break;}
+				}
+				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; 
+	//			sss.Format(_T("(iFoundR, iTargetC) - (%d, %d)"), iTargetR,iTargetC);
+	//	AfxMessageBox(sss);
+				
+				return TRUE;}
+			}
+		}
+	}
 
 	if((imgTarget->iChannel==CHANNEL_3_8) && (imgModel->iChannel == CHANNEL_3_8))
 	{
@@ -234,27 +286,6 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 		}
 	}
 	
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
-	{
-		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
-		{
-			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
-			{
-				bFound = TRUE;
-				for(int r=0; r<iModelHeight; r++)
-				{
-					for(int c=0; c<iModelWidth; c++)
-					{
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+0] != (imgModel->byImgB[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+1] != (imgModel->byImgG[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+2] != (imgModel->byImgR[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
-					}
-					if(bFound == FALSE){break;}
-				}
-				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
-			}
-		}
-	}
 
 	return FALSE;
 }

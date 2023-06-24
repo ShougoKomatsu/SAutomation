@@ -1,15 +1,2 @@
 
-
-WaitImage(block.bmp, 604, 16, 1623, 1518, on, -1)
-mousepostoimage(block.bmp, 604, 16, 1623, 1518)
-LMouse Click
-
-WaitImage(block2.bmp, 604, 16, 1623, 1008, on, -1)
-mousepostoimage(block2.bmp, 604, 16, 1623, 1008)
-LMouse Click
-100				
-				
-
-200
-Wheel -150
-500
+mousepostoimage(aaa.bmp, 1, 1, 623, 518)

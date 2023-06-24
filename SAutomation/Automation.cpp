@@ -291,17 +291,18 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
-	imgModel.Assign(sModelFilePath);
-
+	BOOL bRet;
+	bRet = imgModel.Assign(sModelFilePath);
+	if(bRet != TRUE){AfxMessageBox(sModelFilePath);}
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 
-	BOOL bRet;
 	int iFoundR, iFoundC;
 	while(1)
 	{
 		Screenshot(&imgTarget);
+
 		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
 		if(iWaitOn==1)
 		{
