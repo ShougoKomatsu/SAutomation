@@ -291,16 +291,15 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
-	Screenshot(&imgTarget);
 	imgModel.Assign(sModelFilePath);
 
 
 	
 	BOOL bRet;
-		bRet = IsInRegion(&imgTarget, &imgModel, _ttoi(sR0), _ttoi(sC0), _ttoi(sR1), _ttoi(sC1));
 
 	while(1)
 	{
+	Screenshot(&imgTarget);
 		bRet = IsInRegion(&imgTarget, &imgModel, _ttoi(sR0), _ttoi(sC0), _ttoi(sR1), _ttoi(sC1));
 		if(iWaitOn==1)
 		{
