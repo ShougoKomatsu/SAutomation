@@ -1,3 +1,2 @@
 
-WaitImage(aaa.bmp, 0, 0, 300, 300, on, 100000000)
 mousepostoimage(aaa.bmp, 0, 0, 300, 300)

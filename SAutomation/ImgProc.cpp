@@ -245,7 +245,6 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					if(bFound == FALSE){break;}
 				}
 				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
-				break;
 			}
 		}
 	}

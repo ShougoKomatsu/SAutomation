@@ -424,8 +424,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
 
-			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sArg);}}
-			else{sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sArg);}
+			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }}
+			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }
 
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
