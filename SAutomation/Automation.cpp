@@ -268,7 +268,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	TCHAR tch;
 	int iRet;
 	int iTimeOut;
-	if(saData->GetCount()<=5){return -1;}
+	if(saData->GetCount()<=6){return -1;}
 
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
@@ -284,8 +284,16 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return -1;}
 
+	int iContinue;
+	iContinue = 0;
 	if(saData->GetCount()==6){iTimeOut=-1;}
 	else {iTimeOut = _ttoi(saData->GetAt(6));}
+
+
+	if(saData->GetCount()>=8)
+	{
+		if(saData->GetAt(7).CompareNoCase(_T("continue"))==0){iContinue=1;}
+	}
 
 
 
@@ -317,7 +325,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		if(K_Sleep(Halt, Suspend, 1)<0){return -1;}
 		if(iTimeOut>=0)
 		{
-			if(GetTickCount64()>ullStartMilliSec+iTimeOut){return -1;}
+			if(GetTickCount64()>ullStartMilliSec+iTimeOut){if(iContinue==0){return -1;}else{return 0;}}
 		}
 	}
 
