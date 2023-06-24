@@ -1,2 +1,6 @@
 
-mousepostoimage(aaa.bmp, 0, 0, 300, 300)
+mousepostoimage(block.bmp, 604, 16, 1623, 518)
+LMouse Click
+200
+mousepostoimage(block2.bmp, 604, 16, 1623, 1008)
+LMouse Click
