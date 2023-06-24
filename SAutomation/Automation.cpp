@@ -5,6 +5,7 @@
 
 #include "Window.h"
 
+CString g_sDir;
 int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 {
 	if((Halt==NULL)&&(Suspend == NULL)){Sleep(SleepMilliSec);return 0;}
@@ -262,7 +263,6 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 
 int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
-
 	int iWaitOn;
 
 	TCHAR tch;
@@ -275,10 +275,10 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
 
-	iC0=_ttoi( saData->GetAt(1));
-	iR0=_ttoi( saData->GetAt(2));
+	iC0=_ttoi(saData->GetAt(1));
+	iR0=_ttoi(saData->GetAt(2));
 	iC1=_ttoi(saData->GetAt(3));
-	iR1=_ttoi( saData->GetAt(4));
+	iR1=_ttoi(saData->GetAt(4));
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
@@ -298,15 +298,14 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	ullStartMilliSec = GetTickCount64();
 
 	BOOL bRet;
-
+	int iFoundR, iFoundC;
 	while(1)
 	{
 		Screenshot(&imgTarget);
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1);
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
 		if(iWaitOn==1)
 		{
 			if(bRet == TRUE) {return 0;}
-
 		}
 		else
 		{
@@ -412,7 +411,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	int iCommandType=COMMAND_UNDEFINED;
 	BOOL bRet;
 	CStringArray saData;
-	bRet = PerseCommand(iSceneData, sDataLine, &iCommandType, &saData);
+	bRet = PerseCommand(iSceneData, sDataLine, &iCommandType, &saData, g_sDir);
 	if(iCommandType == COMMAND_NOTING){return 0;}
 	if(bRet != TRUE){return -1;}
 
@@ -430,10 +429,11 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(&saData);}
 
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(&saData);}
-	case COMMAND_MOUSE_MOVE_INCL:{
-		return MoveMouseIncl(&saData);
-								}
+	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(&saData);}
+	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(&saData);}
+
 	case COMMAND_WHEEL:{return MouseVWheel(&saData);}
+
 
 	case COMMAND_KEY_DOWN_UP:{return KeyDownAndUp(&saData);}
 	case COMMAND_KEY_DOWN:{return KeyDown(&saData);}

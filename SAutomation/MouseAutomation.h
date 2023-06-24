@@ -17,6 +17,8 @@
 #define COMMAND_MOUSE_R_CLICK (COMMAND_MOUSE+100+2)
 
 #define COMMAND_MOUSE_MOVE_INCL (COMMAND_MOUSE+100+3)
+#define COMMAND_MOUSE_MOVE_TO_IMG (COMMAND_MOUSE+100+4)
+
 
 int MouseLDown(UINT nX, UINT nY);
 int MouseLDown(CStringArray* saData);
@@ -43,3 +45,4 @@ int MouseRClick(UINT nX, UINT nY);
 int MouseRClick(CStringArray* saData);
 
 extern int g_iClickDulation;
+int MoveMouseToImage(CStringArray* saData);

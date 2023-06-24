@@ -27,3 +27,5 @@
 #define COMMAND_WAIT_IMG (COMMAND_IMGPROC + 1)
 
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine);
+
+extern CString g_sDir;

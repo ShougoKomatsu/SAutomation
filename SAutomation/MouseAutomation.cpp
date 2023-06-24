@@ -124,3 +124,47 @@ int MouseVWheel(CStringArray* saData)
 {
 	return MouseVWheel(_ttoi(saData->GetAt(0)));
 }
+
+
+#include "ImgProc.h"
+
+int MoveMouseToImage(CStringArray* saData)
+{
+	int iWaitOn;
+
+	TCHAR tch;
+	int iRet;
+
+	if(saData->GetCount()<5){return -1;}
+
+	CString sModelFilePath;
+	int iR0, iC0, iR1, iC1;
+
+	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
+
+	iC0=_ttoi(saData->GetAt(1));
+	iR0=_ttoi(saData->GetAt(2));
+	iC1=_ttoi(saData->GetAt(3));
+	iR1=_ttoi(saData->GetAt(4));
+
+
+	ImgRGB imgModel;
+	ImgRGB imgTarget;
+	imgModel.Assign(sModelFilePath);
+
+
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
+	BOOL bRet;
+	int iFoundR, iFoundC;
+
+	Screenshot(&imgTarget);
+	bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+
+	if(bRet != TRUE){return -1;}
+
+	MoveMouse(iFoundC, iFoundR);
+
+	return 0;
+}

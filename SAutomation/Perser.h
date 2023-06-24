@@ -5,4 +5,4 @@ BOOL GetCommand(CString sDataLine, int* iCommandType);
 
 BOOL ExtractData(const CString sInput, const CString sDelim, CString* sOut, CString* sRemin);
 
-BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData);
+BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir);

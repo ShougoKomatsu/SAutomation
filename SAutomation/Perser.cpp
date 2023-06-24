@@ -23,6 +23,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(9).CompareNoCase(_T("waitimage"))==0){*iCommandType=COMMAND_WAIT_IMG; return TRUE;}
 
 	if(sDataTrim.Left(12).CompareNoCase(_T("mouseposincl"))==0){*iCommandType=COMMAND_MOUSE_MOVE_INCL; return TRUE;}
+	if(sDataTrim.Left(15).CompareNoCase(_T("mousepostoimage"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_IMG; return TRUE;}
 	if((sDataTrim.Left(8).CompareNoCase(_T("mousepos"))==0) && (sDataTrim.Left(11).CompareNoCase(_T("mouseposrel"))!=0)){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
 	if(sDataTrim.Left(5).CompareNoCase(_T("wheel"))==0){*iCommandType=COMMAND_WHEEL; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
@@ -174,7 +175,7 @@ BOOL GetKeyType(CString sInput, CString* sOut)
 	sOut->Format(_T("%s"), sRemind);
 	return TRUE;
 }
-BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData)
+BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir)
 {
 	int iType;
 	BOOL bRet;
@@ -397,6 +398,10 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			
+			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sArg);}}
+			else{sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sArg);}
+
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
@@ -413,7 +418,27 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
+		
+	case COMMAND_MOUSE_MOVE_TO_IMG:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
 
+			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sArg);}}
+			else{sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sArg);}
+
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			break;
+		}
 	}
 
 	return TRUE;

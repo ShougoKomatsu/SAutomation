@@ -159,7 +159,7 @@ BOOL Screenshot(ImgRGB* imgRGB)
 	return TRUE;
 }
 
-BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1)
+BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {
 	int iModelHeight;
 	int iModelWidth;
@@ -198,7 +198,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					}
 					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){return TRUE;}
+				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
 				break;
 			}
 		}
@@ -221,7 +221,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					}
 					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){return TRUE;}
+				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
 				break;
 			}
 		}
@@ -244,7 +244,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					}
 					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){return TRUE;}
+				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
 				break;
 			}
 		}
