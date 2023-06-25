@@ -265,7 +265,7 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 	combo->AddString(_T("Win"));
 
 	if(op->bUseCtrl==TRUE){combo->SetCurSel(1); return;}
-	if(op->bUseShift==TRUE){combo->SetCurSel(2); return;}
+//	if(op->bUseShift==TRUE){combo->SetCurSel(2); return;}
 	if(op->bUseAlt==TRUE){combo->SetCurSel(3); return;}
 	if(op->bUseWin==TRUE){combo->SetCurSel(4); return;}
 	combo->SetCurSel(0);
@@ -280,7 +280,7 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op)
 	combo->AddString(_T("Win"));
 	
 	if(op->bUseShift==TRUE){combo->SetCurSel(1); return;}
-	if(op->bUseAlt==TRUE){combo->SetCurSel(2); return;}
+//	if(op->bUseAlt==TRUE){combo->SetCurSel(2); return;}
 	if(op->bUseWin==TRUE){combo->SetCurSel(3); return;}
 	combo->SetCurSel(0);
 }

@@ -29,3 +29,7 @@
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine);
 
 extern CString g_sDir;
+
+#define RETURN_IF (100)
+#define RETURN_LABEL (101)
+#define RETURN_GOTO (102)

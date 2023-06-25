@@ -1,2 +1,1 @@
-
-mousepostoimage(aaa.bmp, 1, 1, 623, 518)
+F1

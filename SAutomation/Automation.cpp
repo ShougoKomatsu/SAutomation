@@ -413,6 +413,21 @@ int KeyUp(CStringArray* saData)
 
 	return KeyUp(bySendKey);
 }
+int FilndLabel(CStringArray* saCommands, CString sLabel)
+{
+	CString sCommand;
+	for(int i=0; i<saCommands->GetCount(); i++)
+	{
+		sCommand.Format(_T("%s"), saCommands->GetAt(i));
+		sCommand.Trim(_T(" ")).Trim(_T("\t"));
+
+		if(sCommand.GetLength()!=sLabel.GetLength()+1){continue;}
+		if(sCommand.GetAt(sLabel.GetLength())!=':'){continue;}
+
+		if(sCommand.Left(sLabel.GetLength()).CompareNoCase(sLabel)==0){return i;}
+	}
+	return -1;
+}
 
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine)
 {

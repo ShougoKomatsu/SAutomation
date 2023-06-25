@@ -8,9 +8,6 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 	
 	CFile f;
 	BITMAPFILEHEADER bmfh;
-	ULONGLONG ullSize;
-	ULONG ulSize;
-	BYTE* byData;
 
 
 	
@@ -189,7 +186,6 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	int iScanWidth;
 	iScanHeight = iR1Local-iR0-iModelHeight + 2;
 	iScanWidth = iC1Local-iC0-iModelWidth + 2;
-	BOOL bRet;
 
 	if(iScanHeight<=0){return FALSE;}
 	if(iScanWidth<=0){return FALSE;}
