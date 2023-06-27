@@ -5,6 +5,7 @@
 #define COMMAND_COMMON (0)
 #define COMMAND_MOUSE (1000)
 #define COMMAND_IMGPROC (2000)
+#define COMMAND_FLOW (3000)
 
 #define COMMAND_DELAY (COMMAND_COMMON + 1)
 //#define COMMAND_BREAK (COMMAND_COMMON + 2)
@@ -24,12 +25,21 @@
 #define COMMAND_WINDOW_POS (COMMAND_COMMON + 15)
 #define COMMAND_RUN (COMMAND_COMMON + 16)
 
+#define COMMAND_EXIT (COMMAND_FLOW +1)
+#define COMMAND_LABEL (COMMAND_FLOW +2)
+#define COMMAND_ERROR_TREAT (COMMAND_FLOW+3)
+#define COMMAND_GOTO (COMMAND_FLOW+4)
+
 #define COMMAND_WAIT_IMG (COMMAND_IMGPROC + 1)
 
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine);
 
 extern CString g_sDir;
 
+#define RETURN_NORMAL (0)
+#define RETURN_FAILED (-1)
+#define RETURN_END (10)
+#define RETURN_ERROR_TREAT (11)
 #define RETURN_IF (100)
 #define RETURN_LABEL (101)
 #define RETURN_GOTO (102)

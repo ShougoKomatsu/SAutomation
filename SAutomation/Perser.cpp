@@ -12,6 +12,9 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
+	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("onerror"))==0){*iCommandType=COMMAND_ERROR_TREAT;return TRUE;}
 
 	if(sDataTrim.Left(12).CompareNoCase(_T("lmouse click"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK; 		return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("lmouse down"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
@@ -80,6 +83,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 		if(sDataTrim.CompareNoCase(_T("f24"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	}
 
+	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
 	//-------------------------------------------------------
 	if((sDataTrim.Left(1).CompareNoCase(_T("<"))==0)&&(sDataTrim.Left(1).CompareNoCase(_T(">"))==0))
 	{
@@ -437,6 +441,32 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			*iCommandType = iType;
+			break;
+		}
+	case COMMAND_EXIT:
+		{
+			*iCommandType = iType;
+			break;
+		}
+	case COMMAND_LABEL:
+		{
+//			ExtractData(sDataLocal, _T(":"), &sArg, &sDataLocal);
+//			sArg.Trim(_T(" ")).Trim(_T("\t"));
+//			if(sArg.GetLength()<0){return FALSE;}
+			*iCommandType = iType;
+			break;
+		}
+	case COMMAND_ERROR_TREAT:
+		{
+//			ExtractData(sDataLocal, _T("onerror"), &sArg, &sDataLocal);
+//			sArg.Trim(_T(" ")).Trim(_T("\t"));
+//			if(sArg.GetLength()<0){return FALSE;}
+			*iCommandType = iType;
+			break;
+		}
+	case COMMAND_GOTO:
+		{
+					*iCommandType = iType;
 			break;
 		}
 	}

@@ -1,1 +1,5 @@
-F1
+
+TEST:
+MousePos(100,100)
+MousePos(100,200)
+Goto Test

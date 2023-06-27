@@ -471,6 +471,10 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_WINDOW_POS:{return WindowPos(&saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
 	case COMMAND_NOTING:{return 0;}
+	case COMMAND_EXIT:{return RETURN_END;}
+	case COMMAND_LABEL:{return RETURN_LABEL;}
+	case COMMAND_GOTO:{return RETURN_GOTO;}
+	case COMMAND_ERROR_TREAT:{return RETURN_ERROR_TREAT;}
 	default:{return -1;}
 	}
 	return -1;
