@@ -1,0 +1,50 @@
+﻿wait ctrl off
+wait shift off
+Wheel -1000
+300
+Wheel -1000
+300
+Wheel -1000
+300
+Wheel -1000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+Wheel -2000
+300
+wheel 1000
+100
+wheel 1000
+100
+wheel 1000
+100
+wheel 1000
+100
+wheel 1000
+100
+wheel 1000
+100
+wheel 1000
+100
+wheel 1000
+100
+wheel 1000
+100

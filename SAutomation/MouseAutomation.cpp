@@ -130,10 +130,6 @@ int MouseVWheel(CStringArray* saData)
 
 int MoveMouseToImage(CStringArray* saData)
 {
-	int iWaitOn;
-
-	TCHAR tch;
-	int iRet;
 
 	if(saData->GetCount()<5){return -1;}
 

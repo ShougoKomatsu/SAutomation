@@ -2,4 +2,5 @@
 TEST:
 MousePos(100,100)
 MousePos(100,200)
+Exit
 Goto Test

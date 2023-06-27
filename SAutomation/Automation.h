@@ -43,3 +43,8 @@ extern CString g_sDir;
 #define RETURN_IF (100)
 #define RETURN_LABEL (101)
 #define RETURN_GOTO (102)
+
+#define ERROR_TREAT_UNDEFINED (-1)
+#define ERROR_TREAT_END (0)
+#define ERROR_TREAT_RESUME (1)
+#define ERROR_TREAT_GOTO (2)

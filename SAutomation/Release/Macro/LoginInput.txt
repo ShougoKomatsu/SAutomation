@@ -1,0 +1,17 @@
+﻿LMouse Click(	1000	,	550	)
+Wait Ctrl off
+Wait Shift off
+s
+a
+_
+t
+o
+_
+r
+u
+_
+_
+100
+Enter
+1000
+LMouse Click(	1000	,	680	)

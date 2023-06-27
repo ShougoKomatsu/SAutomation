@@ -179,6 +179,62 @@ BOOL GetKeyType(CString sInput, CString* sOut)
 	sOut->Format(_T("%s"), sRemind);
 	return TRUE;
 }
+
+int GetErroTreat(CString sDataLine, CString* sLabel)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" ")).Trim(_T("\t")));
+
+	if(sDataTrim.Left(7).CompareNoCase(_T("onerror"))!=0){return ERROR_TREAT_UNDEFINED;}
+	CString sDataRemaind;
+	sDataRemaind.Format(_T("%s"), sDataTrim.Right(sDataTrim.GetLength()-7));
+	sDataRemaind.Trim(_T(" ")).Trim(_T("\t"));
+
+	if(sDataRemaind.Left(4).CompareNoCase(_T("goto"))==0)
+	{
+		CString sTemp;
+		sTemp.Format(_T("%s"), sDataRemaind.Right(sDataRemaind.GetLength()-4));
+		sTemp.Trim(_T(" ")).Trim(_T("\t"));
+		if(sTemp.GetAt(1)=='0'){return ERROR_TREAT_END;}
+		else{sLabel->Format(_T("%s"), sTemp);}
+	}
+
+	if(sDataRemaind.Left(11).CompareNoCase(_T("resume next"))==0){return ERROR_TREAT_RESUME;}
+
+
+	return ERROR_TREAT_UNDEFINED;
+}
+
+int SearchLable(CStringArray* saData, CString sLabel)
+{
+	for(int i=0; i<saData->GetCount(); i++)
+	{
+		CString sTemp;
+		sTemp.Format(_T("%s"), saData->GetAt(i));
+		sTemp.Trim(_T(" ")).Trim(_T("\t"));
+		CString sTrim;
+		sTrim.Format(_T("%s"), sTemp.Left(sTemp.GetLength()-1));
+		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+		if(sTrim.CompareNoCase(sLabel)==0){return i;}
+	}
+	return -1;
+}
+BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"), sData.Trim(_T(" ")).Trim(_T("\t")));
+
+	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))!=0){return FALSE;}
+	CString sDataRemaind;
+	sDataRemaind.Format(_T("%s"),sDataTrim.Right(sDataTrim.GetLength()-4));
+
+	sDataRemaind.Trim(_T(" ")).Trim(_T("\t"));
+
+	sLabel->Format(_T("%s"), sDataRemaind);
+
+	return TRUE;
+}
+
 BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir)
 {
 	int iType;

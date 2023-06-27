@@ -1,15 +1,6 @@
-﻿
-MouseMoveRel(100, 100)
-300
-MouseMoveRel(100, 100)
-300
-MouseMoveRel(100, 100)
-300
-MouseMoveRel(100, 100)
-300
-MouseMoveRel(100, 100)
-300
-MouseMoveRel(100, 100)
-300
-MouseMoveRel(100, 100)
-300
+LMouse Down(720, 323)
+1000
+MousePos(545, 323)
+100
+LMouse Up(545, 323)
+100
