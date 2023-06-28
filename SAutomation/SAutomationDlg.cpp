@@ -263,12 +263,41 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 	combo->AddString(_T("Shift"));
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
+	int iCombi;
+	iCombi=0;
 
-	if(op->bUseCtrl==TRUE){combo->SetCurSel(1); return;}
-//	if(op->bUseShift==TRUE){combo->SetCurSel(2); return;}
-	if(op->bUseAlt==TRUE){combo->SetCurSel(3); return;}
-	if(op->bUseWin==TRUE){combo->SetCurSel(4); return;}
-	combo->SetCurSel(0);
+	if(op->bUseCtrl==TRUE){iCombi=iCombi+1;}
+	if(op->bUseShift==TRUE){iCombi=iCombi+2;}
+	if(op->bUseAlt==TRUE){iCombi=iCombi+4;}
+	if(op->bUseWin==TRUE){iCombi=iCombi+8;}
+
+	switch(iCombi)
+	{
+	case 0:{combo->SetCurSel(0); return;}
+	case 1:{combo->SetCurSel(1); return;}
+	case 2:{combo->SetCurSel(2); return;}
+	case 3:{combo->SetCurSel(1); return;}
+
+	case 4:{combo->SetCurSel(3); return;}
+	case 5:{combo->SetCurSel(1); return;}
+	case 6:{combo->SetCurSel(2); return;}
+	case 7:{combo->SetCurSel(0); return;}
+
+	case 8:{combo->SetCurSel(4); return;}
+	case 9:{combo->SetCurSel(1); return;}
+	case 10:{combo->SetCurSel(2); return;}
+	case 11:{combo->SetCurSel(0); return;}
+
+	case 12:{combo->SetCurSel(3); return;}
+	case 13:{combo->SetCurSel(0); return;}
+	case 14:{combo->SetCurSel(0); return;}
+	case 15:{combo->SetCurSel(0); return;}
+
+	default:{combo->SetCurSel(0); return;}
+	}
+	combo->SetCurSel(0); 
+	return;
+
 }
 
 void SetComboItemShift(CComboBox* combo,OperationInfo* op)
@@ -278,11 +307,40 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op)
 	combo->AddString(_T("Shift"));
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
-	
-	if(op->bUseShift==TRUE){combo->SetCurSel(1); return;}
-//	if(op->bUseAlt==TRUE){combo->SetCurSel(2); return;}
-	if(op->bUseWin==TRUE){combo->SetCurSel(3); return;}
-	combo->SetCurSel(0);
+	int iCombi;
+	iCombi=0;
+
+	if(op->bUseCtrl==TRUE){iCombi=iCombi+1;}
+	if(op->bUseShift==TRUE){iCombi=iCombi+2;}
+	if(op->bUseAlt==TRUE){iCombi=iCombi+4;}
+	if(op->bUseWin==TRUE){iCombi=iCombi+8;}
+
+	switch(iCombi)
+	{
+	case 0:{combo->SetCurSel(0); return;}
+	case 1:{combo->SetCurSel(0); return;}
+	case 2:{combo->SetCurSel(0); return;}
+	case 3:{combo->SetCurSel(1); return;}
+
+	case 4:{combo->SetCurSel(0); return;}
+	case 5:{combo->SetCurSel(2); return;}
+	case 6:{combo->SetCurSel(2); return;}
+	case 7:{combo->SetCurSel(0); return;}
+
+	case 8:{combo->SetCurSel(0); return;}
+	case 9:{combo->SetCurSel(3); return;}
+	case 10:{combo->SetCurSel(3); return;}
+	case 11:{combo->SetCurSel(0); return;}
+
+	case 12:{combo->SetCurSel(3); return;}
+	case 13:{combo->SetCurSel(0); return;}
+	case 14:{combo->SetCurSel(0); return;}
+	case 15:{combo->SetCurSel(0); return;}
+
+	default:{combo->SetCurSel(0); return;}
+	}
+	combo->SetCurSel(0); 
+	return;
 }
 
 
@@ -457,7 +515,7 @@ void CSAutomationDlg::SaveSettings()
 			if(wcscmp(tch,_T("Ctrl"))==0){sUseCtrl.Format(_T("1"));}
 			if(wcscmp(tch,_T("Shift"))==0){sUseShift.Format(_T("1"));}
 			if(wcscmp(tch,_T("Alt"))==0){sUseAlt.Format(_T("1"));}
-			if(wcscmp(tch,_T("Win"))==0){sUseCtrl.Format(_T("1"));}
+			if(wcscmp(tch,_T("Win"))==0){sUseWin.Format(_T("1"));}
 		}
 		
 		if(m_comboUseShift[iID].GetCurSel()<0){sData.Format(_T("0"));}
