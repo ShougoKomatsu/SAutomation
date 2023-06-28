@@ -8,7 +8,7 @@
 CString g_sDir;
 int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 {
-	if((Halt==NULL)&&(Suspend == NULL)){Sleep(SleepMilliSec);return 0;}
+	if((Halt==NULL)&&(Suspend == NULL)){Sleep(SleepMilliSec);return RETURN_NORMAL;}
 
 
 
@@ -32,7 +32,7 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 			}
 			Sleep(1);
 		}
-		return 0;
+		return RETURN_NORMAL;
 	}
 
 	if(Suspend==NULL)
@@ -41,10 +41,10 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 		ullStartMilliSec = GetTickCount64();
 		while(GetTickCount64()<ullStartMilliSec+SleepMilliSec/g_dSpeedMult)
 		{
-			if((*(int*)Halt) == 1){return -1;}
+			if((*(int*)Halt) == 1){return RETURN_HALT;}
 			Sleep(1);
 		}
-		return 0;
+		return RETURN_NORMAL;
 	}
 
 	ULONGLONG ullStartMilliSec;
@@ -54,13 +54,13 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 	ullSuspendedMilliSec=0;
 	while(GetTickCount64()<ullStartMilliSec+SleepMilliSec/g_dSpeedMult+ullSuspendedMilliSec)
 	{
-		if((*(int*)Halt) == 1){return -1;}
+		if((*(int*)Halt) == 1){return RETURN_HALT;}
 		if((*(int*)Suspend) == 1)
 		{
 			ullSuspendStartMilliSec = GetTickCount64();
 			while((*(int*)Suspend) == 1)
 			{
-				if((*(int*)Halt) == 1){return -1;}
+				if((*(int*)Halt) == 1){return RETURN_HALT;}
 				Sleep(1);
 			}
 			ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
@@ -69,7 +69,7 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 	}
 
 
-	return 0;
+	return RETURN_NORMAL;
 }
 
 
@@ -85,7 +85,7 @@ int KeyDownAndUp(BYTE bySendKey)
 	inputs[1].ki.dwFlags = KEYEVENTF_KEYUP;
 
 	SendInput(2,inputs,sizeof(INPUT)); 
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int KeyDownAndUpUnicode(TCHAR tch)
@@ -106,7 +106,7 @@ int KeyDownAndUpUnicode(TCHAR tch)
 	input[1].ki.dwExtraInfo = 0;
 
 	SendInput(2, input, sizeof(INPUT));
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int KeyDownUnicode(TCHAR tch)
@@ -120,7 +120,7 @@ int KeyDownUnicode(TCHAR tch)
 	input[0].ki.dwExtraInfo = 0;
 
 	SendInput(1, input, sizeof(INPUT));
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int KeyUpUnicode(TCHAR tch)
@@ -135,7 +135,7 @@ int KeyUpUnicode(TCHAR tch)
 	input[0].ki.dwExtraInfo = 0;
 
 	SendInput(1, input, sizeof(INPUT));
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int KeyDown(BYTE bySendKey)
@@ -146,7 +146,7 @@ int KeyDown(BYTE bySendKey)
 	inputs[0].ki.wVk=bySendKey;
 
 	SendInput(1,inputs,sizeof(INPUT)); 
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int KeyUp(BYTE bySendKey)
@@ -158,7 +158,7 @@ int KeyUp(BYTE bySendKey)
 	inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
 
 	SendInput(1,inputs,sizeof(INPUT)); 
-	return 0;
+	return RETURN_NORMAL;
 }
 
 
@@ -171,61 +171,61 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	if(sData.CompareNoCase(_T("ctrl"))==0)
 	{
 		*byData= VK_CONTROL;
-		return 0;
+		return RETURN_NORMAL;
 	}
-	if(sData.CompareNoCase(_T("shift"))==0){*byData= VK_SHIFT;return 0;}
-	if(sData.CompareNoCase(_T("alt"))==0){*byData= VK_MENU;return 0;}
+	if(sData.CompareNoCase(_T("shift"))==0){*byData= VK_SHIFT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("alt"))==0){*byData= VK_MENU;return RETURN_NORMAL;}
 
-	if(sData.CompareNoCase(_T("©"))==0){*byData= VK_LEFT;return 0;}
-	if(sData.CompareNoCase(_T("ª"))==0){*byData= VK_UP;return 0;}
-	if(sData.CompareNoCase(_T("¨"))==0){*byData= VK_RIGHT;return 0;}
-	if(sData.CompareNoCase(_T("«"))==0){*byData= VK_DOWN;return 0;}
+	if(sData.CompareNoCase(_T("©"))==0){*byData= VK_LEFT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("ª"))==0){*byData= VK_UP;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("¨"))==0){*byData= VK_RIGHT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("«"))==0){*byData= VK_DOWN;return RETURN_NORMAL;}
 
 
 	if(sData.GetLength()==2)
 	{
-		if(sData.CompareNoCase(_T("f1"))==0){*byData = VK_F1;return 0;}
-		if(sData.CompareNoCase(_T("f2"))==0){*byData = VK_F2;return 0;}
-		if(sData.CompareNoCase(_T("f3"))==0){*byData = VK_F3;return 0;}
-		if(sData.CompareNoCase(_T("f4"))==0){*byData = VK_F4;return 0;}
-		if(sData.CompareNoCase(_T("f5"))==0){*byData = VK_F5;return 0;}
-		if(sData.CompareNoCase(_T("f6"))==0){*byData = VK_F6;return 0;}
-		if(sData.CompareNoCase(_T("f7"))==0){*byData = VK_F7;return 0;}
-		if(sData.CompareNoCase(_T("f8"))==0){*byData = VK_F8;return 0;}
-		if(sData.CompareNoCase(_T("f9"))==0){*byData = VK_F9;return 0;}
+		if(sData.CompareNoCase(_T("f1"))==0){*byData = VK_F1;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f2"))==0){*byData = VK_F2;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f3"))==0){*byData = VK_F3;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f4"))==0){*byData = VK_F4;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f5"))==0){*byData = VK_F5;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f6"))==0){*byData = VK_F6;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f7"))==0){*byData = VK_F7;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f8"))==0){*byData = VK_F8;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f9"))==0){*byData = VK_F9;return RETURN_NORMAL;}
 	}
 
 	if(sData.GetLength()==3)
 	{
-		if(sData.CompareNoCase(_T("f10"))==0){*byData = VK_F10;return 0;}
-		if(sData.CompareNoCase(_T("f11"))==0){*byData = VK_F11;return 0;}
-		if(sData.CompareNoCase(_T("f12"))==0){*byData = VK_F12;return 0;}
-		if(sData.CompareNoCase(_T("f13"))==0){*byData = VK_F13;return 0;}
-		if(sData.CompareNoCase(_T("f14"))==0){*byData = VK_F14;return 0;}
-		if(sData.CompareNoCase(_T("f15"))==0){*byData = VK_F15;return 0;}
-		if(sData.CompareNoCase(_T("f16"))==0){*byData = VK_F16;return 0;}
-		if(sData.CompareNoCase(_T("f17"))==0){*byData = VK_F17;return 0;}
-		if(sData.CompareNoCase(_T("f18"))==0){*byData = VK_F18;return 0;}
-		if(sData.CompareNoCase(_T("f19"))==0){*byData = VK_F19;return 0;}
+		if(sData.CompareNoCase(_T("f10"))==0){*byData = VK_F10;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f11"))==0){*byData = VK_F11;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f12"))==0){*byData = VK_F12;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f13"))==0){*byData = VK_F13;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f14"))==0){*byData = VK_F14;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f15"))==0){*byData = VK_F15;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f16"))==0){*byData = VK_F16;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f17"))==0){*byData = VK_F17;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f18"))==0){*byData = VK_F18;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f19"))==0){*byData = VK_F19;return RETURN_NORMAL;}
 
-		if(sData.CompareNoCase(_T("f20"))==0){*byData = VK_F20;return 0;}
-		if(sData.CompareNoCase(_T("f21"))==0){*byData = VK_F21;return 0;}
-		if(sData.CompareNoCase(_T("f22"))==0){*byData = VK_F22;return 0;}
-		if(sData.CompareNoCase(_T("f23"))==0){*byData = VK_F23;return 0;}
-		if(sData.CompareNoCase(_T("f24"))==0){*byData = VK_F24;return 0;}
+		if(sData.CompareNoCase(_T("f20"))==0){*byData = VK_F20;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f21"))==0){*byData = VK_F21;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f22"))==0){*byData = VK_F22;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f23"))==0){*byData = VK_F23;return RETURN_NORMAL;}
+		if(sData.CompareNoCase(_T("f24"))==0){*byData = VK_F24;return RETURN_NORMAL;}
 	}
 
-	if(sData.CompareNoCase(_T("lshift"))==0){*byData = VK_SHIFT;return 0;}
-	if(sData.CompareNoCase(_T("rshift"))==0){*byData = VK_SHIFT;return 0;}
-	if(sData.CompareNoCase(_T("lctrl"))==0){*byData = VK_CONTROL;return 0;}
-	if(sData.CompareNoCase(_T("rctrl"))==0){*byData = VK_CONTROL;return 0;}
-	if(sData.CompareNoCase(_T("lalt"))==0){*byData = VK_MENU;return 0;}
-	if(sData.CompareNoCase(_T("ralt"))==0){*byData = VK_MENU;return 0;}
+	if(sData.CompareNoCase(_T("lshift"))==0){*byData = VK_SHIFT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("rshift"))==0){*byData = VK_SHIFT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("lctrl"))==0){*byData = VK_CONTROL;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("rctrl"))==0){*byData = VK_CONTROL;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("lalt"))==0){*byData = VK_MENU;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("ralt"))==0){*byData = VK_MENU;return RETURN_NORMAL;}
 
-	if(sData.CompareNoCase(_T("tab"))==0){*byData = VK_TAB;return 0;}
-	if(sData.CompareNoCase(_T("enter"))==0){*byData = VK_RETURN;return 0;}
-	if(sData.CompareNoCase(_T("return"))==0){*byData = VK_RETURN;return 0;}
-	if(sData.CompareNoCase(_T("space"))==0){*byData = VK_SPACE;return 0;}
+	if(sData.CompareNoCase(_T("tab"))==0){*byData = VK_TAB;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("enter"))==0){*byData = VK_RETURN;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("return"))==0){*byData = VK_RETURN;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("space"))==0){*byData = VK_SPACE;return RETURN_NORMAL;}
 
 	
 	if(sData.GetLength()==1)
@@ -236,19 +236,19 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 		{
 			*byData = sData.GetAt(0);
 			*bUnicode = FALSE;
-			return 0;
+			return RETURN_NORMAL;
 		}
 		if(('A' <= cChar) &&(cChar <= 'Z'))
 		{
 			*byData = sData.GetAt(0);
 			*bUnicode = FALSE;
-			return 0;
+			return RETURN_NORMAL;
 		}
 		if(('a' <= cChar) &&(cChar <= 'z'))
 		{
 			*byData = sData.GetAt(0)-'a'+'A';
 			*bUnicode = FALSE;
-			return 0;
+			return RETURN_NORMAL;
 		}
 	}
 
@@ -256,7 +256,7 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	*bUnicode = TRUE;
 	*byData = 0x00;
 	*tch=sData.GetAt(0);
-	return 0;
+	return RETURN_NORMAL;
 }
 
 #include "ImgProc.h"
@@ -266,9 +266,8 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	int iWaitOn;
 
 	int iTimeOut;
-	int iContinue;
 
-	if(saData->GetCount()<=6){return -1;}
+	if(saData->GetCount()<=6){return RETURN_FAILED;}
 
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
@@ -282,18 +281,11 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
-	else{return -1;}
+	else{return RETURN_FAILED;}
 
 
-	iContinue = 0;
 	if(saData->GetCount()==6){iTimeOut=-1;}
 	else {iTimeOut = _ttoi(saData->GetAt(6));}
-
-
-	if(saData->GetCount()>=8)
-	{
-		if(saData->GetAt(7).CompareNoCase(_T("continue"))==0){iContinue=1;}
-	}
 
 
 
@@ -313,22 +305,26 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
 		if(iWaitOn==1)
 		{
-			if(bRet == TRUE) {return 0;}
+			if(bRet == TRUE) {return RETURN_NORMAL;}
 		}
 		else
 		{
-			if(bRet == FALSE) {return 0;}
+			if(bRet == FALSE) {return RETURN_NORMAL;}
 		}
 
 
-		if(K_Sleep(Halt, Suspend, 1)<0){return -1;}
+		int iRet=K_Sleep(Halt, Suspend, 1);
+		if(iRet<0){return iRet;}
 		if(iTimeOut>=0)
 		{
-			if(GetTickCount64()>ullStartMilliSec+iTimeOut){if(iContinue==0){return -1;}else{return 0;}}
+			if(GetTickCount64()>ullStartMilliSec+iTimeOut)
+			{
+				return RETURN_FAILED;
+			}
 		}
 	}
 
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
@@ -345,7 +341,7 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	if(saData->GetAt(1).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(1).CompareNoCase(_T("off"))==0){iWaitOn=0;}
-	else{return -1;}
+	else{return RETURN_FAILED;}
 
 
 	if(bUnicode == TRUE)
@@ -361,18 +357,19 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		shKey = GetAsyncKeyState (byKey);
 		if(iWaitOn==1)
 		{
-			if((shKey<0)) {return 0;}
+			if((shKey<0)) {return RETURN_NORMAL;}
 
 		}
 		else
 		{
-			if((shKey>=0)) {return 0;}
+			if((shKey>=0)) {return RETURN_NORMAL;}
 		}
 
 
-		if(K_Sleep(Halt, Suspend, 1)<0){return -1;}
+		iRet = K_Sleep(Halt, Suspend, 1);
+		if(iRet <0){return iRet;}
 	}
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int KeyDownAndUp(CStringArray* saData)
@@ -435,8 +432,8 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	BOOL bRet;
 	CStringArray saData;
 	bRet = PerseCommand(iSceneData, sDataLine, &iCommandType, &saData, g_sDir);
-	if(iCommandType == COMMAND_NOTING){return 0;}
-	if(bRet != TRUE){return -1;}
+	if(iCommandType == COMMAND_NOTING){return RETURN_NORMAL;}
+	if(bRet != TRUE){return RETURN_FAILED;}
 
 	switch(iCommandType)
 	{
@@ -470,12 +467,12 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_WINDOW_SIZE:{return WindowSize(&saData);}
 	case COMMAND_WINDOW_POS:{return WindowPos(&saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
-	case COMMAND_NOTING:{return 0;}
+	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
 	case COMMAND_GOTO:{return RETURN_GOTO;}
 	case COMMAND_ERROR_TREAT:{return RETURN_ERROR_TREAT;}
-	default:{return -1;}
+	default:{return RETURN_FAILED;}
 	}
-	return -1;
+	return RETURN_FAILED;
 }

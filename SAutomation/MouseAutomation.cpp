@@ -9,7 +9,7 @@ int MouseLDown(UINT nX, UINT nY)
 	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
 	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
 	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTDOWN, dwX, dwY, NULL, NULL);
-	return 0;
+	return RETURN_NORMAL;
 }
 int MouseLDown(CStringArray* saData)
 {
@@ -23,7 +23,7 @@ int MouseRDown(UINT nX, UINT nY)
 	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
 	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
 	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTDOWN, dwX, dwY, NULL, NULL);
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int MouseRDown(CStringArray* saData)
@@ -38,7 +38,7 @@ int MouseLUp(UINT nX, UINT nY)
 	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
 	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
 	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTUP, dwX, dwY, NULL, NULL);
-	return 0;
+	return RETURN_NORMAL;
 }
 int MouseLUp(CStringArray* saData)
 {
@@ -52,7 +52,7 @@ int MouseRUp(UINT nX, UINT nY)
 	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
 	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
 	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTUP, dwX, dwY, NULL, NULL);
-	return 0;
+	return RETURN_NORMAL;
 }
 int MouseRUp(CStringArray* saData)
 {
@@ -106,7 +106,7 @@ int MoveMouse(UINT nX, UINT nY)
 	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
 	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
 	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, dwX, dwY, NULL, NULL);
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int MoveMouse(CStringArray* saData)
@@ -117,7 +117,7 @@ int MoveMouse(CStringArray* saData)
 int MouseVWheel(int iWheel)
 {
 	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_WHEEL, 0, 0, iWheel, NULL);
-	return 0;
+	return RETURN_NORMAL;
 }
 
 int MouseVWheel(CStringArray* saData)
@@ -131,7 +131,7 @@ int MouseVWheel(CStringArray* saData)
 int MoveMouseToImage(CStringArray* saData)
 {
 
-	if(saData->GetCount()<5){return -1;}
+	if(saData->GetCount()<5){return RETURN_FAILED;}
 
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
@@ -158,9 +158,9 @@ int MoveMouseToImage(CStringArray* saData)
 	Screenshot(&imgTarget);
 	bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
 
-	if(bRet != TRUE){return -1;}
+	if(bRet != TRUE){return RETURN_FAILED;}
 
 	MoveMouse(iFoundC, iFoundR);
 
-	return 0;
+	return RETURN_NORMAL;
 }

@@ -196,7 +196,7 @@ int GetErroTreat(CString sDataLine, CString* sLabel)
 		sTemp.Format(_T("%s"), sDataRemaind.Right(sDataRemaind.GetLength()-4));
 		sTemp.Trim(_T(" ")).Trim(_T("\t"));
 		if(sTemp.GetAt(1)=='0'){return ERROR_TREAT_END;}
-		
+
 		sLabel->Format(_T("%s"), sTemp);
 		return ERROR_TREAT_GOTO;
 	}
@@ -290,7 +290,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
-		
+
 	case COMMAND_MOUSE_R_DOWN:
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
@@ -353,7 +353,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
-		
+
 	case COMMAND_MOUSE_R_CLICK:
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
@@ -455,12 +455,12 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
-		
+
 	case COMMAND_WAIT_IMG:
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			
+
 			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }}
 			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }
 
@@ -480,7 +480,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
-		
+
 	case COMMAND_MOUSE_MOVE_TO_IMG:
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
@@ -508,23 +508,23 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_LABEL:
 		{
-//			ExtractData(sDataLocal, _T(":"), &sArg, &sDataLocal);
-//			sArg.Trim(_T(" ")).Trim(_T("\t"));
-//			if(sArg.GetLength()<0){return FALSE;}
+			//			ExtractData(sDataLocal, _T(":"), &sArg, &sDataLocal);
+			//			sArg.Trim(_T(" ")).Trim(_T("\t"));
+			//			if(sArg.GetLength()<0){return FALSE;}
 			*iCommandType = iType;
 			break;
 		}
 	case COMMAND_ERROR_TREAT:
 		{
-//			ExtractData(sDataLocal, _T("onerror"), &sArg, &sDataLocal);
-//			sArg.Trim(_T(" ")).Trim(_T("\t"));
-//			if(sArg.GetLength()<0){return FALSE;}
+			//			ExtractData(sDataLocal, _T("onerror"), &sArg, &sDataLocal);
+			//			sArg.Trim(_T(" ")).Trim(_T("\t"));
+			//			if(sArg.GetLength()<0){return FALSE;}
 			*iCommandType = iType;
 			break;
 		}
 	case COMMAND_GOTO:
 		{
-					*iCommandType = iType;
+			*iCommandType = iType;
 			break;
 		}
 	}
