@@ -1,2 +1,4 @@
-﻿1000
-LMouse Down(500,500)
+﻿
+Ctrl Down
+l
+Ctrl Up
