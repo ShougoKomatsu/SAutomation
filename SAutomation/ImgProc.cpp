@@ -341,3 +341,16 @@ BOOL ImgRGB::Assign(CString sFilePath)
 
 	return TRUE;
 }
+BOOL Search()
+{
+int* iMap;
+iSearchWidth = imgTarget->iWidth - imgModel->iWidth +1;
+iSearchHeight = imgTarget->iHeight - imgModel->iHeight+1;
+if(iSearchWidth<=0){return FALSE;}
+if(iSearchHeight<=0){return FALSE;}
+iMap = new int[iSearchWidth * iSearchHeight];
+for(int r = 0; r<iSearchHeight; r++)
+{
+for(int c=0;c<iSearchWidth;c++){}
+}
+}
