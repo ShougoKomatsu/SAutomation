@@ -1,6 +1,36 @@
+wait ctrl off
+wait shift off
+FirstClick:
+OnError Goto LabelWheel
+WaitImage(block_result.bmp, 900, 940, 1150, 1000, on, 0)
+300
+LMouse Click(	1058	,	957	)
+50
+WaitImage(block.bmp, 950, 850, 1100, 950, on, 3000)
+MousePosToImage(block.bmp, 950, 850, 1100, 950)
+LMouse Click
 
-TEST:
-MousePos(100,100)
-MousePos(100,200)
+OnErrorGoto 0
+
+WaitImage(block2.bmp, 900, 550, 1100, 650, on, 3000)
+MousePosToImage(block2.bmp, 900, 550, 1100, 650)
+LMouse Click
+
+
+
+400
+Wheel -150
+
+
 Exit
-Goto Test
+
+
+LabelWheel:
+
+OnError Goto FirstClick
+WaitImage(block_result.bmp, 900, 940, 1150, 1000, on, 1000)
+300
+
+Wheel -150
+500
+

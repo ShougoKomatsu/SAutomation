@@ -93,7 +93,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	int iRet;
 	CString sLabel;
 	BOOL bExit;
-
+	StopWatch sw;
 	while(1)
 	{
 		iListLength =(int) saCommands.GetCount();
@@ -108,7 +108,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				TerminateThread(hGetStepKey, 0);
 				return 0;
 			}
-
+			
 			iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i));
 			switch(iRet)
 			{
@@ -132,6 +132,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 							return 0;
 						}
 					}
+					break;
 				}
 			case RETURN_FAILED:
 				{
