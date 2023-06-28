@@ -73,3 +73,16 @@ MousePostToImage(文字列, 整数, 整数, 整数, 整数)
 整数, 整数, 整数, 整数：探索範囲左上X, 探索範囲左上Y, 探索範囲右下X, 探索範囲右下Y
 
 
+●フロー制御
+・ラベル設定
+文字列:
+
+・ラベルにジャンプ
+GoTo ラベル
+
+・エラー時処理設定
+OnError GoTo ラベル
+OnError GoTo 0
+OnError Resume Next
+
+

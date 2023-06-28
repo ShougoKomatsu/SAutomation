@@ -196,7 +196,9 @@ int GetErroTreat(CString sDataLine, CString* sLabel)
 		sTemp.Format(_T("%s"), sDataRemaind.Right(sDataRemaind.GetLength()-4));
 		sTemp.Trim(_T(" ")).Trim(_T("\t"));
 		if(sTemp.GetAt(1)=='0'){return ERROR_TREAT_END;}
-		else{sLabel->Format(_T("%s"), sTemp);}
+		
+		sLabel->Format(_T("%s"), sTemp);
+		return ERROR_TREAT_GOTO;
 	}
 
 	if(sDataRemaind.Left(11).CompareNoCase(_T("resume next"))==0){return ERROR_TREAT_RESUME;}
