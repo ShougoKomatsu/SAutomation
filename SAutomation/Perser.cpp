@@ -8,6 +8,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" ")).Trim(_T("\t")));
+	
+	if(sDataTrim.Left(1).CompareNoCase(_T("'"))==0){*iCommandType=COMMAND_NOTING;return TRUE;}
 
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
 
@@ -253,6 +255,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	saData->RemoveAll();
 	switch(iType)
 	{
+	case COMMAND_NOTING:{*iCommandType = COMMAND_NOTING; return TRUE;}
 	case COMMAND_REPEAT:
 		{
 			CString sID;
