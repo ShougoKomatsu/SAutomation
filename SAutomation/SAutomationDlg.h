@@ -63,6 +63,7 @@ protected:
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;
 	BOOL m_bMinimizeToTaskTray;
+	BOOL m_bLog;
 	CString m_sHotkeyEnable;
 
 	

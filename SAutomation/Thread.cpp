@@ -87,6 +87,9 @@ DWORD WINAPI CommandThread(LPVOID arg)
 
 	int iLoop;
 	iLoop =(iData>>4)&0x01;
+	int iLog;
+	iLog = (iData>>6)%0x01;
+
 	int iErrorTreat;
 	iErrorTreat = ERROR_TREAT_END;
 	int iListLength;
@@ -97,7 +100,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	CStdioFile cf;
 	CString sFilePath;
 	sFilePath.Format(_T("%s\\Log\\log%d.txt"), g_sDir, iScene);
-	cf.Open(sFilePath,CFile::modeCreate|CFile::modeWrite);
+	if(iLog==1){cf.Open(sFilePath,CFile::modeCreate|CFile::modeWrite);}
 	CString sWrite;
 	while(1)
 	{
@@ -105,11 +108,11 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		for(int i=0; i<iListLength; i++)
 		{
 			sWrite.Format(_T("%d "), i+1);
-			cf.WriteString(sWrite);
+			if(iLog==1){cf.WriteString(sWrite);}
 			bExit = FALSE;
 			if(g_bHalt == TRUE)
 			{
-				cf.Close();
+				if(iLog==1){cf.Close();}
 				g_bHalt = FALSE;
 				PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 				TerminateThread(hGetKey, 0);
@@ -118,15 +121,15 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			}
 			
 			sWrite.Format(_T("%s "), saCommands.GetAt(i));
-			cf.WriteString(sWrite);
+			if(iLog==1){cf.WriteString(sWrite);}
 			iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i));
 			sWrite.Format(_T("%d\n"), iRet);
-			cf.WriteString(sWrite);
+			if(iLog==1){cf.WriteString(sWrite);}
 			switch(iRet)
 			{
 			case RETURN_HALT:
 				{
-					cf.Close();
+					if(iLog==1){cf.Close();}
 					g_bHalt = FALSE;
 					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 					TerminateThread(hGetKey, 0);
@@ -146,7 +149,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					case ERROR_TREAT_RESUME:{iErrorTreat=ERROR_TREAT_RESUME; break;}
 					default:
 						{
-							cf.Close();
+							if(iLog==1){cf.Close();}
 							g_bHalt = FALSE;
 							PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 							TerminateThread(hGetKey, 0);
@@ -178,7 +181,8 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					int iLabel;
 					iLabel = SearchLable(&saCommands,sLabel);
 					if(iLabel >= 0){i=iLabel-1;break;}
-
+					
+					if(iLog==1){cf.Close();}
 					g_bHalt = FALSE;
 					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 					TerminateThread(hGetKey, 0);
@@ -192,7 +196,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		}
 		if(iLoop==0){break;}
 	}
-	cf.Close();
+	if(iLog==1){cf.Close();}
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 	TerminateThread(hGetKey, 0);
 	TerminateThread(hGetStepKey, 0);

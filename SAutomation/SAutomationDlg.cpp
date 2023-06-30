@@ -474,6 +474,10 @@ void CSAutomationDlg::ReadSettings()
 	GetPrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	if(wcscmp(szData,_T("1"))==0){m_bMinimizeToTaskTray=TRUE;}
 	else{m_bMinimizeToTaskTray=FALSE;}
+
+	GetPrivateProfileString(_T("Common"),_T("Log"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+	if(wcscmp(szData,_T("1"))==0){m_bLog=TRUE;}
+	else{m_bLog=FALSE;}
 }
 
 void CSAutomationDlg::SaveSettings()
@@ -569,6 +573,15 @@ void CSAutomationDlg::SaveSettings()
 	else
 	{
 		WritePrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),sFilePath);
+	}
+
+	if(((CButton*)GetDlgItem(IDC_CHECK_LOG))->GetCheck()==1)
+	{
+		WritePrivateProfileString(_T("Common"),_T("Log"),_T("1"),sFilePath);
+	}
+	else
+	{
+		WritePrivateProfileString(_T("Common"),_T("Log"),_T("0"),sFilePath);
 	}
 }
 
@@ -729,6 +742,15 @@ BOOL CSAutomationDlg::OnInitDialog()
 	else
 	{
 		((CButton*)GetDlgItem(IDC_CHECK_TASKTRAY))->SetCheck(0);
+	}
+	
+	if(m_bLog==TRUE)
+	{
+		((CButton*)GetDlgItem(IDC_CHECK_LOG))->SetCheck(1);
+	}
+	else
+	{
+		((CButton*)GetDlgItem(IDC_CHECK_LOG))->SetCheck(0);
 	}
 
 	if(m_bEnableHotkey==TRUE)
@@ -979,8 +1001,10 @@ void CSAutomationDlg::Operate(int iID)
 	g_sFilePath[iID].Format(_T("%s\\Macro\\%s"),m_sDir, m_sEditFileName[iID]);
 	int iParam;
 	int iChecked;
+	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_LOG))->GetCheck();
+	iParam = iChecked<<6;
 	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_REPEAT_0+iID))->GetCheck();
-	iParam = 1<<5;
+	iParam += 1<<5;
 	iParam+=(iChecked<<4)+iID;
 	m_OpeInfo[iID].m_bRunning=TRUE;
 	g_hThread[iID] = CreateThread(NULL, 0, CommandThread, (LPVOID)(&iParam), 0, &dwThreadID);
