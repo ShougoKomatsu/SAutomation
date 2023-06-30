@@ -674,9 +674,17 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	CString sMacroFolderPath;
 	sMacroFolderPath.Format(_T("%s\\Macro"),m_sDir);
+	
+	CString sLogFolderPath;
+	sLogFolderPath.Format(_T("%s\\Log"),m_sDir);
+	
+	CString sModelFolderPath;
+	sModelFolderPath.Format(_T("%s\\Macro\\Model"),m_sDir);
 
 	CFileFind cf;
 	if(cf.FindFile(sMacroFolderPath) != TRUE){_tmkdir(sMacroFolderPath);}
+	if(cf.FindFile(sLogFolderPath) != TRUE){_tmkdir(sLogFolderPath);}
+	if(cf.FindFile(sModelFolderPath) != TRUE){_tmkdir(sModelFolderPath);}
 	ReadSettings();
 
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
