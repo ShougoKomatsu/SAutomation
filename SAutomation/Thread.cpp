@@ -88,7 +88,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	int iLoop;
 	iLoop =(iData>>4)&0x01;
 	int iLog;
-	iLog = (iData>>6)%0x01;
+	iLog = (iData>>6)&0x01;
 
 	int iErrorTreat;
 	iErrorTreat = ERROR_TREAT_END;
