@@ -209,7 +209,7 @@ int GetErroTreat(CString sDataLine, CString* sLabel)
 	return ERROR_TREAT_UNDEFINED;
 }
 
-int SearchLable(CStringArray* saData, CString sLabel)
+int SearchLable(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
 {
 	for(int i=0; i<saData->GetCount(); i++)
 	{
@@ -219,6 +219,13 @@ int SearchLable(CStringArray* saData, CString sLabel)
 		CString sTrim;
 		sTrim.Format(_T("%s"), sTemp.Left(sTemp.GetLength()-1));
 		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+
+		if(iLog==1)
+		{
+			CString sWrite;
+			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);
+			cf->WriteString(sWrite);
+		}
 		if(sTrim.CompareNoCase(sLabel)==0){return i;}
 	}
 	return -1;

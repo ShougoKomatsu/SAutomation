@@ -100,7 +100,11 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	CStdioFile cf;
 	CString sFilePath;
 	sFilePath.Format(_T("%s\\Log\\log%d.txt"), g_sDir, iScene);
-	if(iLog==1){cf.Open(sFilePath,CFile::modeCreate|CFile::modeWrite);}
+	if(iLog==1)
+	{
+		BOOL bRet;
+		bRet = cf.Open(sFilePath,CFile::modeCreate|CFile::modeWrite);
+	}
 	CString sWrite;
 	while(1)
 	{
@@ -161,12 +165,16 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				}
 			case RETURN_FAILED:
 				{
+			sWrite.Format(_T("iErrorTreat = %d %s\n"), iErrorTreat, sLabel);
+			if(iLog==1){cf.WriteString(sWrite);}
 					if(iErrorTreat==ERROR_TREAT_RESUME){break;}
 					if(iErrorTreat==ERROR_TREAT_GOTO)
 					{
 						PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
 						int iLabel;
-						iLabel = SearchLable(&saCommands,sLabel);
+						iLabel = SearchLable(&saCommands,sLabel, iLog, &cf);
+			sWrite.Format(_T("iLabel = %d\n"), iLabel);
+			if(iLog==1){cf.WriteString(sWrite);}
 						if(iLabel >= 0){i=iLabel-1;break;}
 					}
 					g_bHalt = FALSE;
@@ -179,7 +187,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				{
 					PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
 					int iLabel;
-					iLabel = SearchLable(&saCommands,sLabel);
+					iLabel = SearchLable(&saCommands,sLabel, iLog, &cf);
 					if(iLabel >= 0){i=iLabel-1;break;}
 					
 					if(iLog==1){cf.Close();}
