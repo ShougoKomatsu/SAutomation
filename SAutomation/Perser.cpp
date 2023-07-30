@@ -220,7 +220,7 @@ int SearchLable(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
 		sTrim.Format(_T("%s"), sTemp.Left(sTemp.GetLength()-1));
 		sTrim.Trim(_T(" ")).Trim(_T("\t"));
 
-		if(iLog==1)
+		if(iLog>=5)
 		{
 			CString sWrite;
 			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);

@@ -129,7 +129,8 @@ void CSAutomationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_7, (m_comboUseShift[7]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_8, (m_comboUseShift[8]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_9, (m_comboUseShift[9]));
-
+	
+	DDX_Control(pDX, IDC_COMBO_LOG_LEVEL, m_comboLogLevel);
 	DDX_Text(pDX, IDC_EDIT_SPEED, m_sEditSpeed);
 	DDX_Control(pDX, IDC_SLIDER_SPEED, m_sliderSpeed);
 }
@@ -478,6 +479,12 @@ void CSAutomationDlg::ReadSettings()
 	GetPrivateProfileString(_T("Common"),_T("Log"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	if(wcscmp(szData,_T("1"))==0){m_bLog=TRUE;}
 	else{m_bLog=FALSE;}
+	
+	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+	m_iLogLevel=_ttoi(szData);
+	if(m_iLogLevel<1){m_iLogLevel=1;}
+	if(m_iLogLevel>5){m_iLogLevel=5;}
+
 }
 
 void CSAutomationDlg::SaveSettings()
@@ -540,7 +547,7 @@ void CSAutomationDlg::SaveSettings()
 	}
 
 	CString sData;
-	TCHAR tch[8];
+	TCHAR tch[32];
 
 
 
@@ -583,6 +590,17 @@ void CSAutomationDlg::SaveSettings()
 	{
 		WritePrivateProfileString(_T("Common"),_T("Log"),_T("0"),sFilePath);
 	}
+
+	m_comboLogLevel.GetLBText(m_comboLogLevel.GetCurSel(),tch); sData.Format(_T("%s"), tch);
+
+	if(wcscmp(tch,_T("OnlyCritical"))==0){m_iLogLevel=1;}
+	if(wcscmp(tch,_T("4"))==0){m_iLogLevel=2;}
+	if(wcscmp(tch,_T("3"))==0){m_iLogLevel=3;}
+	if(wcscmp(tch,_T("2"))==0){m_iLogLevel=4;}
+	if(wcscmp(tch,_T("All"))==0){m_iLogLevel=5;}
+	sData.Format(_T("%d"),m_iLogLevel);
+	WritePrivateProfileString(_T("Common"),_T("LogLevel"),sData,sFilePath);
+
 }
 
 VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD dwIgnoreProcessId)
@@ -752,6 +770,17 @@ BOOL CSAutomationDlg::OnInitDialog()
 	{
 		((CButton*)GetDlgItem(IDC_CHECK_LOG))->SetCheck(0);
 	}
+
+	m_comboLogLevel.ResetContent();
+	m_comboLogLevel.AddString(_T("OnlyCritical"));
+	m_comboLogLevel.AddString(_T("4"));
+	m_comboLogLevel.AddString(_T("3"));
+	m_comboLogLevel.AddString(_T("2"));
+	m_comboLogLevel.AddString(_T("All"));
+	if(m_iLogLevel<1){m_iLogLevel=1;}
+	if(m_iLogLevel>5){m_iLogLevel=5;}
+	m_comboLogLevel.SetCurSel(m_iLogLevel-1);
+	
 
 	if(m_bEnableHotkey==TRUE)
 	{
@@ -1001,8 +1030,25 @@ void CSAutomationDlg::Operate(int iID)
 	g_sFilePath[iID].Format(_T("%s\\Macro\\%s"),m_sDir, m_sEditFileName[iID]);
 	int iParam;
 	int iChecked;
+	int iLogLevel;
 	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_LOG))->GetCheck();
-	iParam = iChecked<<6;
+	iLogLevel=0;
+	if(iChecked==0)
+	{
+		iLogLevel=0;
+	}
+	else
+	{
+		TCHAR tch[32];
+		m_comboLogLevel.GetLBText(m_comboLogLevel.GetCurSel(),tch);
+		if(wcscmp(tch,_T("OnlyCritical"))==0){iLogLevel=1;}
+		if(wcscmp(tch,_T("4"))==0){iLogLevel=2;}
+		if(wcscmp(tch,_T("3"))==0){iLogLevel=3;}
+		if(wcscmp(tch,_T("2"))==0){iLogLevel=4;}
+		if(wcscmp(tch,_T("All"))==0){iLogLevel=5;}
+	}
+
+	iParam = iLogLevel<<6;
 	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_REPEAT_0+iID))->GetCheck();
 	iParam += 1<<5;
 	iParam+=(iChecked<<4)+iID;

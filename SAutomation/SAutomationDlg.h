@@ -63,8 +63,9 @@ protected:
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;
 	BOOL m_bMinimizeToTaskTray;
-	BOOL m_bLog;
 	CString m_sHotkeyEnable;
+	int m_iLogLevel;
+	BOOL m_bLog;
 
 	
 	DWORD m_dwHotKeyEnable;
@@ -113,6 +114,7 @@ public:
 	CComboBox m_comboUseCtrl[MAX_THREAD];
 	CComboBox m_comboUseShift[MAX_THREAD];
 	CComboBox m_comboEnable;
+	CComboBox m_comboLogLevel;
 
 
 	
