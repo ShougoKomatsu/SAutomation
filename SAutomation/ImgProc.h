@@ -53,6 +53,7 @@ struct ImgRGB
 	BOOL Assign(CString sFilePath);
 };
 BOOL Screenshot(ImgRGB* imgRGB);
+BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, int iC1);
 
 BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC);
 BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath);

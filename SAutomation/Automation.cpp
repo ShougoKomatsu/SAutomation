@@ -261,6 +261,72 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 
 #include "ImgProc.h"
 
+int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+{
+	
+	int iWaitOn;
+
+	int iTimeOutMillisec;
+	int iTickMillisec;
+	if(saData->GetCount()<=6){return RETURN_FAILED;}
+
+	int iR0, iC0, iR1, iC1;
+
+	iTickMillisec = _ttoi(saData->GetAt(0));
+
+	iC0=_ttoi(saData->GetAt(1));
+	iR0=_ttoi(saData->GetAt(2));
+	iC1=_ttoi(saData->GetAt(3));
+	iR1=_ttoi(saData->GetAt(4));
+
+	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	else{return RETURN_FAILED;}
+
+
+	if(saData->GetCount()==6){iTimeOutMillisec=-1;}
+	else {iTimeOutMillisec = _ttoi(saData->GetAt(6));}
+
+	
+	ImgRGB imgModel;
+	ImgRGB imgTarget;
+	BOOL bRet;
+	Screenshot(&imgTarget);
+	CropImage(&imgTarget, &imgModel, iR0, iC0, iR1, iC1);
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
+	int iFoundR, iFoundC;
+	while(1)
+	{
+		Screenshot(&imgTarget);
+
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		if(iWaitOn==1)
+		{
+			if(bRet == TRUE) {return RETURN_NORMAL;}
+		}
+		else
+		{
+			if(bRet == FALSE) {return RETURN_NORMAL;}
+		}
+
+
+		int iRet=K_Sleep(Halt, Suspend, 1);
+		if(iRet<0){return iRet;}
+		if(iTimeOutMillisec>=0)
+		{
+			if(GetTickCount64()>ullStartMilliSec+iTimeOutMillisec)
+			{
+				return RETURN_FAILED;
+			}
+		}
+	}
+
+	return RETURN_NORMAL;
+
+}
+
 int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;

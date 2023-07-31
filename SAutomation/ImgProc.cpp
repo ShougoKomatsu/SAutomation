@@ -91,6 +91,38 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 
 	return TRUE;
 }
+BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, int iC1)
+{
+	if(imgRGBin==NULL){return FALSE;}
+	if(imgRGBout==NULL){return FALSE;}
+	if(iR0>iR1){return FALSE;}
+	if(iC0>iC1){return FALSE;}
+	if(iR0<0){return FALSE;}
+	if(iC0<0){return FALSE;}
+	if(iR1>=imgRGBin->iHeight){return FALSE;}
+	if(iC1>=imgRGBin->iWidth){return FALSE;}
+
+	if(imgRGBin==imgRGBout)
+	{
+		//
+	}
+	else
+	{
+	imgRGBout->Init();
+	imgRGBout->Set(iC1-iC0+1, iR1-iC0+1, imgRGBin->iChannel);
+	for(int r=iR0; r<=iR1; r++)
+	{
+		for(int c=iC0; c<=iC1; c++)
+		{
+			imgRGBout->byImgB[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgB[r*imgRGBin->iWidth+c];
+			imgRGBout->byImgG[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgG[r*imgRGBin->iWidth+c];
+			imgRGBout->byImgR[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+		}
+	}
+	}
+	return TRUE;
+}
+
 BOOL Screenshot(ImgRGB* imgRGB)
 {
 	HWND hDesktop = GetDesktopWindow();
