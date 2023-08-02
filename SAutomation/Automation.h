@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Perser.h"
+#include "Perser.h"	
 
 #define COMMAND_UNDEFINED (0)
 #define COMMAND_COMMON (0)
@@ -31,6 +31,7 @@
 #define COMMAND_GOTO (COMMAND_FLOW+4)
 
 #define COMMAND_WAIT_IMG (COMMAND_IMGPROC + 1)
+#define COMMAND_WAIT_UPDATE (COMMAND_IMGPROC + 2)
 
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine);
 

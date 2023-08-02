@@ -288,31 +288,39 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	else {iTimeOutMillisec = _ttoi(saData->GetAt(6));}
 
 	
+	ImgRGB imgModelCropped;
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
 	BOOL bRet;
-	Screenshot(&imgTarget);
-	CropImage(&imgTarget, &imgModel, iR0, iC0, iR1, iC1);
+
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
-
 	int iFoundR, iFoundC;
+	int iRet;
+	BOOL bFirstTime;
+	bFirstTime=TRUE;
+	Screenshot(&imgModel);
+	iRet = K_Sleep(Halt, Suspend, iTickMillisec);
+	if(iRet<0){return iRet;}
 	while(1)
 	{
 		Screenshot(&imgTarget);
+		if(bFirstTime==TRUE){CropImage(&imgModel, &imgModelCropped, iR0, iC0, iR1, iC1);}
+	
+		
 
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModelCropped, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
 		if(iWaitOn==1)
-		{
-			if(bRet == TRUE) {return RETURN_NORMAL;}
-		}
-		else
 		{
 			if(bRet == FALSE) {return RETURN_NORMAL;}
 		}
+		else
+		{
+			if(bRet == TRUE) {return RETURN_NORMAL;}
+		}
 
-
-		int iRet=K_Sleep(Halt, Suspend, 1);
+		CropImage(&imgTarget, &imgModelCropped, iR0, iC0, iR1, iC1);
+		iRet=K_Sleep(Halt, Suspend, iTickMillisec);
 		if(iRet<0){return iRet;}
 		if(iTimeOutMillisec>=0)
 		{
@@ -527,6 +535,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 
 	case COMMAND_WAIT:{return WaitForKey(Halt, Suspend, &saData);}
 	case COMMAND_WAIT_IMG:{return WaitForImage(Halt, Suspend, &saData);}
+	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
 	case COMMAND_WINDOW_FORWARD:{return SetWindowForward(saData.GetAt(0));}

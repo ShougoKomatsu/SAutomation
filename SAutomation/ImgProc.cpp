@@ -108,17 +108,39 @@ BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, i
 	}
 	else
 	{
-	imgRGBout->Init();
-	imgRGBout->Set(iC1-iC0+1, iR1-iC0+1, imgRGBin->iChannel);
-	for(int r=iR0; r<=iR1; r++)
-	{
-		for(int c=iC0; c<=iC1; c++)
+		imgRGBout->Init();
+		imgRGBout->Set(iC1-iC0+1, iR1-iC0+1, imgRGBin->iChannel);
+		if(imgRGBin->iChannel==CHANNEL_1_24)
 		{
-			imgRGBout->byImgB[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgB[r*imgRGBin->iWidth+c];
-			imgRGBout->byImgG[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgG[r*imgRGBin->iWidth+c];
-			imgRGBout->byImgR[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+
+			for(int r=iR0; r<=iR1; r++)
+			{for(int c=iC0; c<=iC1; c++)
+			{
+				imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+0]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+0];
+				imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+1]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+1];
+				imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+2]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+2];
+			}}
 		}
-	}
+		if(imgRGBin->iChannel==CHANNEL_3_8)
+		{
+			for(int r=iR0; r<=iR1; r++)
+			{for(int c=iC0; c<=iC1; c++)
+			{
+				imgRGBout->byImgB[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgB[r*imgRGBin->iWidth+c];
+				imgRGBout->byImgG[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgG[r*imgRGBin->iWidth+c];
+				imgRGBout->byImgR[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+			}}
+		}
+		if(imgRGBin->iChannel==CHANNEL_1_8)
+		{
+			for(int r=iR0; r<=iR1; r++)
+			{for(int c=iC0; c<=iC1; c++)
+			{
+				imgRGBout->byImgR[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+			}}
+		}
+
+
 	}
 	return TRUE;
 }
