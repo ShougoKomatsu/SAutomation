@@ -333,6 +333,135 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	return FALSE;
 }
 
+inline BYTE bySubAbs(BYTE by1, BYTE by2)
+{
+	if(by1>=by2){return by1-by2;}
+	return by2-by1;
+}
+
+BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
+{
+	int iModelHeight;
+	int iModelWidth;
+
+	if(imgTarget == NULL){return FALSE;}
+	if(imgModel == NULL){return FALSE;}
+	if(imgMask == NULL){return FALSE;}
+
+	if(imgModel->iHeight != imgMask->iHeight){return FALSE;}
+	if(imgModel->iWidth != imgMask->iWidth){return FALSE;}
+
+	
+	iModelHeight = imgModel->iHeight;
+	iModelWidth = imgModel->iWidth;
+
+
+	int iR1Local;
+	int iC1Local;
+
+	iR1Local = iR1;
+	iC1Local = iC1;
+
+	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
+	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
+
+	int iScanHeight;
+	int iScanWidth;
+	iScanHeight = iR1Local-iR0-iModelHeight + 2;
+	iScanWidth = iC1Local-iC0-iModelWidth + 2;
+
+	if(iScanHeight<=0){return FALSE;}
+	if(iScanWidth<=0){return FALSE;}
+	
+	BOOL bFound;
+	int iREnd, iCEnd;
+
+	iREnd = iR0+iScanHeight;
+	iCEnd = iC0+iScanWidth;
+
+	int iPtrTarget;
+	int iPtrModel;
+	
+	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	{
+		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
+		{
+			for(int iTargetC = iC0; iTargetC<iCEnd; iTargetC++)
+			{
+				bFound = TRUE;
+				for(int r=0; r<iModelHeight; r++)
+				{
+					for(int c=0; c<iModelWidth; c++)
+					{
+						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+						iPtrModel = (r)*imgModel->iWidth+(c);
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bFound = FALSE; break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bFound = FALSE; break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bFound = FALSE; break;}
+					}
+					if(bFound == FALSE){break;}
+				}
+				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; 
+				
+				return TRUE;}
+			}
+		}
+	}
+
+	if((imgTarget->iChannel==CHANNEL_3_8) && (imgModel->iChannel == CHANNEL_3_8))
+	{
+		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
+		{
+			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
+			{
+				bFound = TRUE;
+				for(int r=0; r<iModelHeight; r++)
+				{
+					for(int c=0; c<iModelWidth; c++)
+					{
+						iPtrTarget = (iTargetR + r)*imgTarget->iWidth+(iTargetC+c);
+						iPtrModel = (r)*imgModel->iWidth+(c);
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bFound = FALSE; break;}
+						if(bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bFound = FALSE; break;}
+						if(bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bFound = FALSE; break;}
+					}
+					if(bFound == FALSE){break;}
+				}
+				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+				break;
+			}
+		}
+	}
+	
+	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_1_24))
+	{
+		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
+		{
+			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
+			{
+				bFound = TRUE;
+				for(int r=0; r<iModelHeight; r++)
+				{
+					for(int c=0; c<iModelWidth; c++)
+					{
+						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+						iPtrModel = 3*((r)*imgModel->iWidth+(c));
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) > imgMask->byImgR[iPtrModel + 0]){bFound = FALSE; break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) > imgMask->byImgR[iPtrModel + 1]){bFound = FALSE; break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) > imgMask->byImgR[iPtrModel + 2]){bFound = FALSE; break;}
+					}
+					if(bFound == FALSE){break;}
+				}
+				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+				break;
+			}
+		}
+	}
+	
+
+	return FALSE;
+}
+
 BOOL ImgRGB::Assign(CString sFilePath)
 {
 
