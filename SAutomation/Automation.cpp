@@ -307,8 +307,6 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		Screenshot(&imgTarget);
 		if(bFirstTime==TRUE){CropImage(&imgModel, &imgModelCropped, iR0, iC0, iR1, iC1);}
 	
-		
-
 		bRet = IsInRegion(&imgTarget, &imgModelCropped, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
 		if(iWaitOn==1)
 		{
@@ -365,8 +363,16 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
+	ImgRGB imgMask;
+
 	BOOL bRet;
 	imgModel.Assign(sModelFilePath);
+	CString sMaskFilePath;
+	sMaskFilePath.Format(_T("%s"), sModelFilePath);
+	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
+	BOOL bUseMask;
+	bRet = imgMask.Assign(sMaskFilePath);
+	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
@@ -376,7 +382,15 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	{
 		Screenshot(&imgTarget);
 
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		if(bUseMask==TRUE)
+		{
+			bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		}
+		else
+		{
+			bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		}
+
 		if(iWaitOn==1)
 		{
 			if(bRet == TRUE) {return RETURN_NORMAL;}

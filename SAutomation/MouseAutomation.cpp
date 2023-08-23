@@ -132,7 +132,8 @@ int MoveMouseToImage(CStringArray* saData)
 {
 
 	if(saData->GetCount()<5){return RETURN_FAILED;}
-
+	
+	BOOL bRet;
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
 
@@ -146,17 +147,32 @@ int MoveMouseToImage(CStringArray* saData)
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
+	ImgRGB imgMask;
 	imgModel.Assign(sModelFilePath);
+	
+	CString sMaskFilePath;
+	sMaskFilePath.Format(_T("%s"), sModelFilePath);
+	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
+	BOOL bUseMask;
+
+	bRet = imgMask.Assign(sMaskFilePath);
+	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
 
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 
-	BOOL bRet;
 	int iFoundR, iFoundC;
 
 	Screenshot(&imgTarget);
-	bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+	if(bUseMask==TRUE)
+	{
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+	}
+	else
+	{
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+	}
 
 	if(bRet != TRUE){return RETURN_FAILED;}
 
