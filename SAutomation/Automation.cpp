@@ -268,7 +268,7 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	int iTimeOutMillisec;
 	int iTickMillisec;
-	if(saData->GetCount()<=6){return RETURN_FAILED;}
+	if(saData->GetCount()<=5){return RETURN_FAILED;}
 
 	int iR0, iC0, iR1, iC1;
 

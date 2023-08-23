@@ -109,7 +109,7 @@ BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, i
 	else
 	{
 		imgRGBout->Init();
-		imgRGBout->Set(iC1-iC0+1, iR1-iC0+1, imgRGBin->iChannel);
+		imgRGBout->Set(iC1-iC0+1, iR1-iR0+1, imgRGBin->iChannel);
 		if(imgRGBin->iChannel==CHANNEL_1_24)
 		{
 
@@ -249,6 +249,9 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 
 	iREnd = iR0+iScanHeight;
 	iCEnd = iC0+iScanWidth;
+
+	int iPtrTarget;
+	int iPtrModel;
 	
 	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
 	{
@@ -261,9 +264,11 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 				{
 					for(int c=0; c<iModelWidth; c++)
 					{
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+0] != (imgModel->byImgB[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+1] != (imgModel->byImgG[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+2] != (imgModel->byImgR[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
+						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+						iPtrModel = (r)*imgModel->iWidth+(c);
+						if(imgTarget->byImgR[iPtrTarget + 0] != (imgModel->byImgB[iPtrModel])){bFound = FALSE; break;}
+						if(imgTarget->byImgR[iPtrTarget + 1] != (imgModel->byImgG[iPtrModel])){bFound = FALSE; break;}
+						if(imgTarget->byImgR[iPtrTarget + 2] != (imgModel->byImgR[iPtrModel])){bFound = FALSE; break;}
 					}
 					if(bFound == FALSE){break;}
 				}
@@ -285,9 +290,11 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 				{
 					for(int c=0; c<iModelWidth; c++)
 					{
-						if(imgTarget->byImgR[(iTargetR + r)*imgTarget->iWidth+(iTargetC+c)] != (imgModel->byImgR[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
-						if(imgTarget->byImgG[(iTargetR + r)*imgTarget->iWidth+(iTargetC+c)] != (imgModel->byImgG[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
-						if(imgTarget->byImgB[(iTargetR + r)*imgTarget->iWidth+(iTargetC+c)] != (imgModel->byImgB[(r)*imgModel->iWidth+(c)])){bFound = FALSE; break;}
+						iPtrTarget = (iTargetR + r)*imgTarget->iWidth+(iTargetC+c);
+						iPtrModel = (r)*imgModel->iWidth+(c);
+						if(imgTarget->byImgR[iPtrTarget] != (imgModel->byImgR[iPtrModel])){bFound = FALSE; break;}
+						if(imgTarget->byImgG[iPtrTarget] != (imgModel->byImgG[iPtrModel])){bFound = FALSE; break;}
+						if(imgTarget->byImgB[iPtrTarget] != (imgModel->byImgB[iPtrModel])){bFound = FALSE; break;}
 					}
 					if(bFound == FALSE){break;}
 				}
@@ -308,9 +315,11 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 				{
 					for(int c=0; c<iModelWidth; c++)
 					{
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+0] != (imgModel->byImgR[3*((r)*imgModel->iWidth+(c))+0])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+1] != (imgModel->byImgR[3*((r)*imgModel->iWidth+(c))+1])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c))+2] != (imgModel->byImgR[3*((r)*imgModel->iWidth+(c))+2])){bFound = FALSE; break;}
+						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+						iPtrModel = 3*((r)*imgModel->iWidth+(c));
+						if(imgTarget->byImgR[iPtrTarget+0] != (imgModel->byImgR[iPtrModel + 0])){bFound = FALSE; break;}
+						if(imgTarget->byImgR[iPtrTarget+1] != (imgModel->byImgR[iPtrModel + 1])){bFound = FALSE; break;}
+						if(imgTarget->byImgR[iPtrTarget+2] != (imgModel->byImgR[iPtrModel + 2])){bFound = FALSE; break;}
 					}
 					if(bFound == FALSE){break;}
 				}
