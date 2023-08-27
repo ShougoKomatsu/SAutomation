@@ -1280,7 +1280,7 @@ void CSAutomationDlg::OnKillfocusEditSpeed()
 	g_dSpeedMult=_ttof(m_sEditSpeed);
 	if(g_dSpeedMult==0){g_dSpeedMult=1;m_sEditSpeed.Format(_T("1.00"));}
 
-	if(g_dSpeedMult<1){m_sliderSpeed.SetPos(int(( g_dSpeedMult-0.2)/0.016));}
+	if(g_dSpeedMult<1){m_sliderSpeed.SetPos(int(( g_dSpeedMult-0.1)/0.016));}
 	else{m_sliderSpeed.SetPos(int(sqrt(g_dSpeedMult)*50));}
 
 	UpdateData(FALSE);
@@ -1293,7 +1293,7 @@ void CSAutomationDlg::OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult)
 	UpdateData(TRUE);
 	int iPos;
 	iPos = m_sliderSpeed.GetPos();
-	if(iPos<50){g_dSpeedMult = iPos*0.016+0.2;}
+	if(iPos<50){g_dSpeedMult = iPos*0.016+0.1;}
 	else{g_dSpeedMult = iPos*iPos/2500.0;}
 	m_sEditSpeed.Format(_T("%.02f"), g_dSpeedMult);
 	UpdateData(FALSE);
