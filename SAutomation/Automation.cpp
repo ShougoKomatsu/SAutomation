@@ -529,12 +529,15 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 
 	case COMMAND_MOUSE_L_DOWN:{MoveMouse(&saData);return MouseLDown(&saData);}
 	case COMMAND_MOUSE_R_DOWN:{MoveMouse(&saData);return MouseRDown(&saData);}
+	case COMMAND_MOUSE_M_DOWN:{MoveMouse(&saData);return MouseMDown(&saData);}
 
 	case COMMAND_MOUSE_L_UP:{MoveMouse(&saData);return MouseLUp(&saData);}
 	case COMMAND_MOUSE_R_UP:{MoveMouse(&saData);return MouseRUp(&saData);}
+	case COMMAND_MOUSE_M_UP:{MoveMouse(&saData);return MouseMUp(&saData);}
 
 	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(&saData);}
 	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(&saData);}
+	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(&saData);}
 
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(&saData);}
 	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(&saData);}

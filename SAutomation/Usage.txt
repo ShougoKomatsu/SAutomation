@@ -38,6 +38,10 @@ LMouse Up(整数, 整数)
 RMouse Click(整数, 整数)
 RMouse Down(整数, 整数)
 RMouse Up(整数, 整数)
+MMouse Click(整数, 整数)
+MMouse Down(整数, 整数)
+MMouse Up(整数, 整数)
+
 MousePos(整数, 整数)
 MousePosIncl(整数, 整数)
 Wheel 整数
@@ -49,6 +53,9 @@ LMouse Up
 RMouse Click
 RMouse Down
 RMouse Up
+MMouse Click
+MMouse Down
+MMouse Up
 
 
 ●ウィンドウ操作
