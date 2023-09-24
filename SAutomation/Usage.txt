@@ -32,6 +32,17 @@ Wait キー Off
 
 
 ●マウス操作
+MouseLClick(整数, 整数)
+MouseLDown(整数, 整数)
+MouseLUp(整数, 整数)
+MouseRClick(整数, 整数)
+MouseRDown(整数, 整数)
+MouseRUp(整数, 整数)
+MouseMClick(整数, 整数)
+MouseMDown(整数, 整数)
+MouseMUp(整数, 整数)
+
+旧コマンド使用可能
 LMouse Click(整数, 整数)
 LMouse Down(整数, 整数)
 LMouse Up(整数, 整数)
@@ -41,12 +52,24 @@ RMouse Up(整数, 整数)
 MMouse Click(整数, 整数)
 MMouse Down(整数, 整数)
 MMouse Up(整数, 整数)
+旧コマンド使用可能
 
 MousePos(整数, 整数)
 MousePosIncl(整数, 整数)
 Wheel 整数
 
 現在の位置で動作
+MouseLClick
+MouseLDown
+MouseLUp
+MouseRClick
+MouseRDown
+MouseRUp
+MouseMClick
+MouseMDown
+MouseMUp
+
+旧コマンド使用可能
 LMouse Click
 LMouse Down
 LMouse Up
@@ -56,7 +79,7 @@ RMouse Up
 MMouse Click
 MMouse Down
 MMouse Up
-
+旧コマンド使用可能
 
 ●ウィンドウ操作
 Maximize
