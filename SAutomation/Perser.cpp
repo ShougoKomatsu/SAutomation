@@ -331,6 +331,29 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
+	case COMMAND_MOUSE_M_DOWN:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
+			*iCommandType = iType;
+			break;
+		}
+
+	case COMMAND_MOUSE_M_UP:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
+			*iCommandType = iType;
+			break;
+		}
 	case COMMAND_MOUSE_MOVE:
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
@@ -382,7 +405,18 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
-
+		
+	case COMMAND_MOUSE_M_CLICK:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
+			*iCommandType = iType;
+			break;
+		}
 	case COMMAND_DELAY:
 		{
 			saData->Add(sDataLocal);
