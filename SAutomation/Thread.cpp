@@ -80,8 +80,17 @@ DWORD WINAPI CommandThread(LPVOID arg)
 
 	int iScene;
 	iScene = (iData&0x0F);
+	BOOL bRet;
 
-	ReadTextFile(g_sFilePath[iScene],&saCommands);
+	bRet = ReadTextFile(g_sFilePath[iScene],&saCommands);
+	if(bRet != TRUE)
+	{
+		PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+		TerminateThread(hGetKey, 0);
+		TerminateThread(hGetStepKey, 0);
+		return 0;
+	}
+
 	g_iSceneData[iScene]=iScene;
 	iSceneData=&g_iSceneData[iScene];
 

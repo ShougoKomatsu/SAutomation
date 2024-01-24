@@ -40,9 +40,14 @@ BOOL ReadUTFFile(CString sFilePath, CString* sData)
 
 BOOL ReadTextFile(CString sFilePath, CStringArray* saCommands)
 {
+	CFileFind cfind;
+	BOOL bRet;
+	bRet = cfind.FindFile(sFilePath);
+	cfind.Close();
+	if(bRet != TRUE){return FALSE;}
+	
 
 	saCommands->RemoveAll();
-	BOOL bRet;
 	CString sFileDataRaw;
 	bRet = ReadUTFFile(sFilePath, &sFileDataRaw);
 	if(bRet != TRUE){return FALSE;}
