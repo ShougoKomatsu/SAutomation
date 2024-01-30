@@ -691,7 +691,9 @@ BOOL CSAutomationDlg::OnInitDialog()
 	GetCursorPos(&p);
 	g_iR=p.y;
 	g_iC=p.x;
+	g_hhook = NULL;
 	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
+	if(g_hhook = NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); OnOK();}
 
 
 	SetTimer(TIMER_DISP_MOUSPOS,200, NULL);
