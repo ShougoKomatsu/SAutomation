@@ -372,7 +372,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 
 	if(iScanHeight<=0){return FALSE;}
 	if(iScanWidth<=0){return FALSE;}
-	
+
 	BOOL bFound;
 	int iREnd, iCEnd;
 
@@ -381,29 +381,27 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 
 	int iPtrTarget;
 	int iPtrModel;
-	
+
 	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
 		{
 			for(int iTargetC = iC0; iTargetC<iCEnd; iTargetC++)
 			{
-				bFound = TRUE;
 				for(int r=0; r<iModelHeight; r++)
 				{
 					for(int c=0; c<iModelWidth; c++)
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
-						iPtrModel = (r)*imgModel->iWidth+(c);
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bFound = FALSE; break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bFound = FALSE; break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bFound = FALSE; break;}
+						iPtrModel = ((r)*imgModel->iWidth)+(c);
+						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) <= imgMask->byImgB[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) <= imgMask->byImgG[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) <= imgMask->byImgR[iPtrModel])){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
 					}
-					if(bFound == FALSE){break;}
+					if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+
 				}
-				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; 
-				
-				return TRUE;}
+
 			}
 		}
 	}
@@ -414,50 +412,42 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 		{
 			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
 			{
-				bFound = TRUE;
 				for(int r=0; r<iModelHeight; r++)
 				{
 					for(int c=0; c<iModelWidth; c++)
 					{
 						iPtrTarget = (iTargetR + r)*imgTarget->iWidth+(iTargetC+c);
 						iPtrModel = (r)*imgModel->iWidth+(c);
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bFound = FALSE; break;}
-						if(bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bFound = FALSE; break;}
-						if(bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bFound = FALSE; break;}
+						if((bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgR[iPtrModel])) <= imgMask->byImgR[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel])) <= imgMask->byImgG[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgB[iPtrModel])) <= imgMask->byImgB[iPtrModel])){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
 					}
-					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
-				break;
 			}
 		}
 	}
-	
+
 	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_1_24))
 	{
 		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
 			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
 			{
-				bFound = TRUE;
 				for(int r=0; r<iModelHeight; r++)
 				{
 					for(int c=0; c<iModelWidth; c++)
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = 3*((r)*imgModel->iWidth+(c));
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) > imgMask->byImgR[iPtrModel + 0]){bFound = FALSE; break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) > imgMask->byImgR[iPtrModel + 1]){bFound = FALSE; break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) > imgMask->byImgR[iPtrModel + 2]){bFound = FALSE; break;}
+						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) <= imgMask->byImgR[iPtrModel + 0])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) <= imgMask->byImgR[iPtrModel + 1])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) <= imgMask->byImgR[iPtrModel + 2])){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
 					}
-					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
-				break;
 			}
 		}
 	}
-	
+
 
 	return FALSE;
 }
