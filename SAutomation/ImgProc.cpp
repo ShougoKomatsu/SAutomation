@@ -399,18 +399,17 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 				{
 					for(int c=0; c<iModelWidth; c++)
 					{
+						if(iTargetR + r>=imgTarget->iHeight){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
+						if(iTargetC + c>=imgTarget->iWidth){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = (r)*imgModel->iWidth+(c);
 
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgG[iPtrModel]));
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 3] , (imgModel->byImgR[iPtrModel]));
 
-						uiMap[iMapR*iMapH+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
-						uiMap[iMapR*iMapH+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgG[iPtrModel]));
-						uiMap[iMapR*iMapH+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 3] , (imgModel->byImgR[iPtrModel]));
-
-
-					}}
-
-
+					}
+				}
 			}
 		}
 		int iScoreMax;
@@ -425,7 +424,7 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 		{
 			for(int iMapC=0; iMapC<iMapW; iMapC++)
 			{
-				if(uiMap[iMapR*iMapH+iMapC]>iScoreMax){iScoreMax=uiMap[iMapR*iMapH+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
+				if(uiMap[iMapR*iMapW+iMapC]>iScoreMax){iScoreMax=uiMap[iMapR*iMapW+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
 
 			}
 		}

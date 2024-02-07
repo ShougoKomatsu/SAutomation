@@ -1,2 +1,1 @@
-1 WaitUpdate(1, 100, 100, 200,200, on, 1000000) 0
-2 MousePos(545, 323) 0
+1 MousePosToImage(Win.bmp, 	0	,	800	,	200	,	1300) 0
