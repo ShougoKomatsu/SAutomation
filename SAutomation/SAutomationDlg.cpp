@@ -385,6 +385,18 @@ void SetComboItem(CComboBox* combo, CString m_sHotkey)
 	combo->AddString(_T("x"));
 	combo->AddString(_T("y"));
 	combo->AddString(_T("z"));
+	combo->AddString(_T("F1"));
+	combo->AddString(_T("F2"));
+	combo->AddString(_T("F3"));
+	combo->AddString(_T("F4"));
+	combo->AddString(_T("F5"));
+	combo->AddString(_T("F6"));
+	combo->AddString(_T("F7"));
+	combo->AddString(_T("F8"));
+	combo->AddString(_T("F9"));
+	combo->AddString(_T("F10"));
+	combo->AddString(_T("F11"));
+	combo->AddString(_T("F12"));
 
 
 	BOOL bFound;
@@ -724,8 +736,27 @@ BOOL CSAutomationDlg::OnInitDialog()
 	for(int iID= 0 ; iID<MAX_THREAD; iID++)
 	{
 		g_hThread[iID] = NULL;
-		if((char(m_OpeInfo[iID].sHotkey.GetAt(0))>='a') && (char(m_OpeInfo[iID].sHotkey.GetAt(0))<='z')){m_OpeInfo[iID].dwHotKey = char(m_OpeInfo[iID].sHotkey.GetAt(0))-'a'+0x41;}
-		if((char(m_OpeInfo[iID].sHotkey.GetAt(0))>='0') && (char(m_OpeInfo[iID].sHotkey.GetAt(0))<='9')){m_OpeInfo[iID].dwHotKey = char(m_OpeInfo[iID].sHotkey.GetAt(0))-'0'+0x30;}
+		if(m_OpeInfo[iID].sHotkey.GetLength()>=2)
+		{
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F1"))==0){m_OpeInfo[iID].dwHotKey = VK_F1;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F2"))==0){m_OpeInfo[iID].dwHotKey = VK_F2;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F3"))==0){m_OpeInfo[iID].dwHotKey = VK_F3;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F4"))==0){m_OpeInfo[iID].dwHotKey = VK_F4;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F5"))==0){m_OpeInfo[iID].dwHotKey = VK_F5;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F6"))==0){m_OpeInfo[iID].dwHotKey = VK_F6;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F7"))==0){m_OpeInfo[iID].dwHotKey = VK_F7;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F8"))==0){m_OpeInfo[iID].dwHotKey = VK_F8;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F9"))==0){m_OpeInfo[iID].dwHotKey = VK_F9;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F10"))==0){m_OpeInfo[iID].dwHotKey = VK_F10;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F11"))==0){m_OpeInfo[iID].dwHotKey = VK_F11;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F12"))==0){m_OpeInfo[iID].dwHotKey = VK_F12;}
+
+		}
+		else
+		{
+			if((char(m_OpeInfo[iID].sHotkey.GetAt(0))>='a') && (char(m_OpeInfo[iID].sHotkey.GetAt(0))<='z')){m_OpeInfo[iID].dwHotKey = char(m_OpeInfo[iID].sHotkey.GetAt(0))-'a'+0x41;}
+			if((char(m_OpeInfo[iID].sHotkey.GetAt(0))>='0') && (char(m_OpeInfo[iID].sHotkey.GetAt(0))<='9')){m_OpeInfo[iID].dwHotKey = char(m_OpeInfo[iID].sHotkey.GetAt(0))-'0'+0x30;}
+		}
 		m_sEditStatus[iID].Format(_T("Stand by"));
 		((CButton*)GetDlgItem(IDC_CHECK_REPEAT_0 + iID))->SetCheck(m_OpeInfo[iID].bLoop);
 		m_sEditFileName[iID].Format(_T("%s"),m_OpeInfo[iID].sFileName);
@@ -1179,9 +1210,27 @@ void CSAutomationDlg::ResetHotkey(int iID)
 	if(m_combo[iID].GetCurSel()<0){return;}
 	m_combo[iID].GetLBText(m_combo[iID].GetCurSel(),tch);
 	if(wcscmp(tch,_T(" "))==0){return;}
-	if((tch[0]>='a') && (tch[0]<='z')){m_OpeInfo[iID].dwHotKey = char(tch[0])-'a'+0x41;}
-	if((tch[0]>='0') && (tch[0]<='9')){m_OpeInfo[iID].dwHotKey = char(tch[0])-'0'+0x30;}
+	if(_tcslen(tch)>=2)
+	{
+		if(_tcsicmp(tch,_T("F1"))==0){m_OpeInfo[iID].dwHotKey = VK_F1;}
+		if(_tcsicmp(tch,_T("F2"))==0){m_OpeInfo[iID].dwHotKey = VK_F2;}
+		if(_tcsicmp(tch,_T("F3"))==0){m_OpeInfo[iID].dwHotKey = VK_F3;}
+		if(_tcsicmp(tch,_T("F4"))==0){m_OpeInfo[iID].dwHotKey = VK_F4;}
+		if(_tcsicmp(tch,_T("F5"))==0){m_OpeInfo[iID].dwHotKey = VK_F5;}
+		if(_tcsicmp(tch,_T("F6"))==0){m_OpeInfo[iID].dwHotKey = VK_F6;}
+		if(_tcsicmp(tch,_T("F7"))==0){m_OpeInfo[iID].dwHotKey = VK_F7;}
+		if(_tcsicmp(tch,_T("F8"))==0){m_OpeInfo[iID].dwHotKey = VK_F8;}
+		if(_tcsicmp(tch,_T("F9"))==0){m_OpeInfo[iID].dwHotKey = VK_F9;}
+		if(_tcsicmp(tch,_T("F10"))==0){m_OpeInfo[iID].dwHotKey = VK_F10;}
+		if(_tcsicmp(tch,_T("F11"))==0){m_OpeInfo[iID].dwHotKey = VK_F11;}
+		if(_tcsicmp(tch,_T("F12"))==0){m_OpeInfo[iID].dwHotKey = VK_F12;}
 
+	}
+	else
+	{
+		if((tch[0]>='a') && (tch[0]<='z')){m_OpeInfo[iID].dwHotKey = char(tch[0])-'a'+0x41;}
+		if((tch[0]>='0') && (tch[0]<='9')){m_OpeInfo[iID].dwHotKey = char(tch[0])-'0'+0x30;}
+	}
 
 	m_OpeInfo[iID].bUseShift=FALSE;
 	m_OpeInfo[iID].bUseCtrl=FALSE;
