@@ -397,6 +397,7 @@ void SetComboItem(CComboBox* combo, CString m_sHotkey)
 	combo->AddString(_T("F10"));
 	combo->AddString(_T("F11"));
 	combo->AddString(_T("F12"));
+	combo->AddString(_T("Insert"));
 
 
 	BOOL bFound;
@@ -750,6 +751,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F10"))==0){m_OpeInfo[iID].dwHotKey = VK_F10;}
 			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F11"))==0){m_OpeInfo[iID].dwHotKey = VK_F11;}
 			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("F12"))==0){m_OpeInfo[iID].dwHotKey = VK_F12;}
+			if(m_OpeInfo[iID].sHotkey.CompareNoCase(_T("Insert"))==0){m_OpeInfo[iID].dwHotKey = VK_INSERT;}
 
 		}
 		else
@@ -1224,6 +1226,7 @@ void CSAutomationDlg::ResetHotkey(int iID)
 		if(_tcsicmp(tch,_T("F10"))==0){m_OpeInfo[iID].dwHotKey = VK_F10;}
 		if(_tcsicmp(tch,_T("F11"))==0){m_OpeInfo[iID].dwHotKey = VK_F11;}
 		if(_tcsicmp(tch,_T("F12"))==0){m_OpeInfo[iID].dwHotKey = VK_F12;}
+		if(_tcsicmp(tch,_T("Insert"))==0){m_OpeInfo[iID].dwHotKey = VK_INSERT;}
 
 	}
 	else
