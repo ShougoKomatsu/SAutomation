@@ -734,9 +734,8 @@ BOOL FindModelPylamid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int
 		}
 
 		iFoundC1Temp=iMapW-1;
-		for(int iMapC=0; iMapC<iMapW; iMapC++)
-		{
-			for(int iMapR=0; iMapR<iMapH; iMapR++)
+		for(int iMapC=iMapW-1; iMapC>=0; iMapC--)
+		{			for(int iMapR=0; iMapR<iMapH; iMapR++)
 			{
 				if(uiMap[iMapR*iMapW+iMapC]>uiThresh){iFoundC1Temp=iMapC; break;}
 			}
