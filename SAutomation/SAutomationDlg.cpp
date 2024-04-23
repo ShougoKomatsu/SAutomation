@@ -130,6 +130,8 @@ void CSAutomationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_8, (m_comboUseShift[8]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_9, (m_comboUseShift[9]));
 	
+	DDX_Control(pDX, IDC_COMBO_WINDOW_NAME, m_comboWindowName);
+
 	DDX_Control(pDX, IDC_COMBO_LOG_LEVEL, m_comboLogLevel);
 	DDX_Text(pDX, IDC_EDIT_SPEED, m_sEditSpeed);
 	DDX_Control(pDX, IDC_SLIDER_SPEED, m_sliderSpeed);
@@ -207,6 +209,7 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER_SPEED, &CSAutomationDlg::OnCustomdrawSliderSpeed)
 	ON_BN_CLICKED(IDC_BUTTON_CONFING, &CSAutomationDlg::OnBnClickedButtonConfing)
 	ON_BN_CLICKED(IDC_CHECK_TASKTRAY, &CSAutomationDlg::OnBnClickedCheckTasktray)
+	ON_BN_CLICKED(IDC_BUTTON_WINDOW_NAME_REFRESH, &CSAutomationDlg::OnBnClickedButtonWindowNameRefresh)
 END_MESSAGE_MAP()
 
 
@@ -830,7 +833,12 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_sliderSpeed.SetRangeMin(0);	
 	m_sliderSpeed.SetRangeMax(100);
 	m_sliderSpeed.SetPos(50);
+
+	m_comboWindowName.ResetContent();
+	m_comboWindowName.AddString(_T("Desktop"));
+	m_comboWindowName.SetCurSel(0);
 	UpdateData(FALSE);
+
 
 
 	TrayNotifyIconMessage(NIM_ADD);
@@ -1373,4 +1381,20 @@ void CSAutomationDlg::OnBnClickedCheckTasktray()
 		m_bMinimizeToTaskTray=FALSE;
 	}
 
+}
+#include "Window.h"
+
+void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
+{
+	CStringArray csNames;
+	m_comboWindowName.ResetContent();
+	AfxMessageBox(_T(""));
+	m_comboWindowName.AddString(_T("Desktop"));
+//	GetWindowNameList(&csNames);
+//	for(int i=0; i<csNames.GetCount(); i++)
+//	{
+//		m_comboWindowName.AddString(csNames.GetAt(i));
+//	}
+	m_comboWindowName.SetCurSel(0);
+	UpdateData(FALSE);
 }

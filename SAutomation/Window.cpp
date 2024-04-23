@@ -112,6 +112,28 @@ int SetWindowForward(CString sTargetName)
 }
 
 
+BOOL GetWindowNameList(CStringArray* csNames)
+{
+	csNames->RemoveAll();
+	
+	WCHAR wszWindowName[MAX_PATH];
+	CString sWindowName;
+
+	g_iWnd=0;
+	EnumWindows(EnumWindowsFunc, 0) ;
+
+	int iTargetHandle;
+	BOOL bFound;
+	bFound = FALSE;
+	iTargetHandle=0;
+	for(int i=0; i<g_iWnd; i++)
+	{
+		GetWindowText(g_hWnds[i],wszWindowName,MAX_PATH);
+		sWindowName.Format(_T("%s"), wszWindowName);
+		csNames->Add(wszWindowName);
+	}
+	return TRUE;
+}
 
 int WindowSize(CStringArray* saData)
 {

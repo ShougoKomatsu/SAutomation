@@ -615,6 +615,51 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 	}
 	return FALSE;
 }
+
+BOOL FindModel2(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
+{
+	int iModelHeight;
+	int iModelWidth;
+
+	if(imgTarget == NULL){return FALSE;}
+	if(imgModel == NULL){return FALSE;}
+
+	
+	iModelHeight = imgModel->iHeight;
+	iModelWidth = imgModel->iWidth;
+
+
+
+	if(
+		((imgTarget->iHeight>128) || (imgTarget->iWidth>128))
+		&&(imgTarget->iHeight>64)
+		&&(imgTarget->iWidth>64)
+		&&(imgModel->iHeight>16)
+		&&(imgModel->iWidth>16)
+		)
+
+	{
+		ImgRGB imgTargetCropped;
+		ImgRGB imgTargetPylam;
+		ImgRGB imgModelPylam;
+		CropImage(imgTarget, &imgTargetCropped,iR0, iC0, iR1, iC1);
+		CreatePyramid(&imgTargetCropped, &imgTargetPylam);
+		CreatePyramid(imgModel, &imgModelPylam);
+		BOOL bRet;
+		int iFoundR0, iFoundC0, iFoundR1, iFoundC1;
+//		bRet = FindModel2(&imgTargetPylam, &imgModelPylam, 0, 0, imgTargetPylam.iHeight-1, imgTargetPylam.iWidth-1, &iFoundR0, &iFoundC0, &iFoundR1, &iFoundC1);
+		if(bRet != TRUE){return FALSE;}
+	}
+	else
+	{
+		int iFoundR, iFoundC;
+		BOOL bRet;
+//		bRet = FindModel(&imgTarget, imgModel, iR0, iC0, iR1, iC1,&iFoundR, &iFoundC);
+		if(bRet != TRUE){return FALSE;}
+	}
+	return TRUE;
+}
+
 BOOL FindModelPylamid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR0, int* iFoundC0, int* iFoundR1, int* iFoundC1)
 {
 
@@ -751,6 +796,38 @@ BOOL FindModelPylamid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int
 	return FALSE;
 }
 
+BOOL FindModelPylamidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR0, int* iFoundC0, int* iFoundR1, int* iFoundC1)
+{
+
+	if(imgTarget == NULL){return FALSE;}
+	if(imgModel == NULL){return FALSE;}
+	if(dThreshPercent<0){return FALSE;}
+	if(dThreshPercent>1){dThreshPercent=1;}
+	ImgRGB imgTargetCropped;
+	ImgRGB imgModelCropped;
+	ImgRGB imgTargetPylam;
+	ImgRGB imgModelPylam;
+	
+	if(
+		(imgTarget->iHeight<=64)
+		||(imgTarget->iWidth<=64)
+		||(imgModel->iHeight<=16)
+		||(imgModel->iWidth<=16)
+		)
+
+	{
+		return FindModelPylamid(imgTarget, imgModel, iR0, iC0, iR1, iC1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
+	}
+
+	CropImage2(imgTarget, &imgTargetCropped, iR0, iC0, iR1, iC1);
+	CropImage2(imgModel, &imgModelCropped, 0, 0, imgModel->iHeight-1, imgModel->iWidth-1);
+
+	CreatePyramid(&imgTargetCropped, &imgTargetPylam);
+	CreatePyramid(&imgModelCropped, &imgModelPylam);
+
+	
+	return FindModelPylamidRecursion(&imgTargetPylam, &imgModelPylam, 0, 0, imgTargetPylam.iHeight-1, imgTargetPylam.iWidth-1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
+}
 BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {
 	int iModelHeight;

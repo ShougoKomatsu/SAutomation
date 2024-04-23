@@ -13,3 +13,5 @@ BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam);
 int SetWindowForward(CString sTargetName);
 int WindowSize(CStringArray* saData);
 int WindowPos(CStringArray* saData);
+
+BOOL GetWindowNameList(CStringArray* csNames);

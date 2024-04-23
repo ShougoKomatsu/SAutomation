@@ -116,7 +116,7 @@ public:
 	CComboBox m_comboEnable;
 	CComboBox m_comboLogLevel;
 
-
+	CComboBox m_comboWindowName;
 	
 	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
 
@@ -177,4 +177,5 @@ public:
 	afx_msg void OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonConfing();
 	afx_msg void OnBnClickedCheckTasktray();
+	afx_msg void OnBnClickedButtonWindowNameRefresh();
 };
