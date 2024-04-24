@@ -210,6 +210,7 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_CONFING, &CSAutomationDlg::OnBnClickedButtonConfing)
 	ON_BN_CLICKED(IDC_CHECK_TASKTRAY, &CSAutomationDlg::OnBnClickedCheckTasktray)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOW_NAME_REFRESH, &CSAutomationDlg::OnBnClickedButtonWindowNameRefresh)
+	ON_CBN_SELCHANGE(IDC_COMBO_WINDOW_NAME, &CSAutomationDlg::OnSelchangeWindowName)
 END_MESSAGE_MAP()
 
 
@@ -1398,4 +1399,8 @@ void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
 	UpdateData(FALSE);
 
 
+}
+void CSAutomationDlg::OnSelchangeWindowName()
+{
+	AfxMessageBox(_T(""));
 }

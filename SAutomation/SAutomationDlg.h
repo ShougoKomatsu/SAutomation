@@ -117,6 +117,7 @@ public:
 	CComboBox m_comboLogLevel;
 
 	CComboBox m_comboWindowName;
+	afx_msg void OnSelchangeWindowName();
 	
 	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
 
