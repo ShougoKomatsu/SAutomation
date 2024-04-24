@@ -15,6 +15,7 @@
 
 
 #include "Automation.h"
+#include "Window.h"
 #define TIMER_DISP_MOUSPOS (100)
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
@@ -843,6 +844,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_comboWindowName.SetCurSel(0);
 	g_iR_Origin=0;
 	g_iC_Origin=0;
+	m_sTargetWindowName.Format(_T(""));
 	UpdateData(FALSE);
 
 
@@ -1019,14 +1021,37 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 }
 
 int g_iWatching=0;
+void CSAutomationDlg::RefleshTargetWindowPos()
+{
+	if(m_sTargetWindowName.Compare(_T("Desktop"))==0)
+	{
+		g_iR_Origin=0; 
+		g_iC_Origin=0;
+		return;
+	}
+
+	RECT rect;
+	BOOL bRet;
+	bRet = GetWindowRectByName(m_sTargetWindowName,&rect);
+	if(bRet!=TRUE)
+	{
+		g_iR_Origin = 0; 
+		g_iC_Origin = 0;
+	}
+
+	g_iC_Origin = rect.left;		
+	g_iR_Origin = rect.top;
+}
+
 void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 {
 
 	if(nIDEvent == TIMER_DISP_MOUSPOS)
 	{
 		UpdateData(TRUE);
-		m_sEditMousePosR.Format(_T("%d"),g_iR-g_iR_Origin);
-		m_sEditMousePosC.Format(_T("%d"),g_iC-g_iC_Origin);
+
+		m_sEditMousePosR.Format(_T("%d"),g_iR - g_iR_Origin);
+		m_sEditMousePosC.Format(_T("%d"),g_iC - g_iC_Origin);
 		UpdateData(FALSE);
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)
@@ -1388,7 +1413,6 @@ void CSAutomationDlg::OnBnClickedCheckTasktray()
 	}
 
 }
-#include "Window.h"
 
 void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
 {
@@ -1407,17 +1431,9 @@ void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
 }
 void CSAutomationDlg::OnSelchangeWindowName()
 {
-
-
 	TCHAR tch[256];
 	m_comboWindowName.GetLBText(m_comboWindowName.GetCurSel(),tch); 
 	CString sWindowName;
-	sWindowName.Format(_T("%s"), tch);
-	if(sWindowName.Compare(_T("Desktop"))==0){g_iR_Origin=0; g_iC_Origin=0; return;}
-
-	RECT rect;
-	GetWindowRectByName(sWindowName,&rect);
-	g_iC_Origin= rect.left;
-	g_iR_Origin= rect.top;
+	m_sTargetWindowName.Format(_T("%s"), tch);
 	return;
 }
