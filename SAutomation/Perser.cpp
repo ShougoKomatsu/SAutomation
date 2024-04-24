@@ -487,8 +487,9 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	case COMMAND_WINDOW_FORWARD:
 		{
 			*iCommandType=iType;
-			ExtractData(sDataLine, _T(" "), &sArg, &sDataLocal);
-			saData->Add(sDataLocal);
+			ExtractData(sDataLine, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			saData->Add(sArg);
 			break;
 		}
 	case COMMAND_WINDOW_SIZE:
