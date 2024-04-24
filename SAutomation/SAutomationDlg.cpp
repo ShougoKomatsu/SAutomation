@@ -838,13 +838,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_sliderSpeed.SetRangeMin(0);	
 	m_sliderSpeed.SetRangeMax(100);
 	m_sliderSpeed.SetPos(50);
-
-	m_comboWindowName.ResetContent();
-	m_comboWindowName.AddString(_T("Desktop"));
-	m_comboWindowName.SetCurSel(0);
+	
+	WindowNameRefresh();
 	g_iR_Origin=0;
 	g_iC_Origin=0;
-	m_sTargetWindowName.Format(_T(""));
 	UpdateData(FALSE);
 
 
@@ -1021,7 +1018,7 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 }
 
 int g_iWatching=0;
-void CSAutomationDlg::RefleshTargetWindowPos()
+void CSAutomationDlg::RefreshTargetWindowPos()
 {
 	if(m_sTargetWindowName.Compare(_T("Desktop"))==0)
 	{
@@ -1049,7 +1046,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_DISP_MOUSPOS)
 	{
 		UpdateData(TRUE);
-		RefleshTargetWindowPos();
+		RefreshTargetWindowPos();
 		m_sEditMousePosR.Format(_T("%d"),g_iR - g_iR_Origin);
 		m_sEditMousePosC.Format(_T("%d"),g_iC - g_iC_Origin);
 		UpdateData(FALSE);
@@ -1414,7 +1411,8 @@ void CSAutomationDlg::OnBnClickedCheckTasktray()
 
 }
 
-void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
+
+void CSAutomationDlg::WindowNameRefresh()
 {
 	CStringArray caNames;
 	GetWindowNameList(&caNames);
@@ -1425,10 +1423,17 @@ void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
 		m_comboWindowName.AddString(caNames.GetAt(i));
 	}
 	m_comboWindowName.SetCurSel(0);
+	m_sTargetWindowName.Format(_T("Desktop"));
 	UpdateData(FALSE);
-
-
 }
+
+void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
+{
+	WindowNameRefresh();
+	UpdateData(FALSE);
+}
+
+
 void CSAutomationDlg::OnSelchangeWindowName()
 {
 	TCHAR tch[256];

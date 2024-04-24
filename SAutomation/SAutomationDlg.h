@@ -68,12 +68,13 @@ protected:
 	int m_iLogLevel;
 	BOOL m_bLog;
 
-	void RefleshTargetWindowPos();
+	void RefreshTargetWindowPos();
 	DWORD m_dwHotKeyEnable;
 
 	CString m_sDir;
 	void FileSelect(CString *sFileName);
 	void SaveSettings();
+	void WindowNameRefresh();
 	void ReadSettings();
 	BOOL m_bRunningAny;
 	BOOL MouseMoveAndDisp(DWORD dwMoveDirection, int iDistance);
