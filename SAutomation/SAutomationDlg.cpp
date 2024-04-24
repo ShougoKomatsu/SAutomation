@@ -218,6 +218,9 @@ END_MESSAGE_MAP()
 HHOOK g_hhook=NULL;
 int g_iR=0;
 int g_iC=0;
+int g_iR_Origin=0;
+int g_iC_Origin=0;
+
 
 HANDLE g_hHotkey[MAX_THREAD];
 BOOL g_iMninizedOnce=FALSE;
@@ -838,6 +841,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_comboWindowName.ResetContent();
 	m_comboWindowName.AddString(_T("Desktop"));
 	m_comboWindowName.SetCurSel(0);
+	g_iR_Origin=0;
+	g_iC_Origin=0;
 	UpdateData(FALSE);
 
 
@@ -1020,8 +1025,8 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_DISP_MOUSPOS)
 	{
 		UpdateData(TRUE);
-		m_sEditMousePosR.Format(_T("%d"),g_iR);
-		m_sEditMousePosC.Format(_T("%d"),g_iC);
+		m_sEditMousePosR.Format(_T("%d"),g_iR-g_iR_Origin);
+		m_sEditMousePosC.Format(_T("%d"),g_iC-g_iC_Origin);
 		UpdateData(FALSE);
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)
@@ -1402,5 +1407,17 @@ void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
 }
 void CSAutomationDlg::OnSelchangeWindowName()
 {
-	AfxMessageBox(_T(""));
+
+
+	TCHAR tch[256];
+	m_comboWindowName.GetLBText(m_comboWindowName.GetCurSel(),tch); 
+	CString sWindowName;
+	sWindowName.Format(_T("%s"), tch);
+	if(sWindowName.Compare(_T("Desktop"))==0){g_iR_Origin=0; g_iC_Origin=0; return;}
+
+	RECT rect;
+	GetWindowRectByName(sWindowName,&rect);
+	g_iC_Origin= rect.left;
+	g_iR_Origin= rect.top;
+	return;
 }

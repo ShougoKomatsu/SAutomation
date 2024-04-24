@@ -109,6 +109,20 @@ BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch)
 	return FALSE;
 }
 
+BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch)
+{
+	BOOL bRet;
+	HWND hwnd;
+	bRet = GetHandleByName(sTargetName, &hwnd, bPartialMatch);
+	if(bRet != TRUE){return FALSE;}
+
+	WINDOWINFO wi;
+	GetWindowInfo(hwnd,&wi);
+	*rect=wi.rcWindow;
+	return TRUE;
+}
+
+
 int SetWindowForward(CString sTargetName)
 {
 	BOOL bRet;
@@ -145,8 +159,6 @@ BOOL GetWindowNameList(CStringArray* csNames)
 		CRect	rect ;
 		GetWindowRect(g_hWnds[i],&rect) ;
 		if(rect.Width()<=1){continue;}
-		//	WINDOWINFO wi;
-		//	GetWindowInfo(g_hWnds[i],&wi);
 
 		sWindowName.Format(_T("%s"), wszWindowName);
 
