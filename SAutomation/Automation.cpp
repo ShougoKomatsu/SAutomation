@@ -21,15 +21,15 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 		ullSuspendedMilliSec=0;
 		while(GetTickCount64()<ullStartMilliSec+SleepMilliSec/g_dSpeedMult+ullSuspendedMilliSec)
 		{
-			if((*(int*)Suspend) == 1)
+			if((*(int*)Suspend) == 0){Sleep(1);	continue;}
+
+			ullSuspendStartMilliSec = GetTickCount64();
+			while((*(int*)Suspend) == 1)
 			{
-				ullSuspendStartMilliSec = GetTickCount64();
-				while((*(int*)Suspend) == 1)
-				{
-					Sleep(1);
-				}
-				ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
+				Sleep(1);
 			}
+			ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
+
 			Sleep(1);
 		}
 		return RETURN_NORMAL;
@@ -55,16 +55,16 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 	while(GetTickCount64()<ullStartMilliSec+SleepMilliSec/g_dSpeedMult+ullSuspendedMilliSec)
 	{
 		if((*(int*)Halt) == 1){return RETURN_HALT;}
-		if((*(int*)Suspend) == 1)
+		if((*(int*)Suspend) == 0){Sleep(1); continue;}
+
+		ullSuspendStartMilliSec = GetTickCount64();
+		while((*(int*)Suspend) == 1)
 		{
-			ullSuspendStartMilliSec = GetTickCount64();
-			while((*(int*)Suspend) == 1)
-			{
-				if((*(int*)Halt) == 1){return RETURN_HALT;}
-				Sleep(1);
-			}
-			ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
+			if((*(int*)Halt) == 1){return RETURN_HALT;}
+			Sleep(1);
 		}
+		ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
+
 		Sleep(1);
 	}
 
