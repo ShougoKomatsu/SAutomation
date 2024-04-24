@@ -15,3 +15,4 @@ int WindowSize(CStringArray* saData);
 int WindowPos(CStringArray* saData);
 
 BOOL GetWindowNameList(CStringArray* caNames);
+BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch=TRUE);

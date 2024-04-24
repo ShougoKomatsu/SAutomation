@@ -1,1 +1,0 @@
-1 MousePosToImage(Win.bmp, 	0	,	800	,	200	,	1300) 0

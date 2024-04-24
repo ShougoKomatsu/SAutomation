@@ -80,9 +80,9 @@ BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam)
 	return TRUE;
 }
 
-int SetWindowForward(CString sTargetName)
-{
 
+BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch)
+{
 	WCHAR wszWindowName[MAX_PATH];
 	CString sWindowName;
 
@@ -97,15 +97,28 @@ int SetWindowForward(CString sTargetName)
 	{
 		GetWindowText(g_hWnds[i],wszWindowName,MAX_PATH);
 		sWindowName.Format(_T("%s"), wszWindowName);
-		if(sWindowName.Find(sTargetName)>=0){bFound = TRUE;iTargetHandle = i;break;}
+		if(bPartialMatch==TRUE)
+		{
+			if(sWindowName.Find(sTargetName)>=0){*hwnd = (g_hWnds[i]); return TRUE;}
+		}
+		else
+		{
+			if(sWindowName.Compare(sTargetName)==0){*hwnd = (g_hWnds[i]); return TRUE;}
+		}
 	}
+	return FALSE;
+}
 
-	if(bFound != TRUE){return -1;}
-
+int SetWindowForward(CString sTargetName)
+{
 	BOOL bRet;
+	HWND hwnd;
+	bRet = GetHandleByName(sTargetName, &hwnd);
+	if(bRet != TRUE){return -1;}
+
 //	bRet = ShowWindow(g_hWnds[iTargetHandle], SW_SHOW);
 //	if(bRet != TRUE){return -1;}
-	bRet = SetForegroundWindow(g_hWnds[iTargetHandle]);
+	bRet = SetForegroundWindow(hwnd);
 //	if(bRet != TRUE){return -1;}
 
 	return 0;
