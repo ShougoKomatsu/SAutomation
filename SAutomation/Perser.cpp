@@ -516,8 +516,9 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_RUN:
 		{
-			ExtractData(sDataLocal, _T(" "), &sArg, &sDataLocal);
-			saData->Add(sDataLocal);
+			ExtractData(sDataLine, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			saData->Add(sArg);
 			*iCommandType = iType;
 			break;
 		}

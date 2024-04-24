@@ -1,1 +1,2 @@
 1 Windowforward(GitHub Desktop) 0
+2 Run("D:\Program Files\mspaint.exe") 0

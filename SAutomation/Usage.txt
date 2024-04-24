@@ -87,7 +87,7 @@ Minimaize
 Windowforward(ウインドウ名(部分一致))
 WindowPos(整数, 整数)
 WindowSize(整数, 整数)
-Run 実行ファイルのパス
+Run(実行ファイルのパス)
 
 
 
