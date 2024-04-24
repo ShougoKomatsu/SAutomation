@@ -1035,11 +1035,11 @@ void CSAutomationDlg::RefleshTargetWindowPos()
 	bRet = GetWindowRectByName(m_sTargetWindowName,&rect);
 	if(bRet!=TRUE)
 	{
-		g_iR_Origin = 0; 
+		g_iR_Origin = 0;
 		g_iC_Origin = 0;
 	}
 
-	g_iC_Origin = rect.left;		
+	g_iC_Origin = rect.left;
 	g_iR_Origin = rect.top;
 }
 
@@ -1049,7 +1049,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_DISP_MOUSPOS)
 	{
 		UpdateData(TRUE);
-
+		RefleshTargetWindowPos();
 		m_sEditMousePosR.Format(_T("%d"),g_iR - g_iR_Origin);
 		m_sEditMousePosC.Format(_T("%d"),g_iC - g_iC_Origin);
 		UpdateData(FALSE);

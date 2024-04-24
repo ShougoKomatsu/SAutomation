@@ -68,7 +68,7 @@ protected:
 	int m_iLogLevel;
 	BOOL m_bLog;
 
-	
+	void RefleshTargetWindowPos();
 	DWORD m_dwHotKeyEnable;
 
 	CString m_sDir;
