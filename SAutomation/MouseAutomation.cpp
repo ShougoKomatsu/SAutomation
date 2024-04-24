@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MouseAutomation.h"
-
+#include "Window.h"
 int g_iClickDulation = 50;
 
 int MouseLDown(UINT nX, UINT nY)
@@ -13,8 +13,8 @@ int MouseLDown(UINT nX, UINT nY)
 }
 int MouseLDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLDown(g_iC, g_iR);}
-	else{return MouseLDown(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+	if(saData->GetCount()==0){return MouseLDown(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
+	else{return MouseLDown(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
 }
 
 int MouseRDown(UINT nX, UINT nY)
@@ -28,8 +28,8 @@ int MouseRDown(UINT nX, UINT nY)
 
 int MouseRDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRDown(g_iC, g_iR);}
-	else{return MouseRDown(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+	if(saData->GetCount()==0){return MouseRDown(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
+	else{return MouseRDown(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
 }
 
 int MouseMDown(UINT nX, UINT nY)
@@ -43,8 +43,8 @@ int MouseMDown(UINT nX, UINT nY)
 
 int MouseMDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMDown(g_iC, g_iR);}
-	else{return MouseMDown(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+	if(saData->GetCount()==0){return MouseMDown(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
+	else{return MouseMDown(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
 }
 
 
@@ -60,8 +60,8 @@ int MouseLUp(UINT nX, UINT nY)
 }
 int MouseLUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLUp(g_iC, g_iR);}
-	else{return MouseLUp(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+	if(saData->GetCount()==0){return MouseLUp(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
+	else{return MouseLUp(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
 }
 
 int MouseRUp(UINT nX, UINT nY)
@@ -74,8 +74,8 @@ int MouseRUp(UINT nX, UINT nY)
 }
 int MouseRUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRUp(g_iC, g_iR);}
-	else{return MouseRUp(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+	if(saData->GetCount()==0){return MouseRUp(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
+	else{return MouseRUp(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
 }
 
 int MouseMUp(UINT nX, UINT nY)
@@ -88,8 +88,8 @@ int MouseMUp(UINT nX, UINT nY)
 }
 int MouseMUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMUp(g_iC, g_iR);}
-	else{return MouseMUp(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+	if(saData->GetCount()==0){return MouseMUp(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
+	else{return MouseMUp(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
 }
 
 
@@ -148,6 +148,29 @@ int MouseMClick(CStringArray* saData)
 	else{return MouseMClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
 }
 
+int MouseSetOrigin(CStringArray* saData)
+{
+	if(saData->GetAt(0).Compare(_T("Desktop"))==0)
+	{
+		g_iR_Origin=0; 
+		g_iC_Origin=0;
+		return RETURN_NORMAL;
+	}
+
+	RECT rect;
+	BOOL bRet;
+	bRet = GetWindowRectByName(saData->GetAt(0),&rect);
+	if(bRet!=TRUE)
+	{
+		g_iR_Origin = 0;
+		g_iC_Origin = 0;
+		return RETURN_FAILED;
+	}
+
+	g_iC_Origin = rect.left;
+	g_iR_Origin = rect.top;
+	return RETURN_NORMAL;
+}
 
 
 int MoveMouse(UINT nX, UINT nY)
@@ -161,7 +184,7 @@ int MoveMouse(UINT nX, UINT nY)
 
 int MoveMouse(CStringArray* saData)
 {
-	return MoveMouse(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
+	return MoveMouse(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);
 }
 
 int MouseVWheel(int iWheel)
@@ -217,11 +240,11 @@ int MoveMouseToImage(CStringArray* saData)
 	Screenshot(&imgTarget);
 	if(bUseMask==TRUE)
 	{
-		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
 	}
 	else
 	{
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
 	}
 
 	if(bRet != TRUE){return RETURN_FAILED;}

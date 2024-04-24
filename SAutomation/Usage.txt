@@ -32,6 +32,9 @@ Wait キー Off
 
 
 ●マウス操作
+SetOrigin(ウインドウ名(部分一致))
+Desktopを指定するとリセットされる
+
 MouseLClick(整数, 整数)
 MouseLDown(整数, 整数)
 MouseLUp(整数, 整数)
@@ -99,6 +102,9 @@ Ctrl+Shift+Sでステップ送り
 
 ●画像処理
 読み込みできる画像は24bitビットマップフォーマットのみ。圧縮やカラーパレットには対応していません。
+
+SetOrigin(ウインドウ名(部分一致))
+Desktopを指定するとリセットされる
 
 WaitImage(文字列, 整数, 整数, 整数, 整数, on/off, 整数)
 文字列：ファイルパスもしくはMacro\Model内のファイル名

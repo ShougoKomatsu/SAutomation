@@ -305,9 +305,9 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	while(1)
 	{
 		Screenshot(&imgTarget);
-		if(bFirstTime==TRUE){CropImage(&imgModel, &imgModelCropped, iR0, iC0, iR1, iC1);}
+		if(bFirstTime==TRUE){CropImage(&imgModel, &imgModelCropped, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin);}
 	
-		bRet = IsInRegion(&imgTarget, &imgModelCropped, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModelCropped, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
 		if(iWaitOn==1)
 		{
 			if(bRet == FALSE) {return RETURN_NORMAL;}
@@ -317,7 +317,7 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 			if(bRet == TRUE) {return RETURN_NORMAL;}
 		}
 
-		CropImage(&imgTarget, &imgModelCropped, iR0, iC0, iR1, iC1);
+		CropImage(&imgTarget, &imgModelCropped, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin);
 		iRet=K_Sleep(Halt, Suspend, iTickMillisec);
 		if(iRet<0){return iRet;}
 		if(iTimeOutMillisec>=0)
@@ -384,11 +384,11 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 		if(bUseMask==TRUE)
 		{
-			bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+			bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
 		}
 		else
 		{
-			bRet = IsInRegion(&imgTarget, &imgModel, iR0, iC0, iR1, iC1, &iFoundR, &iFoundC);
+			bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
 		}
 
 		if(iWaitOn==1)
@@ -538,6 +538,9 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(&saData);}
 	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(&saData);}
 	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(&saData);}
+							   
+	case COMMAND_MOUSE_SET_ORIGIN:{return MouseSetOrigin(&saData);}
+
 
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(&saData);}
 	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(&saData);}
