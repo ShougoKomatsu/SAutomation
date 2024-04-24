@@ -840,6 +840,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_sliderSpeed.SetPos(50);
 	
 	WindowNameRefresh();
+	RefreshTargetWindowPos();
 	g_iR_Origin=0;
 	g_iC_Origin=0;
 	UpdateData(FALSE);
@@ -1046,7 +1047,6 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_DISP_MOUSPOS)
 	{
 		UpdateData(TRUE);
-		RefreshTargetWindowPos();
 		m_sEditMousePosR.Format(_T("%d"),g_iR - g_iR_Origin);
 		m_sEditMousePosC.Format(_T("%d"),g_iC - g_iC_Origin);
 		UpdateData(FALSE);
@@ -1430,6 +1430,7 @@ void CSAutomationDlg::WindowNameRefresh()
 void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
 {
 	WindowNameRefresh();
+	RefreshTargetWindowPos();
 	UpdateData(FALSE);
 }
 
@@ -1440,5 +1441,6 @@ void CSAutomationDlg::OnSelchangeWindowName()
 	m_comboWindowName.GetLBText(m_comboWindowName.GetCurSel(),tch); 
 	CString sWindowName;
 	m_sTargetWindowName.Format(_T("%s"), tch);
+	RefreshTargetWindowPos();
 	return;
 }
