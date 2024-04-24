@@ -1386,15 +1386,16 @@ void CSAutomationDlg::OnBnClickedCheckTasktray()
 
 void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
 {
-	CStringArray csNames;
+	CStringArray caNames;
+	GetWindowNameList(&caNames);
 	m_comboWindowName.ResetContent();
-	AfxMessageBox(_T(""));
 	m_comboWindowName.AddString(_T("Desktop"));
-//	GetWindowNameList(&csNames);
-//	for(int i=0; i<csNames.GetCount(); i++)
-//	{
-//		m_comboWindowName.AddString(csNames.GetAt(i));
-//	}
+	for(int i=0; i<caNames.GetCount(); i++)
+	{
+		m_comboWindowName.AddString(caNames.GetAt(i));
+	}
 	m_comboWindowName.SetCurSel(0);
 	UpdateData(FALSE);
+
+
 }

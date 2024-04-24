@@ -14,4 +14,4 @@ int SetWindowForward(CString sTargetName);
 int WindowSize(CStringArray* saData);
 int WindowPos(CStringArray* saData);
 
-BOOL GetWindowNameList(CStringArray* csNames);
+BOOL GetWindowNameList(CStringArray* caNames);

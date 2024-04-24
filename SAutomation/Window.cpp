@@ -129,8 +129,19 @@ BOOL GetWindowNameList(CStringArray* csNames)
 	for(int i=0; i<g_iWnd; i++)
 	{
 		GetWindowText(g_hWnds[i],wszWindowName,MAX_PATH);
-		sWindowName.Format(_T("%s"), wszWindowName);
-		csNames->Add(wszWindowName);
+	CRect	rect ;
+	GetWindowRect(g_hWnds[i],&rect) ;
+	if(rect.Width()<=1){continue;}
+//	WINDOWINFO wi;
+//	GetWindowInfo(g_hWnds[i],&wi);
+	
+	sWindowName.Format(_T("%s"), wszWindowName);
+	
+
+		if(wcslen(wszWindowName)>0)
+			{
+				csNames->Add(wszWindowName);
+		}
 	}
 	return TRUE;
 }
