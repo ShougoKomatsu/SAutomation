@@ -1091,6 +1091,11 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 void CSAutomationDlg::Operate(int iID)
 {
 	UpdateData(TRUE);
+	g_iC_Origin=0;
+	g_iR_Origin=0;
+	m_comboWindowName.SetCurSel(0);
+	UpdateData(FALSE);
+
 	DWORD dwThreadID;
 	if(g_hThread[iID] != NULL)
 	{
