@@ -69,6 +69,10 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	HANDLE hGetStepKey;
 	DWORD dwThreadID;
 	int* iSceneData;
+	
+	g_iC_Origin=0;
+	g_iR_Origin=0;
+
 	hGetKey = CreateThread(NULL, 0, GetKeyThread, NULL, 0, &dwThreadID);
 	hGetStepKey = CreateThread(NULL, 0, GetStepKeyThread, NULL, 0, &dwThreadID);
 	CStringArray saCommands;
