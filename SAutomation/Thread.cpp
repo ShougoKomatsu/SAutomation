@@ -214,6 +214,8 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		if(iLoop==0){break;}
 	}
 	if(iLogLevel==1){cf.Close();}
+	g_iC_Origin=0;
+	g_iR_Origin=0;
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 	TerminateThread(hGetKey, 0);
 	TerminateThread(hGetStepKey, 0);
