@@ -1,5 +1,5 @@
 #include "stdafx.h"
-
+#pragma once
 #define CHANNEL_UNDEFINED (0)
 #define CHANNEL_1_8 (1)
 #define CHANNEL_3_8 (3)

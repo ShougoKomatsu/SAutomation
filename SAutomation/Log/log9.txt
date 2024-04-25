@@ -1,4 +1,2 @@
-1 setorigin(GitHub Desktop) 0
+1 SetOriginToImage(test.bmp, 0, 0, 1000, 1000) 0
 2 MousePos(0,0) 0
-3 100 0
-4 MousePosIncl(100,100) 0

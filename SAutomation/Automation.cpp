@@ -540,6 +540,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(&saData);}
 							   
 	case COMMAND_MOUSE_SET_ORIGIN:{return MouseSetOrigin(&saData);}
+	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(&saData);}
 
 
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(&saData);}

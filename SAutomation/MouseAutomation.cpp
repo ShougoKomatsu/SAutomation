@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MouseAutomation.h"
 #include "Window.h"
+#include "ImgProc.h"
 int g_iClickDulation = 50;
 
 int MouseLDown(UINT nX, UINT nY)
@@ -172,6 +173,63 @@ int MouseSetOrigin(CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
+int MouseSetOriginToImage(CStringArray* saData)
+{
+	int iWaitOn;
+
+	int iTimeOut;
+
+	if(saData->GetCount()<=4){return RETURN_FAILED;}
+
+	CString sModelFilePath;
+	int iR0, iC0, iR1, iC1;
+
+	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
+
+	iC0=_ttoi(saData->GetAt(1));
+	iR0=_ttoi(saData->GetAt(2));
+	iC1=_ttoi(saData->GetAt(3));
+	iR1=_ttoi(saData->GetAt(4));
+
+
+
+	ImgRGB imgModel;
+	ImgRGB imgTarget;
+	ImgRGB imgMask;
+
+	BOOL bRet;
+	imgModel.Assign(sModelFilePath);
+	CString sMaskFilePath;
+	sMaskFilePath.Format(_T("%s"), sModelFilePath);
+	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
+	BOOL bUseMask;
+	bRet = imgMask.Assign(sMaskFilePath);
+	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
+
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
+	int iFoundR, iFoundC;
+
+	Screenshot(&imgTarget);
+
+	if(bUseMask==TRUE)
+	{
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+	}
+	else
+	{
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+	}
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+
+
+	g_iC_Origin = iFoundC;
+	g_iR_Origin = iFoundR;
+	return RETURN_NORMAL;
+}
+
 
 int MoveMouse(UINT nX, UINT nY)
 {
@@ -198,8 +256,6 @@ int MouseVWheel(CStringArray* saData)
 	return MouseVWheel(_ttoi(saData->GetAt(0)));
 }
 
-
-#include "ImgProc.h"
 
 int MoveMouseToImage(CStringArray* saData)
 {

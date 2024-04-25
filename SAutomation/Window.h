@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#include "ImgProc.h"
+
 
 #define MAX_WINDOW_HANDLE (4096)
 BOOL isProcessExist(CString sExePath);
