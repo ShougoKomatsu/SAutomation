@@ -702,10 +702,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 		AfxMessageBox(_T("‘½d‹N“®"));
 //		return CDialogEx::DestroyWindow();
 	}
-	ImgRGB imgRGB;
-	Screenshot(&imgRGB);
-	WriteImage(&imgRGB, _T("d:\\test.bmp"));
 
+	SetWindowText(_T("SAutomation"));
 	g_hWnd = this->m_hWnd;
 
 	POINT p;
