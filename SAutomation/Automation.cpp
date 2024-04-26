@@ -322,7 +322,7 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		if(iRet<0){return iRet;}
 		if(iTimeOutMillisec>=0)
 		{
-			if(GetTickCount64()>ullStartMilliSec+iTimeOutMillisec)
+			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMillisec/g_dSpeedMult))
 			{
 				return RETURN_FAILED;
 			}
@@ -337,7 +337,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
-	int iTimeOut;
+	int iTimeOutMilliSec;
 
 	if(saData->GetCount()<=6){return RETURN_FAILED;}
 
@@ -356,8 +356,8 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	else{return RETURN_FAILED;}
 
 
-	if(saData->GetCount()==6){iTimeOut=-1;}
-	else {iTimeOut = _ttoi(saData->GetAt(6));}
+	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
+	else {iTimeOutMilliSec = _ttoi(saData->GetAt(6));}
 
 
 
@@ -403,9 +403,9 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 		int iRet=K_Sleep(Halt, Suspend, 1);
 		if(iRet<0){return iRet;}
-		if(iTimeOut>=0)
+		if(iTimeOutMilliSec>=0)
 		{
-			if(GetTickCount64()>ullStartMilliSec+iTimeOut)
+			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMilliSec/g_dSpeedMult))
 			{
 				return RETURN_FAILED;
 			}
