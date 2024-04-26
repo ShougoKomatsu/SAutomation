@@ -42,8 +42,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(11).CompareNoCase(_T("mousemclick"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK; 		return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("mousemdown"))==0){*iCommandType=COMMAND_MOUSE_M_DOWN; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("mousemup"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
+	if(sDataTrim.Left(17).CompareNoCase(_T("setorigintowindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
 	if(sDataTrim.Left(16).CompareNoCase(_T("setorigintoimage"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE; return TRUE;}
-	if(sDataTrim.Left(9).CompareNoCase(_T("setorigin"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN; return TRUE;}
 
 
 
@@ -433,7 +433,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			break;
 		}
-	case COMMAND_MOUSE_SET_ORIGIN:
+	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:
 		{
 			ExtractData(sDataLine, _T("("), &sArg, &sDataLocal);
 			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
@@ -445,10 +445,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		{
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-
 			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }}
 			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }
-
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
 			if(sArg.GetLength()>0){saData->Add(sArg);}

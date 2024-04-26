@@ -24,7 +24,7 @@
 
 #define COMMAND_MOUSE_M_CLICK (COMMAND_MOUSE+100+5)
 
-#define COMMAND_MOUSE_SET_ORIGIN (COMMAND_MOUSE+100+6)
+#define COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW (COMMAND_MOUSE+100+6)
 #define COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE (COMMAND_MOUSE+100+7)
 
 int MouseLDown(UINT nX, UINT nY);
@@ -59,5 +59,5 @@ int MouseMClick(CStringArray* saData);
 
 extern int g_iClickDulation;
 int MoveMouseToImage(CStringArray* saData);
-int MouseSetOrigin(CStringArray* saData);
+int MouseSetOriginToWindow(CStringArray* saData);
 int MouseSetOriginToImage(CStringArray* saData);

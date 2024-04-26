@@ -98,10 +98,10 @@ int MouseMUp(CStringArray* saData)
 
 int MouseLClick(UINT nX, UINT nY)
 {
-	MoveMouse(nX, nY);
-	MouseLDown(nX, nY);
+	MoveMouse(nX+g_iC_Origin, nY+g_iR_Origin);
+	MouseLDown(nX+g_iC_Origin, nY+g_iR_Origin);
 	Sleep(g_iClickDulation);
-	return MouseLUp(nX, nY);
+	return MouseLUp(nX+g_iC_Origin, nY+g_iR_Origin);
 }
 
 int MouseLClick(CStringArray* saData)
@@ -123,10 +123,10 @@ int MoveMouseIncl(CStringArray* saData)
 
 int MouseRClick(UINT nX, UINT nY)
 {
-	MoveMouse(nX, nY);
-	MouseRDown(nX, nY);
+	MoveMouse(nX+g_iC_Origin, nY+g_iR_Origin);
+	MouseRDown(nX+g_iC_Origin, nY+g_iR_Origin);
 	Sleep(g_iClickDulation);
-	return MouseRUp(nX, nY);
+	return MouseRUp(nX+g_iC_Origin, nY+g_iR_Origin);
 }
 
 int MouseRClick(CStringArray* saData)
@@ -137,10 +137,10 @@ int MouseRClick(CStringArray* saData)
 
 int MouseMClick(UINT nX, UINT nY)
 {
-	MoveMouse(nX, nY);
-	MouseMDown(nX, nY);
+	MoveMouse(nX+g_iC_Origin, nY+g_iR_Origin);
+	MouseMDown(nX+g_iC_Origin, nY+g_iR_Origin);
 	Sleep(g_iClickDulation);
-	return MouseMUp(nX, nY);
+	return MouseMUp(nX+g_iC_Origin, nY+g_iR_Origin);
 }
 
 int MouseMClick(CStringArray* saData)
@@ -149,7 +149,7 @@ int MouseMClick(CStringArray* saData)
 	else{return MouseMClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
 }
 
-int MouseSetOrigin(CStringArray* saData)
+int MouseSetOriginToWindow(CStringArray* saData)
 {
 	if(saData->GetAt(0).Compare(_T("Desktop"))==0)
 	{
