@@ -877,22 +877,20 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 		{
 			for(int iTargetC = iC0; iTargetC<iCEnd; iTargetC++)
 			{
-				BOOL bOK_R=FALSE;
+				BOOL bOK_R=TRUE;
 				for(int r=0; r<iModelHeight; r++)
 				{
-					bOK_R=FALSE;
 					for(int c=0; c<iModelWidth; c++)
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = ((r)*imgModel->iWidth)+(c);
-						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) <= imgMask->byImgB[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) <= imgMask->byImgG[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) <= imgMask->byImgR[iPtrModel])){bOK_R=TRUE;break;}
+						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel])){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
-
 				}
-				if(bOK_R==TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+				if(bOK_R==TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC;return TRUE;}
 			}
 		}
 	}
@@ -903,17 +901,16 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 		{
 			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
 			{
-				BOOL bOK_R=FALSE;
+				BOOL bOK_R=TRUE;
 				for(int r=0; r<iModelHeight; r++)
 				{
-					bOK_R=FALSE;
 					for(int c=0; c<iModelWidth; c++)
 					{
 						iPtrTarget = (iTargetR + r)*imgTarget->iWidth+(iTargetC+c);
 						iPtrModel = (r)*imgModel->iWidth+(c);
-						if((bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgR[iPtrModel])) <= imgMask->byImgR[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel])) <= imgMask->byImgG[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgB[iPtrModel])) <= imgMask->byImgB[iPtrModel])){bOK_R=TRUE;break;}
+						if((bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel])
+							&&(bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel])){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
 				}
@@ -928,17 +925,16 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 		{
 			for(int iTargetC=iC0; iTargetC<iCEnd; iTargetC++)
 			{
-				BOOL bOK_R=FALSE;
+				BOOL bOK_R=TRUE;
 				for(int r=0; r<iModelHeight; r++)
 				{
-					bOK_R=FALSE;
 					for(int c=0; c<iModelWidth; c++)
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = 3*((r)*imgModel->iWidth+(c));
-						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) <= imgMask->byImgR[iPtrModel + 0])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) <= imgMask->byImgR[iPtrModel + 1])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) <= imgMask->byImgR[iPtrModel + 2])){bOK_R=TRUE;break;}
+						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) > imgMask->byImgR[iPtrModel + 0])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) > imgMask->byImgR[iPtrModel + 1])
+							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) > imgMask->byImgR[iPtrModel + 2])){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
 				}
