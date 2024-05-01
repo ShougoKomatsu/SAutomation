@@ -828,6 +828,7 @@ BOOL FindModelPylamidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int
 	
 	return FindModelPylamidRecursion(&imgTargetPylam, &imgModelPylam, 0, 0, imgTargetPylam.iHeight-1, imgTargetPylam.iWidth-1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
 }
+
 BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {
 	int iModelHeight;
@@ -884,9 +885,9 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = ((r)*imgModel->iWidth)+(c);
-						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel])){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
 				}
@@ -908,9 +909,9 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					{
 						iPtrTarget = (iTargetR + r)*imgTarget->iWidth+(iTargetC+c);
 						iPtrModel = (r)*imgModel->iWidth+(c);
-						if((bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel])
-							&&(bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel])){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
 				}
@@ -932,9 +933,9 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = 3*((r)*imgModel->iWidth+(c));
-						if((bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) > imgMask->byImgR[iPtrModel + 0])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) > imgMask->byImgR[iPtrModel + 1])
-							&&(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) > imgMask->byImgR[iPtrModel + 2])){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) > imgMask->byImgR[iPtrModel + 0]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) > imgMask->byImgR[iPtrModel + 1]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) > imgMask->byImgR[iPtrModel + 2]){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
 				}
