@@ -302,6 +302,7 @@ int MoveMouseToImage(CStringArray* saData)
 	{
 		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
 	}
+	FindModel(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
 
 	if(bRet != TRUE){return RETURN_FAILED;}
 

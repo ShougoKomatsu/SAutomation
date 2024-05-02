@@ -586,15 +586,15 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 						iPtrModel = (r)*imgModel->iWidth+(c);
 
 						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgG[iPtrModel]));
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 3] , (imgModel->byImgR[iPtrModel]));
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
 
 					}
 				}
 			}
 		}
-		int iScoreMax;
-		iScoreMax=0;
+		UINT iScoreMin;
+		iScoreMin=UINT_MAX;
 		int iMaxR;
 		int iMaxC;
 
@@ -605,7 +605,7 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 		{
 			for(int iMapC=0; iMapC<iMapW; iMapC++)
 			{
-				if(uiMap[iMapR*iMapW+iMapC]>iScoreMax){iScoreMax=uiMap[iMapR*iMapW+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
+				if(uiMap[iMapR*iMapW+iMapC]<iScoreMin){iScoreMin=uiMap[iMapR*iMapW+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
 
 			}
 		}

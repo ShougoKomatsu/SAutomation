@@ -1,3 +1,0 @@
-1 //SetOriginToWindow(Usage) 0
-2 MousePos(0,0) 0
-3 MousePosIncl(10,10) 0
