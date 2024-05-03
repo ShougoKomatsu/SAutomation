@@ -732,7 +732,7 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 			}
 		}
 		
-		for(int c=iC0; c<iC1Local; c++)
+		for(int c=iC0; c<=iC1Local; c++)
 		{
 			byMinOfEachCTargetR[c]=255;
 			byMaxOfEachCTargetR[c]=0;
@@ -758,6 +758,37 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 				uiSumOfEachCTargetB[c]+=imgTarget->byImgB[(r+iR0)*imgTarget->iWidth+c];
 			}
 		}
+
+		int iMapR=0;
+		for(int iMapC=0; iMapC<iMapW; iMapC++)
+		{
+			int iTargetR=iR0+iMapR;
+			int iTargetC=iC0+iMapC;
+
+			for(int c=0; c<=iModelWidth; c++)
+			{
+				if(byMaxOfEachCTargetR[iC0+c] < byMinOfEachCModelR[c])
+				{
+					uiMap[0*iMapW+iMapC]+=uiSumOfEachCModelR[c] - uiSumOfEachCTargetR[iC0+c];
+				}
+				else if(byMinOfEachCTargetR[iC0+c] > byMaxOfEachCModelR[c])
+				{
+					uiMap[0*iMapW+iMapC]+=uiSumOfEachCTargetR[iC0+c] - uiSumOfEachCModelR[c];
+				}
+				else
+				{
+					for(int r=0; r<=iModelHeight; r++)
+					{
+						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+						iPtrModel = (r)*imgModel->iWidth+(c);
+
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
+					}
+				}
+			}
+		}
+
+
 		for(int iMapR=0; iMapR<iMapH; iMapR++)
 		{
 			for(int iMapC=0; iMapC<iMapW; iMapC++)
