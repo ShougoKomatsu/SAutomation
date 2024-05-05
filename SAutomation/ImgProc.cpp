@@ -615,7 +615,27 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 	}
 	return FALSE;
 }
-
+inline BOOL SumRDirection()
+{
+	if(byMaxOfEachCTargetR[iC0+c] < byMinOfEachCModelR[c])
+	{
+		uiMap[0*iMapW+iMapC]+=uiSumOfEachCModelR[c] - uiSumOfEachCTargetR[iC0+c];
+	}
+	else if(byMinOfEachCTargetR[iC0+c] > byMaxOfEachCModelR[c])
+	{
+		uiMap[0*iMapW+iMapC]+=uiSumOfEachCTargetR[iC0+c] - uiSumOfEachCModelR[c];
+	}
+	else
+	{
+		for(int r=0; r<=iModelHeight; r++)
+		{
+			iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+			iPtrModel = (r)*imgModel->iWidth+(c);
+			uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
+		}
+	}
+	return TRUE;
+}
 BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {
 	int iModelHeight;
@@ -745,17 +765,17 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 			uiSumOfEachCTargetB[c]=0;
 			for(int r=0; r<iModelHeight; r++)
 			{
-				if(byMinOfEachCTargetR[c]<imgTarget->byImgR[(r+iR0)*imgTarget->iWidth+c]){byMinOfEachCTargetR[c]=imgTarget->byImgR[(r+iR0)*imgTarget->iWidth+c];}
-				if(byMinOfEachCTargetG[c]<imgTarget->byImgG[(r+iR0)*imgTarget->iWidth+c]){byMinOfEachCTargetG[c]=imgTarget->byImgG[(r+iR0)*imgTarget->iWidth+c];}
-				if(byMinOfEachCTargetB[c]<imgTarget->byImgB[(r+iR0)*imgTarget->iWidth+c]){byMinOfEachCTargetB[c]=imgTarget->byImgB[(r+iR0)*imgTarget->iWidth+c];}
+				if(byMinOfEachCTargetR[c]<imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2]){byMinOfEachCTargetR[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2];}
+				if(byMinOfEachCTargetG[c]<imgTarget->byImgG[3*((r+iR0)*imgTarget->iWidth+c)+1]){byMinOfEachCTargetG[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+1];}
+				if(byMinOfEachCTargetB[c]<imgTarget->byImgB[3*((r+iR0)*imgTarget->iWidth+c)+0]){byMinOfEachCTargetB[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+0];}
 				
-				if(byMaxOfEachCTargetR[c]>imgTarget->byImgR[(r+iR0)*imgTarget->iWidth+c]){byMaxOfEachCTargetR[c]=imgTarget->byImgR[(r+iR0)*imgTarget->iWidth+c];}
-				if(byMaxOfEachCTargetG[c]>imgTarget->byImgG[(r+iR0)*imgTarget->iWidth+c]){byMaxOfEachCTargetG[c]=imgTarget->byImgG[(r+iR0)*imgTarget->iWidth+c];}
-				if(byMaxOfEachCTargetB[c]>imgTarget->byImgB[(r+iR0)*imgTarget->iWidth+c]){byMaxOfEachCTargetB[c]=imgTarget->byImgB[(r+iR0)*imgTarget->iWidth+c];}
+				if(byMaxOfEachCTargetR[c]>imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2]){byMaxOfEachCTargetR[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2];}
+				if(byMaxOfEachCTargetG[c]>imgTarget->byImgG[3*((r+iR0)*imgTarget->iWidth+c)+1]){byMaxOfEachCTargetG[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+1];}
+				if(byMaxOfEachCTargetB[c]>imgTarget->byImgB[3*((r+iR0)*imgTarget->iWidth+c)+0]){byMaxOfEachCTargetB[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+0];}
 
-				uiSumOfEachCTargetR[c]+=imgTarget->byImgR[(r+iR0)*imgTarget->iWidth+c];
-				uiSumOfEachCTargetG[c]+=imgTarget->byImgG[(r+iR0)*imgTarget->iWidth+c];
-				uiSumOfEachCTargetB[c]+=imgTarget->byImgB[(r+iR0)*imgTarget->iWidth+c];
+				uiSumOfEachCTargetR[c]+=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2)+2];
+				uiSumOfEachCTargetG[c]+=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+1)+1];
+				uiSumOfEachCTargetB[c]+=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+0)+0];
 			}
 		}
 
@@ -781,8 +801,7 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = (r)*imgModel->iWidth+(c);
-
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
 					}
 				}
 			}
