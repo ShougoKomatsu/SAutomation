@@ -473,7 +473,7 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 	}
 	return TRUE;
 }
-
+/*
 BOOL CreatePyramid(ImgRGB* imgIn, ImgRGB* imgOut)
 {
 	if(imgIn == NULL){return FALSE;}
@@ -520,140 +520,60 @@ BOOL CreatePyramid(ImgRGB* imgIn, ImgRGB* imgOut)
 }
 
 
-BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
-{
-	int iModelHeight;
-	int iModelWidth;
-
-	if(imgTarget == NULL){return FALSE;}
-	if(imgModel == NULL){return FALSE;}
-
-	
-	iModelHeight = imgModel->iHeight;
-	iModelWidth = imgModel->iWidth;
-
-	UINT* uiMap;
-	int iMapW;
-	int iMapH;
-	iMapW=(iC1-iC0+1)-imgModel->iWidth+1;
-	iMapH=(iR1-iR0+1)-imgModel->iHeight+1;
-	if(iMapW<=0){return FALSE;}
-	if(iMapH<=0){return FALSE;}
-	uiMap = new UINT[iMapW*iMapH];
-	int iR1Local;
-	int iC1Local;
-
-	iR1Local = iR1;
-	iC1Local = iC1;
-
-	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
-	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
-
-	int iScanHeight;
-	int iScanWidth;
-	iScanHeight = iR1Local-iR0-iModelHeight + 2;
-	iScanWidth = iC1Local-iC0-iModelWidth + 2;
-
-	if(iScanHeight<=0){return FALSE;}
-	if(iScanWidth<=0){return FALSE;}
-	
-	BOOL bFound;
-	int iREnd, iCEnd;
-
-	iREnd = iR0+iScanHeight;
-	iCEnd = iC0+iScanWidth;
-
-	int iPtrTarget;
-	int iPtrModel;
-
-	memset(uiMap,0,iMapW*iMapH);
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
-	{
-		for(int iMapR=0; iMapR<iMapH; iMapR++)
-		{
-			for(int iMapC=0; iMapC<iMapW; iMapC++)
-			{
-
-				int iTargetR=iR0+iMapR;
-				int iTargetC=iC0+iMapC;
-				for(int r=0; r<iModelHeight; r++)
-				{
-					for(int c=0; c<iModelWidth; c++)
-					{
-						if(iTargetR + r>=imgTarget->iHeight){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
-						if(iTargetC + c>=imgTarget->iWidth){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
-						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
-						iPtrModel = (r)*imgModel->iWidth+(c);
-
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
-
-					}
-				}
-			}
-		}
-		UINT iScoreMin;
-		iScoreMin=UINT_MAX;
-		int iMaxR;
-		int iMaxC;
-
-
-		iMaxR=-1;
-		iMaxC=-1;
-		for(int iMapR=0; iMapR<iMapH; iMapR++)
-		{
-			for(int iMapC=0; iMapC<iMapW; iMapC++)
-			{
-				if(uiMap[iMapR*iMapW+iMapC]<iScoreMin){iScoreMin=uiMap[iMapR*iMapW+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
-
-			}
-		}
-		(*iFoundR)=iMaxR+iR0;
-		(*iFoundC)=iMaxC+iC0;
-		return TRUE;
-	}
-	return FALSE;
-}
 inline BOOL SumRDirection(
-	BYTE* byTarget, 
-	BYTE* byModel, 
+	BYTE* byTargetCropped, int iImgTargetCroppedW,
+	BYTE* byModel, int iModelW, int iModelH, 
+	UINT* uiMap, int iMapW, int iMapR, int iMapC, 
+	int c, 
 	BYTE* byMinOfEachCTarget, 
 	BYTE* byMaxOfEachCTarget, 
 	UINT* uiSumOfEachCTarget,
 	BYTE* byMinOfEachCModel, 
 	BYTE* byMaxOfEachCModel,
-	UINT* uiSumOfEachCModel, 
-	UINT* uiMap, int iMapW, 
-	int iR0, int iC0, 
-	int iMapR, int iMapC, 
-	int c, int iModelHeight, 
-	int iImgTargetWidth, int iImgModelWidth, 
-	int iPtrOffset)
+	UINT* uiSumOfEachCModel)
 {
-	if(byMaxOfEachCTarget[iC0+c] < byMinOfEachCModel[c])
+	if(byMaxOfEachCTarget[c] < byMinOfEachCModel[c])
 	{
-		uiMap[0*iMapW+iMapC]+=uiSumOfEachCModel[c] - uiSumOfEachCTarget[iC0+c];
+		uiMap[iMapR*iMapW+iMapC]+=uiSumOfEachCModel[c] - uiSumOfEachCTarget[c];
 		return TRUE;
 	}
-	if(byMinOfEachCTarget[iC0+c] > byMaxOfEachCModel[c])
+	if(byMinOfEachCTarget[c] > byMaxOfEachCModel[c])
 	{
-		uiMap[0*iMapW+iMapC]+=uiSumOfEachCTarget[iC0+c] - uiSumOfEachCModel[c];
+		uiMap[iMapR*iMapW+iMapC]+=uiSumOfEachCTarget[c] - uiSumOfEachCModel[c];
 		return TRUE;
 	}
 
-	int iTargetR=iR0+iMapR;
-	int iTargetC=iC0+iMapC;
-
-	for(int r=0; r<=iModelHeight; r++)
+	for(int r=0; r<iModelH; r++)
 	{
-		int iPtrTarget = 3*((iTargetR + r)*iImgTargetWidth+(iTargetC+c));
-		int iPtrModel = (r)*iImgModelWidth+(c);
-		uiMap[iMapR*iMapW+iMapC]+=bySubAbs(byTarget[iPtrTarget + iPtrOffset] , (byModel[iPtrModel]));
+		uiMap[iMapR*iMapW+iMapC]+=bySubAbs(byTargetCropped[r*iImgTargetCroppedW+c+iMapC] , (byModel[r*iModelW+c]));
 	}
 
 	return TRUE;
 }
+BOOL UpdateVerticalInformation(BYTE* byDataR, BYTE* byDataG, BYTE* byDataB, int R BYTE* byMinOfEachCTargetR, BYTE* byMaxOfEachCTargetR, UINT* uiSumOfEachCTargetR, BYTE* byMinOfEachCTargetG, BYTE* byMaxOfEachCTargetG, UINT* uiSumOfEachCTargetG,
+BYTE* byMinOfEachCTargetB, BYTE* byMaxOfEachCTargetB, UINT* uiSumOfEachCTargetB, int iCropW, int iModelHeight)
+{
+	for(int c=0; c<iCropW; c++)
+	{
+		uiSumOfEachCTargetR[c]+=byDataR[iModelHe*iCropW+c];
+		uiSumOfEachCTargetG[c]+=byDataG[r*iCropW+c];
+		uiSumOfEachCTargetB[c]+=byDataB[r*iCropW+c];
+	}
+			for(int r=0; r<iModelHeight; r++)
+			{
+				if(byMinOfEachCTargetR[c]<byDataR[r*iCropW+c]){byMinOfEachCTargetR[c]=byDataR[r*iCropW+c];}
+				if(byMinOfEachCTargetG[c]<byDataG[r*iCropW+c]){byMinOfEachCTargetG[c]=byDataG[r*iCropW+c];}
+				if(byMinOfEachCTargetB[c]<byDataB[r*iCropW+c]){byMinOfEachCTargetB[c]=byDataB[r*iCropW+c];}
+				
+				if(byMaxOfEachCTargetR[c]>byDataR[r*iCropW+c]){byMaxOfEachCTargetR[c]=byDataR[r*iCropW+c];}
+				if(byMaxOfEachCTargetG[c]>byDataG[r*iCropW+c]){byMaxOfEachCTargetG[c]=byDataG[r*iCropW+c];}
+				if(byMaxOfEachCTargetB[c]>byDataB[r*iCropW+c]){byMaxOfEachCTargetB[c]=byDataB[r*iCropW+c];}
+
+			}
+		}
+		return TRUE;
+}
+
 BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {
 	int iModelHeight;
@@ -682,7 +602,10 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 
 	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
 	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
-
+	int iCropH;
+	int iCropW;
+	iCropH=iR1Local-iR0+1;
+	iCropW=iC1Local-iC0+1;
 	int iScanHeight;
 	int iScanWidth;
 	iScanHeight = iR1Local-iR0-iModelHeight + 2;
@@ -701,6 +624,10 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 	int iPtrModel;
 
 	memset(uiMap,0,iMapW*iMapH);
+	BYTE* byDataR;
+	BYTE* byDataG;
+	BYTE* byDataB;
+
 	BYTE* byMaxOfEachCModelR;
 	BYTE* byMinOfEachCModelR;
 	UINT* uiSumOfEachCModelR;
@@ -720,6 +647,10 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 	BYTE* byMaxOfEachCTargetB;
 	BYTE* byMinOfEachCTargetB;
 	UINT* uiSumOfEachCTargetB;
+	
+	byDataR = new BYTE[iCropH*iCropW];
+	byDataG = new BYTE[iCropH*iCropW];
+	byDataB = new BYTE[iCropH*iCropW];
 
 	byMaxOfEachCModelR = new BYTE[iModelWidth];
 	byMinOfEachCModelR = new BYTE[iModelWidth];
@@ -731,15 +662,28 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 	byMinOfEachCModelB = new BYTE[iModelWidth];
 	uiSumOfEachCModelB = new UINT[iModelWidth];
 
-	byMaxOfEachCTargetR = new BYTE[imgTarget->iWidth];
-	byMinOfEachCTargetR = new BYTE[imgTarget->iWidth];
-	uiSumOfEachCTargetR = new UINT[imgTarget->iWidth];
-	byMaxOfEachCTargetG = new BYTE[imgTarget->iWidth];
-	byMinOfEachCTargetG = new BYTE[imgTarget->iWidth];
-	uiSumOfEachCTargetG = new UINT[imgTarget->iWidth];
-	byMaxOfEachCTargetB = new BYTE[imgTarget->iWidth];
-	byMinOfEachCTargetB = new BYTE[imgTarget->iWidth];
-	uiSumOfEachCTargetB = new UINT[imgTarget->iWidth];
+	byMaxOfEachCTargetR = new BYTE[iCropW];
+	byMinOfEachCTargetR = new BYTE[iCropW];
+	uiSumOfEachCTargetR = new UINT[iCropW];
+	byMaxOfEachCTargetG = new BYTE[iCropW];
+	byMinOfEachCTargetG = new BYTE[iCropW];
+	uiSumOfEachCTargetG = new UINT[iCropW];
+	byMaxOfEachCTargetB = new BYTE[iCropW];
+	byMinOfEachCTargetB = new BYTE[iCropW];
+	uiSumOfEachCTargetB = new UINT[iCropW];
+
+	for(int r=0;r<iCropH; r++)
+	{
+		int iTargetR=iR0+r;
+		for(int c=0; c<iCropW; c++)
+		{
+			int iTargetC=iC0+c;
+			byDataR[r*iCropW+c] = imgTarget->byImgR[3*(iTargetR*imgTarget->iWidth+(iTargetC))+2];
+			byDataG[r*iCropW+c] = imgTarget->byImgR[3*(iTargetR*imgTarget->iWidth+(iTargetC))+1];
+			byDataB[r*iCropW+c] = imgTarget->byImgR[3*(iTargetR*imgTarget->iWidth+(iTargetC))+0];
+
+		}
+	}
 
 	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
 	{
@@ -770,7 +714,7 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 			}
 		}
 		
-		for(int c=iC0; c<=iC1Local; c++)
+		for(int c=0; c<iCropW; c++)
 		{
 			byMinOfEachCTargetR[c]=255;
 			byMaxOfEachCTargetR[c]=0;
@@ -783,17 +727,17 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 			uiSumOfEachCTargetB[c]=0;
 			for(int r=0; r<iModelHeight; r++)
 			{
-				if(byMinOfEachCTargetR[c]<imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2]){byMinOfEachCTargetR[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2];}
-				if(byMinOfEachCTargetG[c]<imgTarget->byImgG[3*((r+iR0)*imgTarget->iWidth+c)+1]){byMinOfEachCTargetG[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+1];}
-				if(byMinOfEachCTargetB[c]<imgTarget->byImgB[3*((r+iR0)*imgTarget->iWidth+c)+0]){byMinOfEachCTargetB[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+0];}
+				if(byMinOfEachCTargetR[c]<byDataR[r*iCropW+c]){byMinOfEachCTargetR[c]=byDataR[r*iCropW+c];}
+				if(byMinOfEachCTargetG[c]<byDataG[r*iCropW+c]){byMinOfEachCTargetG[c]=byDataG[r*iCropW+c];}
+				if(byMinOfEachCTargetB[c]<byDataB[r*iCropW+c]){byMinOfEachCTargetB[c]=byDataB[r*iCropW+c];}
 				
-				if(byMaxOfEachCTargetR[c]>imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2]){byMaxOfEachCTargetR[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2];}
-				if(byMaxOfEachCTargetG[c]>imgTarget->byImgG[3*((r+iR0)*imgTarget->iWidth+c)+1]){byMaxOfEachCTargetG[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+1];}
-				if(byMaxOfEachCTargetB[c]>imgTarget->byImgB[3*((r+iR0)*imgTarget->iWidth+c)+0]){byMaxOfEachCTargetB[c]=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+0];}
+				if(byMaxOfEachCTargetR[c]>byDataR[r*iCropW+c]){byMaxOfEachCTargetR[c]=byDataR[r*iCropW+c];}
+				if(byMaxOfEachCTargetG[c]>byDataG[r*iCropW+c]){byMaxOfEachCTargetG[c]=byDataG[r*iCropW+c];}
+				if(byMaxOfEachCTargetB[c]>byDataB[r*iCropW+c]){byMaxOfEachCTargetB[c]=byDataB[r*iCropW+c];}
 
-				uiSumOfEachCTargetR[c]+=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+2];
-				uiSumOfEachCTargetG[c]+=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+1];
-				uiSumOfEachCTargetB[c]+=imgTarget->byImgR[3*((r+iR0)*imgTarget->iWidth+c)+0];
+				uiSumOfEachCTargetR[c]+=byDataR[r*iCropW+c];
+				uiSumOfEachCTargetG[c]+=byDataG[r*iCropW+c];
+				uiSumOfEachCTargetB[c]+=byDataB[r*iCropW+c];
 			}
 		}
 
@@ -803,21 +747,40 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 			for(int c=0; c<iModelWidth; c++)
 			{
 				SumRDirection(
-					imgTarget->byImgR, 
-					imgModel->byImgB, 
+					byDataR, iCropW,  
+					imgModel->byImgR, imgModel->iWidth, imgModel->iHeight,
+					uiMap, iMapW, iMapR, iMapC,
+					c,
 					byMinOfEachCTargetR, 
 					byMaxOfEachCTargetR, 
 					uiSumOfEachCTargetR,
 					byMinOfEachCModelR, 
 					byMaxOfEachCModelR,
-					uiSumOfEachCModelR, 
-					uiMap, iMapW, 
-					iR0, iC0, 
-					iMapR, iMapC, 
-					c, imgModel->iHeight, 
-					imgModel->iWidth, imgModel->iWidth, 
-					2);
-
+					uiSumOfEachCModelR);
+				
+				SumRDirection(
+					byDataG, iCropW,  
+					imgModel->byImgG, imgModel->iWidth, imgModel->iHeight,
+					uiMap, iMapW, iMapR, iMapC,
+					c,
+					byMinOfEachCTargetG, 
+					byMaxOfEachCTargetG, 
+					uiSumOfEachCTargetG,
+					byMinOfEachCModelG, 
+					byMaxOfEachCModelG,
+					uiSumOfEachCModelG);
+				
+				SumRDirection(
+					byDataB, iCropW,  
+					imgModel->byImgB, imgModel->iWidth, imgModel->iHeight,
+					uiMap, iMapW, iMapR, iMapC,
+					c,
+					byMinOfEachCTargetB, 
+					byMaxOfEachCTargetB, 
+					uiSumOfEachCTargetB,
+					byMinOfEachCModelB, 
+					byMaxOfEachCModelB,
+					uiSumOfEachCModelB);
 			}
 		}
 
@@ -1081,6 +1044,105 @@ BOOL FindModelPylamidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int
 	return FindModelPylamidRecursion(&imgTargetPylam, &imgModelPylam, 0, 0, imgTargetPylam.iHeight-1, imgTargetPylam.iWidth-1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
 }
 
+*/
+
+
+BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
+{
+	int iModelHeight;
+	int iModelWidth;
+
+	if(imgTarget == NULL){return FALSE;}
+	if(imgModel == NULL){return FALSE;}
+
+	
+	iModelHeight = imgModel->iHeight;
+	iModelWidth = imgModel->iWidth;
+
+	UINT* uiMap;
+	int iMapW;
+	int iMapH;
+	iMapW=(iC1-iC0+1)-imgModel->iWidth+1;
+	iMapH=(iR1-iR0+1)-imgModel->iHeight+1;
+	if(iMapW<=0){return FALSE;}
+	if(iMapH<=0){return FALSE;}
+	uiMap = new UINT[iMapW*iMapH];
+	int iR1Local;
+	int iC1Local;
+
+	iR1Local = iR1;
+	iC1Local = iC1;
+
+	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
+	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
+
+	int iScanHeight;
+	int iScanWidth;
+	iScanHeight = iR1Local-iR0-iModelHeight + 2;
+	iScanWidth = iC1Local-iC0-iModelWidth + 2;
+
+	if(iScanHeight<=0){return FALSE;}
+	if(iScanWidth<=0){return FALSE;}
+	
+	BOOL bFound;
+	int iREnd, iCEnd;
+
+	iREnd = iR0+iScanHeight;
+	iCEnd = iC0+iScanWidth;
+
+	int iPtrTarget;
+	int iPtrModel;
+
+	memset(uiMap,0,iMapW*iMapH);
+	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	{
+		for(int iMapR=0; iMapR<iMapH; iMapR++)
+		{
+			for(int iMapC=0; iMapC<iMapW; iMapC++)
+			{
+
+				int iTargetR=iR0+iMapR;
+				int iTargetC=iC0+iMapC;
+				for(int r=0; r<iModelHeight; r++)
+				{
+					for(int c=0; c<iModelWidth; c++)
+					{
+						if(iTargetR + r>=imgTarget->iHeight){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
+						if(iTargetC + c>=imgTarget->iWidth){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
+						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+						iPtrModel = (r)*imgModel->iWidth+(c);
+
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
+						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
+
+					}
+				}
+			}
+		}
+		UINT iScoreMin;
+		iScoreMin=UINT_MAX;
+		int iMaxR;
+		int iMaxC;
+
+
+		iMaxR=-1;
+		iMaxC=-1;
+		for(int iMapR=0; iMapR<iMapH; iMapR++)
+		{
+			for(int iMapC=0; iMapC<iMapW; iMapC++)
+			{
+				if(uiMap[iMapR*iMapW+iMapC]<iScoreMin){iScoreMin=uiMap[iMapR*iMapW+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
+
+			}
+		}
+		(*iFoundR)=iMaxR+iR0;
+		(*iFoundC)=iMaxC+iC0;
+		return TRUE;
+	}
+	return FALSE;
+}
+
 BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {
 	int iModelHeight;
@@ -1199,7 +1261,6 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 
 	return FALSE;
 }
-
 BOOL ImgRGB::Assign(CString sFilePath)
 {
 
