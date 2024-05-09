@@ -4,122 +4,126 @@
 #include "ImgProc.h"
 int g_iClickDulation = 50;
 
-int MouseLDownAbs(UINT nX, UINT nY)
+int MouseEvent(UINT uiEvent, UINT nX, UINT nY)
 {
 	DWORD dwX, dwY;
 	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
 	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTDOWN, dwX, dwY, NULL, NULL);
+	mouse_event(uiEvent, dwX, dwY, NULL, NULL);
 	return RETURN_NORMAL;
 }
+
+int MoveMouseAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, nX, nY);}
+int MouseLDownAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTDOWN, nX, nY);}
+int MouseRDownAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTDOWN, nX, nY);}
+int MouseMDownAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEDOWN, nX, nY);}
+int MouseLUpAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTUP, nX, nY);}
+int MouseRUpAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTUP, nX, nY);}
+int MouseMUpAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEUP, nX, nY);}
+
+
+int MoveMouse(UINT nX, UINT nY){return MoveMouseAbs(nX + g_iOriginC, nY + g_iOriginR);}
+int MouseLDown(UINT nX, UINT nY){return MouseLDownAbs(nX + g_iOriginC, nY + g_iOriginR);}
+int MouseRDown(UINT nX, UINT nY){return MouseRDownAbs(nX + g_iOriginC, nY + g_iOriginR);}
+int MouseMDown(UINT nX, UINT nY){return MouseMDownAbs(nX + g_iOriginC, nY + g_iOriginR);}
+int MouseLUp(UINT nX, UINT nY){return MouseLUpAbs(nX + g_iOriginC, nY + g_iOriginR);}
+int MouseRUp(UINT nX, UINT nY){return MouseRUpAbs(nX + g_iOriginC, nY + g_iOriginR);}
+int MouseMUp(UINT nX, UINT nY){return MouseMUpAbs(nX + g_iOriginC, nY + g_iOriginR);}
+
+
+int MoveMouse(CStringArray* saData)
+{
+	return MoveMouse(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
+}
+
+
 int MouseLDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLDownAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseLDownAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
+	if(saData->GetCount()==0){return MouseLDown(g_iC, g_iR);}
+	return MouseLDown(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
 }
-
-int MouseRDownAbs(UINT nX, UINT nY)
-{
-	DWORD dwX, dwY;
-	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTDOWN, dwX, dwY, NULL, NULL);
-	return RETURN_NORMAL;
-}
-
 int MouseRDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRDownAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseRDownAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
-}
-
-int MouseMDownAbs(UINT nX, UINT nY)
-{
-	DWORD dwX, dwY;
-	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEDOWN, dwX, dwY, NULL, NULL);
-	return RETURN_NORMAL;
+	if(saData->GetCount()==0){return MouseRDown(g_iC, g_iR);}
+	return MouseRDown(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
 }
 
 int MouseMDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMDownAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseMDownAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
+	if(saData->GetCount()==0){return MouseMDown(g_iC, g_iR);}
+	return MouseMDown(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
 }
 
 
 
 
-int MouseLUpAbs(UINT nX, UINT nY)
-{
-	DWORD dwX, dwY;
-	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTUP, dwX, dwY, NULL, NULL);
-	return RETURN_NORMAL;
-}
 int MouseLUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLUpAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseLUpAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
+	if(saData->GetCount()==0){return MouseLUp(g_iC, g_iR);}
+	return MouseLUp(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
 }
 
-int MouseRUpAbs(UINT nX, UINT nY)
-{
-	DWORD dwX, dwY;
-	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTUP, dwX, dwY, NULL, NULL);
-	return RETURN_NORMAL;
-}
 int MouseRUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRUpAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseRUpAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
+	if(saData->GetCount()==0){return MouseRUp(g_iC, g_iR);}
+	return MouseRUp(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
 }
 
-int MouseMUpAbs(UINT nX, UINT nY)
-{
-	DWORD dwX, dwY;
-	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEUP, dwX, dwY, NULL, NULL);
-	return RETURN_NORMAL;
-}
 int MouseMUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMUpAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseMUpAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
+	if(saData->GetCount()==0){return MouseMUp(g_iC, g_iR);}
+	return MouseMUp(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
 }
 
 
-
-
-int MouseLClickAbs(UINT nX, UINT nY)
-{
-	MoveMouseAbs(nX, nY);
-	MouseLDownAbs(nX, nY);
-	Sleep(g_iClickDulation);
-	return MouseLUpAbs(nX, nY);
-}
 
 int MouseLClick(UINT nX, UINT nY)
 {
-	return MouseLClickAbs(nX+g_iOriginC, nY+g_iOriginR);
+	MoveMouse(nX, nY);
+	MouseLDown(nX, nY);
+	Sleep(g_iClickDulation);
+	return MouseLUp(nX, nY);
 }
+int MouseRClick(UINT nX, UINT nY)
+{
+	MoveMouse(nX, nY);
+	MouseRDown(nX, nY);
+	Sleep(g_iClickDulation);
+	return MouseRUp(nX, nY);
+}
+int MouseMClick(UINT nX, UINT nY)
+{
+	MoveMouse(nX, nY);
+	MouseMDown(nX, nY);
+	Sleep(g_iClickDulation);
+	return MouseMUp(nX, nY);
+}
+
+
+
 
 
 int MouseLClick(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLClickAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseLClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+	if(saData->GetCount()==0){return MouseLClick(g_iC, g_iR);}
+	return MouseLClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
+}
+int MouseRClick(CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseRClick(g_iC, g_iR);}
+	return MouseRClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
+}
+
+int MouseMClick(CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseMClick(g_iC, g_iR);}
+	return MouseMClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));
 }
 
 
 int MoveMouseIncl(int iX, int iY)
 {
-	return MoveMouseAbs(g_iC+iX+g_iOriginC, g_iR +iY+ g_iOriginR);
+	return MoveMouse(g_iC+iX, g_iR+iY);
 }
 
 int MoveMouseIncl(CStringArray* saData)
@@ -127,42 +131,8 @@ int MoveMouseIncl(CStringArray* saData)
 	return MoveMouseIncl(_ttoi(saData->GetAt(0)), _ttoi(saData->GetAt(1)));
 }
 
-int MouseRClickAbs(UINT nX, UINT nY)
-{
-	MoveMouseAbs(nX, nY);
-	MouseRDownAbs(nX, nY);
-	Sleep(g_iClickDulation);
-	return MouseRUpAbs(nX, nY);
-}
 
-int MouseRClick(UINT nX, UINT nY)
-{
-	return MouseRClickAbs(nX+g_iOriginC, nY+g_iOriginR);
-}
 
-int MouseRClick(CStringArray* saData)
-{
-	if(saData->GetCount()==0){return MouseRClickAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseRClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
-}
-
-int MouseMClickAbs(UINT nX, UINT nY)
-{
-	MoveMouseAbs(nX, nY);
-	MouseMDownAbs(nX, nY);
-	Sleep(g_iClickDulation);
-	return MouseMUpAbs(nX, nY);
-}
-
-int MouseMClick(UINT nX, UINT nY)
-{
-	return MouseMClickAbs(nX+g_iOriginC, nY+g_iOriginR);
-}
-int MouseMClick(CStringArray* saData)
-{
-	if(saData->GetCount()==0){return MouseMClickAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
-	else{return MouseMClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
-}
 
 int MouseSetOriginToWindow(CStringArray* saData)
 {
@@ -256,20 +226,6 @@ int MouseSetOriginToImage(CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-
-int MoveMouseAbs(UINT nX, UINT nY)
-{
-	DWORD dwX, dwY;
-	dwX = (nX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (nY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, dwX, dwY, NULL, NULL);
-	return RETURN_NORMAL;
-}
-
-int MoveMouse(CStringArray* saData)
-{
-	return MoveMouseAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);
-}
 
 int MouseVWheel(int iWheel)
 {

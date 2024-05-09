@@ -1,0 +1,10 @@
+1 MousePosIncl(0, 0) 0
+2 300 0
+3 MousePosIncl(100, 95) 0
+4 300 0
+5 SetOriginToImage(test.bmp, 0, 0, 1500, 1500) 0
+6 SetOriginToWindow(Desktop) 0
+7 MousePos(0, 0) 0
+8 300 0
+9 MousePosIncl(100, 95) 0
+10 MouseLClick 0
