@@ -4,6 +4,20 @@
 #include "ImgProc.h"
 int g_iClickDulation = 50;
 
+
+int MouseVWheel(int iWheel)
+{
+	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_WHEEL, 0, 0, iWheel, NULL);
+	return RETURN_NORMAL;
+}
+
+int MouseVWheel(CStringArray* saData)
+{
+	return MouseVWheel(_ttoi(saData->GetAt(0)));
+}
+
+
+
 int MouseEvent(UINT uiEvent, UINT nX, UINT nY)
 {
 	DWORD dwX, dwY;
@@ -226,17 +240,6 @@ int MouseSetOriginToImage(CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-
-int MouseVWheel(int iWheel)
-{
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_WHEEL, 0, 0, iWheel, NULL);
-	return RETURN_NORMAL;
-}
-
-int MouseVWheel(CStringArray* saData)
-{
-	return MouseVWheel(_ttoi(saData->GetAt(0)));
-}
 
 
 int MoveMouseToImage(CStringArray* saData)
