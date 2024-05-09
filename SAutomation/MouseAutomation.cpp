@@ -96,17 +96,23 @@ int MouseMUp(CStringArray* saData)
 
 
 
+int MouseLClickAbs(UINT nX, UINT nY)
+{
+	MoveMouse(nX, nY);
+	MouseLDown(nX, nY);
+	Sleep(g_iClickDulation);
+	return MouseLUp(nX, nY);
+}
+
 int MouseLClick(UINT nX, UINT nY)
 {
-	MoveMouse(nX+g_iC_Origin, nY+g_iR_Origin);
-	MouseLDown(nX+g_iC_Origin, nY+g_iR_Origin);
-	Sleep(g_iClickDulation);
-	return MouseLUp(nX+g_iC_Origin, nY+g_iR_Origin);
+	return MouseLClickAbs(nX+g_iC_Origin, nY+g_iR_Origin);
 }
+
 
 int MouseLClick(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLClick(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseLClickAbs(g_iC, g_iR);}
 	else{return MouseLClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
 }
 
@@ -121,31 +127,40 @@ int MoveMouseIncl(CStringArray* saData)
 	return MoveMouseIncl(_ttoi(saData->GetAt(0)), _ttoi(saData->GetAt(1)));
 }
 
+int MouseRClickAbs(UINT nX, UINT nY)
+{
+	MoveMouse(nX, nY);
+	MouseRDown(nX, nY);
+	Sleep(g_iClickDulation);
+	return MouseRUp(nX, nY);
+}
+
 int MouseRClick(UINT nX, UINT nY)
 {
-	MoveMouse(nX+g_iC_Origin, nY+g_iR_Origin);
-	MouseRDown(nX+g_iC_Origin, nY+g_iR_Origin);
-	Sleep(g_iClickDulation);
-	return MouseRUp(nX+g_iC_Origin, nY+g_iR_Origin);
+	return MouseRClickAbs(nX+g_iC_Origin, nY+g_iR_Origin);
 }
 
 int MouseRClick(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRClick(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseRClickAbs(g_iC, g_iR);}
 	else{return MouseRClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
+}
+
+int MouseMClickAbs(UINT nX, UINT nY)
+{
+	MoveMouse(nX, nY);
+	MouseMDown(nX, nY);
+	Sleep(g_iClickDulation);
+	return MouseMUp(nX, nY);
 }
 
 int MouseMClick(UINT nX, UINT nY)
 {
-	MoveMouse(nX+g_iC_Origin, nY+g_iR_Origin);
-	MouseMDown(nX+g_iC_Origin, nY+g_iR_Origin);
-	Sleep(g_iClickDulation);
-	return MouseMUp(nX+g_iC_Origin, nY+g_iR_Origin);
+	return MouseMClickAbs(nX+g_iC_Origin, nY+g_iR_Origin);
 }
-
 int MouseMClick(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMClick(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseMClickAbs(g_iC, g_iR);}
 	else{return MouseMClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
 }
 
