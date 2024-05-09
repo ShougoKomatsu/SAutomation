@@ -1045,8 +1045,8 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_DISP_MOUSPOS)
 	{
 		UpdateData(TRUE);
-		m_sEditMousePosR.Format(_T("%d"),g_iR - g_iR_Origin);
-		m_sEditMousePosC.Format(_T("%d"),g_iC - g_iC_Origin);
+		m_sEditMousePosR.Format(_T("%d"),g_iR);
+		m_sEditMousePosC.Format(_T("%d"),g_iC);
 		UpdateData(FALSE);
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)

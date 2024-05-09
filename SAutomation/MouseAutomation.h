@@ -27,21 +27,21 @@
 #define COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW (COMMAND_MOUSE+100+6)
 #define COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE (COMMAND_MOUSE+100+7)
 
-int MouseLDown(UINT nX, UINT nY);
+int MouseLDownAbs(UINT nX, UINT nY);
 int MouseLDown(CStringArray* saData);
-int MouseRDown(UINT nX, UINT nY);
+int MouseRDownAbs(UINT nX, UINT nY);
 int MouseRDown(CStringArray* saData);
-int MouseMDown(UINT nX, UINT nY);
+int MouseMDownAbs(UINT nX, UINT nY);
 int MouseMDown(CStringArray* saData);
 
-int MouseLUp(UINT nX, UINT nY);
+int MouseLUpAbs(UINT nX, UINT nY);
 int MouseLUp(CStringArray* saData);
-int MouseRUp(UINT nX, UINT nY);
+int MouseRUpAbs(UINT nX, UINT nY);
 int MouseRUp(CStringArray* saData);
-int MouseMUp(UINT nX, UINT nY);
+int MouseMUpAbs(UINT nX, UINT nY);
 int MouseMUp(CStringArray* saData);
 
-int MoveMouse(UINT nX, UINT nY);
+int MoveMouseAbs(UINT nX, UINT nY);
 int MoveMouse(CStringArray* saData);
 
 int MoveMouseIncl(int iX, int iY);
