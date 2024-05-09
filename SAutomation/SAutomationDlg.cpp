@@ -839,8 +839,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 	
 	WindowNameRefresh();
 	RefreshTargetWindowPos();
-	g_iOriginR=0;
-	g_iOriginC=0;
 	UpdateData(FALSE);
 
 
@@ -1021,8 +1019,7 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 {
 	if(m_sTargetWindowName.Compare(_T("Desktop"))==0)
 	{
-		g_iOriginR=0; 
-		g_iOriginC=0;
+		ResetMouseOrigin();
 		return;
 	}
 
@@ -1031,12 +1028,10 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 	bRet = GetWindowRectByName(m_sTargetWindowName,&rect);
 	if(bRet!=TRUE)
 	{
-		g_iOriginR = 0;
-		g_iOriginC = 0;
+		ResetMouseOrigin();
 	}
-
-	g_iOriginC = rect.left;
-	g_iOriginR = rect.top;
+	
+	ChangeMouseOrigin(rect.left, rect.top);
 }
 
 void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
@@ -1089,8 +1084,7 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 void CSAutomationDlg::Operate(int iID)
 {
 	UpdateData(TRUE);
-	g_iOriginC=0;
-	g_iOriginR=0;
+	ResetMouseOrigin();
 	m_comboWindowName.SetCurSel(0);
 	UpdateData(FALSE);
 

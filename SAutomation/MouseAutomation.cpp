@@ -150,14 +150,9 @@ int MoveMouseIncl(CStringArray* saData)
 
 int MouseSetOriginToWindow(CStringArray* saData)
 {
-	int iRNowAbs=g_iR+g_iOriginR;
-	int iCNowAbs=g_iC+g_iOriginC;
 	if(saData->GetAt(0).Compare(_T("Desktop"))==0)
 	{
-		g_iR=iRNowAbs;
-		g_iC=iCNowAbs;
-		g_iOriginR=0; 
-		g_iOriginC=0;
+		ResetMouseOrigin();
 		return RETURN_NORMAL;
 	}
 
@@ -166,16 +161,11 @@ int MouseSetOriginToWindow(CStringArray* saData)
 	bRet = GetWindowRectByName(saData->GetAt(0),&rect);
 	if(bRet!=TRUE)
 	{
-		g_iR=iRNowAbs;
-		g_iC=iCNowAbs;
-		g_iOriginR = 0;
-		g_iOriginC = 0;
+		ResetMouseOrigin();
 		return RETURN_FAILED;
 	}
-	g_iOriginC = rect.left;
-	g_iOriginR = rect.top;
-	g_iR=iRNowAbs-g_iOriginR;
-	g_iC=iCNowAbs-g_iOriginC;
+
+	ChangeMouseOrigin(rect.left, rect.top);
 	return RETURN_NORMAL;
 }
 
@@ -229,14 +219,7 @@ int MouseSetOriginToImage(CStringArray* saData)
 	}
 	if(bRet != TRUE){return RETURN_FAILED;}
 
-
-	
-	int iRNowAbs=g_iR+g_iOriginR;
-	int iCNowAbs=g_iC+g_iOriginC;
-	g_iOriginC = iFoundC;
-	g_iOriginR = iFoundR;
-	g_iR=iRNowAbs-g_iOriginR;
-	g_iC=iCNowAbs-g_iOriginC;
+	ChangeMouseOrigin(iFoundC, iFoundR);
 	return RETURN_NORMAL;
 }
 
@@ -294,4 +277,20 @@ int MoveMouseToImage(CStringArray* saData)
 	MoveMouseAbs(iFoundC, iFoundR);
 
 	return RETURN_NORMAL;
+}
+
+
+void ChangeMouseOrigin(UINT uiX, UINT uiY)
+{
+	int iRNowAbs=g_iR+g_iOriginR;
+	int iCNowAbs=g_iC+g_iOriginC;
+	g_iOriginC = uiX;
+	g_iOriginR = uiY;
+	g_iR=iRNowAbs-g_iOriginR;
+	g_iC=iCNowAbs-g_iOriginC;
+}
+
+void ResetMouseOrigin()
+{
+	ChangeMouseOrigin(0, 0);
 }
