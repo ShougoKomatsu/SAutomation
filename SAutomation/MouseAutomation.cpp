@@ -119,7 +119,7 @@ int MouseLClick(CStringArray* saData)
 
 int MoveMouseIncl(int iX, int iY)
 {
-	return MoveMouse(g_iC+iX, g_iR + iY);
+	return MoveMouse(g_iC+g_iC_Origin+iX, g_iR + g_iR_Origin+iY);
 }
 
 int MoveMouseIncl(CStringArray* saData)
