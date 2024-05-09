@@ -14,8 +14,8 @@ int MouseLDownAbs(UINT nX, UINT nY)
 }
 int MouseLDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLDownAbs(g_iC, g_iR);}
-	else{return MouseLDownAbs(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
+	if(saData->GetCount()==0){return MouseLDownAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
+	else{return MouseLDownAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
 }
 
 int MouseRDownAbs(UINT nX, UINT nY)
@@ -29,8 +29,8 @@ int MouseRDownAbs(UINT nX, UINT nY)
 
 int MouseRDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRDownAbs(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
-	else{return MouseRDownAbs(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
+	if(saData->GetCount()==0){return MouseRDownAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
+	else{return MouseRDownAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
 }
 
 int MouseMDownAbs(UINT nX, UINT nY)
@@ -44,8 +44,8 @@ int MouseMDownAbs(UINT nX, UINT nY)
 
 int MouseMDown(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMDownAbs(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
-	else{return MouseMDownAbs(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
+	if(saData->GetCount()==0){return MouseMDownAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
+	else{return MouseMDownAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
 }
 
 
@@ -61,8 +61,8 @@ int MouseLUpAbs(UINT nX, UINT nY)
 }
 int MouseLUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLUp(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
-	else{return MouseLUpAbs(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
+	if(saData->GetCount()==0){return MouseLUpAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
+	else{return MouseLUpAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
 }
 
 int MouseRUpAbs(UINT nX, UINT nY)
@@ -75,8 +75,8 @@ int MouseRUpAbs(UINT nX, UINT nY)
 }
 int MouseRUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRUpAbs(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
-	else{return MouseRUpAbs(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
+	if(saData->GetCount()==0){return MouseRUpAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
+	else{return MouseRUpAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
 }
 
 int MouseMUpAbs(UINT nX, UINT nY)
@@ -89,8 +89,8 @@ int MouseMUpAbs(UINT nX, UINT nY)
 }
 int MouseMUp(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMUpAbs(g_iC+g_iC_Origin, g_iR+g_iR_Origin);}
-	else{return MouseMUpAbs(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);}
+	if(saData->GetCount()==0){return MouseMUpAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
+	else{return MouseMUpAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);}
 }
 
 
@@ -106,20 +106,20 @@ int MouseLClickAbs(UINT nX, UINT nY)
 
 int MouseLClick(UINT nX, UINT nY)
 {
-	return MouseLClickAbs(nX+g_iC_Origin, nY+g_iR_Origin);
+	return MouseLClickAbs(nX+g_iOriginC, nY+g_iOriginR);
 }
 
 
 int MouseLClick(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLClickAbs(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseLClickAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
 	else{return MouseLClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
 }
 
 
 int MoveMouseIncl(int iX, int iY)
 {
-	return MoveMouse(g_iC+g_iC_Origin+iX, g_iR + g_iR_Origin+iY);
+	return MoveMouseAbs(g_iC+iX+g_iOriginC, g_iR +iY+ g_iOriginR);
 }
 
 int MoveMouseIncl(CStringArray* saData)
@@ -137,12 +137,12 @@ int MouseRClickAbs(UINT nX, UINT nY)
 
 int MouseRClick(UINT nX, UINT nY)
 {
-	return MouseRClickAbs(nX+g_iC_Origin, nY+g_iR_Origin);
+	return MouseRClickAbs(nX+g_iOriginC, nY+g_iOriginR);
 }
 
 int MouseRClick(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRClickAbs(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseRClickAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
 	else{return MouseRClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
 }
 
@@ -156,24 +156,24 @@ int MouseMClickAbs(UINT nX, UINT nY)
 
 int MouseMClick(UINT nX, UINT nY)
 {
-	return MouseMClickAbs(nX+g_iC_Origin, nY+g_iR_Origin);
+	return MouseMClickAbs(nX+g_iOriginC, nY+g_iOriginR);
 }
 int MouseMClick(CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMClickAbs(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseMClickAbs(g_iC+g_iOriginC, g_iR+g_iOriginR);}
 	else{return MouseMClick(_ttoi(saData->GetAt(0)),_ttoi(saData->GetAt(1)));}
 }
 
 int MouseSetOriginToWindow(CStringArray* saData)
 {
-	int iRNowAbs=g_iR+g_iR_Origin;
-	int iCNowAbs=g_iC+g_iC_Origin;
+	int iRNowAbs=g_iR+g_iOriginR;
+	int iCNowAbs=g_iC+g_iOriginC;
 	if(saData->GetAt(0).Compare(_T("Desktop"))==0)
 	{
 		g_iR=iRNowAbs;
 		g_iC=iCNowAbs;
-		g_iR_Origin=0; 
-		g_iC_Origin=0;
+		g_iOriginR=0; 
+		g_iOriginC=0;
 		return RETURN_NORMAL;
 	}
 
@@ -184,14 +184,14 @@ int MouseSetOriginToWindow(CStringArray* saData)
 	{
 		g_iR=iRNowAbs;
 		g_iC=iCNowAbs;
-		g_iR_Origin = 0;
-		g_iC_Origin = 0;
+		g_iOriginR = 0;
+		g_iOriginC = 0;
 		return RETURN_FAILED;
 	}
-	g_iC_Origin = rect.left;
-	g_iR_Origin = rect.top;
-	g_iR=iRNowAbs-g_iR_Origin;
-	g_iC=iCNowAbs-g_iC_Origin;
+	g_iOriginC = rect.left;
+	g_iOriginR = rect.top;
+	g_iR=iRNowAbs-g_iOriginR;
+	g_iC=iCNowAbs-g_iOriginC;
 	return RETURN_NORMAL;
 }
 
@@ -237,22 +237,22 @@ int MouseSetOriginToImage(CStringArray* saData)
 
 	if(bUseMask==TRUE)
 	{
-		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 	}
 	else
 	{
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 	}
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 
 	
-	int iRNowAbs=g_iR+g_iR_Origin;
-	int iCNowAbs=g_iC+g_iC_Origin;
-	g_iC_Origin = iFoundC;
-	g_iR_Origin = iFoundR;
-	g_iR=iRNowAbs-g_iR_Origin;
-	g_iC=iCNowAbs-g_iC_Origin;
+	int iRNowAbs=g_iR+g_iOriginR;
+	int iCNowAbs=g_iC+g_iOriginC;
+	g_iOriginC = iFoundC;
+	g_iOriginR = iFoundR;
+	g_iR=iRNowAbs-g_iOriginR;
+	g_iC=iCNowAbs-g_iOriginC;
 	return RETURN_NORMAL;
 }
 
@@ -268,7 +268,7 @@ int MoveMouseAbs(UINT nX, UINT nY)
 
 int MoveMouse(CStringArray* saData)
 {
-	return MoveMouseAbs(_ttoi(saData->GetAt(0))+g_iC_Origin,_ttoi(saData->GetAt(1))+g_iR_Origin);
+	return MoveMouseAbs(_ttoi(saData->GetAt(0))+g_iOriginC,_ttoi(saData->GetAt(1))+g_iOriginR);
 }
 
 int MouseVWheel(int iWheel)
@@ -322,17 +322,17 @@ int MoveMouseToImage(CStringArray* saData)
 	Screenshot(&imgTarget);
 	if(bUseMask==TRUE)
 	{
-		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 	}
 	else
 	{
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 	}
-	FindModel(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+//	FindModel(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 
 	if(bRet != TRUE){return RETURN_FAILED;}
 
-	MoveMouse(iFoundC, iFoundR);
+	MoveMouseAbs(iFoundC, iFoundR);
 
 	return RETURN_NORMAL;
 }

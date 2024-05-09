@@ -70,8 +70,10 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	DWORD dwThreadID;
 	int* iSceneData;
 	
-	g_iC_Origin=0;
-	g_iR_Origin=0;
+	g_iC=g_iC+g_iOriginC;
+	g_iR=g_iR+g_iOriginR;
+	g_iOriginC=0;
+	g_iOriginR=0;
 
 	hGetKey = CreateThread(NULL, 0, GetKeyThread, NULL, 0, &dwThreadID);
 	hGetStepKey = CreateThread(NULL, 0, GetStepKeyThread, NULL, 0, &dwThreadID);
@@ -218,8 +220,10 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		if(iLoop==0){break;}
 	}
 	if(iLogLevel==1){cf.Close();}
-	g_iC_Origin=0;
-	g_iR_Origin=0;
+	g_iC=g_iC+g_iOriginC;
+	g_iR=g_iR+g_iOriginR;
+	g_iOriginC=0;
+	g_iOriginR=0;
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 	TerminateThread(hGetKey, 0);
 	TerminateThread(hGetStepKey, 0);

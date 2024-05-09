@@ -33,7 +33,6 @@ SAutomation/Log/log9.txt
 SAutomation/Macro/test1.txt
 *.lastbuildstate
 SAutomation/Release/SAutomation.ini
-SAutomation/Release/SAutomation.exe
 SAutomation/Release/Macro/Start.txt
 SAutomation/Release/Macro/Scroll.txt
 SAutomation/Macro/Wheel.txt

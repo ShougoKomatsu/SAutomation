@@ -46,8 +46,8 @@ extern HWND g_hWnd;
 extern double g_dSpeedMult;
 extern int g_iR;
 extern int g_iC;
-extern int g_iR_Origin;
-extern int g_iC_Origin;
+extern int g_iOriginR;
+extern int g_iOriginC;
 
 
 

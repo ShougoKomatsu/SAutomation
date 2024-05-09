@@ -305,9 +305,9 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	while(1)
 	{
 		Screenshot(&imgTarget);
-		if(bFirstTime==TRUE){CropImage(&imgModel, &imgModelCropped, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin);}
+		if(bFirstTime==TRUE){CropImage(&imgModel, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC);}
 	
-		bRet = IsInRegion(&imgTarget, &imgModelCropped, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 		if(iWaitOn==1)
 		{
 			if(bRet == FALSE) {return RETURN_NORMAL;}
@@ -317,7 +317,7 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 			if(bRet == TRUE) {return RETURN_NORMAL;}
 		}
 
-		CropImage(&imgTarget, &imgModelCropped, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin);
+		CropImage(&imgTarget, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC);
 		iRet=K_Sleep(Halt, Suspend, iTickMillisec);
 		if(iRet<0){return iRet;}
 		if(iTimeOutMillisec>=0)
@@ -384,11 +384,11 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 		if(bUseMask==TRUE)
 		{
-			bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+			bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 		}
 		else
 		{
-			bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iR_Origin, iC0+g_iC_Origin, iR1+g_iR_Origin, iC1+g_iC_Origin, &iFoundR, &iFoundC);
+			bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 		}
 
 		if(iWaitOn==1)

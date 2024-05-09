@@ -219,8 +219,8 @@ END_MESSAGE_MAP()
 HHOOK g_hhook=NULL;
 int g_iR=0;
 int g_iC=0;
-int g_iR_Origin=0;
-int g_iC_Origin=0;
+int g_iOriginR=0;
+int g_iOriginC=0;
 
 
 HANDLE g_hHotkey[MAX_THREAD];
@@ -232,8 +232,8 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_MOUSEMOVE:
 		{
-			g_iR = ((LPMSLLHOOKSTRUCT)lParam)->pt.y;
-			g_iC = ((LPMSLLHOOKSTRUCT)lParam)->pt.x;
+			g_iR = ((LPMSLLHOOKSTRUCT)lParam)->pt.y-g_iOriginR;
+			g_iC = ((LPMSLLHOOKSTRUCT)lParam)->pt.x-g_iOriginC;
 			break;
 		}
 	default: break;
@@ -708,8 +708,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	POINT p;
 	GetCursorPos(&p);
-	g_iR=p.y;
-	g_iC=p.x;
+	g_iR=p.y-g_iOriginR;
+	g_iC=p.x-g_iOriginC;
 	g_hhook = NULL;
 	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
 	if(g_hhook == NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); OnOK();}
@@ -839,8 +839,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 	
 	WindowNameRefresh();
 	RefreshTargetWindowPos();
-	g_iR_Origin=0;
-	g_iC_Origin=0;
+	g_iOriginR=0;
+	g_iOriginC=0;
 	UpdateData(FALSE);
 
 
@@ -1021,8 +1021,8 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 {
 	if(m_sTargetWindowName.Compare(_T("Desktop"))==0)
 	{
-		g_iR_Origin=0; 
-		g_iC_Origin=0;
+		g_iOriginR=0; 
+		g_iOriginC=0;
 		return;
 	}
 
@@ -1031,12 +1031,12 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 	bRet = GetWindowRectByName(m_sTargetWindowName,&rect);
 	if(bRet!=TRUE)
 	{
-		g_iR_Origin = 0;
-		g_iC_Origin = 0;
+		g_iOriginR = 0;
+		g_iOriginC = 0;
 	}
 
-	g_iC_Origin = rect.left;
-	g_iR_Origin = rect.top;
+	g_iOriginC = rect.left;
+	g_iOriginR = rect.top;
 }
 
 void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
@@ -1089,8 +1089,8 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 void CSAutomationDlg::Operate(int iID)
 {
 	UpdateData(TRUE);
-	g_iC_Origin=0;
-	g_iR_Origin=0;
+	g_iOriginC=0;
+	g_iOriginR=0;
 	m_comboWindowName.SetCurSel(0);
 	UpdateData(FALSE);
 
