@@ -273,34 +273,37 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
 	int iCombi;
-	iCombi=0;
 
-	if(op->bUseCtrl==TRUE){iCombi=iCombi+1;}
-	if(op->bUseShift==TRUE){iCombi=iCombi+2;}
-	if(op->bUseAlt==TRUE){iCombi=iCombi+4;}
-	if(op->bUseWin==TRUE){iCombi=iCombi+8;}
+	const int NOTHING = 0;
+	const int CTRL = 1;
+	const int SHIFT = 2;
+	const int ALT = 4;
+	const int WIN = 8;
+
+	iCombi=NOTHING;
+
+	if(op->bUseCtrl==TRUE){iCombi |= CTRL;}
+	if(op->bUseShift==TRUE){iCombi |= SHIFT;}
+	if(op->bUseAlt==TRUE){iCombi |= ALT;}
+	if(op->bUseWin==TRUE){iCombi |= WIN;}
+
+	if(iCombi==(CTRL|	SHIFT|	ALT		   )){iCombi=NOTHING;}
+	if(iCombi==(CTRL|	SHIFT|	   		WIN)){iCombi=NOTHING;}
+	if(iCombi==(CTRL|	    	ALT|	WIN)){iCombi=NOTHING;}
+	if(iCombi==(     	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
+	if(iCombi==(CTRL|	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
+	
+	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
+	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
+	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
 
 	switch(iCombi)
 	{
-	case 0:{combo->SetCurSel(0); return;}
-	case 1:{combo->SetCurSel(1); return;}
-	case 2:{combo->SetCurSel(2); return;}
-	case 3:{combo->SetCurSel(1); return;}
-
-	case 4:{combo->SetCurSel(3); return;}
-	case 5:{combo->SetCurSel(1); return;}
-	case 6:{combo->SetCurSel(2); return;}
-	case 7:{combo->SetCurSel(0); return;}
-
-	case 8:{combo->SetCurSel(4); return;}
-	case 9:{combo->SetCurSel(1); return;}
-	case 10:{combo->SetCurSel(2); return;}
-	case 11:{combo->SetCurSel(0); return;}
-
-	case 12:{combo->SetCurSel(3); return;}
-	case 13:{combo->SetCurSel(0); return;}
-	case 14:{combo->SetCurSel(0); return;}
-	case 15:{combo->SetCurSel(0); return;}
+	case NOTHING:{combo->SetCurSel(0); return;}
+	case CTRL:{combo->SetCurSel(1); return;}
+	case SHIFT:{combo->SetCurSel(2); return;}
+	case ALT:{combo->SetCurSel(3); return;}
+	case WIN:{combo->SetCurSel(4); return;}
 
 	default:{combo->SetCurSel(0); return;}
 	}
@@ -317,34 +320,42 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op)
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
 	int iCombi;
-	iCombi=0;
+	
+	const int NOTHING = 0;
+	const int CTRL = 1;
+	const int SHIFT = 2;
+	const int ALT = 4;
+	const int WIN = 8;
 
-	if(op->bUseCtrl==TRUE){iCombi=iCombi+1;}
-	if(op->bUseShift==TRUE){iCombi=iCombi+2;}
-	if(op->bUseAlt==TRUE){iCombi=iCombi+4;}
-	if(op->bUseWin==TRUE){iCombi=iCombi+8;}
+	iCombi=NOTHING;
 
+	if(op->bUseCtrl==TRUE){iCombi |= CTRL;}
+	if(op->bUseShift==TRUE){iCombi |= SHIFT;}
+	if(op->bUseAlt==TRUE){iCombi |= ALT;}
+	if(op->bUseWin==TRUE){iCombi |= WIN;}
+	
+	if(iCombi==(CTRL	     	   		   )){iCombi=NOTHING;}
+	if(iCombi==(    	SHIFT	   		   )){iCombi=NOTHING;}
+	if(iCombi==(    	     	ALT		   )){iCombi=NOTHING;}
+	if(iCombi==(    	     	   		WIN)){iCombi=NOTHING;}
+	if(iCombi==(CTRL|	SHIFT|	ALT		   )){iCombi=NOTHING;}
+	if(iCombi==(CTRL|	SHIFT|	   		WIN)){iCombi=NOTHING;}
+	if(iCombi==(CTRL|	    	ALT|	WIN)){iCombi=NOTHING;}
+	if(iCombi==(     	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
+	if(iCombi==(CTRL|	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
+	
+	if((iCombi&CTRL) == CTRL)	{iCombi -= CTRL;}
+	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
+	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
+	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
+	
 	switch(iCombi)
 	{
-	case 0:{combo->SetCurSel(0); return;}
-	case 1:{combo->SetCurSel(0); return;}
-	case 2:{combo->SetCurSel(0); return;}
-	case 3:{combo->SetCurSel(1); return;}
-
-	case 4:{combo->SetCurSel(0); return;}
-	case 5:{combo->SetCurSel(2); return;}
-	case 6:{combo->SetCurSel(2); return;}
-	case 7:{combo->SetCurSel(0); return;}
-
-	case 8:{combo->SetCurSel(0); return;}
-	case 9:{combo->SetCurSel(3); return;}
-	case 10:{combo->SetCurSel(3); return;}
-	case 11:{combo->SetCurSel(0); return;}
-
-	case 12:{combo->SetCurSel(3); return;}
-	case 13:{combo->SetCurSel(0); return;}
-	case 14:{combo->SetCurSel(0); return;}
-	case 15:{combo->SetCurSel(0); return;}
+	case NOTHING:{combo->SetCurSel(0); return;}
+	case CTRL:{combo->SetCurSel(0); return;}
+	case SHIFT:{combo->SetCurSel(1); return;}
+	case ALT:{combo->SetCurSel(2); return;}
+	case WIN:{combo->SetCurSel(3); return;}
 
 	default:{combo->SetCurSel(0); return;}
 	}
