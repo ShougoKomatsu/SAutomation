@@ -299,6 +299,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			iRepeat=_ttoi(sArg);
 			sRepeat.Format(_T("%d"),iRepeat);
 			saData->Add(sRepeat);
+			return TRUE;
 		}
 	case COMMAND_MOUSE_L_DOWN:
 		{
