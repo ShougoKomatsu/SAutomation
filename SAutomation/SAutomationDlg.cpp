@@ -272,7 +272,6 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 	combo->AddString(_T("Shift"));
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
-	int iCombi;
 
 	const int NOTHING = 0;
 	const int CTRL = 1;
@@ -280,18 +279,14 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 	const int ALT = 4;
 	const int WIN = 8;
 
-	iCombi=NOTHING;
-
-	if(op->bUseCtrl==TRUE){iCombi |= CTRL;}
-	if(op->bUseShift==TRUE){iCombi |= SHIFT;}
-	if(op->bUseAlt==TRUE){iCombi |= ALT;}
-	if(op->bUseWin==TRUE){iCombi |= WIN;}
-
-	if(iCombi==(CTRL|	SHIFT|	ALT		   )){iCombi=NOTHING;}
-	if(iCombi==(CTRL|	SHIFT|	   		WIN)){iCombi=NOTHING;}
-	if(iCombi==(CTRL|	    	ALT|	WIN)){iCombi=NOTHING;}
-	if(iCombi==(     	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
-	if(iCombi==(CTRL|	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
+	int iCombi = NOTHING;
+	int iKeyCount = 0;
+	if(op->bUseCtrl==TRUE){iKeyCount++; iCombi |= CTRL;}
+	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
+	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
+	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
+	
+	if(iKeyCount >= 3){combo->SetCurSel(0); return;}
 	
 	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
 	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
@@ -319,30 +314,21 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op)
 	combo->AddString(_T("Shift"));
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
-	int iCombi;
 	
 	const int NOTHING = 0;
 	const int CTRL = 1;
 	const int SHIFT = 2;
 	const int ALT = 4;
 	const int WIN = 8;
-
-	iCombi=NOTHING;
-
-	if(op->bUseCtrl==TRUE){iCombi |= CTRL;}
-	if(op->bUseShift==TRUE){iCombi |= SHIFT;}
-	if(op->bUseAlt==TRUE){iCombi |= ALT;}
-	if(op->bUseWin==TRUE){iCombi |= WIN;}
 	
-	if(iCombi==(CTRL	     	   		   )){iCombi=NOTHING;}
-	if(iCombi==(    	SHIFT	   		   )){iCombi=NOTHING;}
-	if(iCombi==(    	     	ALT		   )){iCombi=NOTHING;}
-	if(iCombi==(    	     	   		WIN)){iCombi=NOTHING;}
-	if(iCombi==(CTRL|	SHIFT|	ALT		   )){iCombi=NOTHING;}
-	if(iCombi==(CTRL|	SHIFT|	   		WIN)){iCombi=NOTHING;}
-	if(iCombi==(CTRL|	    	ALT|	WIN)){iCombi=NOTHING;}
-	if(iCombi==(     	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
-	if(iCombi==(CTRL|	SHIFT|	ALT|	WIN)){iCombi=NOTHING;}
+	int iCombi = NOTHING;
+	int iKeyCount = 0;
+	if(op->bUseCtrl==TRUE){iKeyCount++;iCombi |= CTRL;}
+	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
+	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
+	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
+	
+	if(iKeyCount != 2){combo->SetCurSel(0); return;}
 	
 	if((iCombi&CTRL) == CTRL)	{iCombi -= CTRL;}
 	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
