@@ -152,7 +152,7 @@ int MouseSetOriginToWindow(CStringArray* saData)
 {
 	if(saData->GetAt(0).Compare(_T("Desktop"))==0)
 	{
-		ResetMouseOrigin();
+		ChangeMouseOrigin(0, 0);
 		return RETURN_NORMAL;
 	}
 
@@ -161,7 +161,7 @@ int MouseSetOriginToWindow(CStringArray* saData)
 	bRet = GetWindowRectByName(saData->GetAt(0),&rect);
 	if(bRet!=TRUE)
 	{
-		ResetMouseOrigin();
+		ChangeMouseOrigin(0, 0);
 		return RETURN_FAILED;
 	}
 
@@ -288,9 +288,4 @@ void ChangeMouseOrigin(UINT uiX, UINT uiY)
 	g_iOriginR = uiY;
 	g_iR=iRNowAbs-g_iOriginR;
 	g_iC=iCNowAbs-g_iOriginC;
-}
-
-void ResetMouseOrigin()
-{
-	ChangeMouseOrigin(0, 0);
 }

@@ -1019,7 +1019,7 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 {
 	if(m_sTargetWindowName.Compare(_T("Desktop"))==0)
 	{
-		ResetMouseOrigin();
+		ChangeMouseOrigin(0, 0);
 		return;
 	}
 
@@ -1028,7 +1028,7 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 	bRet = GetWindowRectByName(m_sTargetWindowName,&rect);
 	if(bRet!=TRUE)
 	{
-		ResetMouseOrigin();
+		ChangeMouseOrigin(0, 0);
 	}
 
 	ChangeMouseOrigin(rect.left, rect.top);
@@ -1084,7 +1084,7 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 void CSAutomationDlg::Operate(int iID)
 {
 	UpdateData(TRUE);
-	ResetMouseOrigin();
+	ChangeMouseOrigin(0, 0);
 	m_comboWindowName.SetCurSel(0);
 	UpdateData(FALSE);
 

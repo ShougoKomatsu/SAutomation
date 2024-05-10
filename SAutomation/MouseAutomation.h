@@ -62,5 +62,4 @@ int MoveMouseToImage(CStringArray* saData);
 int MouseSetOriginToWindow(CStringArray* saData);
 int MouseSetOriginToImage(CStringArray* saData);
 
-void ResetMouseOrigin();
 void ChangeMouseOrigin(UINT uiX, UINT uiY);

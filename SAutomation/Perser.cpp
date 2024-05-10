@@ -8,7 +8,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" ")).Trim(_T("\t")));
-	
+
 	if(sDataTrim.Left(1).CompareNoCase(_T("'"))==0){*iCommandType=COMMAND_NOTING;return TRUE;}
 
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -18,28 +18,28 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("onerror"))==0){*iCommandType=COMMAND_ERROR_TREAT;return TRUE;}
 
-	if(sDataTrim.Left(12).CompareNoCase(_T("lmouse click"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK; 		return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("lmouse click"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("lmouse down"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("lmouse up"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
 
-	if(sDataTrim.Left(12).CompareNoCase(_T("rmouse click"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK; 		return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("rmouse click"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK;  return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("rmouse down"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("rmouse up"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
-	
-	if(sDataTrim.Left(12).CompareNoCase(_T("mmouse click"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK; 		return TRUE;}
+
+	if(sDataTrim.Left(12).CompareNoCase(_T("mmouse click"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK;  return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("mmouse down"))==0){*iCommandType=COMMAND_MOUSE_M_DOWN; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("mmouse up"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
-	
 
-	if(sDataTrim.Left(11).CompareNoCase(_T("mouselclick"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK; 		return TRUE;}
+
+	if(sDataTrim.Left(11).CompareNoCase(_T("mouselclick"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("mouseldown"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("mouselup"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
 
-	if(sDataTrim.Left(11).CompareNoCase(_T("mouserclick"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK; 		return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("mouserclick"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK;  return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("mouserdown"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("mouserup"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
-	
-	if(sDataTrim.Left(11).CompareNoCase(_T("mousemclick"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK; 		return TRUE;}
+
+	if(sDataTrim.Left(11).CompareNoCase(_T("mousemclick"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK;  return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("mousemdown"))==0){*iCommandType=COMMAND_MOUSE_M_DOWN; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("mousemup"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
 	if(sDataTrim.Left(17).CompareNoCase(_T("setorigintowindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
@@ -515,8 +515,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		return TRUE;
 	}
 
-	if(iType == COMMAND_MAXIMIZE){*iCommandType=iType;return TRUE;}
-	if(iType == COMMAND_MINIMIZE){*iCommandType=iType;return TRUE;}
+	if(iType == COMMAND_MAXIMIZE){*iCommandType=iType; return TRUE;}
+	if(iType == COMMAND_MINIMIZE){*iCommandType=iType; return TRUE;}
 
 	if(iType == COMMAND_WINDOW_FORWARD)
 	{
@@ -603,6 +603,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		*iCommandType = iType;
 		return TRUE;
 	}
+
 	if(iType == COMMAND_MOUSE_MOVE_TO_IMG)
 	{
 		ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);

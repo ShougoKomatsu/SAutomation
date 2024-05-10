@@ -72,7 +72,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	DWORD dwThreadID;
 	int* iSceneData;
 
-	ResetMouseOrigin();
+	ChangeMouseOrigin(0, 0);
 
 	hGetKey = CreateThread(NULL, 0, GetKeyThread, NULL, 0, &dwThreadID);
 	hGetStepKey = CreateThread(NULL, 0, GetStepKeyThread, NULL, 0, &dwThreadID);
@@ -90,7 +90,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	bRet = ReadTextFile(g_sFilePath[iScene],&saCommands);
 	if(bRet != TRUE)
 	{
-		ResetMouseOrigin();
+		ChangeMouseOrigin(0, 0);
 		PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 		TerminateThread(hGetKey, 0);
 		TerminateThread(hGetStepKey, 0);
@@ -133,7 +133,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			{
 				if(iLogLevel>=1){cf.Close();}
 				g_bHalt = FALSE;
-				ResetMouseOrigin();
+				ChangeMouseOrigin(0, 0);
 				PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 				TerminateThread(hGetKey, 0);
 				TerminateThread(hGetStepKey, 0);
@@ -151,7 +151,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				{
 					if(iLogLevel>=1){cf.Close();}
 					g_bHalt = FALSE;
-					ResetMouseOrigin();
+					ChangeMouseOrigin(0, 0);
 					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 					TerminateThread(hGetKey, 0);
 					TerminateThread(hGetStepKey, 0);
@@ -172,7 +172,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 						{
 							if(iLogLevel>=1){cf.Close();}
 							g_bHalt = FALSE;
-							ResetMouseOrigin();
+							ChangeMouseOrigin(0, 0);
 							PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 							TerminateThread(hGetKey, 0);
 							TerminateThread(hGetStepKey, 0);
@@ -196,7 +196,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 						if(iLabel >= 0){i=iLabel-1;break;}
 					}
 					g_bHalt = FALSE;
-					ResetMouseOrigin();
+					ChangeMouseOrigin(0, 0);
 					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 					TerminateThread(hGetKey, 0);
 					TerminateThread(hGetStepKey, 0);
@@ -211,7 +211,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 
 					if(iLogLevel>=1){cf.Close();}
 					g_bHalt = FALSE;
-					ResetMouseOrigin();
+					ChangeMouseOrigin(0, 0);
 					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 					TerminateThread(hGetKey, 0);
 					TerminateThread(hGetStepKey, 0);
@@ -225,7 +225,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		if(iLoop==0){break;}
 	}
 	if(iLogLevel==1){cf.Close();}
-	ResetMouseOrigin();
+	ChangeMouseOrigin(0, 0);
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
 	TerminateThread(hGetKey, 0);
 	TerminateThread(hGetStepKey, 0);
