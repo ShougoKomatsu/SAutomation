@@ -6,14 +6,10 @@
 #include "Window.h"
 
 CString g_sDir;
-int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
+
+
+int K_SleepWithoutHalt(LPVOID Suspend, DWORD SleepMilliSec)
 {
-	if((Halt==NULL)&&(Suspend == NULL)){Sleep(SleepMilliSec);return RETURN_NORMAL;}
-
-
-
-	if(Halt==NULL)
-	{
 		ULONGLONG ullStartMilliSec;
 		ULONGLONG ullSuspendStartMilliSec;
 		ULONGLONG ullSuspendedMilliSec;
@@ -33,10 +29,10 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 			Sleep(1);
 		}
 		return RETURN_NORMAL;
-	}
+}
 
-	if(Suspend==NULL)
-	{
+int K_SleepWithoutSuspend(LPVOID Halt, DWORD SleepMilliSec)
+{
 		ULONGLONG ullStartMilliSec;
 		ullStartMilliSec = GetTickCount64();
 		while(GetTickCount64()<ullStartMilliSec+SleepMilliSec/g_dSpeedMult)
@@ -45,7 +41,13 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 			Sleep(1);
 		}
 		return RETURN_NORMAL;
-	}
+}
+
+int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
+{
+	if((Halt == NULL)&&(Suspend == NULL))	{Sleep(SleepMilliSec);return RETURN_NORMAL;}
+	if(Halt == NULL)						{return K_SleepWithoutHalt(Suspend, SleepMilliSec);}
+	if(Suspend == NULL)						{return K_SleepWithoutSuspend(Halt, SleepMilliSec);}
 
 	ULONGLONG ullStartMilliSec;
 	ULONGLONG ullSuspendStartMilliSec;
