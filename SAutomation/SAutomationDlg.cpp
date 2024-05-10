@@ -130,7 +130,7 @@ void CSAutomationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_7, (m_comboUseShift[7]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_8, (m_comboUseShift[8]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_9, (m_comboUseShift[9]));
-	
+
 	DDX_Control(pDX, IDC_COMBO_WINDOW_NAME, m_comboWindowName);
 
 	DDX_Control(pDX, IDC_COMBO_LOG_LEVEL, m_comboLogLevel);
@@ -201,8 +201,8 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 
 	ON_BN_CLICKED(IDC_CHECK_ENABLE_HOTKEY, &CSAutomationDlg::OnBnClickedCheckEnableHotkey)
 	ON_CBN_SELCHANGE(IDC_COMBO_ENABLE_HOTKEY, &CSAutomationDlg::OnSelchangeComboEnable)
-	
-    ON_MESSAGE(WM_TRAYNOTIFY, OnTrayNotify)
+
+	ON_MESSAGE(WM_TRAYNOTIFY, OnTrayNotify)
 	ON_WM_SIZE()
 	ON_BN_CLICKED(IDC_BUTTON_OPEN_FOLDER, &CSAutomationDlg::OnBnClickedButtonOpenFolder)
 	ON_EN_CHANGE(IDC_EDIT_SPEED, &CSAutomationDlg::OnChangeEditSpeed)
@@ -243,25 +243,25 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 
 LRESULT CSAutomationDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 {
-    switch (lParam)
-    {
+	switch (lParam)
+	{
 	case WM_LBUTTONUP: 
 		{
-        if (wParam == IDI_ICON_STANDBY)
-        {
-            ShowWindow(SW_NORMAL);
-            SetForegroundWindow();
-            SetFocus();
-        } 
-        break;
+			if (wParam == IDI_ICON_STANDBY)
+			{
+				ShowWindow(SW_NORMAL);
+				SetForegroundWindow();
+				SetFocus();
+			} 
+			break;
 		}
-    default:
+	default:
 		{
-        break;
+			break;
 		}
-    } 
+	} 
 
-    return 0;
+	return 0;
 }
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
@@ -427,7 +427,7 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	g_hThread[wParam]=NULL;
 	m_sEditStatus[wParam].Format(_T("Stand by"));
 	UpdateData(FALSE);
-	
+
 	m_OpeInfo[wParam].m_bRunning=FALSE;
 
 	m_bRunningAny=FALSE;
@@ -469,7 +469,7 @@ void CSAutomationDlg::ReadSettings()
 		GetPrivateProfileString(sSection,_T("UseShift"),_T("1"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 		if(wcscmp(szData,_T("1"))==0){m_OpeInfo[iID].bUseShift=TRUE;}
 		else{m_OpeInfo[iID].bUseShift=FALSE;}
-		
+
 		GetPrivateProfileString(sSection,_T("UseAlt"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 		if(wcscmp(szData,_T("1"))==0){m_OpeInfo[iID].bUseAlt=TRUE;}
 		else{m_OpeInfo[iID].bUseAlt=FALSE;}
@@ -488,7 +488,7 @@ void CSAutomationDlg::ReadSettings()
 	GetPrivateProfileString(_T("Hotkey"),_T("Enable"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	if(wcscmp(szData,_T("1"))==0){m_bEnableHotkey=TRUE;}
 	else{m_bEnableHotkey=FALSE;}
-	
+
 	GetPrivateProfileString(_T("Common"),_T("AutoMnimize"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	if(wcscmp(szData,_T("1"))==0){m_bAutoMinimize=TRUE;}
 	else{m_bAutoMinimize=FALSE;}
@@ -500,7 +500,7 @@ void CSAutomationDlg::ReadSettings()
 	GetPrivateProfileString(_T("Common"),_T("Log"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	if(wcscmp(szData,_T("1"))==0){m_bLog=TRUE;}
 	else{m_bLog=FALSE;}
-	
+
 	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	m_iLogLevel=_ttoi(szData);
 	if(m_iLogLevel<1){m_iLogLevel=1;}
@@ -513,11 +513,11 @@ void CSAutomationDlg::SaveSettings()
 	UpdateData(TRUE);
 	CString sFilePath;
 	sFilePath.Format(_T("%s\\SAutomation.ini"), m_sDir); 
-	
-		CString sUseCtrl;
-		CString sUseShift;
-		CString sUseAlt;
-		CString sUseWin;
+
+	CString sUseCtrl;
+	CString sUseShift;
+	CString sUseAlt;
+	CString sUseWin;
 
 	for(int iID = 0; iID<MAX_THREAD; iID++)
 	{
@@ -534,7 +534,7 @@ void CSAutomationDlg::SaveSettings()
 
 		sData.Format(_T("%d"),((CButton*)GetDlgItem(IDC_CHECK_REPEAT_0+iID))->GetCheck());	
 		WritePrivateProfileString(sSection,_T("Loop"),sData,sFilePath);
-		
+
 		sUseCtrl.Format(_T("0"));
 		sUseShift.Format(_T("0"));
 		sUseAlt.Format(_T("0"));
@@ -549,7 +549,7 @@ void CSAutomationDlg::SaveSettings()
 			if(wcscmp(tch,_T("Alt"))==0){sUseAlt.Format(_T("1"));}
 			if(wcscmp(tch,_T("Win"))==0){sUseWin.Format(_T("1"));}
 		}
-		
+
 		if(m_comboUseShift[iID].GetCurSel()<0){sData.Format(_T("0"));}
 		else
 		{
@@ -584,7 +584,7 @@ void CSAutomationDlg::SaveSettings()
 	{
 		WritePrivateProfileString(_T("Hotkey"),_T("Enable"),_T("0"),sFilePath);
 	}
-	
+
 
 	if(((CButton*)GetDlgItem(IDC_CHECK_AUTO_MINIMIZE))->GetCheck()==1)
 	{
@@ -692,7 +692,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwCurrentProcessId);
 	TCHAR szModuleName[MAX_PATH];
 	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
-//	AfxMessageBox(szModuleName);
+	//	AfxMessageBox(szModuleName);
 
 	DWORD dwExeProcessIds[1024] = { 0 };
 	GetExeOtherProcessIds(szModuleName, dwExeProcessIds, dwCurrentProcessId);
@@ -700,7 +700,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if (dwExeProcessIds[0]>0)
 	{
 		AfxMessageBox(_T("‘½d‹N“®"));
-//		return CDialogEx::DestroyWindow();
+		//		return CDialogEx::DestroyWindow();
 	}
 
 	SetWindowText(_T("SAutomation"));
@@ -726,10 +726,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	CString sMacroFolderPath;
 	sMacroFolderPath.Format(_T("%s\\Macro"),m_sDir);
-	
+
 	CString sLogFolderPath;
 	sLogFolderPath.Format(_T("%s\\Log"),m_sDir);
-	
+
 	CString sModelFolderPath;
 	sModelFolderPath.Format(_T("%s\\Macro\\Model"),m_sDir);
 
@@ -802,7 +802,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	{
 		((CButton*)GetDlgItem(IDC_CHECK_TASKTRAY))->SetCheck(0);
 	}
-	
+
 	if(m_bLog==TRUE)
 	{
 		((CButton*)GetDlgItem(IDC_CHECK_LOG))->SetCheck(1);
@@ -821,7 +821,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
 	m_comboLogLevel.SetCurSel(m_iLogLevel-1);
-	
+
 
 	if(m_bEnableHotkey==TRUE)
 	{
@@ -836,7 +836,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_sliderSpeed.SetRangeMin(0);	
 	m_sliderSpeed.SetRangeMax(100);
 	m_sliderSpeed.SetPos(50);
-	
+
 	WindowNameRefresh();
 	RefreshTargetWindowPos();
 	UpdateData(FALSE);
@@ -870,37 +870,37 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 	}
 
 
-    CString sTip = _T("SAutomation.exe");
-    NOTIFYICONDATA nid;
+	CString sTip = _T("SAutomation.exe");
+	NOTIFYICONDATA nid;
 
-    nid.cbSize = sizeof(NOTIFYICONDATA);
-    nid.hWnd   = GetSafeHwnd();
-    nid.uID    = IDI_ICON_STANDBY;
-    nid.uFlags = NIF_MESSAGE | NIF_ICON;
-    nid.uCallbackMessage = WM_TRAYNOTIFY;
-    nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-    nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(iIcon));
-    _tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
-    
+	nid.cbSize = sizeof(NOTIFYICONDATA);
+	nid.hWnd   = GetSafeHwnd();
+	nid.uID    = IDI_ICON_STANDBY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON;
+	nid.uCallbackMessage = WM_TRAYNOTIFY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(iIcon));
+	_tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
 
-    return Shell_NotifyIcon(NIM_MODIFY , &nid);
+
+	return Shell_NotifyIcon(NIM_MODIFY , &nid);
 }
 
 BOOL CSAutomationDlg::TrayNotifyIconMessage(DWORD dwMessage)
 {
-    CString sTip = _T("SAutomation.exe");
-    NOTIFYICONDATA nid;
+	CString sTip = _T("SAutomation.exe");
+	NOTIFYICONDATA nid;
 
-    nid.cbSize = sizeof(NOTIFYICONDATA);
-    nid.hWnd   = GetSafeHwnd();
-    nid.uID    = IDI_ICON_STANDBY;
-    nid.uFlags = NIF_MESSAGE | NIF_ICON;
-    nid.uCallbackMessage = WM_TRAYNOTIFY;
-    nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-    nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON_STANDBY));
-    _tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
-    
-    return Shell_NotifyIcon(dwMessage, &nid);
+	nid.cbSize = sizeof(NOTIFYICONDATA);
+	nid.hWnd   = GetSafeHwnd();
+	nid.uID    = IDI_ICON_STANDBY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON;
+	nid.uCallbackMessage = WM_TRAYNOTIFY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON_STANDBY));
+	_tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
+
+	return Shell_NotifyIcon(dwMessage, &nid);
 }
 
 void CSAutomationDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -988,10 +988,10 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 		if(pMsg->wParam == VK_RETURN){return TRUE;}
 		if(pMsg->wParam == VK_ESCAPE){return TRUE;}
 		if(pMsg->wParam == VK_SPACE){return TRUE;}
-//		if(pMsg->wParam == VK_LEFT){return MouseMoveAndDisp(VK_LEFT,10);}
-//		if(pMsg->wParam == VK_RIGHT){return MouseMoveAndDisp(VK_RIGHT,10);}
-//		if(pMsg->wParam == VK_UP){return MouseMoveAndDisp(VK_UP,10);}
-//		if(pMsg->wParam == VK_DOWN){return MouseMoveAndDisp(VK_DOWN,10);}
+		//		if(pMsg->wParam == VK_LEFT){return MouseMoveAndDisp(VK_LEFT,10);}
+		//		if(pMsg->wParam == VK_RIGHT){return MouseMoveAndDisp(VK_RIGHT,10);}
+		//		if(pMsg->wParam == VK_UP){return MouseMoveAndDisp(VK_UP,10);}
+		//		if(pMsg->wParam == VK_DOWN){return MouseMoveAndDisp(VK_DOWN,10);}
 	}
 	if(pMsg->message == WM_HOTKEY)
 	{
@@ -1030,7 +1030,7 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 	{
 		ResetMouseOrigin();
 	}
-	
+
 	ChangeMouseOrigin(rect.left, rect.top);
 }
 
@@ -1152,8 +1152,8 @@ BOOL CSAutomationDlg::DestroyWindow()
 
 	if(g_hhook != NULL){UnhookWindowsHookEx(g_hhook);}
 	SaveSettings();
-	
-    TrayNotifyIconMessage(NIM_DELETE);
+
+	TrayNotifyIconMessage(NIM_DELETE);
 	return CDialogEx::DestroyWindow();
 }
 
@@ -1333,15 +1333,15 @@ void CSAutomationDlg::ToggleEnable()
 void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialogEx::OnSize(nType, cx, cy);
-	
-    if (nType == SIZE_MINIMIZED)
-    {
+
+	if (nType == SIZE_MINIMIZED)
+	{
 		if(m_bMinimizeToTaskTray==TRUE)
 		{
-		    ShowWindow(SW_HIDE);
+			ShowWindow(SW_HIDE);
 			KillTimer(TIMER_WAKE_UP);
 		}
-    }
+	}
 }
 
 
@@ -1396,7 +1396,7 @@ void CSAutomationDlg::OnBnClickedButtonConfing()
 
 void CSAutomationDlg::OnBnClickedCheckTasktray()
 {
-	
+
 	if(((CButton*)GetDlgItem(IDC_CHECK_TASKTRAY))->GetCheck()==1)
 	{
 		m_bMinimizeToTaskTray=TRUE;

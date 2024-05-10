@@ -306,16 +306,10 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	{
 		Screenshot(&imgTarget);
 		if(bFirstTime==TRUE){CropImage(&imgModel, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC);}
-	
+
 		bRet = IsInRegion(&imgTarget, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
-		if(iWaitOn==1)
-		{
-			if(bRet == FALSE) {return RETURN_NORMAL;}
-		}
-		else
-		{
-			if(bRet == TRUE) {return RETURN_NORMAL;}
-		}
+		if((iWaitOn == 1) && (bRet == FALSE)) {return RETURN_NORMAL;}
+		if((iWaitOn == 0) && (bRet == TRUE)) {return RETURN_NORMAL;}
 
 		CropImage(&imgTarget, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC);
 		iRet=K_Sleep(Halt, Suspend, iTickMillisec);
@@ -390,15 +384,9 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		{
 			bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 		}
-
-		if(iWaitOn==1)
-		{
-			if(bRet == TRUE) {return RETURN_NORMAL;}
-		}
-		else
-		{
-			if(bRet == FALSE) {return RETURN_NORMAL;}
-		}
+		
+		if((iWaitOn == 1) && (bRet == TRUE)) {return RETURN_NORMAL;}
+		if((iWaitOn == 0) && (bRet == FALSE)) {return RETURN_NORMAL;}
 
 
 		int iRet=K_Sleep(Halt, Suspend, 1);
@@ -443,17 +431,9 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	while(1)
 	{
 		shKey = GetAsyncKeyState (byKey);
-		if(iWaitOn==1)
-		{
-			if((shKey<0)) {return RETURN_NORMAL;}
-
-		}
-		else
-		{
-			if((shKey>=0)) {return RETURN_NORMAL;}
-		}
-
-
+		if((iWaitOn == 1) && (shKey<0)) {return RETURN_NORMAL;}
+		if((iWaitOn == 0) && (shKey>=0)) {return RETURN_NORMAL;}
+		
 		iRet = K_Sleep(Halt, Suspend, 1);
 		if(iRet <0){return iRet;}
 	}
