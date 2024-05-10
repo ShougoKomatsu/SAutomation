@@ -1295,7 +1295,7 @@ BOOL ImgRGB::Assign(CString sFilePath)
 	{
 		((BYTE*)&bmfh)[i]=byData[i];
 	}
-	if(bmfh.bfType != 0x4d42){return FALSE;}
+	if(bmfh.bfType != 0x4d42){delete [] byData; return FALSE;}
 
 	for(int i=0; i<sizeof(bmih); i++)
 	{
@@ -1318,15 +1318,15 @@ BOOL ImgRGB::Assign(CString sFilePath)
 
 	iFiller = iWidth%4;
 
-		for(int r=0; r<iHeightLocal; r++)
+	for(int r=0; r<iHeightLocal; r++)
+	{
+		for(int c=0; c< iWidthLocal; c++)
 		{
-			for(int c=0; c< iWidthLocal; c++)
-			{
-				(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+0];
-				(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+1];
-				(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+2];
-			}
+			(this->byImgB)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+0];
+			(this->byImgG)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+1];
+			(this->byImgR)[(this->iHeight - r -1) *this->iWidth+c]=byData[ulOffset +3*( r*iWidthLocal + c)+r*iFiller+2];
 		}
+	}
 
 	delete [] byData;
 
