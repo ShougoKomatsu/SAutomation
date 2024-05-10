@@ -28,19 +28,21 @@ DWORD WINAPI GetKeyThread(LPVOID arg)
 		shShift = GetKeyState(VK_SHIFT);
 		shCtrl = GetKeyState(VK_CONTROL);
 		shSpace = GetKeyState(VK_SPACE);
+
 		if((shSpace<0)&&(shShift<0)&&(shCtrl<0)) 
 		{
 			g_bSuspend = TRUE;  
+			Sleep(1);
+			continue;
 		}
-		else        	
-		{
-			g_bSuspend = FALSE;
-		}
+
+		g_bSuspend = FALSE;
 		Sleep(1);
 	}
 
 	return 0;
 } 
+
 DWORD WINAPI GetStepKeyThread(LPVOID arg)
 {
 	short shStep;
