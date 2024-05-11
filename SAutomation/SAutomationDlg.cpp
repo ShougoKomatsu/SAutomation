@@ -76,16 +76,16 @@ void CSAutomationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_MOUSEPOS_R, m_sEditMousePosR);
 	DDX_Control(pDX, IDC_COMBO_ENABLE_HOTKEY, m_comboEnable);
 
-	DDX_Text(pDX, IDC_EDIT_FILE_0, (m_sEditFileName[0]));
-	DDX_Text(pDX, IDC_EDIT_FILE_1, (m_sEditFileName[1]));
-	DDX_Text(pDX, IDC_EDIT_FILE_2, (m_sEditFileName[2]));
-	DDX_Text(pDX, IDC_EDIT_FILE_3, (m_sEditFileName[3]));
-	DDX_Text(pDX, IDC_EDIT_FILE_4, (m_sEditFileName[4]));
-	DDX_Text(pDX, IDC_EDIT_FILE_5, (m_sEditFileName[5]));
-	DDX_Text(pDX, IDC_EDIT_FILE_6, (m_sEditFileName[6]));
-	DDX_Text(pDX, IDC_EDIT_FILE_7, (m_sEditFileName[7]));
-	DDX_Text(pDX, IDC_EDIT_FILE_8, (m_sEditFileName[8]));
-	DDX_Text(pDX, IDC_EDIT_FILE_9, (m_sEditFileName[9]));
+	DDX_Text(pDX, IDC_EDIT_FILE_00, (m_sEditFileName[0]));
+	DDX_Text(pDX, IDC_EDIT_FILE_01, (m_sEditFileName[1]));
+	DDX_Text(pDX, IDC_EDIT_FILE_02, (m_sEditFileName[2]));
+	DDX_Text(pDX, IDC_EDIT_FILE_03, (m_sEditFileName[3]));
+	DDX_Text(pDX, IDC_EDIT_FILE_04, (m_sEditFileName[4]));
+	DDX_Text(pDX, IDC_EDIT_FILE_05, (m_sEditFileName[5]));
+	DDX_Text(pDX, IDC_EDIT_FILE_06, (m_sEditFileName[6]));
+	DDX_Text(pDX, IDC_EDIT_FILE_07, (m_sEditFileName[7]));
+	DDX_Text(pDX, IDC_EDIT_FILE_08, (m_sEditFileName[8]));
+	DDX_Text(pDX, IDC_EDIT_FILE_09, (m_sEditFileName[9]));
 	DDX_Text(pDX, IDC_EDIT_FILE_10, (m_sEditFileName[10]));
 	DDX_Text(pDX, IDC_EDIT_FILE_11, (m_sEditFileName[11]));
 	DDX_Text(pDX, IDC_EDIT_FILE_12, (m_sEditFileName[12]));
@@ -93,16 +93,16 @@ void CSAutomationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_FILE_14, (m_sEditFileName[14]));
 	DDX_Text(pDX, IDC_EDIT_FILE_15, (m_sEditFileName[15]));
 
-	DDX_Text(pDX, IDC_EDIT_STATUS_0, (m_sEditStatus[0]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_1, (m_sEditStatus[1]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_2, (m_sEditStatus[2]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_3, (m_sEditStatus[3]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_4, (m_sEditStatus[4]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_5, (m_sEditStatus[5]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_6, (m_sEditStatus[6]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_7, (m_sEditStatus[7]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_8, (m_sEditStatus[8]));
-	DDX_Text(pDX, IDC_EDIT_STATUS_9, (m_sEditStatus[9]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_00, (m_sEditStatus[0]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_01, (m_sEditStatus[1]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_02, (m_sEditStatus[2]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_03, (m_sEditStatus[3]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_04, (m_sEditStatus[4]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_05, (m_sEditStatus[5]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_06, (m_sEditStatus[6]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_07, (m_sEditStatus[7]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_08, (m_sEditStatus[8]));
+	DDX_Text(pDX, IDC_EDIT_STATUS_09, (m_sEditStatus[9]));
 	DDX_Text(pDX, IDC_EDIT_STATUS_10, (m_sEditStatus[10]));
 	DDX_Text(pDX, IDC_EDIT_STATUS_11, (m_sEditStatus[11]));
 	DDX_Text(pDX, IDC_EDIT_STATUS_12, (m_sEditStatus[12]));
@@ -110,33 +110,33 @@ void CSAutomationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_STATUS_14, (m_sEditStatus[14]));
 	DDX_Text(pDX, IDC_EDIT_STATUS_15, (m_sEditStatus[15]));
 
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_0, (m_combo[0]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_1, (m_combo[1]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_2, (m_combo[2]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_3, (m_combo[3]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_4, (m_combo[4]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_5, (m_combo[5]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_6, (m_combo[6]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_7, (m_combo[7]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_8, (m_combo[8]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_9, (m_combo[9]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_10, (m_combo[10]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_11, (m_combo[11]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_12, (m_combo[12]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_13, (m_combo[13]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_14, (m_combo[14]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_15, (m_combo[15]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_00, (m_combo[0]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_01, (m_combo[1]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_02, (m_combo[2]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_03, (m_combo[3]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_04, (m_combo[4]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_05, (m_combo[5]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_06, (m_combo[6]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_07, (m_combo[7]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_08, (m_combo[8]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_09, (m_combo[9]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_10, (m_combo[10]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_11, (m_combo[11]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_12, (m_combo[12]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_13, (m_combo[13]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_14, (m_combo[14]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_KEY_15, (m_combo[15]));
 
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_0, (m_comboUseCtrl[0]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_1, (m_comboUseCtrl[1]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_2, (m_comboUseCtrl[2]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_3, (m_comboUseCtrl[3]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_4, (m_comboUseCtrl[4]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_5, (m_comboUseCtrl[5]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_6, (m_comboUseCtrl[6]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_7, (m_comboUseCtrl[7]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_8, (m_comboUseCtrl[8]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_9, (m_comboUseCtrl[9]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_00, (m_comboUseCtrl[0]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_01, (m_comboUseCtrl[1]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_02, (m_comboUseCtrl[2]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_03, (m_comboUseCtrl[3]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_04, (m_comboUseCtrl[4]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_05, (m_comboUseCtrl[5]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_06, (m_comboUseCtrl[6]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_07, (m_comboUseCtrl[7]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_08, (m_comboUseCtrl[8]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_09, (m_comboUseCtrl[9]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_10, (m_comboUseCtrl[10]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_11, (m_comboUseCtrl[11]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_12, (m_comboUseCtrl[12]));
@@ -144,16 +144,16 @@ void CSAutomationDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_14, (m_comboUseCtrl[14]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_CTRL_15, (m_comboUseCtrl[15]));
 
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_0, (m_comboUseShift[0]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_1, (m_comboUseShift[1]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_2, (m_comboUseShift[2]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_3, (m_comboUseShift[3]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_4, (m_comboUseShift[4]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_5, (m_comboUseShift[5]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_6, (m_comboUseShift[6]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_7, (m_comboUseShift[7]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_8, (m_comboUseShift[8]));
-	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_9, (m_comboUseShift[9]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_00, (m_comboUseShift[0]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_01, (m_comboUseShift[1]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_02, (m_comboUseShift[2]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_03, (m_comboUseShift[3]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_04, (m_comboUseShift[4]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_05, (m_comboUseShift[5]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_06, (m_comboUseShift[6]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_07, (m_comboUseShift[7]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_08, (m_comboUseShift[8]));
+	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_09, (m_comboUseShift[9]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_10, (m_comboUseShift[10]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_11, (m_comboUseShift[11]));
 	DDX_Control(pDX, IDC_COMBO_HOTKEY_SHIFT_12, (m_comboUseShift[12]));
@@ -172,51 +172,50 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_0, &CSAutomationDlg::OnBnClickedButton0)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_1, &CSAutomationDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_2, &CSAutomationDlg::OnBnClickedButton2)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_3, &CSAutomationDlg::OnBnClickedButton3)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_4, &CSAutomationDlg::OnBnClickedButton4)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_5, &CSAutomationDlg::OnBnClickedButton5)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_6, &CSAutomationDlg::OnBnClickedButton6)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_7, &CSAutomationDlg::OnBnClickedButton7)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_8, &CSAutomationDlg::OnBnClickedButton8)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_9, &CSAutomationDlg::OnBnClickedButton9)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_00, &CSAutomationDlg::OnBnClickedButton00)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_01, &CSAutomationDlg::OnBnClickedButton01)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_02, &CSAutomationDlg::OnBnClickedButton02)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_03, &CSAutomationDlg::OnBnClickedButton03)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_04, &CSAutomationDlg::OnBnClickedButton04)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_05, &CSAutomationDlg::OnBnClickedButton05)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_06, &CSAutomationDlg::OnBnClickedButton06)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_07, &CSAutomationDlg::OnBnClickedButton07)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_08, &CSAutomationDlg::OnBnClickedButton08)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_09, &CSAutomationDlg::OnBnClickedButton09)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_10, &CSAutomationDlg::OnBnClickedButton10)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_11, &CSAutomationDlg::OnBnClickedButton11)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_12, &CSAutomationDlg::OnBnClickedButton12)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_13, &CSAutomationDlg::OnBnClickedButton13)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_14, &CSAutomationDlg::OnBnClickedButton14)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT_FILE_15, &CSAutomationDlg::OnBnClickedButton15)
-	ON_WM_TIMER()
-	ON_WM_MOUSEMOVE()
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_0, &CSAutomationDlg::OnSelchangeCombo0)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_1, &CSAutomationDlg::OnSelchangeCombo1)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_2, &CSAutomationDlg::OnSelchangeCombo2)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_3, &CSAutomationDlg::OnSelchangeCombo3)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_4, &CSAutomationDlg::OnSelchangeCombo4)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_5, &CSAutomationDlg::OnSelchangeCombo5)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_6, &CSAutomationDlg::OnSelchangeCombo6)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_7, &CSAutomationDlg::OnSelchangeCombo7)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_8, &CSAutomationDlg::OnSelchangeCombo8)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_9, &CSAutomationDlg::OnSelchangeCombo9)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_10, &CSAutomationDlg::OnSelchangeCombo10)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_11, &CSAutomationDlg::OnSelchangeCombo11)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_12, &CSAutomationDlg::OnSelchangeCombo12)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_13, &CSAutomationDlg::OnSelchangeCombo13)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_14, &CSAutomationDlg::OnSelchangeCombo14)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_15, &CSAutomationDlg::OnSelchangeCombo15)
 
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_0, &CSAutomationDlg::OnSelchangeComboCtrl0)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_1, &CSAutomationDlg::OnSelchangeComboCtrl1)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_2, &CSAutomationDlg::OnSelchangeComboCtrl2)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_3, &CSAutomationDlg::OnSelchangeComboCtrl3)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_4, &CSAutomationDlg::OnSelchangeComboCtrl4)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_5, &CSAutomationDlg::OnSelchangeComboCtrl5)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_6, &CSAutomationDlg::OnSelchangeComboCtrl6)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_7, &CSAutomationDlg::OnSelchangeComboCtrl7)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_8, &CSAutomationDlg::OnSelchangeComboCtrl8)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_9, &CSAutomationDlg::OnSelchangeComboCtrl9)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_00, &CSAutomationDlg::OnSelchangeCombo00)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_01, &CSAutomationDlg::OnSelchangeCombo01)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_02, &CSAutomationDlg::OnSelchangeCombo02)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_03, &CSAutomationDlg::OnSelchangeCombo03)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_04, &CSAutomationDlg::OnSelchangeCombo04)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_05, &CSAutomationDlg::OnSelchangeCombo05)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_06, &CSAutomationDlg::OnSelchangeCombo06)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_07, &CSAutomationDlg::OnSelchangeCombo07)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_08, &CSAutomationDlg::OnSelchangeCombo08)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_09, &CSAutomationDlg::OnSelchangeCombo09)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_10, &CSAutomationDlg::OnSelchangeCombo10)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_11, &CSAutomationDlg::OnSelchangeCombo11)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_12, &CSAutomationDlg::OnSelchangeCombo12)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_13, &CSAutomationDlg::OnSelchangeCombo13)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_14, &CSAutomationDlg::OnSelchangeCombo14)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_KEY_15, &CSAutomationDlg::OnSelchangeCombo15)
+
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_00, &CSAutomationDlg::OnSelchangeComboCtrl00)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_01, &CSAutomationDlg::OnSelchangeComboCtrl01)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_02, &CSAutomationDlg::OnSelchangeComboCtrl02)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_03, &CSAutomationDlg::OnSelchangeComboCtrl03)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_04, &CSAutomationDlg::OnSelchangeComboCtrl04)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_05, &CSAutomationDlg::OnSelchangeComboCtrl05)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_06, &CSAutomationDlg::OnSelchangeComboCtrl06)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_07, &CSAutomationDlg::OnSelchangeComboCtrl07)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_08, &CSAutomationDlg::OnSelchangeComboCtrl08)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_09, &CSAutomationDlg::OnSelchangeComboCtrl09)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_10, &CSAutomationDlg::OnSelchangeComboCtrl10)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_11, &CSAutomationDlg::OnSelchangeComboCtrl11)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_12, &CSAutomationDlg::OnSelchangeComboCtrl12)
@@ -224,16 +223,16 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_14, &CSAutomationDlg::OnSelchangeComboCtrl14)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_CTRL_15, &CSAutomationDlg::OnSelchangeComboCtrl15)
 
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_0, &CSAutomationDlg::OnSelchangeComboShift0)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_1, &CSAutomationDlg::OnSelchangeComboShift1)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_2, &CSAutomationDlg::OnSelchangeComboShift2)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_3, &CSAutomationDlg::OnSelchangeComboShift3)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_4, &CSAutomationDlg::OnSelchangeComboShift4)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_5, &CSAutomationDlg::OnSelchangeComboShift5)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_6, &CSAutomationDlg::OnSelchangeComboShift6)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_7, &CSAutomationDlg::OnSelchangeComboShift7)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_8, &CSAutomationDlg::OnSelchangeComboShift8)
-	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_9, &CSAutomationDlg::OnSelchangeComboShift9)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_00, &CSAutomationDlg::OnSelchangeComboShift00)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_01, &CSAutomationDlg::OnSelchangeComboShift01)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_02, &CSAutomationDlg::OnSelchangeComboShift02)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_03, &CSAutomationDlg::OnSelchangeComboShift03)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_04, &CSAutomationDlg::OnSelchangeComboShift04)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_05, &CSAutomationDlg::OnSelchangeComboShift05)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_06, &CSAutomationDlg::OnSelchangeComboShift06)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_07, &CSAutomationDlg::OnSelchangeComboShift07)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_08, &CSAutomationDlg::OnSelchangeComboShift08)
+	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_09, &CSAutomationDlg::OnSelchangeComboShift09)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_10, &CSAutomationDlg::OnSelchangeComboShift10)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_11, &CSAutomationDlg::OnSelchangeComboShift11)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_12, &CSAutomationDlg::OnSelchangeComboShift12)
@@ -241,36 +240,38 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_14, &CSAutomationDlg::OnSelchangeComboShift14)
 	ON_CBN_SELCHANGE(IDC_COMBO_HOTKEY_SHIFT_15, &CSAutomationDlg::OnSelchangeComboShift15)
 
-	ON_MESSAGE(WM_DISP_STANDBY, &CSAutomationDlg::OnDispStandby)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_0, &CSAutomationDlg::OnBnClickedButtonOperate0)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_1, &CSAutomationDlg::OnBnClickedButtonOperate1)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_2, &CSAutomationDlg::OnBnClickedButtonOperate2)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_3, &CSAutomationDlg::OnBnClickedButtonOperate3)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_4, &CSAutomationDlg::OnBnClickedButtonOperate4)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_5, &CSAutomationDlg::OnBnClickedButtonOperate5)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_6, &CSAutomationDlg::OnBnClickedButtonOperate6)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_7, &CSAutomationDlg::OnBnClickedButtonOperate7)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_8, &CSAutomationDlg::OnBnClickedButtonOperate8)
-	ON_BN_CLICKED(IDC_BUTTON_OPERATE_9, &CSAutomationDlg::OnBnClickedButtonOperate9)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_00, &CSAutomationDlg::OnBnClickedButtonOperate00)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_01, &CSAutomationDlg::OnBnClickedButtonOperate01)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_02, &CSAutomationDlg::OnBnClickedButtonOperate02)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_03, &CSAutomationDlg::OnBnClickedButtonOperate03)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_04, &CSAutomationDlg::OnBnClickedButtonOperate04)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_05, &CSAutomationDlg::OnBnClickedButtonOperate05)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_06, &CSAutomationDlg::OnBnClickedButtonOperate06)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_07, &CSAutomationDlg::OnBnClickedButtonOperate07)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_08, &CSAutomationDlg::OnBnClickedButtonOperate08)
+	ON_BN_CLICKED(IDC_BUTTON_OPERATE_09, &CSAutomationDlg::OnBnClickedButtonOperate09)
 	ON_BN_CLICKED(IDC_BUTTON_OPERATE_10, &CSAutomationDlg::OnBnClickedButtonOperate10)
 	ON_BN_CLICKED(IDC_BUTTON_OPERATE_11, &CSAutomationDlg::OnBnClickedButtonOperate11)
 	ON_BN_CLICKED(IDC_BUTTON_OPERATE_12, &CSAutomationDlg::OnBnClickedButtonOperate12)
 	ON_BN_CLICKED(IDC_BUTTON_OPERATE_13, &CSAutomationDlg::OnBnClickedButtonOperate13)
 	ON_BN_CLICKED(IDC_BUTTON_OPERATE_14, &CSAutomationDlg::OnBnClickedButtonOperate14)
 	ON_BN_CLICKED(IDC_BUTTON_OPERATE_15, &CSAutomationDlg::OnBnClickedButtonOperate15)
-
+	
+	ON_WM_TIMER()
+	ON_WM_MOUSEMOVE()
+	ON_MESSAGE(WM_DISP_STANDBY, &CSAutomationDlg::OnDispStandby)
 	ON_BN_CLICKED(IDC_CHECK_ENABLE_HOTKEY, &CSAutomationDlg::OnBnClickedCheckEnableHotkey)
-	ON_CBN_SELCHANGE(IDC_COMBO_ENABLE_HOTKEY, &CSAutomationDlg::OnSelchangeComboEnable)
+	ON_CBN_SELCHANGE(IDC_COMBO_ENABLE_HOTKEY, &CSAutomationDlg::OnSelchangeCombo0Enable)
 
 	ON_MESSAGE(WM_TRAYNOTIFY, OnTrayNotify)
 	ON_WM_SIZE()
-	ON_BN_CLICKED(IDC_BUTTON_OPEN_FOLDER, &CSAutomationDlg::OnBnClickedButtonOpenFolder)
+	ON_BN_CLICKED(IDC_BUTTON_OPEN_FOLDER, &CSAutomationDlg::OnBnClickedButton0OpenFolder)
 	ON_EN_CHANGE(IDC_EDIT_SPEED, &CSAutomationDlg::OnChangeEditSpeed)
 	ON_EN_KILLFOCUS(IDC_EDIT_SPEED, &CSAutomationDlg::OnKillfocusEditSpeed)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER_SPEED, &CSAutomationDlg::OnCustomdrawSliderSpeed)
-	ON_BN_CLICKED(IDC_BUTTON_CONFING, &CSAutomationDlg::OnBnClickedButtonConfing)
+	ON_BN_CLICKED(IDC_BUTTON_CONFING, &CSAutomationDlg::OnBnClickedButton0Confing)
 	ON_BN_CLICKED(IDC_CHECK_TASKTRAY, &CSAutomationDlg::OnBnClickedCheckTasktray)
-	ON_BN_CLICKED(IDC_BUTTON_WINDOW_NAME_REFRESH, &CSAutomationDlg::OnBnClickedButtonWindowNameRefresh)
+	ON_BN_CLICKED(IDC_BUTTON_WINDOW_NAME_REFRESH, &CSAutomationDlg::OnBnClickedButton0WindowNameRefresh)
 	ON_CBN_SELCHANGE(IDC_COMBO_WINDOW_NAME, &CSAutomationDlg::OnSelchangeWindowName)
 END_MESSAGE_MAP()
 
@@ -589,7 +590,7 @@ void CSAutomationDlg::SaveSettings()
 		else{m_combo[iID].GetLBText(m_combo[iID].GetCurSel(),tch); sData.Format(_T("%s"), tch);}
 		WritePrivateProfileString(sSection,_T("Hotkey"),sData,sFilePath);
 
-		sData.Format(_T("%d"),((CButton*)GetDlgItem(IDC_CHECK_REPEAT_0+iID))->GetCheck());	
+		sData.Format(_T("%d"),((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00+iID))->GetCheck());	
 		WritePrivateProfileString(sSection,_T("Loop"),sData,sFilePath);
 
 		sUseCtrl.Format(_T("0"));
@@ -823,7 +824,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 			if((char(m_OpeInfo[iID].sHotkey.GetAt(0))>='0') && (char(m_OpeInfo[iID].sHotkey.GetAt(0))<='9')){m_OpeInfo[iID].dwHotKey = char(m_OpeInfo[iID].sHotkey.GetAt(0))-'0'+0x30;}
 		}
 		m_sEditStatus[iID].Format(_T("Stand by"));
-		((CButton*)GetDlgItem(IDC_CHECK_REPEAT_0 + iID))->SetCheck(m_OpeInfo[iID].bLoop);
+		((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00 + iID))->SetCheck(m_OpeInfo[iID].bLoop);
 		m_sEditFileName[iID].Format(_T("%s"),m_OpeInfo[iID].sFileName);
 		UpdateData(FALSE);
 
@@ -1180,7 +1181,7 @@ void CSAutomationDlg::Operate(int iID)
 	}
 
 	iParam = iLogLevel<<6;
-	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_REPEAT_0+iID))->GetCheck();
+	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00+iID))->GetCheck();
 	iParam += 1<<5;
 	iParam+=(iChecked<<4)+iID;
 	m_OpeInfo[iID].m_bRunning=TRUE;
@@ -1222,16 +1223,16 @@ BOOL CSAutomationDlg::DestroyWindow()
 
 
 
-void CSAutomationDlg::OnBnClickedButton0(){FileSelect(&m_sEditFileName[0]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton1(){FileSelect(&m_sEditFileName[1]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton2(){FileSelect(&m_sEditFileName[2]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton3(){FileSelect(&m_sEditFileName[3]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton4(){FileSelect(&m_sEditFileName[4]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton5(){FileSelect(&m_sEditFileName[5]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton6(){FileSelect(&m_sEditFileName[6]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton7(){FileSelect(&m_sEditFileName[7]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton8(){FileSelect(&m_sEditFileName[8]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton9(){FileSelect(&m_sEditFileName[9]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton00(){FileSelect(&m_sEditFileName[0]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton01(){FileSelect(&m_sEditFileName[1]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton02(){FileSelect(&m_sEditFileName[2]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton03(){FileSelect(&m_sEditFileName[3]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton04(){FileSelect(&m_sEditFileName[4]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton05(){FileSelect(&m_sEditFileName[5]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton06(){FileSelect(&m_sEditFileName[6]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton07(){FileSelect(&m_sEditFileName[7]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton08(){FileSelect(&m_sEditFileName[8]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton09(){FileSelect(&m_sEditFileName[9]);UpdateData(FALSE);SaveSettings();}
 void CSAutomationDlg::OnBnClickedButton10(){FileSelect(&m_sEditFileName[10]);UpdateData(FALSE);SaveSettings();}
 void CSAutomationDlg::OnBnClickedButton11(){FileSelect(&m_sEditFileName[11]);UpdateData(FALSE);SaveSettings();}
 void CSAutomationDlg::OnBnClickedButton12(){FileSelect(&m_sEditFileName[12]);UpdateData(FALSE);SaveSettings();}
@@ -1239,16 +1240,16 @@ void CSAutomationDlg::OnBnClickedButton13(){FileSelect(&m_sEditFileName[13]);Upd
 void CSAutomationDlg::OnBnClickedButton14(){FileSelect(&m_sEditFileName[14]);UpdateData(FALSE);SaveSettings();}
 void CSAutomationDlg::OnBnClickedButton15(){FileSelect(&m_sEditFileName[15]);UpdateData(FALSE);SaveSettings();}
 
-void CSAutomationDlg::OnSelchangeCombo0(){ResetHotkey(0);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo1(){ResetHotkey(1);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo2(){ResetHotkey(2);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo3(){ResetHotkey(3);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo4(){ResetHotkey(4);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo5(){ResetHotkey(5);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo6(){ResetHotkey(6);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo7(){ResetHotkey(7);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo8(){ResetHotkey(8);SaveSettings();}
-void CSAutomationDlg::OnSelchangeCombo9(){ResetHotkey(9);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo00(){ResetHotkey(0);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo01(){ResetHotkey(1);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo02(){ResetHotkey(2);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo03(){ResetHotkey(3);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo04(){ResetHotkey(4);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo05(){ResetHotkey(5);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo06(){ResetHotkey(6);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo07(){ResetHotkey(7);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo08(){ResetHotkey(8);SaveSettings();}
+void CSAutomationDlg::OnSelchangeCombo09(){ResetHotkey(9);SaveSettings();}
 void CSAutomationDlg::OnSelchangeCombo10(){ResetHotkey(10);SaveSettings();}
 void CSAutomationDlg::OnSelchangeCombo11(){ResetHotkey(11);SaveSettings();}
 void CSAutomationDlg::OnSelchangeCombo12(){ResetHotkey(12);SaveSettings();}
@@ -1256,16 +1257,16 @@ void CSAutomationDlg::OnSelchangeCombo13(){ResetHotkey(13);SaveSettings();}
 void CSAutomationDlg::OnSelchangeCombo14(){ResetHotkey(14);SaveSettings();}
 void CSAutomationDlg::OnSelchangeCombo15(){ResetHotkey(15);SaveSettings();}
 
-void CSAutomationDlg::OnSelchangeComboCtrl0(){ResetHotkey(0);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl1(){ResetHotkey(1);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl2(){ResetHotkey(2);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl3(){ResetHotkey(3);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl4(){ResetHotkey(4);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl5(){ResetHotkey(5);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl6(){ResetHotkey(6);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl7(){ResetHotkey(7);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl8(){ResetHotkey(8);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboCtrl9(){ResetHotkey(9);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl00(){ResetHotkey(0);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl01(){ResetHotkey(1);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl02(){ResetHotkey(2);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl03(){ResetHotkey(3);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl04(){ResetHotkey(4);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl05(){ResetHotkey(5);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl06(){ResetHotkey(6);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl07(){ResetHotkey(7);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl08(){ResetHotkey(8);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboCtrl09(){ResetHotkey(9);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboCtrl10(){ResetHotkey(10);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboCtrl11(){ResetHotkey(11);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboCtrl12(){ResetHotkey(12);SaveSettings();}
@@ -1273,16 +1274,16 @@ void CSAutomationDlg::OnSelchangeComboCtrl13(){ResetHotkey(13);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboCtrl14(){ResetHotkey(14);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboCtrl15(){ResetHotkey(15);SaveSettings();}
 
-void CSAutomationDlg::OnSelchangeComboShift0(){ResetHotkey(0);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift1(){ResetHotkey(1);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift2(){ResetHotkey(2);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift3(){ResetHotkey(3);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift4(){ResetHotkey(4);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift5(){ResetHotkey(5);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift6(){ResetHotkey(6);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift7(){ResetHotkey(7);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift8(){ResetHotkey(8);SaveSettings();}
-void CSAutomationDlg::OnSelchangeComboShift9(){ResetHotkey(9);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift00(){ResetHotkey(0);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift01(){ResetHotkey(1);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift02(){ResetHotkey(2);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift03(){ResetHotkey(3);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift04(){ResetHotkey(4);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift05(){ResetHotkey(5);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift06(){ResetHotkey(6);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift07(){ResetHotkey(7);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift08(){ResetHotkey(8);SaveSettings();}
+void CSAutomationDlg::OnSelchangeComboShift09(){ResetHotkey(9);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboShift10(){ResetHotkey(10);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboShift11(){ResetHotkey(11);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboShift12(){ResetHotkey(12);SaveSettings();}
@@ -1290,8 +1291,24 @@ void CSAutomationDlg::OnSelchangeComboShift13(){ResetHotkey(13);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboShift14(){ResetHotkey(14);SaveSettings();}
 void CSAutomationDlg::OnSelchangeComboShift15(){ResetHotkey(15);SaveSettings();}
 
+void CSAutomationDlg::OnBnClickedButtonOperate00(){Operate(0);}
+void CSAutomationDlg::OnBnClickedButtonOperate01(){Operate(1);}
+void CSAutomationDlg::OnBnClickedButtonOperate02(){Operate(2);}
+void CSAutomationDlg::OnBnClickedButtonOperate03(){Operate(3);}
+void CSAutomationDlg::OnBnClickedButtonOperate04(){Operate(4);}
+void CSAutomationDlg::OnBnClickedButtonOperate05(){Operate(5);}
+void CSAutomationDlg::OnBnClickedButtonOperate06(){Operate(6);}
+void CSAutomationDlg::OnBnClickedButtonOperate07(){Operate(7);}
+void CSAutomationDlg::OnBnClickedButtonOperate08(){Operate(8);}
+void CSAutomationDlg::OnBnClickedButtonOperate09(){Operate(9);}
+void CSAutomationDlg::OnBnClickedButtonOperate10(){Operate(10);}
+void CSAutomationDlg::OnBnClickedButtonOperate11(){Operate(11);}
+void CSAutomationDlg::OnBnClickedButtonOperate12(){Operate(12);}
+void CSAutomationDlg::OnBnClickedButtonOperate13(){Operate(13);}
+void CSAutomationDlg::OnBnClickedButtonOperate14(){Operate(14);}
+void CSAutomationDlg::OnBnClickedButtonOperate15(){Operate(15);}
 
-void CSAutomationDlg::OnSelchangeComboEnable()
+void CSAutomationDlg::OnSelchangeCombo0Enable()
 {
 	if(m_sHotkeyEnable.GetLength()==1)
 	{
@@ -1312,22 +1329,6 @@ void CSAutomationDlg::OnSelchangeComboEnable()
 
 
 
-void CSAutomationDlg::OnBnClickedButtonOperate0(){Operate(0);}
-void CSAutomationDlg::OnBnClickedButtonOperate1(){Operate(1);}
-void CSAutomationDlg::OnBnClickedButtonOperate2(){Operate(2);}
-void CSAutomationDlg::OnBnClickedButtonOperate3(){Operate(3);}
-void CSAutomationDlg::OnBnClickedButtonOperate4(){Operate(4);}
-void CSAutomationDlg::OnBnClickedButtonOperate5(){Operate(5);}
-void CSAutomationDlg::OnBnClickedButtonOperate6(){Operate(6);}
-void CSAutomationDlg::OnBnClickedButtonOperate7(){Operate(7);}
-void CSAutomationDlg::OnBnClickedButtonOperate8(){Operate(8);}
-void CSAutomationDlg::OnBnClickedButtonOperate9(){Operate(9);}
-void CSAutomationDlg::OnBnClickedButtonOperate10(){Operate(10);}
-void CSAutomationDlg::OnBnClickedButtonOperate11(){Operate(11);}
-void CSAutomationDlg::OnBnClickedButtonOperate12(){Operate(12);}
-void CSAutomationDlg::OnBnClickedButtonOperate13(){Operate(13);}
-void CSAutomationDlg::OnBnClickedButtonOperate14(){Operate(14);}
-void CSAutomationDlg::OnBnClickedButtonOperate15(){Operate(15);}
 
 void CSAutomationDlg::ResetHotkey(int iID)
 {
@@ -1438,7 +1439,7 @@ void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
 }
 
 
-void CSAutomationDlg::OnBnClickedButtonOpenFolder()
+void CSAutomationDlg::OnBnClickedButton0OpenFolder()
 {
 	CString sMacroFolder;
 	sMacroFolder.Format(_T("%s\\Macro"),m_sDir);
@@ -1481,7 +1482,7 @@ void CSAutomationDlg::OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 
-void CSAutomationDlg::OnBnClickedButtonConfing()
+void CSAutomationDlg::OnBnClickedButton0Confing()
 {
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 }
@@ -1517,7 +1518,7 @@ void CSAutomationDlg::WindowNameRefresh()
 	UpdateData(FALSE);
 }
 
-void CSAutomationDlg::OnBnClickedButtonWindowNameRefresh()
+void CSAutomationDlg::OnBnClickedButton0WindowNameRefresh()
 {
 	WindowNameRefresh();
 	RefreshTargetWindowPos();
