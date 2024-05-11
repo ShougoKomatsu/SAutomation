@@ -17,8 +17,14 @@
 #define HOTKEY_ID_7 (17)
 #define HOTKEY_ID_8 (18)
 #define HOTKEY_ID_9 (19)
+#define HOTKEY_ID_10 (20)
+#define HOTKEY_ID_11 (21)
+#define HOTKEY_ID_12 (22)
+#define HOTKEY_ID_13 (23)
+#define HOTKEY_ID_14 (24)
+#define HOTKEY_ID_15 (25)
 
-#define HOTKEY_ENABLE (20)
+#define HOTKEY_ENABLE (30)
 
 #define HOTKEY_ID_ESCAPE (100)
 
