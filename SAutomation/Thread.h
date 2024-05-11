@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 extern BOOL g_bHalt;
-#define MAX_THREAD (10)
+#define MAX_THREAD (16)
 
 extern HANDLE g_hThread[MAX_THREAD];
 extern CString g_sFilePath[MAX_THREAD];
