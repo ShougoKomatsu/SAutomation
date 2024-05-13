@@ -1177,7 +1177,6 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 	if(iScanHeight<=0){return FALSE;}
 	if(iScanWidth<=0){return FALSE;}
 
-	BOOL bFound;
 	int iREnd, iCEnd;
 
 	iREnd = iR0+iScanHeight;
