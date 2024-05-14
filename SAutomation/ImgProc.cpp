@@ -473,7 +473,118 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 	}
 	return TRUE;
 }
+
+
+int GetPointerOffset(int iW, int iH, int iLevel)
+{
+	if(iLevel==0){return 0;}
+	int iOffset=0;
+	int iLevelH=iH;
+	int iLevelW=iW;
+	for(int i=1; i<=iLevel; i++)
+	{
+		iOffset+=iLevelH*iLevelW;
+		int iLevelParentH=iLevelH;
+		int iLevelParentW=iLevelW;
+		iLevelH = (((iLevelParentH%1)==1) ? (iLevelParentH+1)/2 : (iLevelParentH)/2);
+		iLevelW = (((iLevelParentW%1)==1) ? (iLevelParentW+1)/2 : (iLevelParentW)/2);
+	}
+	return iOffset;
+}
+
 /*
+BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgIn, int iLevel)
+{
+	if(imgIn == NULL){return FALSE;}
+
+
+	this->Set(imgIn->iWidth*2, imgIn->iHeight*2, imgIn->iChannel);
+	
+	int iLevelH;
+	int iLevelW;
+	iLevelH=imgIn->iHeight;
+	iLevelW=imgIn->iWidth;
+	for(int r=0; r<iLevelH; r++)
+	{
+		for(int c=0; c<iLevelW; c++)
+		{
+			this->byImgR[r*iLevelW+c]=imgIn->byImgR[r*iLevelW+c];
+		}
+	}
+
+	for(int i=1; i<iLevel; i++)
+	{
+		int iLevelParentH=iLevelH;
+		int iLevelParentW=iLevelW;
+		iLevelH = ((iLevelParentH%1)==1) ? (iLevelParentH+1)/2 : (iLevelParentH)/2;
+		iLevelW = ((iLevelParentW%1)==1) ? (iLevelParentW+1)/2 : (iLevelParentW)/2;
+
+
+
+	}
+
+	return TRUE;
+}
+
+
+inline BOOL SumRDirection(
+	BYTE* byTargetCropped, int iImgTargetCroppedW,
+	BYTE* byModel, int iModelW, int iModelH, 
+	UINT* uiMap, int iMapW, int iMapR, int iMapC, 
+	int c, 
+	BYTE* byMinOfEachCTarget, 
+	BYTE* byMaxOfEachCTarget, 
+	UINT* uiSumOfEachCTarget,
+	BYTE* byMinOfEachCModel, 
+	BYTE* byMaxOfEachCModel,
+	UINT* uiSumOfEachCModel)
+{
+	if(byMaxOfEachCTarget[c] < byMinOfEachCModel[c])
+	{
+		uiMap[iMapR*iMapW+iMapC]+=uiSumOfEachCModel[c] - uiSumOfEachCTarget[c];
+		return TRUE;
+	}
+	if(byMinOfEachCTarget[c] > byMaxOfEachCModel[c])
+	{
+		uiMap[iMapR*iMapW+iMapC]+=uiSumOfEachCTarget[c] - uiSumOfEachCModel[c];
+		return TRUE;
+	}
+
+	for(int r=0; r<iModelH; r++)
+	{
+		uiMap[iMapR*iMapW+iMapC]+=bySubAbs(byTargetCropped[r*iImgTargetCroppedW+c+iMapC] , (byModel[r*iModelW+c]));
+	}
+
+	return TRUE;
+}
+
+BOOL UpdateVerticalInformation(BYTE* byDataR, BYTE* byDataG, BYTE* byDataB, int r,
+	BYTE* byMinOfEachCTargetR, BYTE* byMaxOfEachCTargetR, UINT* uiSumOfEachCTargetR, 
+	BYTE* byMinOfEachCTargetG, BYTE* byMaxOfEachCTargetG, UINT* uiSumOfEachCTargetG,
+	BYTE* byMinOfEachCTargetB, BYTE* byMaxOfEachCTargetB, UINT* uiSumOfEachCTargetB, int iCropW, int iModelH)
+{
+	for(int c=0; c<iCropW; c++)
+	{
+		uiSumOfEachCTargetR[c]+=byDataR[iModelH*iCropW+c];
+		uiSumOfEachCTargetG[c]+=byDataG[r*iCropW+c];
+		uiSumOfEachCTargetB[c]+=byDataB[r*iCropW+c];
+
+		for(int rl=0; rl<iModelH; rl++)
+		{
+			if(byMinOfEachCTargetR[c]<byDataR[r*iCropW+c]){byMinOfEachCTargetR[c]=byDataR[rl*iCropW+c];}
+			if(byMinOfEachCTargetG[c]<byDataG[r*iCropW+c]){byMinOfEachCTargetG[c]=byDataG[rl*iCropW+c];}
+			if(byMinOfEachCTargetB[c]<byDataB[r*iCropW+c]){byMinOfEachCTargetB[c]=byDataB[rl*iCropW+c];}
+
+			if(byMaxOfEachCTargetR[c]>byDataR[r*iCropW+c]){byMaxOfEachCTargetR[c]=byDataR[rl*iCropW+c];}
+			if(byMaxOfEachCTargetG[c]>byDataG[r*iCropW+c]){byMaxOfEachCTargetG[c]=byDataG[rl*iCropW+c];}
+			if(byMaxOfEachCTargetB[c]>byDataB[r*iCropW+c]){byMaxOfEachCTargetB[c]=byDataB[rl*iCropW+c];}
+
+		}
+	}
+	return TRUE;
+}
+
+
 BOOL CreatePyramid(ImgRGB* imgIn, ImgRGB* imgOut)
 {
 	if(imgIn == NULL){return FALSE;}
@@ -520,59 +631,6 @@ BOOL CreatePyramid(ImgRGB* imgIn, ImgRGB* imgOut)
 }
 
 
-inline BOOL SumRDirection(
-	BYTE* byTargetCropped, int iImgTargetCroppedW,
-	BYTE* byModel, int iModelW, int iModelH, 
-	UINT* uiMap, int iMapW, int iMapR, int iMapC, 
-	int c, 
-	BYTE* byMinOfEachCTarget, 
-	BYTE* byMaxOfEachCTarget, 
-	UINT* uiSumOfEachCTarget,
-	BYTE* byMinOfEachCModel, 
-	BYTE* byMaxOfEachCModel,
-	UINT* uiSumOfEachCModel)
-{
-	if(byMaxOfEachCTarget[c] < byMinOfEachCModel[c])
-	{
-		uiMap[iMapR*iMapW+iMapC]+=uiSumOfEachCModel[c] - uiSumOfEachCTarget[c];
-		return TRUE;
-	}
-	if(byMinOfEachCTarget[c] > byMaxOfEachCModel[c])
-	{
-		uiMap[iMapR*iMapW+iMapC]+=uiSumOfEachCTarget[c] - uiSumOfEachCModel[c];
-		return TRUE;
-	}
-
-	for(int r=0; r<iModelH; r++)
-	{
-		uiMap[iMapR*iMapW+iMapC]+=bySubAbs(byTargetCropped[r*iImgTargetCroppedW+c+iMapC] , (byModel[r*iModelW+c]));
-	}
-
-	return TRUE;
-}
-BOOL UpdateVerticalInformation(BYTE* byDataR, BYTE* byDataG, BYTE* byDataB, int R BYTE* byMinOfEachCTargetR, BYTE* byMaxOfEachCTargetR, UINT* uiSumOfEachCTargetR, BYTE* byMinOfEachCTargetG, BYTE* byMaxOfEachCTargetG, UINT* uiSumOfEachCTargetG,
-BYTE* byMinOfEachCTargetB, BYTE* byMaxOfEachCTargetB, UINT* uiSumOfEachCTargetB, int iCropW, int iModelHeight)
-{
-	for(int c=0; c<iCropW; c++)
-	{
-		uiSumOfEachCTargetR[c]+=byDataR[iModelHe*iCropW+c];
-		uiSumOfEachCTargetG[c]+=byDataG[r*iCropW+c];
-		uiSumOfEachCTargetB[c]+=byDataB[r*iCropW+c];
-	}
-			for(int r=0; r<iModelHeight; r++)
-			{
-				if(byMinOfEachCTargetR[c]<byDataR[r*iCropW+c]){byMinOfEachCTargetR[c]=byDataR[r*iCropW+c];}
-				if(byMinOfEachCTargetG[c]<byDataG[r*iCropW+c]){byMinOfEachCTargetG[c]=byDataG[r*iCropW+c];}
-				if(byMinOfEachCTargetB[c]<byDataB[r*iCropW+c]){byMinOfEachCTargetB[c]=byDataB[r*iCropW+c];}
-				
-				if(byMaxOfEachCTargetR[c]>byDataR[r*iCropW+c]){byMaxOfEachCTargetR[c]=byDataR[r*iCropW+c];}
-				if(byMaxOfEachCTargetG[c]>byDataG[r*iCropW+c]){byMaxOfEachCTargetG[c]=byDataG[r*iCropW+c];}
-				if(byMaxOfEachCTargetB[c]>byDataB[r*iCropW+c]){byMaxOfEachCTargetB[c]=byDataB[r*iCropW+c];}
-
-			}
-		}
-		return TRUE;
-}
 
 BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {
