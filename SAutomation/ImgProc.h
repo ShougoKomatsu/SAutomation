@@ -52,6 +52,13 @@ struct ImgRGB
 	~ImgRGB(){Init();}
 	BOOL Assign(CString sFilePath);
 };
+struct ImgRGBPyramid:ImgRGB
+{
+	int iWidthOriginal;
+	int iHeightOriginal;
+	BOOL SetPyramid(ImgRGB* imgRGBIn);
+};
+
 BOOL Screenshot(ImgRGB* imgRGB);
 BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, int iC1);
 

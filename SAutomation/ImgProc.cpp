@@ -473,6 +473,87 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 	}
 	return TRUE;
 }
+
+int GetPointerOffset(int iW, int iH, int iLevel)
+{
+	int iOffset=0;
+	int iParentLevelH=iH;
+	int iParentLevelW=iW;
+	for(int i=0; i<iLevel; i++)
+	{
+		iOffset+=iParentLevelH*iParentLevelW;
+		iParentLevelH = (((iParentLevelH%1)==1) ? (iParentLevelH+1)/2 : (iParentLevelH)/2);
+		iParentLevelW = (((iParentLevelW%1)==1) ? (iParentLevelW+1)/2 : (iParentLevelW)/2);
+	}
+	return iOffset;
+}
+BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
+{
+	this->Set(imgRGBIn->iWidth*2, imgRGBIn->iHeight*2,imgRGBIn->iChannel);
+
+	int iOffset = 0;
+	int iParentLevelH=imgRGBIn->iHeight;
+	int iParentLevelW=imgRGBIn->iWidth;
+
+	for(int r=0; r<iParentLevelH; r++)
+	{for(int c=0; c<iParentLevelW; c++)
+	{
+		this->byImgB[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgB[r*imgRGBIn->iWidth+c];
+		this->byImgG[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgG[r*imgRGBIn->iWidth+c];
+		this->byImgR[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[r*imgRGBIn->iWidth+c];
+
+	}
+	}
+	int iLevel=0;
+	int iLevelW;
+	int iLevelH;
+	while(1)
+	{
+		iLevelH = (((iParentLevelH%1)==1) ? (iParentLevelH+1)/2 : (iParentLevelH)/2);
+		iLevelW = (((iParentLevelW%1)==1) ? (iParentLevelW+1)/2 : (iParentLevelW)/2);
+		int iParentOffset=iOffset;
+		iOffset=GetPointerOffset(imgRGBIn->iWidth, imgRGBIn->iHeight, iLevel);
+		for(int r=0; r<iLevelH; r++)
+		{
+			if(((iParentLevelW%1)==1) && (r==iLevelW-1))
+			{
+				for(int c=0; c<iLevelW; c++)
+				{
+					if(((iParentLevelW%1)==1) && (c==iLevelW-1))
+					{
+						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgB[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgG[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgR[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+					}
+					else
+					{
+						this->byImgB[r*iLevelW+c+iOffset]=this->byImgB[2*r*iParentLevelW+2*c+iParentOffset];
+						this->byImgG[r*iLevelW+c+iOffset]=this->byImgB[2*r*iParentLevelW+2*c+iParentOffset];
+						this->byImgR[r*iLevelW+c+iOffset]=this->byImgB[2*r*iParentLevelW+2*c+iParentOffset];
+					}
+				}
+			}
+			else
+			{
+				for(int c=0; c<iLevelW; c++)
+				{
+					if(((iParentLevelW%1)==1) && (c==iLevelW-1))
+					{
+						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgB[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgG[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgR[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+					}
+					else
+					{
+						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgB[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)this->byImgB[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
+						this->byImgG[r*iLevelW+c+iOffset]=((int)this->byImgG[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)this->byImgG[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
+						this->byImgR[r*iLevelW+c+iOffset]=((int)this->byImgR[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)this->byImgR[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
+					}
+				}
+			}
+		}
+	}
+}
 /*
 BOOL CreatePyramid(ImgRGB* imgIn, ImgRGB* imgOut)
 {
