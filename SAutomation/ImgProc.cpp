@@ -91,6 +91,96 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 
 	return TRUE;
 }
+BOOL WriteImage(ImgRGBPyramid* imgRGB, CString sFilePath)
+{
+	BITMAPINFOHEADER bmih;
+	BOOL bRet;
+	
+	CFile f;
+	BITMAPFILEHEADER bmfh;
+
+
+	
+	int iFillerSize;
+
+	if(((imgRGB->iWidth*3)%4)==0)
+	{
+		iFillerSize = 0;
+	}
+	else
+	{
+		iFillerSize = (4-((imgRGB->iWidth*3)%4));
+	}
+
+
+	int iBitSize;
+
+	iBitSize = ((imgRGB->iWidth*3)+iFillerSize)*(imgRGB->iHeight);
+
+	bmfh.bfType=0x4d42;
+	bmfh.bfSize =  0x36+iBitSize;
+	bmfh.bfOffBits = 0x36;
+	bmfh.bfReserved1=0;
+	bmfh.bfReserved2 = 0;
+
+	bmih.biSize=0x00000028;
+	bmih.biWidth=imgRGB->iWidth;
+	bmih.biHeight=imgRGB->iHeight;
+	bmih.biPlanes=1;
+	bmih.biBitCount=24;
+	bmih.biCompression=0;
+	bmih.biSizeImage=iBitSize;
+	bmih.biXPelsPerMeter=0;
+	bmih.biYPelsPerMeter=0;
+	bmih.biClrUsed=0;
+	bmih.biClrImportant	=0;
+
+
+	bRet = f.Open(sFilePath, CFile::modeCreate|CFile::modeWrite);
+	if(bRet != TRUE){return FALSE;}
+
+
+	f.Write((BYTE*)&bmfh,sizeof(bmfh));
+	f.Write((BYTE*)&bmih,sizeof(bmih));
+	
+
+	BYTE* byOutBuf;
+
+	byOutBuf = new BYTE[iBitSize];
+
+	if(imgRGB->iChannel==CHANNEL_3_8)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgB[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgG[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+			}
+		}
+	}
+
+	if(imgRGB->iChannel==CHANNEL_1_24)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
+			}
+		}
+	}
+
+
+	f.Write((void*)(byOutBuf),iBitSize);
+	f.Close();
+	delete [] byOutBuf;
+
+	return TRUE;
+}
 BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, int iC1)
 {
 	if(imgRGBin==NULL){return FALSE;}
@@ -489,7 +579,7 @@ int GetPointerOffset(int iW, int iH, int iLevel)
 }
 BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 {
-	this->Set(imgRGBIn->iWidth*2, imgRGBIn->iHeight*2,imgRGBIn->iChannel);
+	this->Set(imgRGBIn->iWidth, imgRGBIn->iHeight*2,imgRGBIn->iChannel);
 
 	int iOffset = 0;
 	int iParentLevelH=imgRGBIn->iHeight;
@@ -509,6 +599,9 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 	int iLevelH;
 	while(1)
 	{
+		iLevel++;
+		if(iParentLevelH<=1){break;}
+		if(iParentLevelW<=1){break;}
 		iLevelH = (((iParentLevelH%1)==1) ? (iParentLevelH+1)/2 : (iParentLevelH)/2);
 		iLevelW = (((iParentLevelW%1)==1) ? (iParentLevelW+1)/2 : (iParentLevelW)/2);
 		int iParentOffset=iOffset;
@@ -552,7 +645,10 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 				}
 			}
 		}
+		iParentLevelH=iLevelH;
+		iParentLevelW=iLevelW;
 	}
+	return TRUE;
 }
 /*
 BOOL CreatePyramid(ImgRGB* imgIn, ImgRGB* imgOut)

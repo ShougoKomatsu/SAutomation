@@ -67,3 +67,4 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC);
 
 BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath);
+BOOL WriteImage(ImgRGBPyramid* imgRGB, CString sFilePath);

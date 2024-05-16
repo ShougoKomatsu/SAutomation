@@ -899,8 +899,11 @@ BOOL CSAutomationDlg::OnInitDialog()
 	RefreshTargetWindowPos();
 	UpdateData(FALSE);
 
-
-
+//	ImgRGB imgTest;
+//	imgTest.Assign(_T("D:\\GitHub\\SAutomation\\SAutomation\\SAutomation\\Macro\\Model\\test.bmp"));
+//	ImgRGBPyramid imgTestPyram;
+//	imgTestPyram.SetPyramid(&imgTest);
+//	WriteImage(&imgTestPyram, _T("D:\\GitHub\\SAutomation\\SAutomation\\SAutomation\\Macro\\Model\\test2.bmp"));
 	TrayNotifyIconMessage(NIM_ADD);
 
 	// このダイアログのアイコンを設定します。アプリケーションのメイン ウィンドウがダイアログでない場合、
