@@ -608,7 +608,7 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 		iOffset=GetPointerOffset(imgRGBIn->iWidth, imgRGBIn->iHeight, iLevel);
 		for(int r=0; r<iLevelH; r++)
 		{
-			if(((iParentLevelW%1)==1) && (r==iLevelW-1))
+			if(((iParentLevelH%1)==1) && (r==iLevelH-1))
 			{
 				for(int c=0; c<iLevelW; c++)
 				{
@@ -651,51 +651,6 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 	return TRUE;
 }
 /*
-BOOL CreatePyramid(ImgRGB* imgIn, ImgRGB* imgOut)
-{
-	if(imgIn == NULL){return FALSE;}
-	if(imgOut == NULL){return FALSE;}
-	if(imgIn == imgOut){return FALSE;}
-
-	int iWidthOriginal=imgIn->iWidth;
-	int iHeightOriginal=imgIn->iHeight;
-	int iWidthNew;
-	int iHeightNew;
-	if((iWidthOriginal%2)!=0){return FALSE;}
-	if((iHeightOriginal%2)!=0){return FALSE;}
-
-	iHeightNew=iHeightOriginal>>1;
-	iWidthNew=iWidthOriginal>>1;
-
-	imgOut->Set(iWidthNew, iHeightNew, imgIn->iChannel);
-	UINT uiData;
-	if(imgIn->iChannel==CHANNEL_1_24)
-	{
-		for(int r=0; r<iHeightNew; r++)
-		{for(int c=0; c<iWidthNew; c++)
-		{
-			uiData = imgIn->byImgR[3*(((2*r+0)*iWidthOriginal)+(2*c+0))+0]
-			+imgIn->byImgR[3*(((2*r+0)*iWidthOriginal)+(2*c+1))+0]
-			+imgIn->byImgR[3*(((2*r+1)*iWidthOriginal)+(2*c+0))+0]
-			+imgIn->byImgR[3*(((2*r+1)*iWidthOriginal)+(2*c+1))+0];
-			imgOut->byImgR[3*(r*iWidthNew+c)+0]=uiData>>2;
-
-			uiData = imgIn->byImgR[3*(((2*r+0)*iWidthOriginal)+(2*c+0))+1]
-			+imgIn->byImgR[3*(((2*r+0)*iWidthOriginal)+(2*c+1))+1]
-			+imgIn->byImgR[3*(((2*r+1)*iWidthOriginal)+(2*c+0))+1]
-			+imgIn->byImgR[3*(((2*r+1)*iWidthOriginal)+(2*c+1))+1];
-			imgOut->byImgR[3*(r*iWidthNew+c)+1]=uiData>>2;
-
-			uiData = imgIn->byImgR[3*(((2*r+0)*iWidthOriginal)+(2*c+0))+2]
-			+imgIn->byImgR[3*(((2*r+0)*iWidthOriginal)+(2*c+1))+2]
-			+imgIn->byImgR[3*(((2*r+1)*iWidthOriginal)+(2*c+0))+2]
-			+imgIn->byImgR[3*(((2*r+1)*iWidthOriginal)+(2*c+1))+2];
-			imgOut->byImgR[3*(r*iWidthNew+c)+2]=uiData>>2;
-		}}
-	}
-	return TRUE;
-}
-
 
 inline BOOL SumRDirection(
 	BYTE* byTargetCropped, int iImgTargetCroppedW,

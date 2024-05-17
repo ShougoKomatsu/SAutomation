@@ -1,5 +1,2 @@
 
-WaitUpdate(1, 100, 100, 200,200, on, 1000000)
-
-
-MousePos(545, 323)
+Run("D:\Program Files\mspaint.exe")
