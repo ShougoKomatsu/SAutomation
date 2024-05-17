@@ -91,96 +91,7 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 
 	return TRUE;
 }
-BOOL WriteImage(ImgRGBPyramid* imgRGB, CString sFilePath)
-{
-	BITMAPINFOHEADER bmih;
-	BOOL bRet;
-	
-	CFile f;
-	BITMAPFILEHEADER bmfh;
 
-
-	
-	int iFillerSize;
-
-	if(((imgRGB->iWidth*3)%4)==0)
-	{
-		iFillerSize = 0;
-	}
-	else
-	{
-		iFillerSize = (4-((imgRGB->iWidth*3)%4));
-	}
-
-
-	int iBitSize;
-
-	iBitSize = ((imgRGB->iWidth*3)+iFillerSize)*(imgRGB->iHeight);
-
-	bmfh.bfType=0x4d42;
-	bmfh.bfSize =  0x36+iBitSize;
-	bmfh.bfOffBits = 0x36;
-	bmfh.bfReserved1=0;
-	bmfh.bfReserved2 = 0;
-
-	bmih.biSize=0x00000028;
-	bmih.biWidth=imgRGB->iWidth;
-	bmih.biHeight=imgRGB->iHeight;
-	bmih.biPlanes=1;
-	bmih.biBitCount=24;
-	bmih.biCompression=0;
-	bmih.biSizeImage=iBitSize;
-	bmih.biXPelsPerMeter=0;
-	bmih.biYPelsPerMeter=0;
-	bmih.biClrUsed=0;
-	bmih.biClrImportant	=0;
-
-
-	bRet = f.Open(sFilePath, CFile::modeCreate|CFile::modeWrite);
-	if(bRet != TRUE){return FALSE;}
-
-
-	f.Write((BYTE*)&bmfh,sizeof(bmfh));
-	f.Write((BYTE*)&bmih,sizeof(bmih));
-	
-
-	BYTE* byOutBuf;
-
-	byOutBuf = new BYTE[iBitSize];
-
-	if(imgRGB->iChannel==CHANNEL_3_8)
-	{
-		for(int r=0; r<imgRGB->iHeight; r++)
-		{
-			for(int c=0; c<imgRGB->iWidth; c++)
-			{
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgB[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgG[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
-			}
-		}
-	}
-
-	if(imgRGB->iChannel==CHANNEL_1_24)
-	{
-		for(int r=0; r<imgRGB->iHeight; r++)
-		{
-			for(int c=0; c<imgRGB->iWidth; c++)
-			{
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
-			}
-		}
-	}
-
-
-	f.Write((void*)(byOutBuf),iBitSize);
-	f.Close();
-	delete [] byOutBuf;
-
-	return TRUE;
-}
 BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, int iC1)
 {
 	if(imgRGBin==NULL){return FALSE;}
@@ -579,18 +490,27 @@ int GetPointerOffset(int iW, int iH, int iLevel)
 }
 BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 {
-	this->Set(imgRGBIn->iWidth, imgRGBIn->iHeight*2,imgRGBIn->iChannel);
+	this->imgRGB.Set(imgRGBIn->iWidth, imgRGBIn->iHeight*2,imgRGBIn->iChannel);
+
+	BYTE* byR;
+	BYTE* byG;
+	BYTE* byB;
+
+	byR = this->imgRGB.byImgR;
+	byG = this->imgRGB.byImgG;
+	byB = this->imgRGB.byImgB;
 
 	int iOffset = 0;
 	int iParentLevelH=imgRGBIn->iHeight;
 	int iParentLevelW=imgRGBIn->iWidth;
 
+
 	for(int r=0; r<iParentLevelH; r++)
 	{for(int c=0; c<iParentLevelW; c++)
 	{
-		this->byImgB[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgB[r*imgRGBIn->iWidth+c];
-		this->byImgG[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgG[r*imgRGBIn->iWidth+c];
-		this->byImgR[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[r*imgRGBIn->iWidth+c];
+		byB[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgB[r*imgRGBIn->iWidth+c];
+		byG[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgG[r*imgRGBIn->iWidth+c];
+		byR[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[r*imgRGBIn->iWidth+c];
 
 	}
 	}
@@ -614,15 +534,15 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 				{
 					if(((iParentLevelW%1)==1) && (c==iLevelW-1))
 					{
-						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgB[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
-						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgG[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
-						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgR[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						byB[r*iLevelW+c+iOffset]=((int)byB[2*r*iParentLevelW+2*c+iParentOffset]+(int)byB[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						byB[r*iLevelW+c+iOffset]=((int)byG[2*r*iParentLevelW+2*c+iParentOffset]+(int)byG[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						byB[r*iLevelW+c+iOffset]=((int)byR[2*r*iParentLevelW+2*c+iParentOffset]+(int)byR[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
 					}
 					else
 					{
-						this->byImgB[r*iLevelW+c+iOffset]=this->byImgB[2*r*iParentLevelW+2*c+iParentOffset];
-						this->byImgG[r*iLevelW+c+iOffset]=this->byImgB[2*r*iParentLevelW+2*c+iParentOffset];
-						this->byImgR[r*iLevelW+c+iOffset]=this->byImgB[2*r*iParentLevelW+2*c+iParentOffset];
+						byB[r*iLevelW+c+iOffset]=byB[2*r*iParentLevelW+2*c+iParentOffset];
+						byG[r*iLevelW+c+iOffset]=byB[2*r*iParentLevelW+2*c+iParentOffset];
+						byR[r*iLevelW+c+iOffset]=byB[2*r*iParentLevelW+2*c+iParentOffset];
 					}
 				}
 			}
@@ -632,15 +552,15 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 				{
 					if(((iParentLevelW%1)==1) && (c==iLevelW-1))
 					{
-						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgB[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
-						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgG[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
-						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgR[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						byB[r*iLevelW+c+iOffset]=((int)byB[2*r*iParentLevelW+2*c+iParentOffset]+(int)byB[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						byB[r*iLevelW+c+iOffset]=((int)byG[2*r*iParentLevelW+2*c+iParentOffset]+(int)byG[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
+						byB[r*iLevelW+c+iOffset]=((int)byR[2*r*iParentLevelW+2*c+iParentOffset]+(int)byR[(2*r+1)*iParentLevelW+2*c+iParentOffset])/2;
 					}
 					else
 					{
-						this->byImgB[r*iLevelW+c+iOffset]=((int)this->byImgB[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)this->byImgB[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)this->byImgB[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
-						this->byImgG[r*iLevelW+c+iOffset]=((int)this->byImgG[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)this->byImgG[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)this->byImgG[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
-						this->byImgR[r*iLevelW+c+iOffset]=((int)this->byImgR[2*r*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)this->byImgR[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)this->byImgR[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
+						byB[r*iLevelW+c+iOffset]=((int)byB[2*r*iParentLevelW+2*c+iParentOffset]+(int)byB[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)byB[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)byB[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
+						byG[r*iLevelW+c+iOffset]=((int)byG[2*r*iParentLevelW+2*c+iParentOffset]+(int)byG[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)byG[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)byG[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
+						byR[r*iLevelW+c+iOffset]=((int)byR[2*r*iParentLevelW+2*c+iParentOffset]+(int)byR[2*r*iParentLevelW+(2*c+1)+iParentOffset]+(int)byR[(2*r+1)*iParentLevelW+2*c+iParentOffset]+(int)byR[2*r*iParentLevelW+(2*c+1)+iParentOffset])/4;
 					}
 				}
 			}
