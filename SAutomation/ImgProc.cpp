@@ -570,6 +570,7 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 	}
 	return TRUE;
 }
+
 /*
 
 inline BOOL SumRDirection(
@@ -1097,6 +1098,63 @@ BOOL FindModelPylamidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int
 }
 
 */
+BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int iC0, int iR1, int iC1)
+{
+	if(imgTarget == NULL){return FALSE;}
+	if(imgModel == NULL){return FALSE;}
+
+	int iModelHeight = imgModel->iHeight;
+	int iModelWidth = imgModel->iWidth;
+
+	
+	int iR0Local;
+	int iC0Local;
+	
+	int iR1Local;
+	int iC1Local;
+	
+	iR0Local = iR0;
+	iC0Local = iC0;
+
+	iR1Local = iR1;
+	iC1Local = iC1;
+
+	if(iR0Local<0){iR0Local=0;}
+	if(iC0Local<0){iC0Local=0;}
+	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
+	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
+	
+	if(((iC1Local-iC0Local+1)-imgModel->iWidth+1)<=0){return FALSE;}
+	if(((iR1Local-iR0Local+1)-imgModel->iHeight+1)<=0){return FALSE;}
+
+	imgMap->Set((iC1Local-iC0Local+1)-imgModel->iWidth+1,(iR1Local-iR0Local+1)-imgModel->iHeight+1);
+
+	for(int iMapR=0; iMapR<imgMap->iHeight; iMapR++)
+	{
+		for(int iMapC=0; iMapC<imgMap->iWidth; iMapC++)
+		{
+
+			int iTargetR=iR0Local+iMapR;
+			int iTargetC=iC0Local+iMapC;
+			for(int r=0; r<iModelHeight; r++)
+			{
+				for(int c=0; c<iModelWidth; c++)
+				{
+					if(iTargetR + r>=imgTarget->iHeight){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
+					if(iTargetC + c>=imgTarget->iWidth){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
+					int iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+					int iPtrModel = (r)*imgModel->iWidth+(c);
+
+					imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
+					imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
+					imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
+
+				}
+			}
+		}
+	}
+	return TRUE;
+}
 
 
 BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)

@@ -60,6 +60,34 @@ struct ImgRGBPyramid
 	BOOL SetPyramid(ImgRGB* imgRGBIn);
 };
 
+struct ImgMap
+{
+	
+	int iWidth;
+	int iHeight;
+	UINT* uiMap;
+	BOOL Set(int iWidthIn, int iHeightIn)
+	{
+		Init();
+		if(iWidthIn<=0){return FALSE;}
+		if(iHeightIn<=0){return FALSE;}
+
+		iWidth = iWidthIn;
+		iHeight = iHeightIn;
+		uiMap = new UINT[iWidth*iHeight];
+		return TRUE;
+	}
+	BOOL Init()
+	{
+		if(uiMap!=NULL){delete [] uiMap; uiMap=NULL;}
+		iWidth=0;
+		iHeight=0;
+		return TRUE;
+	}
+	ImgMap(){uiMap=NULL;Init();}
+	~ImgMap(){Init();}
+};
+
 BOOL Screenshot(ImgRGB* imgRGB);
 BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, int iC1);
 

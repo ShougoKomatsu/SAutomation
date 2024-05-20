@@ -1,2 +1,2 @@
 
-Run("D:\Program Files\mspaint.exe")
+Run("D:\Program Files\ART-VIEWER\ArtViewer.exe")
