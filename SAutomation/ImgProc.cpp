@@ -1129,26 +1129,30 @@ BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int
 
 	imgMap->Set((iC1Local-iC0Local+1)-imgModel->iWidth+1,(iR1Local-iR0Local+1)-imgModel->iHeight+1);
 
-	for(int iMapR=0; iMapR<imgMap->iHeight; iMapR++)
+
+	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
 	{
-		for(int iMapC=0; iMapC<imgMap->iWidth; iMapC++)
+		for(int iMapR=0; iMapR<imgMap->iHeight; iMapR++)
 		{
-
-			int iTargetR=iR0Local+iMapR;
-			int iTargetC=iC0Local+iMapC;
-			for(int r=0; r<iModelHeight; r++)
+			for(int iMapC=0; iMapC<imgMap->iWidth; iMapC++)
 			{
-				for(int c=0; c<iModelWidth; c++)
+
+				int iTargetR=iR0Local+iMapR;
+				int iTargetC=iC0Local+iMapC;
+				for(int r=0; r<iModelHeight; r++)
 				{
-					if(iTargetR + r>=imgTarget->iHeight){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
-					if(iTargetC + c>=imgTarget->iWidth){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
-					int iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
-					int iPtrModel = (r)*imgModel->iWidth+(c);
+					for(int c=0; c<iModelWidth; c++)
+					{
+						if(iTargetR + r>=imgTarget->iHeight){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
+						if(iTargetC + c>=imgTarget->iWidth){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
+						int iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
+						int iPtrModel = (r)*imgModel->iWidth+(c);
 
-					imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
-					imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
-					imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
 
+					}
 				}
 			}
 		}
@@ -1168,89 +1172,55 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 	
 	iModelHeight = imgModel->iHeight;
 	iModelWidth = imgModel->iWidth;
-
-	UINT* uiMap;
-	int iMapW;
-	int iMapH;
-	iMapW=(iC1-iC0+1)-imgModel->iWidth+1;
-	iMapH=(iR1-iR0+1)-imgModel->iHeight+1;
-	if(iMapW<=0){return FALSE;}
-	if(iMapH<=0){return FALSE;}
-	uiMap = new UINT[iMapW*iMapH];
+	ImgMap imgMap;
+	int iScanHeight;
+	int iScanWidth;
+	int iR0Local;
+	int iC0Local;
 	int iR1Local;
 	int iC1Local;
-
-	iR1Local = iR1;
-	iC1Local = iC1;
-
+	if(iR0Local<0){iR0Local=0;}
+	if(iC0Local<0){iC0Local=0;}
 	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
 	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
 
-	int iScanHeight;
-	int iScanWidth;
-	iScanHeight = iR1Local-iR0-iModelHeight + 2;
-	iScanWidth = iC1Local-iC0-iModelWidth + 2;
+	iScanHeight = iR1Local-iR0Local-iModelHeight + 2;
+	iScanWidth = iC1Local-iC0Local-iModelWidth + 2;
 
 	if(iScanHeight<=0){return FALSE;}
 	if(iScanWidth<=0){return FALSE;}
-	
+
 	BOOL bFound;
 	int iREnd, iCEnd;
 
-	iREnd = iR0+iScanHeight;
-	iCEnd = iC0+iScanWidth;
+	iREnd = iR0Local+iScanHeight;
+	iCEnd = iC0Local+iScanWidth;
 
 	int iPtrTarget;
 	int iPtrModel;
 
-	memset(uiMap,0,iMapW*iMapH);
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	UINT iScoreMin;
+	iScoreMin=UINT_MAX;
+	int iMaxR;
+	int iMaxC;
+	
+	BOOL bRet;
+	bRet = CorrelMap(imgTarget, imgModel, &imgMap, iR0, iC0, iR1, iC1);
+	if(bRet != TRUE){return FALSE;}
+
+	iMaxR=-1;
+	iMaxC=-1;
+	for(int iMapR=0; iMapR<imgMap.iHeight; iMapR++)
 	{
-		for(int iMapR=0; iMapR<iMapH; iMapR++)
+		for(int iMapC=0; iMapC<imgMap.iWidth; iMapC++)
 		{
-			for(int iMapC=0; iMapC<iMapW; iMapC++)
-			{
+			if(imgMap.uiMap[iMapR*imgMap.iWidth+iMapC]<iScoreMin){iScoreMin=imgMap.uiMap[iMapR*imgMap.iWidth+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
 
-				int iTargetR=iR0+iMapR;
-				int iTargetC=iC0+iMapC;
-				for(int r=0; r<iModelHeight; r++)
-				{
-					for(int c=0; c<iModelWidth; c++)
-					{
-						if(iTargetR + r>=imgTarget->iHeight){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
-						if(iTargetC + c>=imgTarget->iWidth){uiMap[iMapR*iMapW+iMapC]+=255*3;break;}
-						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
-						iPtrModel = (r)*imgModel->iWidth+(c);
-
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
-						uiMap[iMapR*iMapW+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
-
-					}
-				}
-			}
 		}
-		UINT iScoreMin;
-		iScoreMin=UINT_MAX;
-		int iMaxR;
-		int iMaxC;
-
-
-		iMaxR=-1;
-		iMaxC=-1;
-		for(int iMapR=0; iMapR<iMapH; iMapR++)
-		{
-			for(int iMapC=0; iMapC<iMapW; iMapC++)
-			{
-				if(uiMap[iMapR*iMapW+iMapC]<iScoreMin){iScoreMin=uiMap[iMapR*iMapW+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
-
-			}
-		}
-		(*iFoundR)=iMaxR+iR0;
-		(*iFoundC)=iMaxC+iC0;
-		return TRUE;
 	}
-	return FALSE;
+	(*iFoundR)=iMaxR+iR0;
+	(*iFoundC)=iMaxC+iC0;
+	return TRUE;
 }
 
 BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)

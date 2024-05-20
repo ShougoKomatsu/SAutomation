@@ -75,6 +75,7 @@ struct ImgMap
 		iWidth = iWidthIn;
 		iHeight = iHeightIn;
 		uiMap = new UINT[iWidth*iHeight];
+	memset(uiMap,0,iWidth*iHeight);
 		return TRUE;
 	}
 	BOOL Init()
