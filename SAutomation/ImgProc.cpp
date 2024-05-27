@@ -488,9 +488,19 @@ int GetPointerOffset(int iW, int iH, int iLevel)
 	}
 	return iOffset;
 }
+
+int GetLevelSize(int iHW, int iLevel)
+{
+	int iParentLevelHW=iHW;
+	for(int i=1; i<iLevel; i++)
+	{
+		iParentLevelHW = (((iParentLevelHW%1)==1) ? (iParentLevelHW+1)/2 : (iParentLevelHW)/2);
+	}
+	return iParentLevelHW;
+}
 BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 {
-	this->imgRGB.Set(imgRGBIn->iWidth, imgRGBIn->iHeight*2,imgRGBIn->iChannel);
+	this->imgRGB.Set(imgRGBIn->iWidth, imgRGBIn->iHeight*2,CHANNEL_3_8);
 
 	BYTE* byR;
 	BYTE* byG;
@@ -504,7 +514,8 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 	int iParentLevelH=imgRGBIn->iHeight;
 	int iParentLevelW=imgRGBIn->iWidth;
 
-
+	if(imgRGBIn->iChannel==CHANNEL_3_8)
+	{
 	for(int r=0; r<iParentLevelH; r++)
 	{for(int c=0; c<iParentLevelW; c++)
 	{
@@ -512,6 +523,18 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 		byG[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgG[r*imgRGBIn->iWidth+c];
 		byR[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[r*imgRGBIn->iWidth+c];
 
+	}
+	}}
+	else if(imgRGBIn->iChannel==CHANNEL_1_24)
+	{
+	for(int r=0; r<iParentLevelH; r++)
+	{for(int c=0; c<iParentLevelW; c++)
+	{
+		byB[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[3*(r*imgRGBIn->iWidth+c)+0];
+		byG[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[3*(r*imgRGBIn->iWidth+c)+1];
+		byR[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[3*(r*imgRGBIn->iWidth+c)+2];
+
+	}
 	}
 	}
 	int iLevel=0;
@@ -928,7 +951,7 @@ BOOL FindModel2(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	return TRUE;
 }
 
-BOOL FindModelPylamid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR0, int* iFoundC0, int* iFoundR1, int* iFoundC1)
+BOOL FindModelPyramid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR0, int* iFoundC0, int* iFoundR1, int* iFoundC1)
 {
 
 	if(imgTarget == NULL){return FALSE;}
@@ -1064,7 +1087,7 @@ BOOL FindModelPylamid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int
 	return FALSE;
 }
 
-BOOL FindModelPylamidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR0, int* iFoundC0, int* iFoundR1, int* iFoundC1)
+BOOL FindModelPyramidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR0, int* iFoundC0, int* iFoundR1, int* iFoundC1)
 {
 
 	if(imgTarget == NULL){return FALSE;}
@@ -1084,7 +1107,7 @@ BOOL FindModelPylamidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int
 		)
 
 	{
-		return FindModelPylamid(imgTarget, imgModel, iR0, iC0, iR1, iC1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
+		return FindModelPyramid(imgTarget, imgModel, iR0, iC0, iR1, iC1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
 	}
 
 	CropImage2(imgTarget, &imgTargetCropped, iR0, iC0, iR1, iC1);
@@ -1094,7 +1117,7 @@ BOOL FindModelPylamidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int
 	CreatePyramid(&imgModelCropped, &imgModelPylam);
 
 	
-	return FindModelPylamidRecursion(&imgTargetPylam, &imgModelPylam, 0, 0, imgTargetPylam.iHeight-1, imgTargetPylam.iWidth-1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
+	return FindModelPyramidRecursion(&imgTargetPylam, &imgModelPylam, 0, 0, imgTargetPylam.iHeight-1, imgTargetPylam.iWidth-1, dThreshPercent, iFoundR0, iFoundC0, iFoundR1, iFoundC1);
 }
 
 */
@@ -1159,9 +1182,64 @@ BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int
 	}
 	return TRUE;
 }
+BOOL CorrelMapPyramid(ImgRGB* imgTarget, int iPointerTargetOffset, int iTargetWidth, int iTargetHeight, ImgRGB* imgModel, int iPointerModelOffset, int iModelWidth, int iModelHeight, ImgMap* imgMap, int iR0, int iC0, int iR1, int iC1)
+{
+	if(imgTarget == NULL){return FALSE;}
+	if(imgModel == NULL){return FALSE;}
 
 
-BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
+	
+	int iR0Local;
+	int iC0Local;
+	
+	int iR1Local;
+	int iC1Local;
+	
+	iR0Local = iR0;
+	iC0Local = iC0;
+
+	iR1Local = iR1;
+	iC1Local = iC1;
+
+	if(iR0Local<0){iR0Local=0;}
+	if(iC0Local<0){iC0Local=0;}
+	if(iR1Local>=iTargetHeight){iR1Local = iTargetHeight-1;}
+	if(iC1Local>=iTargetWidth){iC1Local = iTargetWidth-1;}
+	
+	if(((iC1Local-iC0Local+1)-imgModel->iWidth+1)<=0){return FALSE;}
+	if(((iR1Local-iR0Local+1)-imgModel->iHeight+1)<=0){return FALSE;}
+
+	imgMap->Set((iC1Local-iC0Local+1)-imgModel->iWidth+1,(iR1Local-iR0Local+1)-imgModel->iHeight+1);
+
+
+		for(int iMapR=0; iMapR<imgMap->iHeight; iMapR++)
+		{
+			for(int iMapC=0; iMapC<imgMap->iWidth; iMapC++)
+			{
+
+				int iTargetR=iR0Local+iMapR;
+				int iTargetC=iC0Local+iMapC;
+				for(int r=0; r<iModelHeight; r++)
+				{
+					for(int c=0; c<iModelWidth; c++)
+					{
+						if(iTargetR + r>=imgTarget->iHeight){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
+						if(iTargetC + c>=imgTarget->iWidth){imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=255*3;break;}
+						int iPtrTarget = (iTargetR + r)*imgTarget->iWidth+(iTargetC+c)+iPointerTargetOffset;
+						int iPtrModel = (r)*imgModel->iWidth+(c)+iPointerModelOffset;
+
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget] , (imgModel->byImgB[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgG[iPtrTarget] , (imgModel->byImgG[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgB[iPtrTarget] , (imgModel->byImgR[iPtrModel]));
+
+					}
+				}
+			}
+		}
+	return TRUE;
+}
+
+BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC, double dThreshPercent)
 {
 	int iModelHeight;
 	int iModelWidth;
@@ -1170,35 +1248,21 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 	if(imgModel == NULL){return FALSE;}
 
 	
+
 	iModelHeight = imgModel->iHeight;
 	iModelWidth = imgModel->iWidth;
 	ImgMap imgMap;
-	int iScanHeight;
-	int iScanWidth;
-	int iR0Local;
-	int iC0Local;
-	int iR1Local;
-	int iC1Local;
+	int iR0Local=iR0;
+	int iC0Local=iC0;
+	int iR1Local=iR1;
+	int iC1Local=iC1;
 	if(iR0Local<0){iR0Local=0;}
 	if(iC0Local<0){iC0Local=0;}
 	if(iR1Local>=imgTarget->iHeight){iR1Local = imgTarget->iHeight-1;}
 	if(iC1Local>=imgTarget->iWidth){iC1Local = imgTarget->iWidth-1;}
 
-	iScanHeight = iR1Local-iR0Local-iModelHeight + 2;
-	iScanWidth = iC1Local-iC0Local-iModelWidth + 2;
-
-	if(iScanHeight<=0){return FALSE;}
-	if(iScanWidth<=0){return FALSE;}
-
-	BOOL bFound;
-	int iREnd, iCEnd;
-
-	iREnd = iR0Local+iScanHeight;
-	iCEnd = iC0Local+iScanWidth;
-
-	int iPtrTarget;
-	int iPtrModel;
-
+	
+	
 	UINT iScoreMin;
 	iScoreMin=UINT_MAX;
 	int iMaxR;
@@ -1215,13 +1279,138 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 		for(int iMapC=0; iMapC<imgMap.iWidth; iMapC++)
 		{
 			if(imgMap.uiMap[iMapR*imgMap.iWidth+iMapC]<iScoreMin){iScoreMin=imgMap.uiMap[iMapR*imgMap.iWidth+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
-
 		}
 	}
-	(*iFoundR)=iMaxR+iR0;
-	(*iFoundC)=iMaxC+iC0;
+	if((1-(imgMap.uiMap[iMaxR*imgMap.iWidth+iMaxC]/((double)imgModel->iWidth*imgModel->iHeight*255)))*100<dThreshPercent){return FALSE;}
+	(*iFoundR)=iMaxR+iR0Local;
+	(*iFoundC)=iMaxC+iC0Local;
 	return TRUE;
 }
+
+BOOL DetectArea(ImgMap* imgMap, UINT uiThreshScore, int* iR0, int* iC0, int* iR1, int* iC1)
+{
+	BOOL bFoundR0=FALSE;
+	BOOL bFoundC0=FALSE;
+	BOOL bFoundR1=FALSE;
+	BOOL bFoundC1=FALSE;
+
+	for(int r= 0; r<imgMap->iHeight; r++)
+	{
+		for(int c=0; c<imgMap->iWidth; c++)
+		{
+			if(imgMap->uiMap[r*imgMap->iWidth+c]>uiThreshScore){bFoundR0=TRUE;*iR0=r; break;}
+		}
+		if(bFoundR0==TRUE){ break;}
+	}
+
+	for(int c=0; c<imgMap->iWidth; c++)
+	{
+		for(int r= 0; r<imgMap->iHeight; r++)
+		{
+			if(imgMap->uiMap[r*imgMap->iWidth+c]>uiThreshScore){bFoundC0=TRUE; *iC0=c;break;}
+		}
+		if(bFoundC0==TRUE){ break;}
+	}
+	
+	for(int r= imgMap->iHeight-1; r>=0; r--)
+	{
+		for(int c=0; c<imgMap->iWidth; c++)
+		{
+			if(imgMap->uiMap[r*imgMap->iWidth+c]>uiThreshScore){bFoundR1=TRUE;*iR1=r; break;}
+		}
+		if(bFoundR1==TRUE){ break;}
+	}
+
+	for(int c=imgMap->iWidth-1; c>=0; c--)
+	{
+		for(int r= 0; r<imgMap->iHeight; r++)
+		{
+			if(imgMap->uiMap[r*imgMap->iWidth+c]>uiThreshScore){bFoundC1=TRUE; *iC1=c;break;}
+		}
+		if(bFoundC1==TRUE){ break;}
+	}
+	if(bFoundR0 != TRUE){*iR0=0; *iC0=0; *iR1=0; *iC1=0; return FALSE;}
+	if(bFoundC0 != TRUE){*iR0=0; *iC0=0; *iR1=0; *iC1=0; return FALSE;}
+	if(bFoundR1 != TRUE){*iR0=0; *iC0=0; *iR1=0; *iC1=0; return FALSE;}
+	if(bFoundC1 != TRUE){*iR0=0; *iC0=0; *iR1=0; *iC1=0; return FALSE;}
+
+	return TRUE;
+}
+BOOL FindModelPyramid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR, int* iFoundC)
+{
+
+	if(imgTarget == NULL){return FALSE;}
+	if(imgModel == NULL){return FALSE;}
+	if(dThreshPercent<0){return FALSE;}
+	if(dThreshPercent>1){dThreshPercent=1;}
+	ImgRGBPyramid imgTargetPyram;
+	ImgRGBPyramid imgModelPyram;
+
+	ImgMap imgMap;
+
+	imgTargetPyram.SetPyramid(imgTarget);
+	imgModelPyram.SetPyramid(imgModel);
+
+	int iLevelStart=3;
+	int iR0Level = GetLevelSize(iR0, iLevelStart);
+	int iC0Level = GetLevelSize(iC0, iLevelStart);
+	int iR1Level = GetLevelSize(iR1, iLevelStart);
+	int iC1Level = GetLevelSize(iC1, iLevelStart);
+
+	for(int iLevel=iLevelStart; iLevel>=0; iLevel--)
+	{
+		int iTargetOffset = GetPointerOffset(imgTarget->iWidth, imgTarget->iHeight, iLevel);
+		int iModelOffset = GetPointerOffset(imgTarget->iWidth, imgTarget->iHeight, iLevel);
+		int iTargetWidthLevel=GetLevelSize(imgTarget->iWidth, iLevel);
+		int iTargetHeightLevel=GetLevelSize(imgTarget->iHeight, iLevel);
+		int iModelWidthLevel=GetLevelSize(imgModel->iWidth, iLevel);
+		int iModelHeightLevel=GetLevelSize(imgModel->iHeight, iLevel);
+
+		if(iR0Level<0){iR0Level=0;}
+		if(iC0Level<0){iC0Level=0;}
+		if(iR1Level>=iTargetHeightLevel){iR1Level = iTargetWidthLevel-1;}
+		if(iC1Level>=iTargetWidthLevel){iC1Level = iTargetHeightLevel-1;}
+
+		BOOL bRet;
+		bRet = CorrelMapPyramid(&(imgTargetPyram.imgRGB), iTargetOffset, iTargetWidthLevel, iTargetHeightLevel, &(imgModelPyram.imgRGB), iModelOffset, iModelWidthLevel, iModelHeightLevel, &imgMap, iR0Level, iC0Level, iR1Level, iC1Level);
+		if(bRet != TRUE){return FALSE;}
+
+		if(iLevel==0)
+		{
+			UINT iScoreMin;
+			iScoreMin=UINT_MAX;
+			int iMaxR=-1;
+			int iMaxC=-1;
+			for(int iMapR=0; iMapR<imgMap.iHeight; iMapR++)
+			{
+				for(int iMapC=0; iMapC<imgMap.iWidth; iMapC++)
+				{
+					if(imgMap.uiMap[iMapR*imgMap.iWidth+iMapC]<iScoreMin){iScoreMin=imgMap.uiMap[iMapR*imgMap.iWidth+iMapC]; iMaxR=iMapR; iMaxC=iMapC;}
+				}
+			}
+			if((1-(imgMap.uiMap[iMaxR*imgMap.iWidth+iMaxC]/((double)imgModel->iWidth*imgModel->iHeight*255)))*100<dThreshPercent){return FALSE;}
+			(*iFoundR)=iMaxR+iR0Level;
+			(*iFoundC)=iMaxC+iC0Level;
+			return TRUE;
+		}
+
+		int iDetectR0;
+		int iDetectC0;
+		int iDetectR1;
+		int iDetectC1;
+		bRet = DetectArea(&imgMap, (UINT)(iModelWidthLevel*iModelHeightLevel*dThreshPercent*255), &iDetectR0, &iDetectC0, &iDetectR1, &iDetectC1);
+
+		iR0Level = iDetectR0*2-1;
+		iC0Level = iDetectC0*2-1;
+		iR1Level = (iDetectR1+iModelHeightLevel)*2+1;
+		iC1Level = (iDetectC1+iModelWidthLevel)*2+1;
+
+	}
+
+
+	return FALSE;
+}
+
 
 BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC)
 {

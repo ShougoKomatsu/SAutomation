@@ -1,1 +1,2 @@
-1 Run("D:\Program Files\ART-VIEWER\ArtViewer.exe") 0
+1 MousePosToImage(model.bmp,0,0,1000,100) -1
+iErrorTreat = 0 
