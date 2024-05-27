@@ -1,2 +1,4 @@
-1 MousePosToImage(model.bmp,0,0,1000,100) -1
-iErrorTreat = 0 
+1 Wait ctrl off 0
+2 Wait shift off 0
+3 Input(" ab ") 1
+4 ab 0

@@ -563,27 +563,51 @@ BOOL Input(CString sInputWithDblQuart)
 	{
 		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
 		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosL=i;break;}
+		if(sInputWithDblQuart.GetAt(i)=='Å@'){continue;}
+		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosL=i+1;break;}
 		iPosL=0; break;
 	}
 	for(int i=sInputWithDblQuart.GetLength()-1; i>=0; i--)
 	{
 		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
 		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosR=i;break;}
-		iPosR=0; break;
+		if(sInputWithDblQuart.GetAt(i)=='Å@'){continue;}
+		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosR=i-1;break;}
+		iPosR=sInputWithDblQuart.GetLength()-1; break;
 	}
 	if(iPosL==iPosR)
 	{
 		return FALSE;
 	}
-	for(int i=iPosL+1; i<iPosR; i++)
+	for(int i=iPosL; i<=iPosR; i++)
 	{
+		KeyDownAndUpUnicode(sInputWithDblQuart.GetAt(i));
+		/*
+		if((sInputWithDblQuart.GetAt(i)<=' ') && ( '~'<= sInputWithDblQuart.GetAt(i)))
+		{
+		KeyDownUnicode(sInputWithDblQuart.GetAt(i));
+		KeyUpUnicode(sInputWithDblQuart.GetAt(i));
+		}
+		else
+		{
+		KeyDownUnicode(sInputWithDblQuart.GetAt(i));
+		KeyUpUnicode(sInputWithDblQuart.GetAt(i));
+			CString sTemp;
 		CStringArray saData;
-		CString sTemp;
-		sTemp.Format(_T("%s"),sInputWithDblQuart.GetAt(i));
+		sTemp.Format(_T("enter"));
 		saData.Add(sTemp);
 	KeyDownAndUp(&saData);
+
+
+		}
+		*/
+		/*
+		CStringArray saData;
+		CString sTemp;
+		sTemp.Format(_T("%c"),sInputWithDblQuart.GetAt(i));
+		saData.Add(sTemp);
+	KeyDownAndUp(&saData);
+	*/
 	}
 
 	return TRUE;

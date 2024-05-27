@@ -1,3 +1,8 @@
+﻿Wait ctrl off
+Wait shift off
+Input(" ab ")
 
-MousePosToImage(model.bmp,0,0,1000,100)
-MouseLClick
+ab
+
+
+
