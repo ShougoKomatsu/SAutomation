@@ -545,6 +545,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_WINDOW_SIZE:{return WindowSize(&saData);}
 	case COMMAND_WINDOW_POS:{return WindowPos(&saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
+	case COMMAND_INPUT:{return Input(saData.GetAt(0));}
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
@@ -553,4 +554,37 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	default:{return RETURN_FAILED;}
 	}
 	return RETURN_FAILED;
+}
+BOOL Input(CString sInputWithDblQuart)
+{
+	int iPosL;
+	int iPosR;
+	for(int i=0; i<sInputWithDblQuart.GetLength(); i++)
+	{
+		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
+		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
+		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosL=i;break;}
+		iPosL=0; break;
+	}
+	for(int i=sInputWithDblQuart.GetLength()-1; i>=0; i--)
+	{
+		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
+		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
+		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosR=i;break;}
+		iPosR=0; break;
+	}
+	if(iPosL==iPosR)
+	{
+		return FALSE;
+	}
+	for(int i=iPosL+1; i<iPosR; i++)
+	{
+		CStringArray saData;
+		CString sTemp;
+		sTemp.Format(_T("%s"),sInputWithDblQuart.GetAt(i));
+		saData.Add(sTemp);
+	KeyDownAndUp(&saData);
+	}
+
+	return TRUE;
 }

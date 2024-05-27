@@ -59,6 +59,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Right(4).CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
 	if(sDataTrim.Right(2).CompareNoCase(_T("up"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
 	if((sDataTrim.Left(3).CompareNoCase(_T("run"))==0)){*iCommandType=COMMAND_RUN; return TRUE;}
+	if((sDataTrim.Left(5).CompareNoCase(_T("input"))==0)){*iCommandType=COMMAND_INPUT; return TRUE;}
 
 	if((sDataTrim.Left(4).CompareNoCase(_T("dim "))==0)){*iCommandType=COMMAND_DECRARE; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("wait"))==0){*iCommandType=COMMAND_WAIT; return TRUE;}
@@ -549,6 +550,15 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		return TRUE;
 	}
 	if(iType == COMMAND_RUN)
+	{
+		ExtractData(sDataLine, _T("("), &sArg, &sDataLocal);
+		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+		saData->Add(sArg);
+		*iCommandType = iType;
+		return TRUE;
+	}
+	
+	if(iType == COMMAND_INPUT)
 	{
 		ExtractData(sDataLine, _T("("), &sArg, &sDataLocal);
 		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
