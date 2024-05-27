@@ -8,10 +8,11 @@ SAutomationi–{ƒ\ƒtƒgƒEƒFƒAj‚ÍA¬¼ãÄŒåiìŽÒj‚ªŒÂl‚ÌŽï–¡‚Å§ì‚µ‚½‚à‚Ì‚Å‚ ‚
 –{ƒ\ƒtƒgƒEƒFƒA‚æ‚è—Dæ‚³‚ê‚éƒzƒbƒgƒL[iWindows Explorer“™j‚âA–{ƒ\ƒtƒgƒEƒFƒA‚É‰¡Žæ‚è‚³‚ê‚é•’iŽg‚¢‚ÌƒVƒ‡[ƒgƒJƒbƒgƒL[‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B‚Â‚Ü‚èACtrl{s‚Í–{ƒ\ƒtƒgƒEƒFƒA‚ÌƒzƒbƒgƒL[‚Æ‚µ‚Ä“o˜^‚µ‚È‚¢•û‚ª–³“ï‚Å‚·B
 
 
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 
 —˜—p‰Â”\‚ÈƒRƒ}ƒ“ƒh
 
-
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œƒL[ƒ{[ƒh“ü—Í
 ‰p”‹L†ˆê•¶Žš, F1`F16, Ctrl, Shift, Alt, Tab, Space, Enter
 
@@ -22,29 +23,32 @@ Alt Down
 Tab
 Alt Up
 
+----------------------------------------------------------------------------
 Input(•¶Žš—ñ)
+
 •¶Žš—ñ‚ªASCII•¶ŽšˆÈŠO‚Ìê‡‚ÍA•ÏŠ·ŠÖ˜A‚Ìˆ—‚ª“ü‚é‚Ì‚Å’ˆÓ‚ª•K—v
 ""‚ÅˆÍ‚í‚ê‚½ê‡A""‚ÌŠO‘¤‚Ì‹ó”’•¶Žš' ', '\t', '@'‚Í–³Ž‹‚³‚ê‚éB"‚ªˆê‚Â‚¾‚¯‚Ìê‡‚ÍƒGƒ‰[‚É‚È‚éB"‚ð“ü—Í‚·‚éê‡‚Í""‚ÅˆÍ‚Á‚½’†‚É‚·‚é•K—v‚ª‚ ‚éB
 
-
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œƒL[ƒ{[ƒh“ü—Í‘Ò‚¿
 Wait ƒL[ On
 Wait ƒL[ Off
 
-
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œƒEƒFƒCƒg
 “ñŒ…ˆÈã‚Ì”Žš
 
-
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œƒ}ƒEƒX‘€ì
 SetOriginToWindow(ƒEƒCƒ“ƒhƒE–¼(•”•ªˆê’v))
-Desktop‚ðŽw’è‚·‚é‚ÆƒŠƒZƒbƒg‚³‚ê‚éB
-Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
+ƒEƒBƒ“ƒhƒE–¼‚É"Desktop"‚ðŽw’è‚·‚é‚ÆŒ´“_‚ª(0, 0)‚ÉƒŠƒZƒbƒg‚³‚ê‚éB
+ƒEƒBƒ“ƒhƒE‚ÌˆÚ“®‚É‡‚í‚¹‚½Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
 
+----------------------------------------------------------------------------
 SetOriginToImage(•¶Žš—ñ, ®”, ®”, ®”, ®”)
-Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
+‰æ‘œ‚ÌˆÚ“®‚É‡‚í‚¹‚½Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
 
-
+----------------------------------------------------------------------------
 MouseLClick(®”, ®”)
 MouseLDown(®”, ®”)
 MouseLUp(®”, ®”)
@@ -54,18 +58,6 @@ MouseRUp(®”, ®”)
 MouseMClick(®”, ®”)
 MouseMDown(®”, ®”)
 MouseMUp(®”, ®”)
-
-‹ŒƒRƒ}ƒ“ƒhŽg—p‰Â”\
-LMouse Click(®”, ®”)
-LMouse Down(®”, ®”)
-LMouse Up(®”, ®”)
-RMouse Click(®”, ®”)
-RMouse Down(®”, ®”)
-RMouse Up(®”, ®”)
-MMouse Click(®”, ®”)
-MMouse Down(®”, ®”)
-MMouse Up(®”, ®”)
-‹ŒƒRƒ}ƒ“ƒhŽg—p‰Â”\
 
 MousePos(®”, ®”)
 MousePosIncl(®”, ®”)
@@ -82,7 +74,18 @@ MouseMClick
 MouseMDown
 MouseMUp
 
-‹ŒƒRƒ}ƒ“ƒhŽg—p‰Â”\
+----------------------------------------------------------------------------
+‹ŒƒRƒ}ƒ“ƒhŽg—p”ñ„§
+LMouse Click(®”, ®”)
+LMouse Down(®”, ®”)
+LMouse Up(®”, ®”)
+RMouse Click(®”, ®”)
+RMouse Down(®”, ®”)
+RMouse Up(®”, ®”)
+MMouse Click(®”, ®”)
+MMouse Down(®”, ®”)
+MMouse Up(®”, ®”)
+
 LMouse Click
 LMouse Down
 LMouse Up
@@ -92,8 +95,9 @@ RMouse Up
 MMouse Click
 MMouse Down
 MMouse Up
-‹ŒƒRƒ}ƒ“ƒhŽg—p‰Â”\
+‹ŒƒRƒ}ƒ“ƒhŽg—p”ñ„§
 
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œƒEƒBƒ“ƒhƒE‘€ì
 Maximize
 Minimaize
@@ -102,14 +106,13 @@ WindowPos(®”, ®”)
 WindowSize(®”, ®”)
 Run(ŽÀsƒtƒ@ƒCƒ‹‚ÌƒpƒX)
 
-
-
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œŽÀs§Œä
 EscƒL[‚Å’†’fB‚­‚è•Ô‚µ‚àŽ~‚Ü‚éB
 Ctrl+Shift+Space‰Ÿ‰º’†’âŽ~
 Ctrl+Shift+S‚ÅƒXƒeƒbƒv‘—‚è
 
-
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œ‰æ‘œˆ—
 “Ç‚Ýž‚Ý‚Å‚«‚é‰æ‘œ‚Í24bitƒrƒbƒgƒ}ƒbƒvƒtƒH[ƒ}ƒbƒg‚Ì‚ÝBˆ³k‚âƒJƒ‰[ƒpƒŒƒbƒg‚É‚Í‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
 
@@ -117,9 +120,11 @@ SetOriginToWindow(ƒEƒCƒ“ƒhƒE–¼(•”•ªˆê’v))
 Desktop‚ðŽw’è‚·‚é‚ÆƒŠƒZƒbƒg‚³‚ê‚éB
 Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
 
+----------------------------------------------------------------------------
 SetOriginToImage(•¶Žš—ñ, ®”, ®”, ®”, ®”)
 Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
 
+----------------------------------------------------------------------------
 WaitImage(•¶Žš—ñ, ®”, ®”, ®”, ®”, on/off, ®”)
 •¶Žš—ñFƒtƒ@ƒCƒ‹ƒpƒX‚à‚µ‚­‚ÍMacro\Model“à‚Ìƒtƒ@ƒCƒ‹–¼
 ®”, ®”, ®”, ®”F’Tõ”ÍˆÍ¶ãX, ’Tõ”ÍˆÍ¶ãY, ’Tõ”ÍˆÍ‰E‰ºX, ’Tõ”ÍˆÍ‰E‰ºY
@@ -127,31 +132,37 @@ WaitImage(•¶Žš—ñ, ®”, ®”, ®”, ®”, on/off, ®”)
 ƒ^ƒCƒ€ƒAƒEƒg‚ÅƒGƒ‰[ˆ—B
 _mask.bmp‚ª‘¶Ý‚·‚é‚Æ‚«AF·‚ª_mask.bmp‚ÌŠe“_‚Ì’lˆÈ‰º‚Ìê‡‚Íˆê’v‚µ‚Ä‚¢‚é‚Æ‚Ý‚È‚·B
 
+----------------------------------------------------------------------------
 MousePostToImage(•¶Žš—ñ, ®”, ®”, ®”, ®”)
 •¶Žš—ñFƒtƒ@ƒCƒ‹ƒpƒX‚à‚µ‚­‚ÍMacro\Model“à‚Ìƒtƒ@ƒCƒ‹–¼
 ®”, ®”, ®”, ®”F’Tõ”ÍˆÍ¶ãX, ’Tõ”ÍˆÍ¶ãY, ’Tõ”ÍˆÍ‰E‰ºX, ’Tõ”ÍˆÍ‰E‰ºY
 Œ©‚Â‚©‚ç‚È‚¢‚ÆƒGƒ‰[ˆ—B
 _mask.bmp‚ª‘¶Ý‚·‚é‚Æ‚«AF·‚ª_mask.bmp‚ÌŠe“_‚Ì’lˆÈ‰º‚Ìê‡‚Íˆê’v‚µ‚Ä‚¢‚é‚Æ‚Ý‚È‚·B
 
+----------------------------------------------------------------------------
 WaitUpdate(®”, ®”, ®”, ®”, ®”, on/off, ®”)
 ®”F XVŠm”FŠÔŠu (ƒ~ƒŠ•b)
 ®”, ®”, ®”, ®”F”ÍˆÍ¶ãX, ”ÍˆÍ¶ãY, ”ÍˆÍ‰E‰ºX, ”ÍˆÍ‰E‰ºY
 ®”Fƒ^ƒCƒ€ƒAƒEƒgŽžŠÔBÈ—ª‚à‚µ‚­‚Í-1Žw’è‚Å–³ŒÀ‘Ò‚¿
 ƒ^ƒCƒ€ƒAƒEƒg‚ÅƒGƒ‰[ˆ—B
 
-
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 œƒtƒ[§Œä
 Eƒ‰ƒxƒ‹Ý’è
 •¶Žš—ñ:
 
+----------------------------------------------------------------------------
 Eƒ‰ƒxƒ‹‚ÉƒWƒƒƒ“ƒv
 GoTo ƒ‰ƒxƒ‹
 
+----------------------------------------------------------------------------
 EƒGƒ‰[Žžˆ—Ý’è
 OnError GoTo ƒ‰ƒxƒ‹
 OnError GoTo 0
 OnError Resume Next
 
+----------------------------------------------------------------------------
 EI—¹
 Exit
 
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
