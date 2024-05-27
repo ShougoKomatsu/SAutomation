@@ -1,69 +1,69 @@
-SAutomationi–{ƒ\ƒtƒgƒEƒFƒAj‚ÍA¬¼ãÄŒåiìŽÒj‚ªŒÂl‚ÌŽï–¡‚Å§ì‚µ‚½‚à‚Ì‚Å‚ ‚èA‚±‚Ìƒ\ƒtƒg‚ðŽg‚Á‚½‚±‚Æ‚É‚æ‚è”­¶‚µ‚½A‚¢‚©‚È‚é‘¹ŠQ‚É‘Î‚µ‚Ä‚àAìŽÒ‚ÍÓ”C‚ð•‰‚¢‚Ü‚¹‚ñB
-‚Ü‚½AìŽÒ‚Í–{ƒ\ƒtƒgƒEƒFƒA‚Ìƒ\[ƒXƒR[ƒh‚ÉŠÖ‚·‚é’˜ìŒ ‚Í•úŠü‚µ‚Ä‚¢‚Ü‚¹‚ñB—¬—p“™‚Ì‘Š’k‚ÍGithubƒRƒ~ƒ…ƒjƒeƒB‚©‚çs‚Á‚Ä‚­‚¾‚³‚¢B
+ï»¿SAutomationï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ï¼‰ã¯ã€å°æ¾ç¿”æ‚Ÿï¼ˆä½œè€…ï¼‰ãŒå€‹äººã®è¶£å‘³ã§åˆ¶ä½œã—ãŸã‚‚ã®ã§ã‚ã‚Šã€ã“ã®ã‚½ãƒ•ãƒˆã‚’ä½¿ã£ãŸã“ã¨ã«ã‚ˆã‚Šç™ºç”Ÿã—ãŸã€ã„ã‹ãªã‚‹æå®³ã«å¯¾ã—ã¦ã‚‚ã€ä½œè€…ã¯è²¬ä»»ã‚’è² ã„ã¾ã›ã‚“ã€‚
+ã¾ãŸã€ä½œè€…ã¯æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã«é–¢ã™ã‚‹è‘—ä½œæ¨©ã¯æ”¾æ£„ã—ã¦ã„ã¾ã›ã‚“ã€‚æµç”¨ç­‰ã®ç›¸è«‡ã¯Githubã‚³ãƒŸãƒ¥ãƒ‹ãƒ†ã‚£ã‹ã‚‰è¡Œã£ã¦ãã ã•ã„ã€‚
 
-–{ƒ\ƒtƒgƒEƒFƒA‚ÍAƒ}ƒEƒX‘€ìAƒL[ƒ{[ƒh‘€ì“™‚ðŽ©“®‰»‚·‚éƒ\ƒtƒgƒEƒFƒA‚Å‚·B
-ƒzƒbƒgƒL[“o˜^‚Åƒ}ƒNƒ‚ðŽÀs‚µ‚Ü‚·BˆÙ‚È‚éŽí—Þ‚Ìƒ}ƒNƒ‚ð“¯Žž‹N“®‚³‚¹‚é‚±‚Æ‚Í‰Â”\‚Å‚·‚ªA‘ŠŒÝì—piCtrlƒL[‰Ÿ‚µ‚Á‚Ï‚È‚µƒRƒ}ƒ“ƒh“™j‚É‚æ‚éŒëì“®‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B
-ƒL[ƒ{[ƒh“ü—ÍƒRƒ}ƒ“ƒh‚ÅƒzƒbƒgƒL[‚Æˆê’v‚·‚é‚à‚Ì‚ª‚ ‚ê‚ÎA‚½‚Ô‚ñ‹N“®‚µ‚Ä‚µ‚Ü‚¢‚Ü‚·B
-ˆê‰žAƒXƒƒbƒg‚²‚Æ‚É‘½d‹N“®‚µ‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¢‚Ü‚·BƒXƒƒbƒg‚ð•ª‚¯‚é‚Æ“–‘R‚È‚ª‚ç‘½d‹N“®‚µ‚Ü‚·B
-–{ƒ\ƒtƒgƒEƒFƒA‚æ‚è—Dæ‚³‚ê‚éƒzƒbƒgƒL[iWindows Explorer“™j‚âA–{ƒ\ƒtƒgƒEƒFƒA‚É‰¡Žæ‚è‚³‚ê‚é•’iŽg‚¢‚ÌƒVƒ‡[ƒgƒJƒbƒgƒL[‚É’ˆÓ‚µ‚Ä‚­‚¾‚³‚¢B‚Â‚Ü‚èACtrl{s‚Í–{ƒ\ƒtƒgƒEƒFƒA‚ÌƒzƒbƒgƒL[‚Æ‚µ‚Ä“o˜^‚µ‚È‚¢•û‚ª–³“ï‚Å‚·B
+æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ã€ãƒžã‚¦ã‚¹æ“ä½œã€ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æ“ä½œç­‰ã‚’è‡ªå‹•åŒ–ã™ã‚‹ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã§ã™ã€‚
+ãƒ›ãƒƒãƒˆã‚­ãƒ¼ç™»éŒ²ã§ãƒžã‚¯ãƒ­ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚ç•°ãªã‚‹ç¨®é¡žã®ãƒžã‚¯ãƒ­ã‚’åŒæ™‚èµ·å‹•ã•ã›ã‚‹ã“ã¨ã¯å¯èƒ½ã§ã™ãŒã€ç›¸äº’ä½œç”¨ï¼ˆCtrlã‚­ãƒ¼æŠ¼ã—ã£ã±ãªã—ã‚³ãƒžãƒ³ãƒ‰ç­‰ï¼‰ã«ã‚ˆã‚‹èª¤ä½œå‹•ã«æ³¨æ„ã—ã¦ãã ã•ã„ã€‚
+ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã‚³ãƒžãƒ³ãƒ‰ã§ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã¨ä¸€è‡´ã™ã‚‹ã‚‚ã®ãŒã‚ã‚Œã°ã€ãŸã¶ã‚“èµ·å‹•ã—ã¦ã—ã¾ã„ã¾ã™ã€‚
+ä¸€å¿œã€ã‚¹ãƒ­ãƒƒãƒˆã”ã¨ã«å¤šé‡èµ·å‹•ã—ãªã„ã‚ˆã†ã«ã—ã¦ã„ã¾ã™ã€‚ã‚¹ãƒ­ãƒƒãƒˆã‚’åˆ†ã‘ã‚‹ã¨å½“ç„¶ãªãŒã‚‰å¤šé‡èµ·å‹•ã—ã¾ã™ã€‚
+æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚ˆã‚Šå„ªå…ˆã•ã‚Œã‚‹ãƒ›ãƒƒãƒˆã‚­ãƒ¼ï¼ˆWindows Explorerç­‰ï¼‰ã‚„ã€æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«æ¨ªå–ã‚Šã•ã‚Œã‚‹æ™®æ®µä½¿ã„ã®ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã‚­ãƒ¼ã«æ³¨æ„ã—ã¦ãã ã•ã„ã€‚ã¤ã¾ã‚Šã€Ctrlï¼‹sã¯æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã¨ã—ã¦ç™»éŒ²ã—ãªã„æ–¹ãŒç„¡é›£ã§ã™ã€‚
 
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
 
-—˜—p‰Â”\‚ÈƒRƒ}ƒ“ƒh
+åˆ©ç”¨å¯èƒ½ãªã‚³ãƒžãƒ³ãƒ‰
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œƒL[ƒ{[ƒh“ü—Í
-‰p”‹L†ˆê•¶Žš, F1`F16, Ctrl, Shift, Alt, Tab, Space, Enter
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›
+è‹±æ•°è¨˜å·ä¸€æ–‡å­—, F1ï½žF16, Ctrl, Shift, Alt, Tab, Space, Enter
 
-Down, Up‚ð•t‚¯‚é‚Æ‰Ÿ‚µ‚Á‚Ï‚È‚µ‚É‚È‚é
-—áF
+Down, Upã‚’ä»˜ã‘ã‚‹ã¨æŠ¼ã—ã£ã±ãªã—ã«ãªã‚‹
+ä¾‹ï¼š
 
 Alt Down
 Tab
 Alt Up
 
 ----------------------------------------------------------------------------
-Input(•¶Žš—ñ)
+Input(æ–‡å­—åˆ—)
 
-•¶Žš—ñ‚ªASCII•¶ŽšˆÈŠO‚Ìê‡‚ÍA•ÏŠ·ŠÖ˜A‚Ìˆ—‚ª“ü‚é‚Ì‚Å’ˆÓ‚ª•K—v
-""‚ÅˆÍ‚í‚ê‚½ê‡A""‚ÌŠO‘¤‚Ì‹ó”’•¶Žš' ', '\t', '@'‚Í–³Ž‹‚³‚ê‚éB"‚ªˆê‚Â‚¾‚¯‚Ìê‡‚ÍƒGƒ‰[‚É‚È‚éB"‚ð“ü—Í‚·‚éê‡‚Í""‚ÅˆÍ‚Á‚½’†‚É‚·‚é•K—v‚ª‚ ‚éB
+æ–‡å­—åˆ—ãŒASCIIæ–‡å­—ä»¥å¤–ã®å ´åˆã¯ã€å¤‰æ›é–¢é€£ã®å‡¦ç†ãŒå…¥ã‚‹ã®ã§æ³¨æ„ãŒå¿…è¦
+""ã§å›²ã‚ã‚ŒãŸå ´åˆã€""ã®å¤–å´ã®ç©ºç™½æ–‡å­—' ', '\t', 'ã€€'ã¯ç„¡è¦–ã•ã‚Œã‚‹ã€‚"ãŒä¸€ã¤ã ã‘ã®å ´åˆã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã€‚"ã‚’å…¥åŠ›ã™ã‚‹å ´åˆã¯""ã§å›²ã£ãŸä¸­ã«ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œƒL[ƒ{[ƒh“ü—Í‘Ò‚¿
-Wait ƒL[ On
-Wait ƒL[ Off
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›å¾…ã¡
+Wait ã‚­ãƒ¼ On
+Wait ã‚­ãƒ¼ Off
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œƒEƒFƒCƒg
-“ñŒ…ˆÈã‚Ì”Žš
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—ã‚¦ã‚§ã‚¤ãƒˆ
+äºŒæ¡ä»¥ä¸Šã®æ•°å­—
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œƒ}ƒEƒX‘€ì
-SetOriginToWindow(ƒEƒCƒ“ƒhƒE–¼(•”•ªˆê’v))
-ƒEƒBƒ“ƒhƒE–¼‚É"Desktop"‚ðŽw’è‚·‚é‚ÆŒ´“_‚ª(0, 0)‚ÉƒŠƒZƒbƒg‚³‚ê‚éB
-ƒEƒBƒ“ƒhƒE‚ÌˆÚ“®‚É‡‚í‚¹‚½Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
-
-----------------------------------------------------------------------------
-SetOriginToImage(•¶Žš—ñ, ®”, ®”, ®”, ®”)
-‰æ‘œ‚ÌˆÚ“®‚É‡‚í‚¹‚½Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—ãƒžã‚¦ã‚¹æ“ä½œ
+SetOriginToWindow(ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦å(éƒ¨åˆ†ä¸€è‡´))
+ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦åã«"Desktop"ã‚’æŒ‡å®šã™ã‚‹ã¨åŽŸç‚¹ãŒ(0, 0)ã«ãƒªã‚»ãƒƒãƒˆã•ã‚Œã‚‹ã€‚
+ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç§»å‹•ã«åˆã‚ã›ãŸè‡ªå‹•æ›´æ–°ã¯ã•ã‚Œãªã„ã®ã§ã€å¿…è¦ã«å¿œã˜ã¦å†å®Ÿè¡Œã™ã‚‹ã“ã¨ã€‚
 
 ----------------------------------------------------------------------------
-MouseLClick(®”, ®”)
-MouseLDown(®”, ®”)
-MouseLUp(®”, ®”)
-MouseRClick(®”, ®”)
-MouseRDown(®”, ®”)
-MouseRUp(®”, ®”)
-MouseMClick(®”, ®”)
-MouseMDown(®”, ®”)
-MouseMUp(®”, ®”)
+SetOriginToImage(æ–‡å­—åˆ—, æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°)
+ç”»åƒã®ç§»å‹•ã«åˆã‚ã›ãŸè‡ªå‹•æ›´æ–°ã¯ã•ã‚Œãªã„ã®ã§ã€å¿…è¦ã«å¿œã˜ã¦å†å®Ÿè¡Œã™ã‚‹ã“ã¨ã€‚
 
-MousePos(®”, ®”)
-MousePosIncl(®”, ®”)
-Wheel ®”
+----------------------------------------------------------------------------
+MouseLClick(æ•´æ•°, æ•´æ•°)
+MouseLDown(æ•´æ•°, æ•´æ•°)
+MouseLUp(æ•´æ•°, æ•´æ•°)
+MouseRClick(æ•´æ•°, æ•´æ•°)
+MouseRDown(æ•´æ•°, æ•´æ•°)
+MouseRUp(æ•´æ•°, æ•´æ•°)
+MouseMClick(æ•´æ•°, æ•´æ•°)
+MouseMDown(æ•´æ•°, æ•´æ•°)
+MouseMUp(æ•´æ•°, æ•´æ•°)
 
-Œ»Ý‚ÌˆÊ’u‚Å“®ì
+MousePos(æ•´æ•°, æ•´æ•°)
+MousePosIncl(æ•´æ•°, æ•´æ•°)
+Wheel æ•´æ•°
+
+ç¾åœ¨ã®ä½ç½®ã§å‹•ä½œ
 MouseLClick
 MouseLDown
 MouseLUp
@@ -75,16 +75,16 @@ MouseMDown
 MouseMUp
 
 ----------------------------------------------------------------------------
-‹ŒƒRƒ}ƒ“ƒhŽg—p”ñ„§
-LMouse Click(®”, ®”)
-LMouse Down(®”, ®”)
-LMouse Up(®”, ®”)
-RMouse Click(®”, ®”)
-RMouse Down(®”, ®”)
-RMouse Up(®”, ®”)
-MMouse Click(®”, ®”)
-MMouse Down(®”, ®”)
-MMouse Up(®”, ®”)
+æ—§ã‚³ãƒžãƒ³ãƒ‰ä½¿ç”¨éžæŽ¨å¥¨
+LMouse Click(æ•´æ•°, æ•´æ•°)
+LMouse Down(æ•´æ•°, æ•´æ•°)
+LMouse Up(æ•´æ•°, æ•´æ•°)
+RMouse Click(æ•´æ•°, æ•´æ•°)
+RMouse Down(æ•´æ•°, æ•´æ•°)
+RMouse Up(æ•´æ•°, æ•´æ•°)
+MMouse Click(æ•´æ•°, æ•´æ•°)
+MMouse Down(æ•´æ•°, æ•´æ•°)
+MMouse Up(æ•´æ•°, æ•´æ•°)
 
 LMouse Click
 LMouse Down
@@ -95,74 +95,74 @@ RMouse Up
 MMouse Click
 MMouse Down
 MMouse Up
-‹ŒƒRƒ}ƒ“ƒhŽg—p”ñ„§
+æ—§ã‚³ãƒžãƒ³ãƒ‰ä½¿ç”¨éžæŽ¨å¥¨
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œƒEƒBƒ“ƒhƒE‘€ì
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ“ä½œ
 Maximize
 Minimaize
-Windowforward(ƒEƒCƒ“ƒhƒE–¼(•”•ªˆê’v))
-WindowPos(®”, ®”)
-WindowSize(®”, ®”)
-Run(ŽÀsƒtƒ@ƒCƒ‹‚ÌƒpƒX)
+Windowforward(ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦å(éƒ¨åˆ†ä¸€è‡´))
+WindowPos(æ•´æ•°, æ•´æ•°)
+WindowSize(æ•´æ•°, æ•´æ•°)
+Run(å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹)
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œŽÀs§Œä
-EscƒL[‚Å’†’fB‚­‚è•Ô‚µ‚àŽ~‚Ü‚éB
-Ctrl+Shift+Space‰Ÿ‰º’†’âŽ~
-Ctrl+Shift+S‚ÅƒXƒeƒbƒv‘—‚è
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—å®Ÿè¡Œåˆ¶å¾¡
+Escã‚­ãƒ¼ã§ä¸­æ–­ã€‚ãã‚Šè¿”ã—ã‚‚æ­¢ã¾ã‚‹ã€‚
+Ctrl+Shift+SpaceæŠ¼ä¸‹ä¸­åœæ­¢
+Ctrl+Shift+Sã§ã‚¹ãƒ†ãƒƒãƒ—é€ã‚Š
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œ‰æ‘œˆ—
-“Ç‚Ýž‚Ý‚Å‚«‚é‰æ‘œ‚Í24bitƒrƒbƒgƒ}ƒbƒvƒtƒH[ƒ}ƒbƒg‚Ì‚ÝBˆ³k‚âƒJƒ‰[ƒpƒŒƒbƒg‚É‚Í‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñB
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—ç”»åƒå‡¦ç†
+èª­ã¿è¾¼ã¿ã§ãã‚‹ç”»åƒã¯24bitãƒ“ãƒƒãƒˆãƒžãƒƒãƒ—ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®ã¿ã€‚åœ§ç¸®ã‚„ã‚«ãƒ©ãƒ¼ãƒ‘ãƒ¬ãƒƒãƒˆã«ã¯å¯¾å¿œã—ã¦ã„ã¾ã›ã‚“ã€‚
 
-SetOriginToWindow(ƒEƒCƒ“ƒhƒE–¼(•”•ªˆê’v))
-Desktop‚ðŽw’è‚·‚é‚ÆƒŠƒZƒbƒg‚³‚ê‚éB
-Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
-
-----------------------------------------------------------------------------
-SetOriginToImage(•¶Žš—ñ, ®”, ®”, ®”, ®”)
-Ž©“®XV‚Í‚³‚ê‚È‚¢‚Ì‚ÅA•K—v‚É‰ž‚¶‚ÄÄŽÀs‚·‚é‚±‚ÆB
+SetOriginToWindow(ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦å(éƒ¨åˆ†ä¸€è‡´))
+Desktopã‚’æŒ‡å®šã™ã‚‹ã¨ãƒªã‚»ãƒƒãƒˆã•ã‚Œã‚‹ã€‚
+è‡ªå‹•æ›´æ–°ã¯ã•ã‚Œãªã„ã®ã§ã€å¿…è¦ã«å¿œã˜ã¦å†å®Ÿè¡Œã™ã‚‹ã“ã¨ã€‚
 
 ----------------------------------------------------------------------------
-WaitImage(•¶Žš—ñ, ®”, ®”, ®”, ®”, on/off, ®”)
-•¶Žš—ñFƒtƒ@ƒCƒ‹ƒpƒX‚à‚µ‚­‚ÍMacro\Model“à‚Ìƒtƒ@ƒCƒ‹–¼
-®”, ®”, ®”, ®”F’Tõ”ÍˆÍ¶ãX, ’Tõ”ÍˆÍ¶ãY, ’Tõ”ÍˆÍ‰E‰ºX, ’Tõ”ÍˆÍ‰E‰ºY
-®”Fƒ^ƒCƒ€ƒAƒEƒgŽžŠÔBÈ—ª‚à‚µ‚­‚Í-1Žw’è‚Å–³ŒÀ‘Ò‚¿
-ƒ^ƒCƒ€ƒAƒEƒg‚ÅƒGƒ‰[ˆ—B
-_mask.bmp‚ª‘¶Ý‚·‚é‚Æ‚«AF·‚ª_mask.bmp‚ÌŠe“_‚Ì’lˆÈ‰º‚Ìê‡‚Íˆê’v‚µ‚Ä‚¢‚é‚Æ‚Ý‚È‚·B
+SetOriginToImage(æ–‡å­—åˆ—, æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°)
+è‡ªå‹•æ›´æ–°ã¯ã•ã‚Œãªã„ã®ã§ã€å¿…è¦ã«å¿œã˜ã¦å†å®Ÿè¡Œã™ã‚‹ã“ã¨ã€‚
 
 ----------------------------------------------------------------------------
-MousePostToImage(•¶Žš—ñ, ®”, ®”, ®”, ®”)
-•¶Žš—ñFƒtƒ@ƒCƒ‹ƒpƒX‚à‚µ‚­‚ÍMacro\Model“à‚Ìƒtƒ@ƒCƒ‹–¼
-®”, ®”, ®”, ®”F’Tõ”ÍˆÍ¶ãX, ’Tõ”ÍˆÍ¶ãY, ’Tõ”ÍˆÍ‰E‰ºX, ’Tõ”ÍˆÍ‰E‰ºY
-Œ©‚Â‚©‚ç‚È‚¢‚ÆƒGƒ‰[ˆ—B
-_mask.bmp‚ª‘¶Ý‚·‚é‚Æ‚«AF·‚ª_mask.bmp‚ÌŠe“_‚Ì’lˆÈ‰º‚Ìê‡‚Íˆê’v‚µ‚Ä‚¢‚é‚Æ‚Ý‚È‚·B
+WaitImage(æ–‡å­—åˆ—, æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°, on/off, æ•´æ•°)
+æ–‡å­—åˆ—ï¼šãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚‚ã—ãã¯Macro\Modelå†…ã®ãƒ•ã‚¡ã‚¤ãƒ«å
+æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°ï¼šæŽ¢ç´¢ç¯„å›²å·¦ä¸ŠX, æŽ¢ç´¢ç¯„å›²å·¦ä¸ŠY, æŽ¢ç´¢ç¯„å›²å³ä¸‹X, æŽ¢ç´¢ç¯„å›²å³ä¸‹Y
+æ•´æ•°ï¼šã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã€‚çœç•¥ã‚‚ã—ãã¯-1æŒ‡å®šã§ç„¡é™å¾…ã¡
+ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã§ã‚¨ãƒ©ãƒ¼å‡¦ç†ã€‚
+_mask.bmpãŒå­˜åœ¨ã™ã‚‹ã¨ãã€è‰²å·®ãŒ_mask.bmpã®å„ç‚¹ã®å€¤ä»¥ä¸‹ã®å ´åˆã¯ä¸€è‡´ã—ã¦ã„ã‚‹ã¨ã¿ãªã™ã€‚
 
 ----------------------------------------------------------------------------
-WaitUpdate(®”, ®”, ®”, ®”, ®”, on/off, ®”)
-®”F XVŠm”FŠÔŠu (ƒ~ƒŠ•b)
-®”, ®”, ®”, ®”F”ÍˆÍ¶ãX, ”ÍˆÍ¶ãY, ”ÍˆÍ‰E‰ºX, ”ÍˆÍ‰E‰ºY
-®”Fƒ^ƒCƒ€ƒAƒEƒgŽžŠÔBÈ—ª‚à‚µ‚­‚Í-1Žw’è‚Å–³ŒÀ‘Ò‚¿
-ƒ^ƒCƒ€ƒAƒEƒg‚ÅƒGƒ‰[ˆ—B
-
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-œƒtƒ[§Œä
-Eƒ‰ƒxƒ‹Ý’è
-•¶Žš—ñ:
+MousePostToImage(æ–‡å­—åˆ—, æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°)
+æ–‡å­—åˆ—ï¼šãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚‚ã—ãã¯Macro\Modelå†…ã®ãƒ•ã‚¡ã‚¤ãƒ«å
+æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°ï¼šæŽ¢ç´¢ç¯„å›²å·¦ä¸ŠX, æŽ¢ç´¢ç¯„å›²å·¦ä¸ŠY, æŽ¢ç´¢ç¯„å›²å³ä¸‹X, æŽ¢ç´¢ç¯„å›²å³ä¸‹Y
+è¦‹ã¤ã‹ã‚‰ãªã„ã¨ã‚¨ãƒ©ãƒ¼å‡¦ç†ã€‚
+_mask.bmpãŒå­˜åœ¨ã™ã‚‹ã¨ãã€è‰²å·®ãŒ_mask.bmpã®å„ç‚¹ã®å€¤ä»¥ä¸‹ã®å ´åˆã¯ä¸€è‡´ã—ã¦ã„ã‚‹ã¨ã¿ãªã™ã€‚
 
 ----------------------------------------------------------------------------
-Eƒ‰ƒxƒ‹‚ÉƒWƒƒƒ“ƒv
-GoTo ƒ‰ƒxƒ‹
+WaitUpdate(æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°, on/off, æ•´æ•°)
+æ•´æ•°ï¼š æ›´æ–°ç¢ºèªé–“éš” (ãƒŸãƒªç§’)
+æ•´æ•°, æ•´æ•°, æ•´æ•°, æ•´æ•°ï¼šç¯„å›²å·¦ä¸ŠX, ç¯„å›²å·¦ä¸ŠY, ç¯„å›²å³ä¸‹X, ç¯„å›²å³ä¸‹Y
+æ•´æ•°ï¼šã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã€‚çœç•¥ã‚‚ã—ãã¯-1æŒ‡å®šã§ç„¡é™å¾…ã¡
+ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã§ã‚¨ãƒ©ãƒ¼å‡¦ç†ã€‚
+
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
+â—ãƒ•ãƒ­ãƒ¼åˆ¶å¾¡
+ãƒ»ãƒ©ãƒ™ãƒ«è¨­å®š
+æ–‡å­—åˆ—:
 
 ----------------------------------------------------------------------------
-EƒGƒ‰[Žžˆ—Ý’è
-OnError GoTo ƒ‰ƒxƒ‹
+ãƒ»ãƒ©ãƒ™ãƒ«ã«ã‚¸ãƒ£ãƒ³ãƒ—
+GoTo ãƒ©ãƒ™ãƒ«
+
+----------------------------------------------------------------------------
+ãƒ»ã‚¨ãƒ©ãƒ¼æ™‚å‡¦ç†è¨­å®š
+OnError GoTo ãƒ©ãƒ™ãƒ«
 OnError GoTo 0
 OnError Resume Next
 
 ----------------------------------------------------------------------------
-EI—¹
+ãƒ»çµ‚äº†
 Exit
 
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– 
