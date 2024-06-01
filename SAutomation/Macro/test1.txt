@@ -1,5 +1,8 @@
-﻿Wait ctrl off
+﻿
+Wait ctrl off
 Wait shift off
+
+BackSpace
 Input(" ab ")
 
 ab

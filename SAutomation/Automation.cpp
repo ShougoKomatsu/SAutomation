@@ -228,6 +228,8 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	if(sData.CompareNoCase(_T("enter"))==0){*byData = VK_RETURN;return RETURN_NORMAL;}
 	if(sData.CompareNoCase(_T("return"))==0){*byData = VK_RETURN;return RETURN_NORMAL;}
 	if(sData.CompareNoCase(_T("space"))==0){*byData = VK_SPACE;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("backspace"))==0){*byData = VK_BACK;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("jp"))==0){*byData = 0xf3;return RETURN_NORMAL;}
 
 	
 	if(sData.GetLength()==1)

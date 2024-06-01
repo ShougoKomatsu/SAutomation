@@ -14,7 +14,8 @@
 
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 ●キーボード入力
-英数記号一文字, F1～F16, Ctrl, Shift, Alt, Tab, Space, Enter
+英数記号一文字, F1～F16, Ctrl, Shift, Alt, Tab, Space, Enter, BackSpace
+Jp: 全角/半角切り替え
 
 Down, Upを付けると押しっぱなしになる
 例：
