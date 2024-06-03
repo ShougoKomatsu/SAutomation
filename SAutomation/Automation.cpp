@@ -179,8 +179,13 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	if(sData.CompareNoCase(_T("alt"))==0){*byData= VK_MENU;return RETURN_NORMAL;}
 
 	if(sData.CompareNoCase(_T("Å©"))==0){*byData= VK_LEFT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("<-"))==0){*byData= VK_LEFT;return RETURN_NORMAL;}
+
 	if(sData.CompareNoCase(_T("Å™"))==0){*byData= VK_UP;return RETURN_NORMAL;}
+
 	if(sData.CompareNoCase(_T("Å®"))==0){*byData= VK_RIGHT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("->"))==0){*byData= VK_RIGHT;return RETURN_NORMAL;}
+
 	if(sData.CompareNoCase(_T("Å´"))==0){*byData= VK_DOWN;return RETURN_NORMAL;}
 
 
@@ -230,6 +235,11 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	if(sData.CompareNoCase(_T("space"))==0){*byData = VK_SPACE;return RETURN_NORMAL;}
 	if(sData.CompareNoCase(_T("backspace"))==0){*byData = VK_BACK;return RETURN_NORMAL;}
 	if(sData.CompareNoCase(_T("jp"))==0){*byData = 0xf3;return RETURN_NORMAL;}
+
+	if(sData.CompareNoCase(_T("pageup"))==0){*byData = VK_PRIOR;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("pagedown"))==0){*byData = VK_NEXT;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("home"))==0){*byData = VK_HOME;return RETURN_NORMAL;}
+	if(sData.CompareNoCase(_T("end"))==0){*byData = VK_END;return RETURN_NORMAL;}
 
 	
 	if(sData.GetLength()==1)
