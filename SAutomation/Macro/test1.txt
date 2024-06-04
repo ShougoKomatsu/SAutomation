@@ -2,7 +2,6 @@
 Wait ctrl off
 Wait shift off
 
-end
 
 
 
@@ -20,12 +19,7 @@ end
 
 
 
-
-
-
-
-
-
+up
 
 
 
