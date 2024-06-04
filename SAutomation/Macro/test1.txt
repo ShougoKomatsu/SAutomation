@@ -2,10 +2,50 @@
 Wait ctrl off
 Wait shift off
 
-BackSpace
-Input(" ab ")
 
-ab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+up
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

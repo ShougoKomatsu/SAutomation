@@ -13,6 +13,27 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
 
+	if(sDataTrim.CompareNoCase(_T("Å©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("<-"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("left"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+
+	if(sDataTrim.CompareNoCase(_T("Å™"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("up"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+
+	if(sDataTrim.CompareNoCase(_T("Å®"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("->"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("right"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+
+	if(sDataTrim.CompareNoCase(_T("Å´"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+
+
+	if(sDataTrim.CompareNoCase(_T("pageup"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("pagedown"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("home"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("end"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("printscreen"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+
 	//-------------------------------------------------------
 	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
@@ -75,8 +96,10 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("backspace"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("jp"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("tab"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+
 	if(sDataTrim.CompareNoCase(_T("maximize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("minimize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
+
 
 	if(sDataTrim.GetLength()==2)
 	{
@@ -199,6 +222,12 @@ BOOL GetKeyType(CString sInput, CString* sOut)
 	CString sInputLower;
 	sInputLower.Format(_T("%s"), sInput);
 	sInputLower.Trim(_T(" ")).Trim(_T("\t"));
+
+	if(sInputLower.CompareNoCase(_T("pagedown"))==0){sOut->Format(_T("%s"), sInputLower);return TRUE;}
+	if(sInputLower.CompareNoCase(_T("pageup"))==0){sOut->Format(_T("%s"), sInputLower);return TRUE;}
+	if(sInputLower.CompareNoCase(_T("up"))==0){sOut->Format(_T("%s"), sInputLower);return TRUE;}
+	if(sInputLower.CompareNoCase(_T("down"))==0){sOut->Format(_T("%s"), sInputLower);return TRUE;}
+
 	if(sInputLower.Right(4).CompareNoCase(_T("down"))==0){sRemind.Format(_T("%s"), sInput.Left(sInput.GetLength()-5));}
 	else if(sInputLower.Right(2).CompareNoCase(_T("up"))==0){sRemind.Format(_T("%s"), sInput.Left(sInput.GetLength()-2));}
 	else{sRemind.Format(_T("%s"), sInput);}
