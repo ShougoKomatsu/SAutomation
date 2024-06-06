@@ -27,6 +27,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("Å´"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
+	if(sDataTrim.CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("pageup"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("pagedown"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -670,6 +671,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	if(iType == COMMAND_LABEL){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_ERROR_TREAT){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_GOTO){*iCommandType = iType;return TRUE;}
+	if(iType == COMMAND_SWITCH_BY_INPUT){*iCommandType = iType;return TRUE;}
 
 	return FALSE;
 }

@@ -6,6 +6,9 @@
 #include "Window.h"
 
 CString g_sDir;
+CSAutomationDlg* g_dlg;
+
+#include "InputDialog.h"
 
 
 int K_SleepWithoutHalt(LPVOID Suspend, DWORD SleepMilliSec)
@@ -163,6 +166,11 @@ int KeyUp(BYTE bySendKey)
 	return RETURN_NORMAL;
 }
 
+int GetInput()
+{
+	g_dlg->	cInput.DoModal();
+	return 0;
+}
 
 int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 {
@@ -568,6 +576,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_LABEL:{return RETURN_LABEL;}
 	case COMMAND_GOTO:{return RETURN_GOTO;}
 	case COMMAND_ERROR_TREAT:{return RETURN_ERROR_TREAT;}
+	case COMMAND_SWITCH_BY_INPUT:{return GetInput();}
 	default:{return RETURN_FAILED;}
 	}
 	return RETURN_FAILED;
