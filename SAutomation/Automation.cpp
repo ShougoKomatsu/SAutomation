@@ -166,7 +166,7 @@ int KeyUp(BYTE bySendKey)
 	return RETURN_NORMAL;
 }
 
-int GetInput()
+int GetInput(CStringArray* saData, CString* sReturnParam)
 {
 	g_dlg->	cInput.DoModal();
 	return 0;
@@ -521,7 +521,7 @@ int FilndLabel(CStringArray* saCommands, CString sLabel)
 	return -1;
 }
 
-int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine)
+int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
 {
 	int iCommandType=COMMAND_UNDEFINED;
 	BOOL bRet;
@@ -576,7 +576,12 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_LABEL:{return RETURN_LABEL;}
 	case COMMAND_GOTO:{return RETURN_GOTO;}
 	case COMMAND_ERROR_TREAT:{return RETURN_ERROR_TREAT;}
-	case COMMAND_SWITCH_BY_INPUT:{return GetInput();}
+	case COMMAND_SWITCH_BY_INPUT:
+		{
+			int iRet;
+			iRet = GetInput(&saData, sReturnParam);
+			return iRet;
+		}
 	default:{return RETURN_FAILED;}
 	}
 	return RETURN_FAILED;

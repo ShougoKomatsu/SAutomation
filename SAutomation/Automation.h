@@ -34,7 +34,7 @@
 #define COMMAND_WAIT_IMG (COMMAND_IMGPROC + 1)
 #define COMMAND_WAIT_UPDATE (COMMAND_IMGPROC + 2)
 
-int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine);
+int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 
 extern CString g_sDir;
 
@@ -46,6 +46,7 @@ extern CString g_sDir;
 #define RETURN_IF (100)
 #define RETURN_LABEL (101)
 #define RETURN_GOTO (102)
+#define RETURN_GOTO_BY_SWITCH (103)
 
 #define ERROR_TREAT_UNDEFINED (-1)
 #define ERROR_TREAT_END (0)

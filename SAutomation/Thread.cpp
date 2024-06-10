@@ -142,7 +142,8 @@ DWORD WINAPI CommandThread(LPVOID arg)
 
 			sWrite.Format(_T("%s "), saCommands.GetAt(i));
 			if(iLogLevel>=1){cf.WriteString(sWrite);}
-			iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i));
+			CString sReturnParam;
+			iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
 			sWrite.Format(_T("%d\n"), iRet);
 			if(iLogLevel>=1){cf.WriteString(sWrite);}
 			switch(iRet)
@@ -203,6 +204,21 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					return 0;
 				}
 			case RETURN_GOTO:
+				{
+					PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
+					int iLabel;
+					iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
+					if(iLabel >= 0){i=iLabel-1;break;}
+
+					if(iLogLevel>=1){cf.Close();}
+					g_bHalt = FALSE;
+					ChangeMouseOrigin(0, 0);
+					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+					TerminateThread(hGetKey, 0);
+					TerminateThread(hGetStepKey, 0);
+					return 0;
+				}
+			case RETURN_GOTO_BY_SWITCH:
 				{
 					PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
 					int iLabel;
