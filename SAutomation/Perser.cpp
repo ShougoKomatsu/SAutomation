@@ -301,7 +301,25 @@ BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel)
 
 	return TRUE;
 }
+BOOL CountArgsInTheParameter(CString sParameter, int* iCount)
+{
+	int iStart;
+	iStart=0;
+	int iFound;
+	int iCountLocal=0;
 
+	while(1)
+	{
+		iFound = sParameter.Find(_T(","), iStart);
+		if(iFound <0){break;}
+
+		iCountLocal++;
+		iStart=iFound+1;
+	}
+	
+	*iCount = iCountLocal;
+	return TRUE;
+}
 BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir)
 {
 	int iType;
@@ -671,7 +689,27 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	if(iType == COMMAND_LABEL){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_ERROR_TREAT){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_GOTO){*iCommandType = iType;return TRUE;}
-	if(iType == COMMAND_SWITCH_BY_INPUT){*iCommandType = iType;return TRUE;}
+	if(iType == COMMAND_SWITCH_BY_INPUT)
+	{
+		CString sParameter;
+		int iArgCount;
+		ExtractData(sDataLocal, _T("("), &sArg, &sParameter);
+		ExtractData(sParameter, _T(")"), &sArg, &sParameter);
+		CountArgsInTheParameter(sParameter, &iArgCount);
+		if(iArgCount<6){return FALSE;}
+		if((iArgCount%2)!=0){return FALSE;}
+		ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+		for(int i=0; i<iArgCount; i++)
+		{
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()<=0){return FALSE;}
+			saData->Add(sArg);
+		}
+
+
+		*iCommandType = iType;
+		return TRUE;
+	}
 
 	return FALSE;
 }
