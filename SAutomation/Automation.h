@@ -53,5 +53,5 @@ extern CString g_sDir;
 #define ERROR_TREAT_RESUME (1)
 #define ERROR_TREAT_GOTO (2)
 
-
+int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData);
 BOOL Input(CString sInputWithDblQuart);

@@ -27,7 +27,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("Å´"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
-	if(sDataTrim.CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("pageup"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("pagedown"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -36,6 +35,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("printscreen"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
+	if(sDataTrim.Left(13).CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("onerror"))==0){*iCommandType=COMMAND_ERROR_TREAT;return TRUE;}
@@ -306,7 +306,8 @@ BOOL CountArgsInTheParameter(CString sParameter, int* iCount)
 	int iStart;
 	iStart=0;
 	int iFound;
-	int iCountLocal=0;
+	if(sParameter.GetLength()<=0){*iCount=0; return TRUE;}
+	int iCountLocal=1;
 
 	while(1)
 	{
@@ -695,16 +696,18 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		int iArgCount;
 		ExtractData(sDataLocal, _T("("), &sArg, &sParameter);
 		ExtractData(sParameter, _T(")"), &sArg, &sParameter);
-		CountArgsInTheParameter(sParameter, &iArgCount);
+		CountArgsInTheParameter(sArg, &iArgCount);
 		if(iArgCount<6){return FALSE;}
 		if((iArgCount%2)!=0){return FALSE;}
 		ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-		for(int i=0; i<iArgCount; i++)
+		for(int i=0; i<iArgCount-1; i++)
 		{
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
 			if(sArg.GetLength()<=0){return FALSE;}
 			saData->Add(sArg);
 		}
+		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+		saData->Add(sArg);
 
 
 		*iCommandType = iType;

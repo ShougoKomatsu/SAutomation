@@ -9,43 +9,5 @@ Wait shift off
 
 
 
-SwitchByInput
-
-
-
-
-
-
-
-
-
-up
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+SwitchByInput(test, 100, a,b,c,d)
 

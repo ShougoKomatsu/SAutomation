@@ -8,6 +8,15 @@ class CInputDialog : public CDialogEx
 	DECLARE_DYNAMIC(CInputDialog)
 
 public:
+		CStringArray m_saParam;
+	
+	CString m_sMessage;
+	int m_iTimeOutMilliSec;
+	BYTE* m_byKey;
+	int m_iKeyNum;
+	CString* m_sLabel;
+
+	BOOL PerseParameter();
 	CInputDialog(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CInputDialog();
 
@@ -20,4 +29,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual BOOL OnInitDialog();
 };
+

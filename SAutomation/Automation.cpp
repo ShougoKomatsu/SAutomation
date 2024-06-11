@@ -168,6 +168,7 @@ int KeyUp(BYTE bySendKey)
 
 int GetInput(CStringArray* saData, CString* sReturnParam)
 {
+	g_dlg->cInput.m_saParam.Copy(*saData);
 	g_dlg->	cInput.DoModal();
 	return 0;
 }

@@ -220,9 +220,8 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				}
 			case RETURN_GOTO_BY_SWITCH:
 				{
-					PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
 					int iLabel;
-					iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
+					iLabel = SearchLable(&saCommands,sReturnParam, iLogLevel, &cf);
 					if(iLabel >= 0){i=iLabel-1;break;}
 
 					if(iLogLevel>=1){cf.Close();}
