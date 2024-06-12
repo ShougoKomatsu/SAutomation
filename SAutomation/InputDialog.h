@@ -15,6 +15,7 @@ public:
 	BYTE* m_byKey;
 	int m_iKeyNum;
 	CString* m_sLabel;
+	CString m_sResultLabel;
 
 	BOOL PerseParameter();
 	CInputDialog(CWnd* pParent = NULL);   // 標準コンストラクター

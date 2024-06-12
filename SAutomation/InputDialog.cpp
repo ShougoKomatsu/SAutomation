@@ -43,6 +43,13 @@ BOOL CInputDialog::PreTranslateMessage(MSG* pMsg)
 {
 	if(pMsg->message==WM_KEYUP)
 	{
+		for(int i=0; i<m_iKeyNum; i++)
+		{
+			if(pMsg->wParam == m_byKey[i])
+			{
+				m_sResultLabel.Format(_T("%s"), m_sLabel[i]);
+			}
+		}
 		OnOK();
 	}
 
@@ -75,8 +82,10 @@ BOOL CInputDialog::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// TODO:  ここに初期化を追加してください
-	PerseParameter();
+	BOOL bRet;
+	bRet = PerseParameter();
+	if(bRet != TRUE){m_sLabel[0].Format(_T("")); return FALSE;}
+	m_sResultLabel.Format(_T("%s"), m_sLabel[0]);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
 }
