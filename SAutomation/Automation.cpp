@@ -171,7 +171,7 @@ int GetInput(CStringArray* saData, CString* sReturnParam)
 	g_dlg->cInput.m_saParam.Copy(*saData);
 	g_dlg->	cInput.DoModal();
 	sReturnParam->Format(_T("%s"), g_dlg->cInput.m_sResultLabel);
-	return 0;
+	return RETURN_GOTO_BY_SWITCH;
 }
 
 int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
