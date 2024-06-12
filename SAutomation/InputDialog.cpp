@@ -86,6 +86,13 @@ BOOL CInputDialog::OnInitDialog()
 	bRet = PerseParameter();
 	if(bRet != TRUE){m_sLabel[0].Format(_T("")); return FALSE;}
 	m_sResultLabel.Format(_T("%s"), m_sLabel[0]);
+
+	((CButton*)GetDlgItem(IDC_STATIC_MESSAGE))->SetWindowText(m_sMessage);
+	CString sInstruction;
+	sInstruction.Format(_T("%c: %s"), m_byKey[0], m_sLabel[0]);
+
+	((CButton*)GetDlgItem(IDC_STATIC_MESSAGE))->SetWindowText(m_sMessage);
+	((CButton*)GetDlgItem(IDC_STATIC_INSTRUCTION))->SetWindowText(sInstruction);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
 }

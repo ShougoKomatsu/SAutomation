@@ -9,5 +9,13 @@ Wait shift off
 
 
 
-SwitchByInput(test, 100, a,b,c,d)
+SwitchByInput(test, 100, aa,b,cc,d)
+
+
+aa:
+MousePos(100,100)
+Exit
+
+cc:
+MousePos(200,200)
 

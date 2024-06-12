@@ -1,0 +1,12 @@
+1 Wait ctrl off 0
+2 Wait shift off 0
+3 SwitchByInput(test, 100, aa,b,cc,d) 103
+"Wait ctrl of", "cc"
+"Wait shift of", "cc"
+"SwitchByInput(test, 100, aa,b,cc,d", "cc"
+"aa", "cc"
+"MousePos(100,100", "cc"
+"Exi", "cc"
+"cc", "cc"
+7 cc: 101
+8 MousePos(200,200) 0
