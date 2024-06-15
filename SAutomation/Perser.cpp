@@ -12,6 +12,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(1).CompareNoCase(_T("'"))==0){*iCommandType=COMMAND_NOTING;return TRUE;}
 
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
+	
+	if(sDataTrim.CompareNoCase(_T("varint"))==0){*iCommandType=COMMAND_VARIABLE_INT; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("Å©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("<-"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -662,6 +664,13 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		if(sArg.GetLength()>0){saData->Add(sArg);}
 		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
 		if(sArg.GetLength()>0){saData->Add(sArg);}
+		*iCommandType = iType;
+		return TRUE;
+	}
+
+	if(iType == COMMAND_VARIABLE_INT)
+	{
+		saData->Add(sDataLocal);
 		*iCommandType = iType;
 		return TRUE;
 	}
