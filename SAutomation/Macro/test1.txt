@@ -9,7 +9,7 @@ Wait shift off
 
 
 
-SwitchByInput(test, 100, aa,b,cc,d)
+SwitchByInput(test, 100, aa1,b,cc2,d,cc3,d,cc4,d,cc5,d,cc6,d,cc7,d,cc8,d,cc9,d)
 
 
 aa:

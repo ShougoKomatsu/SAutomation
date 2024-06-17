@@ -86,12 +86,29 @@ BOOL CInputDialog::OnInitDialog()
 	bRet = PerseParameter();
 	if(bRet != TRUE){m_sLabel[0].Format(_T("")); return FALSE;}
 	m_sResultLabel.Format(_T("%s"), m_sLabel[0]);
-
+	SetWindowText(_T("SwitchByInput"));
+	
 	((CButton*)GetDlgItem(IDC_STATIC_MESSAGE))->SetWindowText(m_sMessage);
 	CString sInstruction;
-	sInstruction.Format(_T("%c: %s"), m_byKey[0], m_sLabel[0]);
+	sInstruction=_T("");
+	for(int i=0; i<m_iKeyNum-1; i++)
+	{
+		CString sTemp;
+		sTemp.Format(_T("%c: %s\n"), m_byKey[i], m_sLabel[i]);
+		sInstruction.Append(sTemp);
+	}
+		CString sTemp;
+		sTemp.Format(_T("%c: %s\n"), m_byKey[m_iKeyNum-1], m_sLabel[m_iKeyNum-1]);
+		sInstruction.Append(sTemp);
 
 	((CButton*)GetDlgItem(IDC_STATIC_MESSAGE))->SetWindowText(m_sMessage);
+	CRect rect;
+	CRect rectParent;
+	((CButton*)GetDlgItem(IDC_STATIC_INSTRUCTION))->GetWindowRect(&rect);
+	CRect rect2;
+	rect2.SetRect(rect.left, rect.top, rect.left+rect.Width(), rect.top+13*m_iKeyNum);
+	((CButton*)GetDlgItem(IDC_STATIC_INSTRUCTION))->MoveWindow(rect2);
+
 	((CButton*)GetDlgItem(IDC_STATIC_INSTRUCTION))->SetWindowText(sInstruction);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
