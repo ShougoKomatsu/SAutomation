@@ -1,9 +1,9 @@
 1 Wait ctrl off 0
 2 Wait shift off 0
-3 SwitchByInput(test, 100, aa1,b,cc2,d,cc3,d,cc4,d,cc5,d,cc6,d,cc7,d,cc8,d,cc9,d) 103
+3 SwitchByInput(test, 100, aa1,b,cc2,d) 103
 "Wait ctrl of", "aa1"
 "Wait shift of", "aa1"
-"SwitchByInput(test, 100, aa1,b,cc2,d,cc3,d,cc4,d,cc5,d,cc6,d,cc7,d,cc8,d,cc9,d", "aa1"
+"SwitchByInput(test, 100, aa1,b,cc2,d", "aa1"
 "aa", "aa1"
 "MousePos(100,100", "aa1"
 "Exi", "aa1"
