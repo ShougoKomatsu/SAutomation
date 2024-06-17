@@ -6,6 +6,7 @@
 #include "afxwin.h"
 #include "thread.h"
 #include "afxcmn.h"
+#include "InputDialog.h"
 
 #define HOTKEY_ID_0 (10)
 #define HOTKEY_ID_1 (11)
@@ -52,7 +53,8 @@ public:
 
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
-
+	
+		CInputDialog cInput;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 	BOOL TrayNotifyIconMessage(DWORD dwMessage);
@@ -73,7 +75,7 @@ protected:
 	CString m_sTargetWindowName;
 	int m_iLogLevel;
 	BOOL m_bLog;
-
+	
 	void RefreshTargetWindowPos();
 	DWORD m_dwHotKeyEnable;
 

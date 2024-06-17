@@ -35,6 +35,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("printscreen"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
+	if(sDataTrim.Left(13).CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("onerror"))==0){*iCommandType=COMMAND_ERROR_TREAT;return TRUE;}
@@ -300,7 +301,26 @@ BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel)
 
 	return TRUE;
 }
+BOOL CountArgsInTheParameter(CString sParameter, int* iCount)
+{
+	int iStart;
+	iStart=0;
+	int iFound;
+	if(sParameter.GetLength()<=0){*iCount=0; return TRUE;}
+	int iCountLocal=1;
 
+	while(1)
+	{
+		iFound = sParameter.Find(_T(","), iStart);
+		if(iFound <0){break;}
+
+		iCountLocal++;
+		iStart=iFound+1;
+	}
+	
+	*iCount = iCountLocal;
+	return TRUE;
+}
 BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir)
 {
 	int iType;
@@ -670,6 +690,29 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	if(iType == COMMAND_LABEL){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_ERROR_TREAT){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_GOTO){*iCommandType = iType;return TRUE;}
+	if(iType == COMMAND_SWITCH_BY_INPUT)
+	{
+		CString sParameter;
+		int iArgCount;
+		ExtractData(sDataLocal, _T("("), &sArg, &sParameter);
+		ExtractData(sParameter, _T(")"), &sArg, &sParameter);
+		CountArgsInTheParameter(sArg, &iArgCount);
+		if(iArgCount<6){return FALSE;}
+		if((iArgCount%2)!=0){return FALSE;}
+		ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+		for(int i=0; i<iArgCount-1; i++)
+		{
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()<=0){return FALSE;}
+			saData->Add(sArg);
+		}
+		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+		saData->Add(sArg);
+
+
+		*iCommandType = iType;
+		return TRUE;
+	}
 
 	return FALSE;
 }
