@@ -546,6 +546,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 		saData->Add(sOut);
 
+		*iCommandType=iType;
 		
 		return TRUE;
 	}

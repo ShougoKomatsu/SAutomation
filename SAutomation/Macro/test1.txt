@@ -1,7 +1,9 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
-keydownup(a)
 
+KeyDown(Alt)
+KeyDownUp(Tab)
+KeyUp(Alt)
 exit
 
 WaitKey(Ctrl, off,-1)
