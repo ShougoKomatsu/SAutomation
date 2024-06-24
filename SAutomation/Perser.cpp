@@ -91,6 +91,9 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.Left(13).CompareNoCase(_T("windowforward"))==0){*iCommandType=COMMAND_WINDOW_FORWARD; return TRUE;}
 	
+	if(sDataTrim.Left(7).CompareNoCase(_T("keydown"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("keyup"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("key"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
 	if(sDataTrim.CompareNoCase(_T("enter"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -531,17 +534,29 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 	if(iType == COMMAND_KEY_DOWN_UP)
 	{
+
+		CString sTemp;
+		ExtractData(sDataLocal, _T("("), &sArg, &sTemp);
+		ExtractData(sTemp, _T(")"), &sArg, &sTemp);
+		if(sArg.GetLength()>0){*iCommandType=iType; saData->Add(sArg); return TRUE;}
+
+
 		CString sOut;
 		GetKeyType(sDataLocal, &sOut);
 
 		saData->Add(sOut);
 
-		*iCommandType=iType;
+		
 		return TRUE;
 	}
 
 	if(iType == COMMAND_KEY_DOWN)
 	{
+		CString sTemp;
+		ExtractData(sDataLocal, _T("("), &sArg, &sTemp);
+		ExtractData(sTemp, _T(")"), &sArg, &sTemp);
+		if(sArg.GetLength()>0){*iCommandType=iType; saData->Add(sArg); return TRUE;}
+
 		CString sOut;
 		GetKeyType(sDataLocal, &sOut);
 
@@ -553,6 +568,11 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 	if(iType == COMMAND_KEY_UP)
 	{
+		CString sTemp;
+		ExtractData(sDataLocal, _T("("), &sArg, &sTemp);
+		ExtractData(sTemp, _T(")"), &sArg, &sTemp);
+		if(sArg.GetLength()>0){*iCommandType=iType; saData->Add(sArg); return TRUE;}
+
 		CString sOut;
 		GetKeyType(sDataLocal, &sOut);
 

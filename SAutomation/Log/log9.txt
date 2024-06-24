@@ -1,4 +1,4 @@
-1 WaitKey(Ctrl, off,-1) 0
-2 MousePos(100,100) 0
-3 WaitKey(Ctrl, on,-1) 0
-4 MousePos(200,200) 0
+1 Waitkey(ctrl, off, -1) 0
+2 waitkey(shift, off,-1) 0
+3 keydownup(a) 0
+4 exit 10

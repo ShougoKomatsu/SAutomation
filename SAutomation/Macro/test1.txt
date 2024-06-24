@@ -1,10 +1,15 @@
-﻿WaitKey(Ctrl, off,-1)
+﻿Waitkey(ctrl, off, -1)
+waitkey(shift, off,-1)
+keydownup(a)
+
+exit
+
+WaitKey(Ctrl, off,-1)
 
 
 MousePos(100,100)
 
-WaitKey(Ctrl, on,-1)
-
+WaitKey(Ctrl, on,1000)
 
 MousePos(200,200)
 
