@@ -441,6 +441,8 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	BOOL bUnicode;
 	TCHAR tch;
 	int iRet;
+	int iTimeOutMillisec;
+	
 	iRet = GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &byKey);
 	if(iRet < 0){return iRet;}
 
@@ -448,6 +450,9 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	else if(saData->GetAt(1).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
+	
+	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
+	else {iTimeOutMillisec = _ttoi(saData->GetAt(2));}
 
 	if(bUnicode == TRUE)
 	{
@@ -457,6 +462,10 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	}
 
 	short shKey;
+	
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
 	while(1)
 	{
 		shKey = GetAsyncKeyState (byKey);
@@ -465,6 +474,14 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		
 		iRet = K_Sleep(Halt, Suspend, 1);
 		if(iRet <0){return iRet;}
+		
+		if(iTimeOutMillisec>=0)
+		{
+			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMillisec/g_dSpeedMult))
+			{
+				return RETURN_FAILED;
+			}
+		}
 	}
 	return RETURN_NORMAL;
 }
