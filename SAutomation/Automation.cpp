@@ -581,6 +581,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_KEY_UP:{return KeyUp(&saData);}
 
 	case COMMAND_WAIT:{return WaitForKey(Halt, Suspend, &saData);}
+	case COMMAND_WAIT_KEY:{return WaitForKey(Halt, Suspend, &saData);}
 	case COMMAND_WAIT_IMG:{return WaitForImage(Halt, Suspend, &saData);}
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}

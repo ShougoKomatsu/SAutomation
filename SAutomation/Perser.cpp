@@ -84,11 +84,13 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if((sDataTrim.Left(5).CompareNoCase(_T("input"))==0)){*iCommandType=COMMAND_INPUT; return TRUE;}
 
 	if((sDataTrim.Left(4).CompareNoCase(_T("dim "))==0)){*iCommandType=COMMAND_DECRARE; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("WaitKey"))==0){*iCommandType=COMMAND_WAIT_KEY; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("wait"))==0){*iCommandType=COMMAND_WAIT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("windowsize"))==0){*iCommandType=COMMAND_WINDOW_SIZE; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("windowpos"))==0){*iCommandType=COMMAND_WINDOW_POS; return TRUE;}
 
 	if(sDataTrim.Left(13).CompareNoCase(_T("windowforward"))==0){*iCommandType=COMMAND_WINDOW_FORWARD; return TRUE;}
+	
 
 	//-------------------------------------------------------
 	if(sDataTrim.CompareNoCase(_T("enter"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -566,6 +568,31 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		*iCommandType=iType;
 		return TRUE;
 	}
+
+	if(iType == COMMAND_WAIT_KEY)
+	{
+		*iCommandType=iType;
+		ExtractData(sDataLine, _T("("), &sArg, &sDataLocal);
+		ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+		saData->Add(sArg);
+
+		ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+		if(sArg.GetLength()<=0)
+		{
+			saData->Add(sArg);
+			saData->Add(_T("-1"));
+		}
+		else
+		{
+		saData->Add(sArg);
+		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+		saData->Add(sArg);
+		}
+
+		return TRUE;
+	}
+
+
 
 	if(iType == COMMAND_MAXIMIZE){*iCommandType=iType; return TRUE;}
 	if(iType == COMMAND_MINIMIZE){*iCommandType=iType; return TRUE;}
