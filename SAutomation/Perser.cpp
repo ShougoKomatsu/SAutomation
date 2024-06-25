@@ -454,6 +454,12 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 	if(iType == COMMAND_WHEEL)
 	{
+		CString sTemp;
+		ExtractData(sDataLocal, _T("("), &sArg, &sTemp);
+		ExtractData(sTemp, _T(")"), &sArg, &sTemp);
+		if(sArg.GetLength()>0){*iCommandType=iType; saData->Add(sArg); return TRUE;}
+
+
 		ExtractData(sDataLocal, _T(" "), &sArg, &sDataLocal);
 		ExtractData(sDataLocal, _T(" "), &sArg, &sDataLocal);
 		saData->Add(sArg);

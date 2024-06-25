@@ -1,9 +1,7 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
-KeyDown(Alt)
-KeyDownUp(Tab)
-KeyUp(Alt)
+wheel(100)
 exit
 
 WaitKey(Ctrl, off,-1)
