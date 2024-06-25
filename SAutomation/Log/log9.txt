@@ -1,11 +1,4 @@
-1 Wait ctrl off 0
-2 Wait shift off 0
-3 SwitchByInput(test, 100, aa1,b,cc2,d) 103
-"Wait ctrl of", "aa1"
-"Wait shift of", "aa1"
-"SwitchByInput(test, 100, aa1,b,cc2,d", "aa1"
-"aa", "aa1"
-"MousePos(100,100", "aa1"
-"Exi", "aa1"
-"cc", "aa1"
-"MousePos(200,200", "aa1"
+1 Waitkey(ctrl, off, -1) 0
+2 waitkey(shift, off,-1) 0
+3 wheel(100) 0
+4 exit 10

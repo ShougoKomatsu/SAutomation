@@ -1,21 +1,15 @@
-﻿
-Wait ctrl off
-Wait shift off
+﻿Waitkey(ctrl, off, -1)
+waitkey(shift, off,-1)
+
+wheel(100)
+exit
+
+WaitKey(Ctrl, off,-1)
 
 
-
-
-
-
-
-
-SwitchByInput(test, 100, aa1,b,cc2,d)
-
-
-aa:
 MousePos(100,100)
-Exit
 
-cc:
+WaitKey(Ctrl, on,1000)
+
 MousePos(200,200)
 
