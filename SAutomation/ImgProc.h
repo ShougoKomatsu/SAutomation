@@ -3,7 +3,7 @@
 #define CHANNEL_UNDEFINED (0)
 #define CHANNEL_1_8 (1)
 #define CHANNEL_3_8 (3)
-#define CHANNEL_1_24 (24)
+#define CHANNEL_1_24BGR (24)
 
 struct ImgRGB
 {
@@ -32,7 +32,7 @@ struct ImgRGB
 			byImgG = new BYTE[iWidth*iHeight];
 			byImgB = new BYTE[iWidth*iHeight];
 		}
-		if(iChannel == CHANNEL_1_24)
+		if(iChannel == CHANNEL_1_24BGR)
 		{
 			byImgR = new BYTE[iWidth*iHeight*3];
 		}

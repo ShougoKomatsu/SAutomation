@@ -71,7 +71,7 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 		}
 	}
 
-	if(imgRGB->iChannel==CHANNEL_1_24)
+	if(imgRGB->iChannel==CHANNEL_1_24BGR)
 	{
 		for(int r=0; r<imgRGB->iHeight; r++)
 		{
@@ -111,7 +111,7 @@ BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, i
 	{
 		imgRGBout->Init();
 		imgRGBout->Set(iC1-iC0+1, iR1-iR0+1, imgRGBin->iChannel);
-		if(imgRGBin->iChannel==CHANNEL_1_24)
+		if(imgRGBin->iChannel==CHANNEL_1_24BGR)
 		{
 
 			for(int r=iR0; r<=iR1; r++)
@@ -176,7 +176,7 @@ BOOL Screenshot(ImgRGB* imgRGB)
 	iWidth = (rect.right-rect.left);
 	iHeight = (rect.bottom-rect.top);
 
-	imgRGB->Set(iWidth, iHeight, CHANNEL_1_24);
+	imgRGB->Set(iWidth, iHeight, CHANNEL_1_24BGR);
 
 	int iFillerSize;
 
@@ -192,20 +192,20 @@ BOOL Screenshot(ImgRGB* imgRGB)
 	int iBitSize;
 	iBitSize = ((iWidth*3)+iFillerSize)*iHeight;
 	
-	BYTE* byDataTemp;
-	byDataTemp = new BYTE[iBitSize];
+	BYTE* byDataTempBGR;
+	byDataTempBGR = new BYTE[iBitSize];
 
-	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, byDataTemp, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
+	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, byDataTempBGR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
 	for(int r=0; r<iHeight; r++)
 	{
 		for(int c=0; c<iWidth; c++)
 		{
-			imgRGB->byImgR[3*(r*iWidth+c)+0] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +0];
-			imgRGB->byImgR[3*(r*iWidth+c)+1] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +1];
-			imgRGB->byImgR[3*(r*iWidth+c)+2] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +2];
+			imgRGB->byImgR[3*(r*iWidth+c)+0] = byDataTempBGR[3*(r*iWidth+c) + r*iFillerSize +0];
+			imgRGB->byImgR[3*(r*iWidth+c)+1] = byDataTempBGR[3*(r*iWidth+c) + r*iFillerSize +1];
+			imgRGB->byImgR[3*(r*iWidth+c)+2] = byDataTempBGR[3*(r*iWidth+c) + r*iFillerSize +2];
 		}
 	}
-	delete [] byDataTemp;
+	delete [] byDataTempBGR;
 
 
 	ReleaseDC(hDesktop, hDC);
@@ -254,7 +254,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	int iPtrTarget;
 	int iPtrModel;
 	
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
 		{
@@ -305,7 +305,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 		}
 	}
 	
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_1_24))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_1_24BGR))
 	{
 		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
@@ -365,7 +365,7 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 		if(((iR1-iR0+1)%2)==0){iHeightP1=0;}else{iHeightP1=1;}
 
 		imgRGBout->Set(iC1-iC0+1+iWidthP1, iR1-iR0+1+iHeightP1, imgRGBin->iChannel);
-		if(imgRGBin->iChannel==CHANNEL_1_24)
+		if(imgRGBin->iChannel==CHANNEL_1_24BGR)
 		{
 
 			for(int r=iR0; r<=iR1; r++)
@@ -525,7 +525,7 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 
 	}
 	}}
-	else if(imgRGBIn->iChannel==CHANNEL_1_24)
+	else if(imgRGBIn->iChannel==CHANNEL_1_24BGR)
 	{
 	for(int r=0; r<iParentLevelH; r++)
 	{for(int c=0; c<iParentLevelW; c++)
@@ -761,7 +761,7 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 		}
 	}
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int c=0; c<iModelWidth; c++)
 		{
@@ -1003,7 +1003,7 @@ BOOL FindModelPyramid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int
 	int iPtrModel;
 
 	memset(uiMap,0,iMapW*iMapH);
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iMapR=0; iMapR<iMapH; iMapR++)
 		{
@@ -1153,7 +1153,7 @@ BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int
 	imgMap->Set((iC1Local-iC0Local+1)-imgModel->iWidth+1,(iR1Local-iR0Local+1)-imgModel->iHeight+1);
 
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iMapR=0; iMapR<imgMap->iHeight; iMapR++)
 		{
@@ -1454,7 +1454,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 	int iPtrTarget;
 	int iPtrModel;
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
 		{
@@ -1502,7 +1502,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 		}
 	}
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_1_24))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_1_24BGR))
 	{
 		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
