@@ -13,6 +13,7 @@ struct ImgRGB
 	BYTE* byImgR;
 	BYTE* byImgG;
 	BYTE* byImgB;
+	BYTE* byImg;
 	BOOL Set(int iWidthIn, int iHeightIn, int iChannelIn)
 	{
 		Init();
@@ -24,22 +25,24 @@ struct ImgRGB
 		iChannel = iChannelIn;
 		if(iChannel == CHANNEL_1_8)
 		{
-			byImgR = new BYTE[iWidth*iHeight];
+			byImg = new BYTE[iWidth*iHeight];
 		}
 		if(iChannel == CHANNEL_3_8)
 		{
 			byImgR = new BYTE[iWidth*iHeight];
 			byImgG = new BYTE[iWidth*iHeight];
 			byImgB = new BYTE[iWidth*iHeight];
+			byImg=NULL;
 		}
 		if(iChannel == CHANNEL_1_24BGR)
 		{
-			byImgR = new BYTE[iWidth*iHeight*3];
+			byImg = new BYTE[iWidth*iHeight*3];
 		}
 		return TRUE;
 	}
 	BOOL Init()
 	{
+		if(byImg!=NULL){delete [] byImg; byImg=NULL;}
 		if(byImgR!=NULL){delete [] byImgR; byImgR=NULL;}
 		if(byImgG!=NULL){delete [] byImgG; byImgG=NULL;}
 		if(byImgB!=NULL){delete [] byImgB; byImgB=NULL;}
@@ -48,7 +51,7 @@ struct ImgRGB
 		iChannel=CHANNEL_UNDEFINED;
 		return TRUE;
 	}
-	ImgRGB(){byImgR=NULL;byImgG=NULL;byImgB=NULL;Init();}
+	ImgRGB(){byImg = NULL; byImgR=NULL; byImgG=NULL; byImgB=NULL; Init();}
 	~ImgRGB(){Init();}
 	BOOL Assign(CString sFilePath);
 };
