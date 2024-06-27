@@ -121,15 +121,13 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		BOOL bRet;
 		bRet = cf.Open(sFilePath,CFile::modeCreate|CFile::modeWrite);
 	}
-	int iLevel;
-	iLevel=0;
+	ResetProgramCounter(iScene);
 	CString sWrite;
 	while(1)
 	{
 		iListLength =(int) saCommands.GetCount();
 		for(int i=0; i<iListLength; i++)
 		{
-			g_iProgramCounter[iScene][iLevel]=i;
 			sWrite.Format(_T("%d "), i+1);
 			if(iLogLevel>=1){cf.WriteString(sWrite);}
 			bExit = FALSE;
@@ -238,7 +236,33 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				}
 			case RETURN_CALL_SUB:
 				{
-					break;
+					if(g_iNowLevel[iScene]>=MAX_LEVEL)
+					{
+						if(iLogLevel>=1){cf.Close();}
+						g_bHalt = FALSE;
+						ChangeMouseOrigin(0, 0);
+						PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+						TerminateThread(hGetKey, 0);
+						TerminateThread(hGetStepKey, 0);
+						return 0;
+					}
+
+					int iLabel;
+					iLabel = SearchSubRoutine(&saCommands, sReturnParam, iLogLevel, &cf);
+					if(iLabel >= 0)
+					{
+						g_iProgramCounter[iScene][g_iNowLevel[iScene]]=i;
+						(g_iNowLevel[iScene])++;
+						i=iLabel-1;
+						break;
+					}
+					
+					if(iLogLevel>=1){cf.Close();}
+					g_bHalt = FALSE;
+					ChangeMouseOrigin(0, 0);
+					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+					TerminateThread(hGetKey, 0);
+					TerminateThread(hGetStepKey, 0);
 					return 0;
 				}
 			case RETURN_BACK_FROM_SUB:
