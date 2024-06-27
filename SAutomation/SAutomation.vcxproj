@@ -106,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="Automation.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="FlowManager.h" />
     <ClInclude Include="ImgProc.h" />
     <ClInclude Include="InputDialog.h" />
     <ClInclude Include="MouseAutomation.h" />
@@ -121,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="Automation.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="FlowManager.cpp" />
     <ClCompile Include="ImgProc.cpp" />
     <ClCompile Include="InputDialog.cpp" />
     <ClCompile Include="MouseAutomation.cpp" />

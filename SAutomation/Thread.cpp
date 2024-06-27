@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Automation.h"
 #include "resource.h"
+#include "FlowManager.h"
 
 
 HANDLE g_hThread[MAX_THREAD];
