@@ -13,3 +13,53 @@ void ResetProgramCounter(int iScene)
 		g_iProgramCounter[iScene][i]=0;
 	}
 }
+
+
+int SearchLable(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
+{
+	for(int i=0; i<saData->GetCount(); i++)
+	{
+		CString sTemp;
+		sTemp.Format(_T("%s"), saData->GetAt(i));
+		sTemp.Trim(_T(" ")).Trim(_T("\t"));
+		CString sTrim;
+		sTrim.Format(_T("%s"), sTemp.Left(sTemp.GetLength()-1));
+		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+
+		if(iLog>=5)
+		{
+			CString sWrite;
+			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);
+			cf->WriteString(sWrite);
+		}
+		if(sTrim.CompareNoCase(sLabel)==0){return i;}
+	}
+	return -1;
+}
+
+
+int SearchSubRoutine(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
+{
+	for(int i=0; i<saData->GetCount(); i++)
+	{
+		CString sTemp;
+		sTemp.Format(_T("%s"), saData->GetAt(i));
+		sTemp.Trim(_T(" ")).Trim(_T("\t"));
+		if(sTemp.Left(3).CompareNoCase(_T("sub"))!=0){continue;}
+
+		CString sTrim;
+		sTrim.Format(_T("%s"), sTemp.Right(sTemp.GetLength()-4));
+		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+
+		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+
+		if(iLog>=5)
+		{
+			CString sWrite;
+			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);
+			cf->WriteString(sWrite);
+		}
+		if(sTrim.CompareNoCase(sLabel)==0){return i;}
+	}
+	return -1;
+}

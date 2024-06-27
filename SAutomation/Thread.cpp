@@ -236,6 +236,16 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					TerminateThread(hGetStepKey, 0);
 					return 0;
 				}
+			case RETURN_CALL_SUB:
+				{
+					break;
+					return 0;
+				}
+			case RETURN_BACK_FROM_SUB:
+				{
+					break;
+					return 0;
+				}
 			}
 			g_llStepOut=1;
 			g_llStepIn=0;

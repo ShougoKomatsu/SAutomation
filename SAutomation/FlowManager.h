@@ -7,3 +7,5 @@ extern int g_iNowLevel[MAX_THREAD];
 extern int g_iProgramCounter[MAX_THREAD][MAX_LEVEL];
 
 void ResetProgramCounter(int iThread);
+
+int SearchLable(CStringArray* saData, CString sLabel, int iLog,  CStdioFile* cf);
