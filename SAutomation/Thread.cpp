@@ -121,12 +121,15 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		BOOL bRet;
 		bRet = cf.Open(sFilePath,CFile::modeCreate|CFile::modeWrite);
 	}
+	int iLevel;
+	iLevel=0;
 	CString sWrite;
 	while(1)
 	{
 		iListLength =(int) saCommands.GetCount();
 		for(int i=0; i<iListLength; i++)
 		{
+			g_iProgramCounter[iScene][iLevel]=i;
 			sWrite.Format(_T("%d "), i+1);
 			if(iLogLevel>=1){cf.WriteString(sWrite);}
 			bExit = FALSE;
