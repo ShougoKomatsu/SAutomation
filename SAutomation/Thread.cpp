@@ -267,8 +267,21 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				}
 			case RETURN_BACK_FROM_SUB:
 				{
+					g_iNowLevel[iScene]--;
+					if(g_iNowLevel[iScene]<0)
+					{
+						if(iLogLevel>=1){cf.Close();}
+						g_bHalt = FALSE;
+						ChangeMouseOrigin(0, 0);
+						PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+						TerminateThread(hGetKey, 0);
+						TerminateThread(hGetStepKey, 0);
+						return 0;
+					}
+
+					i=g_iProgramCounter[iScene][g_iNowLevel[iScene]];
+					g_iProgramCounter[iScene][g_iNowLevel[iScene]]=0;
 					break;
-					return 0;
 				}
 			}
 			g_llStepOut=1;
