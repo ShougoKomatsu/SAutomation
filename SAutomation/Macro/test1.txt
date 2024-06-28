@@ -18,7 +18,7 @@ Sub test
 MousePos(100,100)
 call test2
 1000
-MousePos(150,150)
+MousePos(1050,1050)
 call test2
 1000
 

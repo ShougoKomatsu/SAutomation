@@ -142,7 +142,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	
 	if(sDataTrim.Left(3).CompareNoCase(_T("sub"))==0){*iCommandType=COMMAND_SUB; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("call"))==0){*iCommandType=COMMAND_CALL_SUB; return TRUE;}
-	if(sDataTrim.Left(3).CompareNoCase(_T("end"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("end sub"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
 
 	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
 	//-------------------------------------------------------
