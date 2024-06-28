@@ -594,6 +594,15 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
+	case COMMAND_SUB:{return RETURN_SUB;}
+	case COMMAND_CALL_SUB:
+		{
+			CString sData;
+			sData.Format(_T("%s"),saData.GetAt(0));
+			sReturnParam->Format(_T("%s"),sData.Trim(_T(" ")).Trim(_T("\t")));
+			return RETURN_CALL_SUB;
+		}
+	case COMMAND_END_SUB:{return RETURN_END_SUB;}
 	case COMMAND_GOTO:{return RETURN_GOTO;}
 	case COMMAND_ERROR_TREAT:{return RETURN_ERROR_TREAT;}
 	case COMMAND_SWITCH_BY_INPUT:

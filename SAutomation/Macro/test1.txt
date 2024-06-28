@@ -1,15 +1,20 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
-wheel(100)
+1000
+MousePos(200,200)
+1000
+call test
+1000
+MousePos(300,300)
+1000
+call test
+1000
+
 exit
 
-WaitKey(Ctrl, off,-1)
-
-
+Sub test
+1000
 MousePos(100,100)
-
-WaitKey(Ctrl, on,1000)
-
-MousePos(200,200)
-
+1000
+End Sub
