@@ -139,6 +139,10 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 		if(sDataTrim.CompareNoCase(_T("f23"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 		if(sDataTrim.CompareNoCase(_T("f24"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	}
+	
+	if(sDataTrim.Left(3).CompareNoCase(_T("sub"))==0){*iCommandType=COMMAND_SUB; return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("call"))==0){*iCommandType=COMMAND_CALL_SUB; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("end"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
 
 	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
 	//-------------------------------------------------------
@@ -721,6 +725,15 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 	if(iType == COMMAND_EXIT){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_LABEL){*iCommandType = iType;return TRUE;}
+	
+	if(iType == COMMAND_SUB){*iCommandType = iType;return TRUE;}
+	if(iType == COMMAND_END_SUB){*iCommandType = iType;return TRUE;}
+	if(iType == COMMAND_CALL_SUB)
+	{
+		saData->Add(sDataLocal.Right(sDataLocal.GetLength()-4).Trim(_T(" ")).Trim(_T("\t")));
+		*iCommandType = iType;return TRUE;
+	}
+
 	if(iType == COMMAND_ERROR_TREAT){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_GOTO){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_SWITCH_BY_INPUT)

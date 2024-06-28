@@ -265,7 +265,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					TerminateThread(hGetStepKey, 0);
 					return 0;
 				}
-			case RETURN_BACK_FROM_SUB:
+			case RETURN_END_SUB:
 				{
 					g_iNowLevel[iScene]--;
 					if(g_iNowLevel[iScene]<0)
@@ -280,7 +280,6 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					}
 
 					i=g_iProgramCounter[iScene][g_iNowLevel[iScene]];
-					g_iProgramCounter[iScene][g_iNowLevel[iScene]]=0;
 					break;
 				}
 			}
