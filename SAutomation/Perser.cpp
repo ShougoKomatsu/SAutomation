@@ -7,7 +7,7 @@
 BOOL GetCommand(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
-	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" ")).Trim(_T("\t")));
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 
 	if(sDataTrim.Left(1).CompareNoCase(_T("'"))==0){*iCommandType=COMMAND_NOTING;return TRUE;}
 
@@ -150,7 +150,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	{
 		CString sRemaindRepeat;
 		sRemaindRepeat.Format(_T("%s"), sDataTrim.Mid(1,sDataTrim.GetLength()-2));
-		sRemaindRepeat.Trim(_T(" ")).Trim(_T("\t"));
+		sRemaindRepeat.Trim(_T(" \t"));
 		if(sRemaindRepeat.Left(1).CompareNoCase(_T("r"))==0)
 		{
 			int iRepeat;
@@ -168,7 +168,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	{
 		CString sRemaindRepeat;
 		sRemaindRepeat.Format(_T("%s"), sDataTrim.Mid(1,sDataTrim.GetLength()-2));
-		sRemaindRepeat.Trim(_T(" ")).Trim(_T("\t"));
+		sRemaindRepeat.Trim(_T(" \t"));
 		if(sRemaindRepeat.Left(2).CompareNoCase(_T("/r"))==0)
 		{
 			*iCommandType = COMMAND_REPEAT_END;
@@ -188,13 +188,13 @@ BOOL ExtractData(const CString sInput, const CString sDelim, CString* sOut, CStr
 	iIndex=sInputLocal.Find(sDelim);
 	if(iIndex<0)
 	{
-		sOut->Format(_T("%s"),sInputLocal.Trim(_T(" ")).Trim(_T("\t")));
+		sOut->Format(_T("%s"),sInputLocal.Trim(_T(" \t")));
 		sRemin->Format(_T(""));
 	}
 	else
 	{
-		sOut->Format(_T("%s"),sInputLocal.Left(iIndex).Trim(_T(" ")).Trim(_T("\t")));
-		sRemin->Format(_T("%s"),sInputLocal.Right(sInputLocal.GetLength()-iIndex-1).Trim(_T(" ")).Trim(_T("\t")));
+		sOut->Format(_T("%s"),sInputLocal.Left(iIndex).Trim(_T(" \t")));
+		sRemin->Format(_T("%s"),sInputLocal.Right(sInputLocal.GetLength()-iIndex-1).Trim(_T(" \t")));
 	}
 	return TRUE;
 }
@@ -205,21 +205,21 @@ BOOL GetWaitParameter(CString sInput, CStringArray* saOut)
 
 	CString sInputTrim;
 	sInputTrim.Format(_T("%s"), sInput);
-	sInputTrim.Trim(_T(" ")).Trim(_T("\t"));
+	sInputTrim.Trim(_T(" \t"));
 
 	if(sInputTrim.Left(4).CompareNoCase(_T("wait"))!=0){return FALSE;}
 	sRemind.Format(_T("%s"), sInputTrim.Right(sInputTrim.GetLength()-4));
-	sRemind.Trim(_T(" ")).Trim(_T("\t"));
+	sRemind.Trim(_T(" \t"));
 	saOut->RemoveAll();
 	if(sRemind.Right(2).CompareNoCase(_T("on"))==0)
 	{
-		saOut->Add(sRemind.Left(sRemind.GetLength()-2).Trim(_T(" ")).Trim(_T("\t")));
+		saOut->Add(sRemind.Left(sRemind.GetLength()-2).Trim(_T(" \t")));
 		saOut->Add(_T("on"));
 		return TRUE;
 	}
 	if(sRemind.Right(3).CompareNoCase(_T("off"))==0)
 	{
-		saOut->Add(sRemind.Left(sRemind.GetLength()-3).Trim(_T(" ")).Trim(_T("\t")));
+		saOut->Add(sRemind.Left(sRemind.GetLength()-3).Trim(_T(" \t")));
 		saOut->Add(_T("off"));
 		return TRUE;
 	}
@@ -231,7 +231,7 @@ BOOL GetKeyType(CString sInput, CString* sOut)
 	CString sRemind;
 	CString sInputLower;
 	sInputLower.Format(_T("%s"), sInput);
-	sInputLower.Trim(_T(" ")).Trim(_T("\t"));
+	sInputLower.Trim(_T(" \t"));
 
 	if(sInputLower.CompareNoCase(_T("pagedown"))==0){sOut->Format(_T("%s"), sInputLower);return TRUE;}
 	if(sInputLower.CompareNoCase(_T("pageup"))==0){sOut->Format(_T("%s"), sInputLower);return TRUE;}
@@ -241,7 +241,7 @@ BOOL GetKeyType(CString sInput, CString* sOut)
 	if(sInputLower.Right(4).CompareNoCase(_T("down"))==0){sRemind.Format(_T("%s"), sInput.Left(sInput.GetLength()-5));}
 	else if(sInputLower.Right(2).CompareNoCase(_T("up"))==0){sRemind.Format(_T("%s"), sInput.Left(sInput.GetLength()-2));}
 	else{sRemind.Format(_T("%s"), sInput);}
-	sRemind.Trim(_T(" ")).Trim(_T("\t"));
+	sRemind.Trim(_T(" \t"));
 
 	sOut->Format(_T("%s"), sRemind);
 	return TRUE;
@@ -250,18 +250,18 @@ BOOL GetKeyType(CString sInput, CString* sOut)
 int GetErroTreat(CString sDataLine, CString* sLabel)
 {
 	CString sDataTrim;
-	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" ")).Trim(_T("\t")));
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 
 	if(sDataTrim.Left(7).CompareNoCase(_T("onerror"))!=0){return ERROR_TREAT_UNDEFINED;}
 	CString sDataRemaind;
 	sDataRemaind.Format(_T("%s"), sDataTrim.Right(sDataTrim.GetLength()-7));
-	sDataRemaind.Trim(_T(" ")).Trim(_T("\t"));
+	sDataRemaind.Trim(_T(" \t"));
 
 	if(sDataRemaind.Left(4).CompareNoCase(_T("goto"))==0)
 	{
 		CString sTemp;
 		sTemp.Format(_T("%s"), sDataRemaind.Right(sDataRemaind.GetLength()-4));
-		sTemp.Trim(_T(" ")).Trim(_T("\t"));
+		sTemp.Trim(_T(" \t"));
 		if(sTemp.GetAt(1)=='0'){return ERROR_TREAT_END;}
 
 		sLabel->Format(_T("%s"), sTemp);
@@ -277,13 +277,13 @@ int GetErroTreat(CString sDataLine, CString* sLabel)
 BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel)
 {
 	CString sDataTrim;
-	sDataTrim.Format(_T("%s"), sData.Trim(_T(" ")).Trim(_T("\t")));
+	sDataTrim.Format(_T("%s"), sData.Trim(_T(" \t")));
 
 	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))!=0){return FALSE;}
 	CString sDataRemaind;
 	sDataRemaind.Format(_T("%s"),sDataTrim.Right(sDataTrim.GetLength()-4));
 
-	sDataRemaind.Trim(_T(" ")).Trim(_T("\t"));
+	sDataRemaind.Trim(_T(" \t"));
 
 	sLabel->Format(_T("%s"), sDataRemaind);
 
@@ -317,7 +317,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	if(bRet == FALSE){*iCommandType = COMMAND_NOTING; return FALSE;}
 
 	CString sDataLocal;
-	sDataLocal.Format(_T("%s"), sDataLine.Trim(_T(" ")).Trim(_T("\t")));
+	sDataLocal.Format(_T("%s"), sDataLine.Trim(_T(" \t")));
 
 	CString sName;
 	CString sArg;
@@ -730,7 +730,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	if(iType == COMMAND_END_SUB){*iCommandType = iType;return TRUE;}
 	if(iType == COMMAND_CALL_SUB)
 	{
-		saData->Add(sDataLocal.Right(sDataLocal.GetLength()-4).Trim(_T(" ")).Trim(_T("\t")));
+		saData->Add(sDataLocal.Right(sDataLocal.GetLength()-4).Trim(_T(" \t")));
 		*iCommandType = iType;return TRUE;
 	}
 

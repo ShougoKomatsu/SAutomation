@@ -530,7 +530,7 @@ int FilndLabel(CStringArray* saCommands, CString sLabel)
 	for(int i=0; i<saCommands->GetCount(); i++)
 	{
 		sCommand.Format(_T("%s"), saCommands->GetAt(i));
-		sCommand.Trim(_T(" ")).Trim(_T("\t"));
+		sCommand.Trim(_T(" \t"));
 
 		if(sCommand.GetLength()!=sLabel.GetLength()+1){continue;}
 		if(sCommand.GetAt(sLabel.GetLength())!=':'){continue;}
@@ -599,7 +599,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 		{
 			CString sData;
 			sData.Format(_T("%s"),saData.GetAt(0));
-			sReturnParam->Format(_T("%s"),sData.Trim(_T(" ")).Trim(_T("\t")));
+			sReturnParam->Format(_T("%s"),sData.Trim(_T(" \t")));
 			return RETURN_CALL_SUB;
 		}
 	case COMMAND_END_SUB:{return RETURN_END_SUB;}

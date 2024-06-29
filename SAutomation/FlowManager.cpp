@@ -21,10 +21,10 @@ int SearchLable(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
 	{
 		CString sTemp;
 		sTemp.Format(_T("%s"), saData->GetAt(i));
-		sTemp.Trim(_T(" ")).Trim(_T("\t"));
+		sTemp.Trim(_T(" \t"));
 		CString sTrim;
 		sTrim.Format(_T("%s"), sTemp.Left(sTemp.GetLength()-1));
-		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+		sTrim.Trim(_T(" \t"));
 
 		if(iLog>=5)
 		{
@@ -44,14 +44,14 @@ int SearchSubRoutine(CStringArray* saData, CString sLabel, int iLog, CStdioFile*
 	{
 		CString sTemp;
 		sTemp.Format(_T("%s"), saData->GetAt(i));
-		sTemp.Trim(_T(" ")).Trim(_T("\t"));
+		sTemp.Trim(_T(" \t"));
 		if(sTemp.Left(3).CompareNoCase(_T("sub"))!=0){continue;}
 
 		CString sTrim;
 		sTrim.Format(_T("%s"), sTemp.Right(sTemp.GetLength()-4));
-		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+		sTrim.Trim(_T(" \t"));
 
-		sTrim.Trim(_T(" ")).Trim(_T("\t"));
+		sTrim.Trim(_T(" \t"));
 
 		if(iLog>=5)
 		{
