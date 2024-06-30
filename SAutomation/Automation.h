@@ -6,6 +6,7 @@
 #define COMMAND_MOUSE (1000)
 #define COMMAND_IMGPROC (2000)
 #define COMMAND_FLOW (3000)
+#define COMMAND_VARIABLE (4000)
 
 #define COMMAND_DELAY (COMMAND_COMMON + 1)
 //#define COMMAND_BREAK (COMMAND_COMMON + 2)
@@ -37,6 +38,8 @@
 
 #define COMMAND_WAIT_IMG (COMMAND_IMGPROC + 1)
 #define COMMAND_WAIT_UPDATE (COMMAND_IMGPROC + 2)
+
+#define COMMAND_VARIABLE_INT (COMMAND_VARIABLE+1)
 
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 

@@ -3,8 +3,8 @@
 #include "Common.h"
 #include "Automation.h"
 #include "resource.h"
+#include "Variables.h"
 #include "FlowManager.h"
-
 
 HANDLE g_hThread[MAX_THREAD];
 
@@ -100,6 +100,11 @@ DWORD WINAPI CommandThread(LPVOID arg)
 
 	g_iSceneData[iScene]=iScene;
 	iSceneData=&g_iSceneData[iScene];
+
+	for(int i=0; i<MAX_VARIABLES; i++)
+	{
+		g_iVar[iScene][i]=0;
+	}
 
 	int iLoop;
 	iLoop =(iData>>4)&0x01;
