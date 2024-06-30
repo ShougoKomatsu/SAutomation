@@ -13,7 +13,7 @@
 #define new DEBUG_NEW
 #endif
 
-
+#include "InputDialog.h"
 #include "Automation.h"
 #include "Window.h"
 #define TIMER_DISP_MOUSPOS (100)
@@ -39,6 +39,8 @@ protected:
 	// 実装
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -796,7 +798,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if(cf.FindFile(sLogFolderPath) != TRUE){_tmkdir(sLogFolderPath);}
 	if(cf.FindFile(sModelFolderPath) != TRUE){_tmkdir(sModelFolderPath);}
 	ReadSettings();
-
+	g_dlg=this;
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
 	for(int iID= 0 ; iID<MAX_THREAD; iID++)
 	{
@@ -905,7 +907,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 	imgTestPyram.SetPyramid(&imgTest);
 	WriteImage(&imgTestPyram.imgRGB, _T("D:\\GitHub\\SAutomation\\SAutomation\\SAutomation\\Macro\\Model\\test2.bmp"));
 	TrayNotifyIconMessage(NIM_ADD);
-
 	// このダイアログのアイコンを設定します。アプリケーションのメイン ウィンドウがダイアログでない場合、
 	//  Framework は、この設定を自動的に行います。
 	SetIcon(m_hIconStandby, TRUE);			// 大きいアイコンの設定
@@ -1537,4 +1538,11 @@ void CSAutomationDlg::OnSelchangeWindowName()
 	m_sTargetWindowName.Format(_T("%s"), tch);
 	RefreshTargetWindowPos();
 	return;
+}
+
+BOOL CAboutDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: ここに特定なコードを追加するか、もしくは基本クラスを呼び出してください。
+
+	return CDialogEx::PreTranslateMessage(pMsg);
 }

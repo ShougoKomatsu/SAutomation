@@ -1,51 +1,33 @@
-﻿
-Wait ctrl off
-Wait shift off
+﻿Waitkey(ctrl, off, -1)
+waitkey(shift, off,-1)
+
+1000
+MousePos(200,200)
+1000
+call test
+1000
+MousePos(300,300)
+1000
+call test
+1000
+
+exit
+
+Sub test
+1000
+MousePos(100,100)
+call test2
+1000
+MousePos(1050,1050)
+call test2
+1000
+
+End Sub
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-up
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+sub test2
+1000
+MousePos(1000,1000)
+1000
+End Sub
 

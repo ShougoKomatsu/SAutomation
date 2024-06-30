@@ -10,5 +10,4 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 int GetErroTreat(CString sDataLine, CString* sLabel);
 
-int SearchLable(CStringArray* saData, CString sLabel, int iLog,  CStdioFile* cf);
 BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel);

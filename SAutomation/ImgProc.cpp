@@ -71,15 +71,15 @@ BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
 		}
 	}
 
-	if(imgRGB->iChannel==CHANNEL_1_24)
+	if(imgRGB->iChannel==CHANNEL_1_24BGR)
 	{
 		for(int r=0; r<imgRGB->iHeight; r++)
 		{
 			for(int c=0; c<imgRGB->iWidth; c++)
 			{
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
-				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
 			}
 		}
 	}
@@ -111,15 +111,15 @@ BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, i
 	{
 		imgRGBout->Init();
 		imgRGBout->Set(iC1-iC0+1, iR1-iR0+1, imgRGBin->iChannel);
-		if(imgRGBin->iChannel==CHANNEL_1_24)
+		if(imgRGBin->iChannel==CHANNEL_1_24BGR)
 		{
 
 			for(int r=iR0; r<=iR1; r++)
 			{for(int c=iC0; c<=iC1; c++)
 			{
-				imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+0]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+0];
-				imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+1]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+1];
-				imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+2]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+2];
+				imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+0]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+0];
+				imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+1]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+1];
+				imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+2]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+2];
 			}}
 		}
 		if(imgRGBin->iChannel==CHANNEL_3_8)
@@ -137,7 +137,7 @@ BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, i
 			for(int r=iR0; r<=iR1; r++)
 			{for(int c=iC0; c<=iC1; c++)
 			{
-				imgRGBout->byImgR[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+				imgRGBout->byImg[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImg[r*imgRGBin->iWidth+c];
 			}}
 		}
 
@@ -176,7 +176,7 @@ BOOL Screenshot(ImgRGB* imgRGB)
 	iWidth = (rect.right-rect.left);
 	iHeight = (rect.bottom-rect.top);
 
-	imgRGB->Set(iWidth, iHeight, CHANNEL_1_24);
+	imgRGB->Set(iWidth, iHeight, CHANNEL_1_24BGR);
 
 	int iFillerSize;
 
@@ -192,20 +192,20 @@ BOOL Screenshot(ImgRGB* imgRGB)
 	int iBitSize;
 	iBitSize = ((iWidth*3)+iFillerSize)*iHeight;
 	
-	BYTE* byDataTemp;
-	byDataTemp = new BYTE[iBitSize];
+	BYTE* byDataTempBGR;
+	byDataTempBGR = new BYTE[iBitSize];
 
-	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, byDataTemp, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
+	GetDIBits(hMemDC, hBitmap, 0, rect.bottom, byDataTempBGR, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS);
 	for(int r=0; r<iHeight; r++)
 	{
 		for(int c=0; c<iWidth; c++)
 		{
-			imgRGB->byImgR[3*(r*iWidth+c)+0] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +0];
-			imgRGB->byImgR[3*(r*iWidth+c)+1] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +1];
-			imgRGB->byImgR[3*(r*iWidth+c)+2] = byDataTemp[3*(r*iWidth+c) + r*iFillerSize +2];
+			imgRGB->byImg[3*(r*iWidth+c)+0] = byDataTempBGR[3*(r*iWidth+c) + r*iFillerSize +0];
+			imgRGB->byImg[3*(r*iWidth+c)+1] = byDataTempBGR[3*(r*iWidth+c) + r*iFillerSize +1];
+			imgRGB->byImg[3*(r*iWidth+c)+2] = byDataTempBGR[3*(r*iWidth+c) + r*iFillerSize +2];
 		}
 	}
-	delete [] byDataTemp;
+	delete [] byDataTempBGR;
 
 
 	ReleaseDC(hDesktop, hDC);
@@ -254,7 +254,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 	int iPtrTarget;
 	int iPtrModel;
 	
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
 		{
@@ -267,9 +267,9 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = (r)*imgModel->iWidth+(c);
-						if(imgTarget->byImgR[iPtrTarget + 0] != (imgModel->byImgB[iPtrModel])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[iPtrTarget + 1] != (imgModel->byImgG[iPtrModel])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[iPtrTarget + 2] != (imgModel->byImgR[iPtrModel])){bFound = FALSE; break;}
+						if(imgTarget->byImg[iPtrTarget + 0] != (imgModel->byImgB[iPtrModel])){bFound = FALSE; break;}
+						if(imgTarget->byImg[iPtrTarget + 1] != (imgModel->byImgG[iPtrModel])){bFound = FALSE; break;}
+						if(imgTarget->byImg[iPtrTarget + 2] != (imgModel->byImgR[iPtrModel])){bFound = FALSE; break;}
 					}
 					if(bFound == FALSE){break;}
 				}
@@ -305,7 +305,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 		}
 	}
 	
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_1_24))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_1_24BGR))
 	{
 		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
@@ -318,9 +318,9 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = 3*((r)*imgModel->iWidth+(c));
-						if(imgTarget->byImgR[iPtrTarget+0] != (imgModel->byImgR[iPtrModel + 0])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[iPtrTarget+1] != (imgModel->byImgR[iPtrModel + 1])){bFound = FALSE; break;}
-						if(imgTarget->byImgR[iPtrTarget+2] != (imgModel->byImgR[iPtrModel + 2])){bFound = FALSE; break;}
+						if(imgTarget->byImg[iPtrTarget+0] != (imgModel->byImg[iPtrModel + 0])){bFound = FALSE; break;}
+						if(imgTarget->byImg[iPtrTarget+1] != (imgModel->byImg[iPtrModel + 1])){bFound = FALSE; break;}
+						if(imgTarget->byImg[iPtrTarget+2] != (imgModel->byImg[iPtrModel + 2])){bFound = FALSE; break;}
 					}
 					if(bFound == FALSE){break;}
 				}
@@ -365,23 +365,23 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 		if(((iR1-iR0+1)%2)==0){iHeightP1=0;}else{iHeightP1=1;}
 
 		imgRGBout->Set(iC1-iC0+1+iWidthP1, iR1-iR0+1+iHeightP1, imgRGBin->iChannel);
-		if(imgRGBin->iChannel==CHANNEL_1_24)
+		if(imgRGBin->iChannel==CHANNEL_1_24BGR)
 		{
 
 			for(int r=iR0; r<=iR1; r++)
 			{
 				for(int c=iC0; c<=iC1; c++)
 				{
-					imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+0]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+0];
-					imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+1]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+1];
-					imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+2]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+2];
+					imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+0]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+0];
+					imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+1]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+1];
+					imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0))+2]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+2];
 				}
 				if(iWidthP1==1)
 				{
 					int c=iC1;
-					imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0+1))+0]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+0];
-					imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0+1))+1]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+1];
-					imgRGBout->byImgR[3*((r-iR0)*imgRGBout->iWidth+(c-iC0+1))+2]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+2];
+					imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0+1))+0]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+0];
+					imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0+1))+1]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+1];
+					imgRGBout->byImg[3*((r-iR0)*imgRGBout->iWidth+(c-iC0+1))+2]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+2];
 				}
 			}
 			if(iHeightP1==1)
@@ -389,16 +389,16 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 				int r=iR1;
 				for(int c=iC0; c<=iC1; c++)
 				{
-					imgRGBout->byImgR[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0))+0]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+0];
-					imgRGBout->byImgR[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0))+1]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+1];
-					imgRGBout->byImgR[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0))+2]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+2];
+					imgRGBout->byImg[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0))+0]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+0];
+					imgRGBout->byImg[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0))+1]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+1];
+					imgRGBout->byImg[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0))+2]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+2];
 				}
 				if(iWidthP1==1)
 				{
 					int c=iC1;
-					imgRGBout->byImgR[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0+1))+0]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+0];
-					imgRGBout->byImgR[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0+1))+1]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+1];
-					imgRGBout->byImgR[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0+1))+2]=imgRGBin->byImgR[3*(r*imgRGBin->iWidth+c)+2];
+					imgRGBout->byImg[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0+1))+0]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+0];
+					imgRGBout->byImg[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0+1))+1]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+1];
+					imgRGBout->byImg[3*((r+1-iR0)*imgRGBout->iWidth+(c-iC0+1))+2]=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+2];
 				}
 			}
 		}
@@ -446,13 +446,13 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 			{
 				for(int c=iC0; c<=iC1; c++)
 				{
-					imgRGBout->byImgR[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+					imgRGBout->byImg[(r-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImg[r*imgRGBin->iWidth+c];
 
 				}
 				if(iWidthP1==1)
 				{
 					int c=iC1;
-					imgRGBout->byImgR[(r-iR0)*imgRGBout->iWidth+(c-iC0+1)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+					imgRGBout->byImg[(r-iR0)*imgRGBout->iWidth+(c-iC0+1)]=imgRGBin->byImg[r*imgRGBin->iWidth+c];
 				}
 			}
 			if(iHeightP1==1)
@@ -460,12 +460,12 @@ BOOL CropImage2(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, 
 				int r=iR1;
 				for(int c=iC0; c<=iC1; c++)
 				{
-					imgRGBout->byImgR[(r+1-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+					imgRGBout->byImg[(r+1-iR0)*imgRGBout->iWidth+(c-iC0)]=imgRGBin->byImg[r*imgRGBin->iWidth+c];
 				}	
 				if(iWidthP1==1)
 				{
 					int c=iC1;
-					imgRGBout->byImgR[(r+1-iR0)*imgRGBout->iWidth+(c-iC0+1)]=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+					imgRGBout->byImg[(r+1-iR0)*imgRGBout->iWidth+(c-iC0+1)]=imgRGBin->byImg[r*imgRGBin->iWidth+c];
 				}
 			}
 		}
@@ -525,14 +525,14 @@ BOOL ImgRGBPyramid::SetPyramid(ImgRGB* imgRGBIn)
 
 	}
 	}}
-	else if(imgRGBIn->iChannel==CHANNEL_1_24)
+	else if(imgRGBIn->iChannel==CHANNEL_1_24BGR)
 	{
 	for(int r=0; r<iParentLevelH; r++)
 	{for(int c=0; c<iParentLevelW; c++)
 	{
-		byB[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[3*(r*imgRGBIn->iWidth+c)+0];
-		byG[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[3*(r*imgRGBIn->iWidth+c)+1];
-		byR[r*imgRGBIn->iWidth+c]=imgRGBIn->byImgR[3*(r*imgRGBIn->iWidth+c)+2];
+		byB[r*imgRGBIn->iWidth+c]=imgRGBIn->byImg[3*(r*imgRGBIn->iWidth+c)+0];
+		byG[r*imgRGBIn->iWidth+c]=imgRGBIn->byImg[3*(r*imgRGBIn->iWidth+c)+1];
+		byR[r*imgRGBIn->iWidth+c]=imgRGBIn->byImg[3*(r*imgRGBIn->iWidth+c)+2];
 
 	}
 	}
@@ -754,14 +754,14 @@ BOOL FindModelFast(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR
 		for(int c=0; c<iCropW; c++)
 		{
 			int iTargetC=iC0+c;
-			byDataR[r*iCropW+c] = imgTarget->byImgR[3*(iTargetR*imgTarget->iWidth+(iTargetC))+2];
-			byDataG[r*iCropW+c] = imgTarget->byImgR[3*(iTargetR*imgTarget->iWidth+(iTargetC))+1];
-			byDataB[r*iCropW+c] = imgTarget->byImgR[3*(iTargetR*imgTarget->iWidth+(iTargetC))+0];
+			byDataR[r*iCropW+c] = imgTarget->byImg[3*(iTargetR*imgTarget->iWidth+(iTargetC))+2];
+			byDataG[r*iCropW+c] = imgTarget->byImg[3*(iTargetR*imgTarget->iWidth+(iTargetC))+1];
+			byDataB[r*iCropW+c] = imgTarget->byImg[3*(iTargetR*imgTarget->iWidth+(iTargetC))+0];
 
 		}
 	}
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int c=0; c<iModelWidth; c++)
 		{
@@ -1003,7 +1003,7 @@ BOOL FindModelPyramid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int
 	int iPtrModel;
 
 	memset(uiMap,0,iMapW*iMapH);
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iMapR=0; iMapR<iMapH; iMapR++)
 		{
@@ -1153,7 +1153,7 @@ BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int
 	imgMap->Set((iC1Local-iC0Local+1)-imgModel->iWidth+1,(iR1Local-iR0Local+1)-imgModel->iHeight+1);
 
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iMapR=0; iMapR<imgMap->iHeight; iMapR++)
 		{
@@ -1171,9 +1171,9 @@ BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int
 						int iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						int iPtrModel = (r)*imgModel->iWidth+(c);
 
-						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
-						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
-						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImg[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImg[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel]));
+						imgMap->uiMap[iMapR*imgMap->iWidth+iMapC]+=bySubAbs(imgTarget->byImg[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel]));
 
 					}
 				}
@@ -1454,7 +1454,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 	int iPtrTarget;
 	int iPtrModel;
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_3_8))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_3_8))
 	{
 		for(int iTargetR = iR0; iTargetR<iREnd; iTargetR++)
 		{
@@ -1467,9 +1467,9 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = ((r)*imgModel->iWidth)+(c);
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bOK_R=FALSE;break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bOK_R=FALSE;break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImg[iPtrTarget + 0] , (imgModel->byImgB[iPtrModel])) > imgMask->byImgB[iPtrModel]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImg[iPtrTarget + 1] , (imgModel->byImgG[iPtrModel])) > imgMask->byImgG[iPtrModel]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImg[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel])) > imgMask->byImgR[iPtrModel]){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
 				}
@@ -1502,7 +1502,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 		}
 	}
 
-	if((imgTarget->iChannel==CHANNEL_1_24) && (imgModel->iChannel == CHANNEL_1_24))
+	if((imgTarget->iChannel==CHANNEL_1_24BGR) && (imgModel->iChannel == CHANNEL_1_24BGR))
 	{
 		for(int iTargetR=iR0; iTargetR<iREnd; iTargetR++)
 		{
@@ -1515,9 +1515,9 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					{
 						iPtrTarget = 3*((iTargetR + r)*imgTarget->iWidth+(iTargetC+c));
 						iPtrModel = 3*((r)*imgModel->iWidth+(c));
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 0] , (imgModel->byImgR[iPtrModel + 0])) > imgMask->byImgR[iPtrModel + 0]){bOK_R=FALSE;break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 1] , (imgModel->byImgR[iPtrModel + 1])) > imgMask->byImgR[iPtrModel + 1]){bOK_R=FALSE;break;}
-						if(bySubAbs(imgTarget->byImgR[iPtrTarget + 2] , (imgModel->byImgR[iPtrModel + 2])) > imgMask->byImgR[iPtrModel + 2]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImg[iPtrTarget + 0] , (imgModel->byImg[iPtrModel + 0])) > imgMask->byImg[iPtrModel + 0]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImg[iPtrTarget + 1] , (imgModel->byImg[iPtrModel + 1])) > imgMask->byImg[iPtrModel + 1]){bOK_R=FALSE;break;}
+						if(bySubAbs(imgTarget->byImg[iPtrTarget + 2] , (imgModel->byImg[iPtrModel + 2])) > imgMask->byImg[iPtrModel + 2]){bOK_R=FALSE;break;}
 					}
 					if(bOK_R==FALSE){break;}
 				}

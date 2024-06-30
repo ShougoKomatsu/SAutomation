@@ -1,3 +1,60 @@
-1 Wait ctrl off 0
-2 Wait shift off 0
-3 up 0
+1 Waitkey(ctrl, off, -1) 0
+2 waitkey(shift, off,-1) 0
+3 1000 0
+4 MousePos(200,200) 0
+5 1000 0
+6 call test 104
+"test", "test"
+13 Sub test 106
+14 1000 0
+15 MousePos(100,100) 0
+16 call test2 104
+"test", "test2"
+"test2", "test2"
+22 sub test2 106
+23 1000 0
+24 MousePos(1000,1000) 0
+25 1000 0
+26 End Sub 105
+17 1000 0
+18 MousePos(1050,1050) 0
+19 call test2 104
+"test", "test2"
+"test2", "test2"
+22 sub test2 106
+23 1000 0
+24 MousePos(1000,1000) 0
+25 1000 0
+26 End Sub 105
+20 1000 0
+21 End Sub 105
+7 1000 0
+8 MousePos(300,300) 0
+9 1000 0
+10 call test 104
+"test", "test"
+13 Sub test 106
+14 1000 0
+15 MousePos(100,100) 0
+16 call test2 104
+"test", "test2"
+"test2", "test2"
+22 sub test2 106
+23 1000 0
+24 MousePos(1000,1000) 0
+25 1000 0
+26 End Sub 105
+17 1000 0
+18 MousePos(1050,1050) 0
+19 call test2 104
+"test", "test2"
+"test2", "test2"
+22 sub test2 106
+23 1000 0
+24 MousePos(1000,1000) 0
+25 1000 0
+26 End Sub 105
+20 1000 0
+21 End Sub 105
+11 1000 0
+12 exit 10
