@@ -40,6 +40,7 @@
 #define COMMAND_WAIT_UPDATE (COMMAND_IMGPROC + 2)
 
 #define COMMAND_VARIABLE_INT (COMMAND_VARIABLE+1)
+#define COMMAND_ISEQUAL_INT (COMMAND_VARIABLE+2)
 
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 

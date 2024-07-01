@@ -2,7 +2,7 @@
 #include "Automation.h"
 #include "windows.h"
 #include "Common.h"
-
+#include "Variables.h"
 #include "Window.h"
 
 CString g_sDir;
@@ -610,6 +610,10 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 			int iRet;
 			iRet = GetInput(&saData, sReturnParam);
 			return iRet;
+		}
+	case COMMAND_ISEQUAL_INT:
+		{
+			return Flow_IsIntEqual(*iSceneData, &saData, sReturnParam);
 		}
 	default:{return RETURN_FAILED;}
 	}

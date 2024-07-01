@@ -88,3 +88,14 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 	return (iInt1==iInt2);
 }
 
+int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
+{
+	if(IsIntEqual(iScene, saData->GetAt(0), saData->GetAt(1)))
+	{
+		sReturnParam->Format(_T("%s"), saData->GetAt(2));
+		return RETURN_GOTO_BY_SWITCH;
+
+	}
+
+	return RETURN_NORMAL;
+}

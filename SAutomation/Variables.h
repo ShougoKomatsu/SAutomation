@@ -13,3 +13,5 @@ int IntMult(int iScene, CString sArg1, CString sArg2);
 int IntDiv(int iScene, CString sArg1, CString sArg2);
 int IntAssign(int iScene, CString sArg, int iValue);
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
+
+int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);

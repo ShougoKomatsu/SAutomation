@@ -107,7 +107,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.CompareNoCase(_T("maximize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("minimize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
-
+	
+	if(sDataTrim.Left(10).CompareNoCase(_T("IsEqualInt"))==0){*iCommandType=COMMAND_ISEQUAL_INT; return TRUE;}
 
 	if(sDataTrim.GetLength()==2)
 	{
@@ -768,6 +769,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		*iCommandType = iType;
 		return TRUE;
 	}
-
+	if(iType == COMMAND_ISEQUAL_INT)
+	{
+		ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+		ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+		if(sArg.GetLength()>0){saData->Add(sArg);}
+		ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+		if(sArg.GetLength()>0){saData->Add(sArg);}
+		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+		if(sArg.GetLength()>0){saData->Add(sArg);}
+		*iCommandType = iType;
+	}
 	return FALSE;
 }
