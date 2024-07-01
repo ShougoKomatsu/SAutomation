@@ -33,3 +33,58 @@ int* GetIntValuePointer(int iScene, CString sArg)
 	
 	return NULL;
 }
+
+int IntAdd(int iScene, CString sArg1, CString sArg2)
+{
+	int iInt1;
+	int iInt2;
+	iInt1 = GetIntValue(iScene, sArg1);
+	iInt2 = GetIntValue(iScene, sArg2);
+	
+	return iInt1+iInt2;
+}
+
+int IntSub(int iScene, CString sArg1, CString sArg2)
+{
+	int iInt1;
+	int iInt2;
+	iInt1 = GetIntValue(iScene, sArg1);
+	iInt2 = GetIntValue(iScene, sArg2);
+	
+	return iInt1-iInt2;
+}
+int IntMult(int iScene, CString sArg1, CString sArg2)
+{
+	int iInt1;
+	int iInt2;
+	iInt1 = GetIntValue(iScene, sArg1);
+	iInt2 = GetIntValue(iScene, sArg2);
+	
+	return iInt1*iInt2;
+}
+
+int IntDiv(int iScene, CString sArg1, CString sArg2)
+{
+	int iInt1;
+	int iInt2;
+	iInt1 = GetIntValue(iScene, sArg1);
+	iInt2 = GetIntValue(iScene, sArg2);
+	
+	return iInt1/iInt2;
+}
+
+int IntAssign(int iScene, CString sArg, int iValue)
+{
+	(*GetIntValuePointer(iScene, sArg))=iValue;
+}
+
+BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
+{
+	int iInt1;
+	int iInt2;
+	iInt1 = GetIntValue(iScene, sArg1);
+	iInt2 = GetIntValue(iScene, sArg2);
+	
+	return (iInt1==iInt2);
+}
+
