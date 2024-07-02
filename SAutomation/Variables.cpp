@@ -127,3 +127,10 @@ int Flow_DivInt(int iScene, CStringArray* saData)
 	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
 	return RETURN_NORMAL;
 }
+
+int GetValue(int iScene, CString sArg)
+{
+	if(sArg.GetLength()<0){return 0;}
+	if(sArg.Left(1).CompareNoCase(_T("v"))==0) {return GetIntValue(iScene, sArg);}
+	return _ttoi(sArg);
+}

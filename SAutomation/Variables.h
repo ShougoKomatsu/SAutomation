@@ -20,3 +20,4 @@ int Flow_MultInt(int iScene, CStringArray* saData);
 int Flow_DivInt(int iScene, CStringArray* saData);
 
 int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
+int GetValue(int iScene, CString sArg);
