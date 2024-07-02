@@ -12,7 +12,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(1).CompareNoCase(_T("'"))==0){*iCommandType=COMMAND_NOTING;return TRUE;}
 
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
-	
+
 	if(sDataTrim.CompareNoCase(_T("varint"))==0){*iCommandType=COMMAND_VARIABLE_INT; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -92,7 +92,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(9).CompareNoCase(_T("windowpos"))==0){*iCommandType=COMMAND_WINDOW_POS; return TRUE;}
 
 	if(sDataTrim.Left(13).CompareNoCase(_T("windowforward"))==0){*iCommandType=COMMAND_WINDOW_FORWARD; return TRUE;}
-	
+
 	if(sDataTrim.Left(7).CompareNoCase(_T("keydown"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
 	if(sDataTrim.Left(5).CompareNoCase(_T("keyup"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
 	if(sDataTrim.Left(3).CompareNoCase(_T("key"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -108,6 +108,11 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("maximize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("minimize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
 
+	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=COMMAND_ADD_INT; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=COMMAND_SUB_INT; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("MultInt"))==0){*iCommandType=COMMAND_MULT_INT; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=COMMAND_DIV_INT; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("IsEqualInt"))==0){*iCommandType=COMMAND_ISEQUAL_INT; return TRUE;}
 
 	if(sDataTrim.GetLength()==2)
 	{
@@ -141,7 +146,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 		if(sDataTrim.CompareNoCase(_T("f23"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 		if(sDataTrim.CompareNoCase(_T("f24"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	}
-	
+
 	if(sDataTrim.Left(3).CompareNoCase(_T("sub"))==0){*iCommandType=COMMAND_SUB; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("call"))==0){*iCommandType=COMMAND_CALL_SUB; return TRUE;}
 	if(sDataTrim.Left(3).CompareNoCase(_T("end sub"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
@@ -307,7 +312,7 @@ BOOL CountArgsInTheParameter(CString sParameter, int* iCount)
 		iCountLocal++;
 		iStart=iFound+1;
 	}
-	
+
 	*iCount = iCountLocal;
 	return TRUE;
 }
@@ -739,6 +744,59 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			return TRUE;
 		}
+	case COMMAND_ISEQUAL_INT:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_ADD_INT:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_SUB_INT:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_MULT_INT:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_DIV_INT:
+		{
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
 	}
+
 	return FALSE;
 }
