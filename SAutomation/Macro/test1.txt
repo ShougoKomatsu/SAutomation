@@ -1,6 +1,18 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
+first:
 
+IsEqualInt(VarInt1,10,test)
+AddInt(VarInt1,1)
+MousePos(100,100)
+100
+MousePos(200,200)
+100
+goto first
+
+test:
+MousePos(500,500)
+exit
 1000
 MousePos(200,200)
 1000
