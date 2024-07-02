@@ -14,4 +14,9 @@ int IntDiv(int iScene, CString sArg1, CString sArg2);
 int IntAssign(int iScene, CString sArg, int iValue);
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
 
+int Flow_AddInt(int iScene, CStringArray* saData);
+int Flow_SubInt(int iScene, CStringArray* saData);
+int Flow_MultInt(int iScene, CStringArray* saData);
+int Flow_DivInt(int iScene, CStringArray* saData);
+
 int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);

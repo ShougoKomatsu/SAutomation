@@ -11,7 +11,7 @@ int GetIntValue(int iScene, CString sArg)
 		for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
 		{
 			CString sVarName;
-			sVarName.Format(_T("VarInt%d"));
+			sVarName.Format(_T("VarInt%d"), iVarNameB1);
 			if(sArg.CompareNoCase(sVarName)==0){return g_iVar[iScene][iVarNameB1-1];}
 		}
 	}
@@ -26,7 +26,7 @@ int* GetIntValuePointer(int iScene, CString sArg)
 		for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
 		{
 			CString sVarName;
-			sVarName.Format(_T("VarInt%d"));
+			sVarName.Format(_T("VarInt%d"), iVarNameB1);
 			if(sArg.CompareNoCase(sVarName)==0){return &(g_iVar[iScene][iVarNameB1-1]);}
 		}
 	}
@@ -76,6 +76,8 @@ int IntDiv(int iScene, CString sArg1, CString sArg2)
 int IntAssign(int iScene, CString sArg, int iValue)
 {
 	(*GetIntValuePointer(iScene, sArg))=iValue;
+
+	return 0;
 }
 
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
@@ -97,5 +99,31 @@ int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
 
 	}
 
+	return RETURN_NORMAL;
+}
+
+int Flow_AddInt(int iScene, CStringArray* saData)
+{
+	int iTemp=IntAdd(iScene, saData->GetAt(0), saData->GetAt(1));
+	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+	return RETURN_NORMAL;
+}
+int Flow_SubInt(int iScene, CStringArray* saData)
+{
+	int iTemp=IntSub(iScene, saData->GetAt(0), saData->GetAt(1));
+	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+	return RETURN_NORMAL;
+}
+int Flow_MultInt(int iScene, CStringArray* saData)
+{
+	int iTemp=IntMult(iScene, saData->GetAt(0), saData->GetAt(1));
+	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+	return RETURN_NORMAL;
+}
+int Flow_DivInt(int iScene, CStringArray* saData)
+{
+	if(_ttoi(saData->GetAt(1))==0){return RETURN_FAILED;}
+	int iTemp=IntDiv(iScene, saData->GetAt(0), saData->GetAt(1));
+	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
 	return RETURN_NORMAL;
 }
