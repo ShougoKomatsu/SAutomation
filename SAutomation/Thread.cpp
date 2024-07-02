@@ -178,8 +178,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					case ERROR_TREAT_GOTO:
 						{
 							PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
-							int iLabel;
-							iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
+							int iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
 							sWrite.Format(_T("iLabel = %d\n"), iLabel);
 							if(iLogLevel>=1){cf.WriteString(sWrite);}
 							if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
@@ -194,8 +193,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			case RETURN_GOTO:
 				{
 					PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
-					int iLabel;
-					iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
+					int iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
 					if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 					i=iLabel-1;
@@ -203,8 +201,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				}
 			case RETURN_GOTO_BY_SWITCH:
 				{
-					int iLabel;
-					iLabel = SearchLable(&saCommands,sReturnParam, iLogLevel, &cf);
+					int iLabel = SearchLable(&saCommands,sReturnParam, iLogLevel, &cf);
 					if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 					i=iLabel-1;
@@ -214,8 +211,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				{
 					if(g_iNowLevel[iScene]>=MAX_LEVEL){TREAT_TO_EXIT_THREAD; return 0;}
 
-					int iLabel;
-					iLabel = SearchSubRoutine(&saCommands, sReturnParam, iLogLevel, &cf);
+					int iLabel = SearchSubRoutine(&saCommands, sReturnParam, iLogLevel, &cf);
 					if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 					g_iProgramCounter[iScene][g_iNowLevel[iScene]]=i;
