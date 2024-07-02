@@ -172,18 +172,24 @@ DWORD WINAPI CommandThread(LPVOID arg)
 				{
 					sWrite.Format(_T("iErrorTreat = %d %s\n"), iErrorTreat, sLabel);
 					if(iLogLevel>=1){cf.WriteString(sWrite);}
-					if(iErrorTreat==ERROR_TREAT_RESUME){break;}
-					if(iErrorTreat==ERROR_TREAT_GOTO)
+					switch(iErrorTreat)
 					{
-						PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
-						int iLabel;
-						iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
-						sWrite.Format(_T("iLabel = %d\n"), iLabel);
-						if(iLogLevel>=1){cf.WriteString(sWrite);}
-						if(iLabel >= 0){i=iLabel-1;break;}
+					case ERROR_TREAT_RESUME:{break;}
+					case ERROR_TREAT_GOTO:
+						{
+							PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
+							int iLabel;
+							iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
+							sWrite.Format(_T("iLabel = %d\n"), iLabel);
+							if(iLogLevel>=1){cf.WriteString(sWrite);}
+							if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
+
+							i=iLabel-1;
+							break;
+						}
+					default:{TREAT_TO_EXIT_THREAD; return 0;}
 					}
-					TREAT_TO_EXIT_THREAD;
-					return 0;
+					break;
 				}
 			case RETURN_GOTO:
 				{
