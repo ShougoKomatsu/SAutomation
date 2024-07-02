@@ -128,7 +128,7 @@ int Flow_DivInt(int iScene, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-int GetValue(int iScene, CString sArg)
+int GetValueInt(int iScene, CString sArg)
 {
 	if(sArg.GetLength()<0){return 0;}
 	if(sArg.Left(1).CompareNoCase(_T("v"))==0) {return GetIntValue(iScene, sArg);}

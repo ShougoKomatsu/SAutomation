@@ -553,27 +553,27 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	{
 	case COMMAND_DELAY:{return K_Sleep(Halt, Suspend, _ttoi(saData.GetAt(0)));}
 
-	case COMMAND_MOUSE_L_DOWN:{MoveMouse(&saData);return MouseLDown(&saData);}
-	case COMMAND_MOUSE_R_DOWN:{MoveMouse(&saData);return MouseRDown(&saData);}
-	case COMMAND_MOUSE_M_DOWN:{MoveMouse(&saData);return MouseMDown(&saData);}
+	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
+	case COMMAND_MOUSE_R_DOWN:{MoveMouse(*iSceneData, &saData);return MouseRDown(*iSceneData, &saData);}
+	case COMMAND_MOUSE_M_DOWN:{MoveMouse(*iSceneData, &saData);return MouseMDown(*iSceneData, &saData);}
 
-	case COMMAND_MOUSE_L_UP:{MoveMouse(&saData);return MouseLUp(&saData);}
-	case COMMAND_MOUSE_R_UP:{MoveMouse(&saData);return MouseRUp(&saData);}
-	case COMMAND_MOUSE_M_UP:{MoveMouse(&saData);return MouseMUp(&saData);}
+	case COMMAND_MOUSE_L_UP:{MoveMouse(*iSceneData, &saData);return MouseLUp(*iSceneData, &saData);}
+	case COMMAND_MOUSE_R_UP:{MoveMouse(*iSceneData, &saData);return MouseRUp(*iSceneData, &saData);}
+	case COMMAND_MOUSE_M_UP:{MoveMouse(*iSceneData, &saData);return MouseMUp(*iSceneData, &saData);}
 
-	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(&saData);}
-	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(&saData);}
-	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(&saData);}
+	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(*iSceneData, &saData);}
+	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(*iSceneData, &saData);}
+	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(*iSceneData, &saData);}
 							   
-	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:{return MouseSetOriginToWindow(&saData);}
-	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(&saData);}
+	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:{return MouseSetOriginToWindow(*iSceneData, &saData);}
+	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(*iSceneData, &saData);}
 
 
-	case COMMAND_MOUSE_MOVE:{return MoveMouse(&saData);}
-	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(&saData);}
-	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(&saData);}
+	case COMMAND_MOUSE_MOVE:{return MoveMouse(*iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(*iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(*iSceneData, &saData);}
 
-	case COMMAND_WHEEL:{return MouseVWheel(&saData);}
+	case COMMAND_WHEEL:{return MouseVWheel(*iSceneData, &saData);}
 
 
 	case COMMAND_KEY_DOWN_UP:{return KeyDownAndUp(&saData);}
