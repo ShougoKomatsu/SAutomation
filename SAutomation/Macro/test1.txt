@@ -1,6 +1,12 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
+IsEqualInt(1,1,test)
+MousePos(200,200)
+
+test:
+MousePos(200,200)
+exit
 1000
 MousePos(200,200)
 1000

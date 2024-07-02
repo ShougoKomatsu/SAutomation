@@ -779,6 +779,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
 		if(sArg.GetLength()>0){saData->Add(sArg);}
 		*iCommandType = iType;
+		return TRUE;
 	}
 	return FALSE;
 }
