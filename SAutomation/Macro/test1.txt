@@ -4,9 +4,11 @@ first:
 AddInt(VarInt1,1)
 
 MousePos(VarInt1, VarInt1)
-
+IsEqualInt(VarInt1, 1000, end)
 goto first
 
+end:
+exit
 
 
 IsEqualInt(VarInt1,10,test)
