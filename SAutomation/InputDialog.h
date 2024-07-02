@@ -3,13 +3,15 @@
 #include "resource.h"
 // CInputDialog2 ダイアログ
 
+
+
 class CInputDialog : public CDialogEx
 {
 	DECLARE_DYNAMIC(CInputDialog)
 
 public:
-		CStringArray m_saParam;
-	
+	static const int TIMER_TIMEOUT=WM_APP+1;
+	CStringArray m_saParam;
 	CString m_sMessage;
 	int m_iTimeOutMilliSec;
 	BYTE* m_byKey;
@@ -31,5 +33,6 @@ protected:
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual BOOL OnInitDialog();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 

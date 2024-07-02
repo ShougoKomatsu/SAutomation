@@ -33,6 +33,7 @@ void CInputDialog::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CInputDialog, CDialogEx)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -75,9 +76,6 @@ BOOL CInputDialog::PerseParameter()
 
 
 
-
-
-
 BOOL CInputDialog::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -91,8 +89,25 @@ BOOL CInputDialog::OnInitDialog()
 	CString sInstruction;
 	sInstruction.Format(_T("%c: %s"), m_byKey[0], m_sLabel[0]);
 
+	if(m_iTimeOutMilliSec>=0)
+	{
+		if(m_iTimeOutMilliSec<10){m_iTimeOutMilliSec=10;}
+		SetTimer(TIMER_TIMEOUT, m_iTimeOutMilliSec, NULL);
+	}
 	((CButton*)GetDlgItem(IDC_STATIC_MESSAGE))->SetWindowText(m_sMessage);
 	((CButton*)GetDlgItem(IDC_STATIC_INSTRUCTION))->SetWindowText(sInstruction);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
+}
+
+
+void CInputDialog::OnTimer(UINT_PTR nIDEvent)
+{
+	if(nIDEvent==TIMER_TIMEOUT)
+	{
+		KillTimer(TIMER_TIMEOUT);
+		m_sResultLabel.Format(_T("%s"), m_sLabel[0]);
+		OnOK();
+	}
+	CDialogEx::OnTimer(nIDEvent);
 }
