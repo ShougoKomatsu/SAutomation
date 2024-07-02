@@ -6,6 +6,12 @@
 #include "Variables.h"
 #include "FlowManager.h"
 
+#define ERR_TREAT_TO_EXIT_THREAD if(iLogLevel>=1){cf.Close();}g_bHalt = FALSE;\
+	ChangeMouseOrigin(0, 0);\
+	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);\
+	TerminateThread(hGetKey, 0);\
+	TerminateThread(hGetStepKey, 0);\
+
 HANDLE g_hThread[MAX_THREAD];
 
 int g_iSceneData[MAX_THREAD];
@@ -138,12 +144,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			bExit = FALSE;
 			if(g_bHalt == TRUE)
 			{
-				if(iLogLevel>=1){cf.Close();}
-				g_bHalt = FALSE;
-				ChangeMouseOrigin(0, 0);
-				PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-				TerminateThread(hGetKey, 0);
-				TerminateThread(hGetStepKey, 0);
+				ERR_TREAT_TO_EXIT_THREAD;
 				return 0;
 			}
 
@@ -157,12 +158,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			{
 			case RETURN_HALT:
 				{
-					if(iLogLevel>=1){cf.Close();}
-					g_bHalt = FALSE;
-					ChangeMouseOrigin(0, 0);
-					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-					TerminateThread(hGetKey, 0);
-					TerminateThread(hGetStepKey, 0);
+					ERR_TREAT_TO_EXIT_THREAD;
 					return 0;
 				}
 			case RETURN_NORMAL: {break;}
@@ -178,12 +174,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					case ERROR_TREAT_RESUME:{iErrorTreat=ERROR_TREAT_RESUME; break;}
 					default:
 						{
-							if(iLogLevel>=1){cf.Close();}
-							g_bHalt = FALSE;
-							ChangeMouseOrigin(0, 0);
-							PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-							TerminateThread(hGetKey, 0);
-							TerminateThread(hGetStepKey, 0);
+							ERR_TREAT_TO_EXIT_THREAD;
 							return 0;
 						}
 					}
@@ -217,12 +208,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &cf);
 					if(iLabel >= 0){i=iLabel-1;break;}
 
-					if(iLogLevel>=1){cf.Close();}
-					g_bHalt = FALSE;
-					ChangeMouseOrigin(0, 0);
-					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-					TerminateThread(hGetKey, 0);
-					TerminateThread(hGetStepKey, 0);
+					ERR_TREAT_TO_EXIT_THREAD;
 					return 0;
 				}
 			case RETURN_GOTO_BY_SWITCH:
@@ -231,24 +217,14 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					iLabel = SearchLable(&saCommands,sReturnParam, iLogLevel, &cf);
 					if(iLabel >= 0){i=iLabel-1;break;}
 
-					if(iLogLevel>=1){cf.Close();}
-					g_bHalt = FALSE;
-					ChangeMouseOrigin(0, 0);
-					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-					TerminateThread(hGetKey, 0);
-					TerminateThread(hGetStepKey, 0);
+					ERR_TREAT_TO_EXIT_THREAD;
 					return 0;
 				}
 			case RETURN_CALL_SUB:
 				{
 					if(g_iNowLevel[iScene]>=MAX_LEVEL)
 					{
-						if(iLogLevel>=1){cf.Close();}
-						g_bHalt = FALSE;
-						ChangeMouseOrigin(0, 0);
-						PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-						TerminateThread(hGetKey, 0);
-						TerminateThread(hGetStepKey, 0);
+						ERR_TREAT_TO_EXIT_THREAD;
 						return 0;
 					}
 
@@ -261,13 +237,8 @@ DWORD WINAPI CommandThread(LPVOID arg)
 						i=iLabel-1;
 						break;
 					}
-					
-					if(iLogLevel>=1){cf.Close();}
-					g_bHalt = FALSE;
-					ChangeMouseOrigin(0, 0);
-					PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-					TerminateThread(hGetKey, 0);
-					TerminateThread(hGetStepKey, 0);
+
+					ERR_TREAT_TO_EXIT_THREAD;
 					return 0;
 				}
 			case RETURN_END_SUB:
@@ -275,12 +246,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 					g_iNowLevel[iScene]--;
 					if(g_iNowLevel[iScene]<0)
 					{
-						if(iLogLevel>=1){cf.Close();}
-						g_bHalt = FALSE;
-						ChangeMouseOrigin(0, 0);
-						PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-						TerminateThread(hGetKey, 0);
-						TerminateThread(hGetStepKey, 0);
+						ERR_TREAT_TO_EXIT_THREAD;
 						return 0;
 					}
 
