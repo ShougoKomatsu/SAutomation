@@ -106,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="Automation.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="FlowManager.h" />
     <ClInclude Include="ImgProc.h" />
     <ClInclude Include="InputDialog.h" />
     <ClInclude Include="MouseAutomation.h" />
@@ -116,11 +117,13 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Thread.h" />
+    <ClInclude Include="Variables.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Automation.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="FlowManager.cpp" />
     <ClCompile Include="ImgProc.cpp" />
     <ClCompile Include="InputDialog.cpp" />
     <ClCompile Include="MouseAutomation.cpp" />
@@ -132,6 +135,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Thread.cpp" />
+    <ClCompile Include="Variables.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>

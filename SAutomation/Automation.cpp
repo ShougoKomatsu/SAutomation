@@ -2,7 +2,7 @@
 #include "Automation.h"
 #include "windows.h"
 #include "Common.h"
-
+#include "Variables.h"
 #include "Window.h"
 
 CString g_sDir;
@@ -441,6 +441,8 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	BOOL bUnicode;
 	TCHAR tch;
 	int iRet;
+	int iTimeOutMillisec;
+	
 	iRet = GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &byKey);
 	if(iRet < 0){return iRet;}
 
@@ -448,6 +450,9 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	else if(saData->GetAt(1).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
+	
+	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
+	else {iTimeOutMillisec = _ttoi(saData->GetAt(2));}
 
 	if(bUnicode == TRUE)
 	{
@@ -457,6 +462,10 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	}
 
 	short shKey;
+	
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
 	while(1)
 	{
 		shKey = GetAsyncKeyState (byKey);
@@ -465,6 +474,14 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		
 		iRet = K_Sleep(Halt, Suspend, 1);
 		if(iRet <0){return iRet;}
+		
+		if(iTimeOutMillisec>=0)
+		{
+			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMillisec/g_dSpeedMult))
+			{
+				return RETURN_FAILED;
+			}
+		}
 	}
 	return RETURN_NORMAL;
 }
@@ -513,7 +530,7 @@ int FilndLabel(CStringArray* saCommands, CString sLabel)
 	for(int i=0; i<saCommands->GetCount(); i++)
 	{
 		sCommand.Format(_T("%s"), saCommands->GetAt(i));
-		sCommand.Trim(_T(" ")).Trim(_T("\t"));
+		sCommand.Trim(_T(" \t"));
 
 		if(sCommand.GetLength()!=sLabel.GetLength()+1){continue;}
 		if(sCommand.GetAt(sLabel.GetLength())!=':'){continue;}
@@ -564,6 +581,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_KEY_UP:{return KeyUp(&saData);}
 
 	case COMMAND_WAIT:{return WaitForKey(Halt, Suspend, &saData);}
+	case COMMAND_WAIT_KEY:{return WaitForKey(Halt, Suspend, &saData);}
 	case COMMAND_WAIT_IMG:{return WaitForImage(Halt, Suspend, &saData);}
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
@@ -576,6 +594,15 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
+	case COMMAND_SUB:{return RETURN_SUB;}
+	case COMMAND_CALL_SUB:
+		{
+			CString sData;
+			sData.Format(_T("%s"),saData.GetAt(0));
+			sReturnParam->Format(_T("%s"),sData.Trim(_T(" \t")));
+			return RETURN_CALL_SUB;
+		}
+	case COMMAND_END_SUB:{return RETURN_END_SUB;}
 	case COMMAND_GOTO:{return RETURN_GOTO;}
 	case COMMAND_ERROR_TREAT:{return RETURN_ERROR_TREAT;}
 	case COMMAND_SWITCH_BY_INPUT:
@@ -583,6 +610,26 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 			int iRet;
 			iRet = GetInput(&saData, sReturnParam);
 			return iRet;
+		}
+	case COMMAND_ISEQUAL_INT:
+		{
+			return Flow_IsIntEqual(*iSceneData, &saData, sReturnParam);
+		}
+	case COMMAND_ADD_INT:
+		{
+			return Flow_AddInt(*iSceneData, &saData);
+		}
+	case COMMAND_SUB_INT:
+		{
+			return Flow_SubInt(*iSceneData, &saData);
+		}
+	case COMMAND_MULT_INT:
+		{
+			return Flow_MultInt(*iSceneData, &saData);
+		}
+	case COMMAND_DIV_INT:
+		{
+			return Flow_DivInt(*iSceneData, &saData);
 		}
 	default:{return RETURN_FAILED;}
 	}
