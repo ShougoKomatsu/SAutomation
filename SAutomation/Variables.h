@@ -18,6 +18,8 @@ int Flow_AddInt(int iScene, CStringArray* saData);
 int Flow_SubInt(int iScene, CStringArray* saData);
 int Flow_MultInt(int iScene, CStringArray* saData);
 int Flow_DivInt(int iScene, CStringArray* saData);
-
+int Flow_Assign(int iScene, CStringArray* saData);
 int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
 int GetValueInt(int iScene, CString sArg);
+void AssignInt(int iScene, CString sArg, int iInput);
+

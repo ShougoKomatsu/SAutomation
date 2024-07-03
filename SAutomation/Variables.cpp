@@ -134,3 +134,96 @@ int GetValueInt(int iScene, CString sArg)
 	if(sArg.Left(1).CompareNoCase(_T("v"))==0) {return GetIntValue(iScene, sArg);}
 	return _ttoi(sArg);
 }
+
+void AssignInt(int iScene, CString sArg, int iInput)
+{
+	(*GetIntValuePointer(iScene, sArg))=iInput;
+}
+
+
+int Flow_Assign(int iScene, CStringArray* saData)
+{
+	int iCommandType;
+
+	BOOL bRet;
+	CString sArg;
+	CString sDataLocal;
+	sDataLocal.Format(_T("%s"), saData->GetAt(1));
+	GetCommand(sDataLocal, &iCommandType);
+	switch(iCommandType)
+	{
+	case COMMAND_ADD_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			int iTemp=IntAdd(iScene, sArg1, sArg2);
+			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+			return RETURN_NORMAL;
+		}
+	case COMMAND_SUB_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			int iTemp=IntSub(iScene, sArg1, sArg2);
+			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+			return RETURN_NORMAL;
+		}
+	case COMMAND_MULT_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			int iTemp=IntMult(iScene, sArg1, sArg2);
+			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+			return RETURN_NORMAL;
+		}
+	case COMMAND_DIV_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			int iTemp=IntDiv(iScene, sArg1, sArg2);
+			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+			return RETURN_NORMAL;
+		}
+	case COMMAND_VARIABLE_INT:
+		{
+			int iTemp=GetIntValue(iScene, sDataLocal);
+			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+			break;
+		}
+	default:
+		{
+			if(sDataLocal.SpanIncluding(_T("0123456789")).CompareNoCase(sDataLocal)==0)
+			{
+				(*GetIntValuePointer(iScene, saData->GetAt(0)))=_ttoi(sDataLocal);;
+				return RETURN_NORMAL;
+			}
+			return RETURN_FAILED;
+		}
+
+	}
+			return RETURN_FAILED;
+}

@@ -1,5 +1,7 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
+
+VarInt1=10
 first:
 AddInt(VarInt1,1)
 
