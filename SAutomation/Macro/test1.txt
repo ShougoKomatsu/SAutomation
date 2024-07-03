@@ -1,12 +1,13 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
-VarInt1=10
+VarInt1=500
+VarInt2=VarInt1
 first:
-AddInt(VarInt1,1)
+AddInt(VarInt2,1)
 
-MousePos(VarInt1, VarInt1)
-IsEqualInt(VarInt1, 1000, end)
+MousePos(VarInt2, VarInt2)
+IsEqualInt(VarInt2, 1000, end)
 goto first
 
 end:

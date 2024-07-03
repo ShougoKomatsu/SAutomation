@@ -1,0 +1,5010 @@
+1 Waitkey(ctrl, off, -1) 0
+2 waitkey(shift, off,-1) 0
+3 VarInt1=500 0
+4 VarInt2=VarInt1 0
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 0
+9 goto first 102
+"Waitkey(ctrl, off, -1", "first"
+"waitkey(shift, off,-1", "first"
+"VarInt1=50", "first"
+"VarInt2=VarInt", "first"
+"first", "first"
+5 first: 101
+6 AddInt(VarInt2,1) 0
+7 MousePos(VarInt2, VarInt2) 0
+8 IsEqualInt(VarInt2, 1000, end) 103
+"Waitkey(ctrl, off, -1", "end"
+"waitkey(shift, off,-1", "end"
+"VarInt1=50", "end"
+"VarInt2=VarInt", "end"
+"first", "end"
+"AddInt(VarInt2,1", "end"
+"MousePos(VarInt2, VarInt2", "end"
+"IsEqualInt(VarInt2, 1000, end", "end"
+"goto firs", "end"
+"end", "end"
+10 end: 101
+11 exit 10

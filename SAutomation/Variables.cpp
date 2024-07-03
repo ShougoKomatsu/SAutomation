@@ -212,13 +212,13 @@ int Flow_Assign(int iScene, CStringArray* saData)
 		{
 			int iTemp=GetIntValue(iScene, sDataLocal);
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
-			break;
+			return RETURN_NORMAL;
 		}
 	default:
 		{
 			if(sDataLocal.SpanIncluding(_T("0123456789")).CompareNoCase(sDataLocal)==0)
 			{
-				(*GetIntValuePointer(iScene, saData->GetAt(0)))=_ttoi(sDataLocal);;
+				(*GetIntValuePointer(iScene, saData->GetAt(0)))=_ttoi(sDataLocal);
 				return RETURN_NORMAL;
 			}
 			return RETURN_FAILED;
