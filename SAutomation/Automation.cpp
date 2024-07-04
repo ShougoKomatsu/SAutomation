@@ -588,8 +588,8 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
 	case COMMAND_WINDOW_FORWARD:{return SetWindowForward(saData.GetAt(0));}
-	case COMMAND_WINDOW_SIZE:{return WindowSize(&saData);}
-	case COMMAND_WINDOW_POS:{return WindowPos(&saData);}
+	case COMMAND_WINDOW_SIZE:{return WindowSize(*iSceneData, &saData);}
+	case COMMAND_WINDOW_POS:{return WindowPos(*iSceneData, &saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
 	case COMMAND_INPUT:{return Input(saData.GetAt(0));}
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
