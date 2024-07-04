@@ -4,6 +4,21 @@
 
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 
+BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=]VARIABLE_INT; return TRUE;}
+
+	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=VARIABLE_ADD_INT; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("MultInt"))==0){*iCommandType=VARIABLE_MULT_INT; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
+
+return FALSE;
+}
+
+
 int GetIntValue(int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarInt"))==0)
@@ -102,31 +117,6 @@ int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
 	return RETURN_NORMAL;
 }
 
-int Flow_AddInt(int iScene, CStringArray* saData)
-{
-	int iTemp=IntAdd(iScene, saData->GetAt(0), saData->GetAt(1));
-	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
-	return RETURN_NORMAL;
-}
-int Flow_SubInt(int iScene, CStringArray* saData)
-{
-	int iTemp=IntSub(iScene, saData->GetAt(0), saData->GetAt(1));
-	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
-	return RETURN_NORMAL;
-}
-int Flow_MultInt(int iScene, CStringArray* saData)
-{
-	int iTemp=IntMult(iScene, saData->GetAt(0), saData->GetAt(1));
-	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
-	return RETURN_NORMAL;
-}
-int Flow_DivInt(int iScene, CStringArray* saData)
-{
-	if(_ttoi(saData->GetAt(1))==0){return RETURN_FAILED;}
-	int iTemp=IntDiv(iScene, saData->GetAt(0), saData->GetAt(1));
-	(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
-	return RETURN_NORMAL;
-}
 
 int GetValueInt(int iScene, CString sArg)
 {
@@ -149,10 +139,10 @@ int Flow_Assign(int iScene, CStringArray* saData)
 	CString sArg;
 	CString sDataLocal;
 	sDataLocal.Format(_T("%s"), saData->GetAt(1));
-	GetCommand(sDataLocal, &iCommandType);
+	GetCommandVariable(sDataLocal, &iCommandType);
 	switch(iCommandType)
 	{
-	case COMMAND_ADD_INT:
+	case VARIABLE_ADD_INT:
 		{
 			CString sArg1;
 			CString sArg2;
@@ -166,7 +156,7 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
 			return RETURN_NORMAL;
 		}
-	case COMMAND_SUB_INT:
+	case VARIABLE_SUB_INT:
 		{
 			CString sArg1;
 			CString sArg2;
@@ -180,7 +170,7 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
 			return RETURN_NORMAL;
 		}
-	case COMMAND_MULT_INT:
+	case VARIABLE_MULT_INT:
 		{
 			CString sArg1;
 			CString sArg2;
@@ -194,7 +184,7 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
 			return RETURN_NORMAL;
 		}
-	case COMMAND_DIV_INT:
+	case VARIABLE_DIV_INT:
 		{
 			CString sArg1;
 			CString sArg2;
@@ -208,7 +198,7 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
 			return RETURN_NORMAL;
 		}
-	case COMMAND_VARIABLE_INT:
+	case VARIABLE_INT:
 		{
 			int iTemp=GetIntValue(iScene, sDataLocal);
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;

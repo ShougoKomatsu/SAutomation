@@ -14,12 +14,14 @@ int IntDiv(int iScene, CString sArg1, CString sArg2);
 int IntAssign(int iScene, CString sArg, int iValue);
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
 
-int Flow_AddInt(int iScene, CStringArray* saData);
-int Flow_SubInt(int iScene, CStringArray* saData);
-int Flow_MultInt(int iScene, CStringArray* saData);
-int Flow_DivInt(int iScene, CStringArray* saData);
 int Flow_Assign(int iScene, CStringArray* saData);
 int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
 int GetValueInt(int iScene, CString sArg);
 void AssignInt(int iScene, CString sArg, int iInput);
 
+#define VARIABLE_INT (0)
+
+#define VARIABLE_ADD_INT (1)
+#define VARIABLE_SUB_INT (2)
+#define VARIABLE_MULT_INT (3)
+#define VARIABLE_DIV_INT (4)

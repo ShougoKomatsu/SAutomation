@@ -619,22 +619,6 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 		{
 			return Flow_IsIntEqual(*iSceneData, &saData, sReturnParam);
 		}
-	case COMMAND_ADD_INT:
-		{
-			return Flow_AddInt(*iSceneData, &saData);
-		}
-	case COMMAND_SUB_INT:
-		{
-			return Flow_SubInt(*iSceneData, &saData);
-		}
-	case COMMAND_MULT_INT:
-		{
-			return Flow_MultInt(*iSceneData, &saData);
-		}
-	case COMMAND_DIV_INT:
-		{
-			return Flow_DivInt(*iSceneData, &saData);
-		}
 	default:{return RETURN_FAILED;}
 	}
 	return RETURN_FAILED;
