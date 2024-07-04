@@ -289,8 +289,9 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 }
 
 #include "ImgProc.h"
+#include "Variables.h"
 
-int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+int WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	
 	int iWaitOn;
@@ -301,12 +302,12 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	int iR0, iC0, iR1, iC1;
 
-	iTickMillisec = _ttoi(saData->GetAt(0));
+	iTickMillisec = GetValueInt(iScene, saData->GetAt(0));
 
-	iC0=_ttoi(saData->GetAt(1));
-	iR0=_ttoi(saData->GetAt(2));
-	iC1=_ttoi(saData->GetAt(3));
-	iR1=_ttoi(saData->GetAt(4));
+	iC0=GetValueInt(iScene, saData->GetAt(1));
+	iR0=GetValueInt(iScene, saData->GetAt(2));
+	iC1=GetValueInt(iScene, saData->GetAt(3));
+	iR1=GetValueInt(iScene, saData->GetAt(4));
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
@@ -314,7 +315,7 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 
 	if(saData->GetCount()==6){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = _ttoi(saData->GetAt(6));}
+	else {iTimeOutMillisec = GetValueInt(iScene, saData->GetAt(6));}
 
 	
 	ImgRGB imgModelCropped;
@@ -356,7 +357,7 @@ int WaitForUpdate(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 }
 
-int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+int WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
@@ -369,10 +370,10 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
 
-	iC0=_ttoi(saData->GetAt(1));
-	iR0=_ttoi(saData->GetAt(2));
-	iC1=_ttoi(saData->GetAt(3));
-	iR1=_ttoi(saData->GetAt(4));
+	iC0=GetValueInt(iScene, saData->GetAt(1));
+	iR0=GetValueInt(iScene, saData->GetAt(2));
+	iC1=GetValueInt(iScene, saData->GetAt(3));
+	iR1=GetValueInt(iScene, saData->GetAt(4));
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
@@ -380,7 +381,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 
 	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = _ttoi(saData->GetAt(6));}
+	else {iTimeOutMilliSec = GetValueInt(iScene, saData->GetAt(6));}
 
 
 
@@ -432,7 +433,7 @@ int WaitForImage(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+int WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 
 	int iWaitOn;
@@ -452,7 +453,7 @@ int WaitForKey(LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 	
 	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = _ttoi(saData->GetAt(2));}
+	else {iTimeOutMillisec = GetValueInt(iScene, saData->GetAt(2));}
 
 	if(bUnicode == TRUE)
 	{
@@ -551,7 +552,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 
 	switch(iCommandType)
 	{
-	case COMMAND_DELAY:{return K_Sleep(Halt, Suspend, _ttoi(saData.GetAt(0)));}
+	case COMMAND_DELAY:{return K_Sleep(Halt, Suspend, GetValueInt(*iSceneData, saData.GetAt(0)));}
 
 	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
 	case COMMAND_MOUSE_R_DOWN:{MoveMouse(*iSceneData, &saData);return MouseRDown(*iSceneData, &saData);}
@@ -580,10 +581,10 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_KEY_DOWN:{return KeyDown(&saData);}
 	case COMMAND_KEY_UP:{return KeyUp(&saData);}
 
-	case COMMAND_WAIT:{return WaitForKey(Halt, Suspend, &saData);}
-	case COMMAND_WAIT_KEY:{return WaitForKey(Halt, Suspend, &saData);}
-	case COMMAND_WAIT_IMG:{return WaitForImage(Halt, Suspend, &saData);}
-	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(Halt, Suspend, &saData);}
+	case COMMAND_WAIT:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_KEY:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_IMG:{return WaitForImage(*iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
 	case COMMAND_WINDOW_FORWARD:{return SetWindowForward(saData.GetAt(0));}
