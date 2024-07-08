@@ -3,6 +3,7 @@
 #include "perser.h"
 
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
+CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 
 BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 {
@@ -46,6 +47,37 @@ int* GetIntValuePointer(int iScene, CString sArg)
 
 	return NULL;
 }
+
+
+CString GetStrValue(int iScene, CString sArg)
+{
+	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return sArg;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarStr%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return g_sVar[iScene][iVarNameB1-1];}
+	}
+
+	return 0;
+}
+
+CString* GetStrValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarStr%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return &(g_sVar[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
+
 
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
@@ -127,6 +159,27 @@ void AssignInt(int iScene, CString sArg, int iInput)
 	(*GetIntValuePointer(iScene, sArg))=iInput;
 }
 
+/*
+const CString Int2Str(int iScene, CString sArg, CString sFormat)
+{
+	int iTemp;
+	iTemp = GetIntValue(iScene sArg);
+	CString sOut;
+
+	if(sFormat.Left(1).Compare(_T("0"))==0)
+	{
+	}
+	else
+	{
+	}
+	sOut.Format(_T("%d"), sArg);
+	return sOut;
+}
+int Str2Int(int iScene, CString sArg)
+{
+	return 0;
+}
+*/
 
 int Flow_Assign(int iScene, CStringArray* saData)
 {
