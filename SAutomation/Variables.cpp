@@ -175,12 +175,41 @@ const CString Int2Str(int iScene, CString sArg, CString sFormat)
 	sOut.Format(_T("%d"), sArg);
 	return sOut;
 }
+*/
 int Str2Int(int iScene, CString sArg)
 {
-	return 0;
+	CString sTemp;
+	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg));
+	return _ttoi(sTemp);
 }
-*/
 
+const CString StrCombine(int iScene, CString sArg1, CString sArg2)
+{
+	CString sTemp;
+	sTemp.Format(_T("%s%s"), GetStrValue(iScene, sArg1),GetStrValue(iScene, sArg2));
+	return sTemp;
+}
+
+const CString StrLeft(int iScene, CString sArg1, CString sArg2)
+{
+	CString sTemp;
+	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg1));
+	return sTemp.Left(GetIntValue(iScene, sArg2));
+}
+
+const CString StrRight(int iScene, CString sArg1, CString sArg2)
+{
+	CString sTemp;
+	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg1));
+	return sTemp.Right(GetIntValue(iScene, sArg2));
+}
+
+const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
+{
+	CString sTemp;
+	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg1));
+	return sTemp.Mid(GetIntValue(iScene, sArg2),GetIntValue(iScene, sArg3));
+}
 int Flow_Assign(int iScene, CStringArray* saData)
 {
 	int iCommandType;
