@@ -1182,6 +1182,9 @@ BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int
 	}
 	return TRUE;
 }
+
+
+
 BOOL CorrelMapPyramid(ImgRGB* imgTarget, int iPointerTargetOffset, int iTargetWidth, int iTargetHeight, ImgRGB* imgModel, int iPointerModelOffset, int iModelWidth, int iModelHeight, ImgMap* imgMap, int iR0, int iC0, int iR1, int iC1)
 {
 	if(imgTarget == NULL){return FALSE;}
