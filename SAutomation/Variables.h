@@ -28,7 +28,7 @@ void AssignInt(int iScene, CString sArg, int iInput);
 CString GetValueString(int iScene, CString sArg);
 void AssignString(int iScene, CString sArg, CString sInput);
 
-const CString Int2Str(int iScene, CString sArg);
+const CString Int2Str(int iScene, CString sArg, CString sFormat);
 int Str2Int(int iScene, CString sArg);
 
 
