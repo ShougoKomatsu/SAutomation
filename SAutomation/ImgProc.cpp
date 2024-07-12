@@ -1318,6 +1318,172 @@ BOOL MeanFilter(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH, UINT uiFi
 	return TRUE;
 }
 
+
+inline BYTE byMaxC(BYTE* byImg, UINT uiImgW, UINT r0, UINT c0, UINT uiFilterW, UINT* uiMaxCL)
+{
+	BYTE byMax=0;
+	*uiMaxCL=0;
+	for(UINT cl=0; cl<uiFilterW; cl++)
+	{
+		if(byMax<= byImg[r0 * uiImgW+c0+cl])
+		{
+			byMax=byImg[r0 * uiImgW+c0+cl];
+			*uiMaxCL=cl;
+		}
+	}
+	return byMax;
+}
+
+
+
+
+
+inline BYTE byMaxR(BYTE* byImg, UINT uiImgW, UINT r0, UINT c0, UINT uiFilterH, UINT* uiMaxRL)
+{
+	BYTE byMax=0;
+	for(int rl=0; rl<uiFilterH; rl++)
+	{
+		if(byMax<=byImg[(r0+rl)*uiImgW+c0])
+		{
+			byMax=byImg[(r0+rl)*uiImgW+c0];
+			*uiMaxRL=rl;
+		}
+	}
+	return byMax;
+}
+
+inline BYTE byMaxRC(BYTE* byImg, int iImgW, int r0, int c0, int iFilterW, int iFilterH)
+{
+	BYTE byMax=0;
+	for(int rl=0; rl<iFilterH; rl++)
+	{
+		for(int cl=0; cl<iFilterW; cl++)
+		{
+			if(byMax<=byImg[(r0+rl)*iImgW+cl+c0])
+			{
+				byMax=byImg[(r0+rl)*iImgW+cl+c0];
+			}
+		}
+	}
+	return byMax;
+}
+
+
+
+
+
+
+inline void UpdateRDirectionMax(BYTE* byImgExp, BYTE* byRMaxData, int r_origin, int iImgW, int iFilterHalfW, int iFilterHalfH, UINT* uiMaxPositions)
+{
+	if(r_origin==0)
+	{
+		for(int c=0; c<iImgW; c++)
+		{
+			byRMaxData[c+iFilterHalfW]=byMaxR(byImgExp, iImgW, r_origin+iFilterHalfH, c, iFilterHalfH+1, &(uiMaxPositions[c]));
+		}
+		return;
+	}
+
+	for(int c=0; c<iImgW; c++)
+	{
+		if(byRMaxData[c+iFilterHalfW] < byImgExp[(r_origin+2*iFilterHalfH)*iImgW+c])
+		{
+			byRMaxData[c+iFilterHalfW]=byImgExp[(r_origin+2*iFilterHalfH)*iImgW+c];
+			uiMaxPositions[c]=2*iFilterHalfH;
+			continue;
+		}
+
+		if(uiMaxPositions[c]==0)
+		{
+			byRMaxData[c+iFilterHalfW]=byMaxR(byImgExp, iImgW, r_origin, c, 2*iFilterHalfH+1, &(uiMaxPositions[c]));
+			continue;
+		}
+		(uiMaxPositions[c])--;
+	}
+}
+
+
+BOOL MaxFilter(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH, UINT uiFilterW, UINT uiFilterH)
+{
+	BYTE* byImgExpanded;
+	BYTE* byRMaxData;
+	UINT* uiMaxPositions;
+	UINT uiMaxPositionCL;
+
+	if((uiFilterW % 2)!=1){return FALSE;}
+	if((uiFilterH % 2)!=1){return FALSE;}
+
+	UINT uiFilterHalfW = (uiFilterW-1)/2;
+	UINT uiFilterHalfH = (uiFilterH-1)/2;
+	
+	BOOL bSameMemory=FALSE;
+	BYTE* byResultLocal;
+	BYTE* pbyResult;
+	if(byImg==byResult)
+	{
+		bSameMemory=TRUE;
+		byResultLocal=new BYTE[uiImgW*uiImgH];
+		pbyResult=byResultLocal;
+	}
+	else
+	{
+		pbyResult=byResult;
+	}
+
+	byImgExpanded = new BYTE[uiImgW*(uiImgH + 2 * uiFilterHalfH)];
+	byRMaxData = new BYTE[uiImgW + 2*uiFilterHalfW];
+	uiMaxPositions = new UINT[uiImgW];
+
+	memset(byImgExpanded, 0, uiImgW*(uiImgH + 2 * uiFilterHalfH));
+	for(UINT r=0; r<uiImgH; r++)
+	{
+		for(UINT c=0; c<uiImgW; c++)
+		{
+			byImgExpanded[(r + uiFilterHalfH)*uiImgW+c] = byImg[r*uiImgW+c];
+		}
+	}
+	memset(byRMaxData, 0, uiImgW + 2*uiFilterHalfW);
+	for(UINT r=0; r<uiImgH; r++)
+	{
+		UpdateRDirectionMax(byImgExpanded, byRMaxData, r, uiImgW, uiFilterHalfW, uiFilterHalfH, uiMaxPositions);
+
+		pbyResult[r*uiImgW+0]=byMaxC(byRMaxData, uiImgW + uiFilterHalfW, 0, 0, uiFilterW, &(uiMaxPositionCL));
+		for(UINT c=1; c<uiImgW; c++)
+		{
+			if(byRMaxData[c+2*uiFilterHalfW]>pbyResult[r*uiImgW+c-1])
+			{
+				pbyResult[r*uiImgW+c] = byRMaxData[c+2*uiFilterHalfW];
+				uiMaxPositionCL = 2*uiFilterHalfW;
+				continue;
+			}
+			if(uiMaxPositionCL==0)
+			{
+				pbyResult[r*uiImgW+c] = byMaxC(byRMaxData, uiImgW+2*uiFilterHalfW, 0, c, uiFilterW,&uiMaxPositionCL);
+				continue;
+			}
+			uiMaxPositionCL--;
+			pbyResult[r*uiImgW+c] = pbyResult[r*uiImgW+c-1];
+		}
+	}
+
+	if(bSameMemory==TRUE)
+	{
+		for(UINT r=0; r<uiImgH; r++)
+		{
+			for(UINT c=0; c<uiImgW; c++)
+			{
+				byResult[r*uiImgW+c]=byResultLocal[r*uiImgW+c];
+			}
+		}
+		delete [] byResultLocal;
+	}
+
+	delete [] uiMaxPositions;
+	delete [] byImgExpanded;
+	delete [] byRMaxData;
+	return TRUE;
+}
+
 BOOL CreateMinMaxSumImg(ImgRGB* img,int iR0, int iC0, int iR1, int iC1,int iKernelWidth, int iKernelHeight, ImgRGB* imgMax, ImgRGB* imgMin, ImgMap* imgSum)
 {
 	if(iR0<0){return FALSE;}
