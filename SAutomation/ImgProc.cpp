@@ -1484,6 +1484,57 @@ BOOL MaxFilter(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH, UINT uiFil
 	return TRUE;
 }
 
+BOOL LaplacianFilter(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH, UINT uiFilterW, UINT uiFilterH)
+{
+	BOOL bSameMemory=FALSE;
+	BYTE* byResultLocal;
+	BYTE* pbyResult;
+	if(byImg==byResult)
+	{
+		bSameMemory=TRUE;
+		byResultLocal=new BYTE[uiImgW*uiImgH];
+		pbyResult=byResultLocal;
+	}
+	else
+	{
+		pbyResult=byResult;
+	}
+
+
+	memset(pbyResult, 0, uiImgW*uiImgH);
+
+	for(UINT r=1; r<uiImgH-1; r++)
+	{
+		for(UINT c=1; c<uiImgW-1; c++)
+		{
+			int iSum=0;
+			iSum+=byImg[(r-1)*uiImgW+(c+0)]*(-1);
+			iSum+=byImg[(r+0)*uiImgW+(c-1)]*(-1);
+			iSum+=byImg[(r+0)*uiImgW+(c+1)]*(-1);
+			iSum+=byImg[(r+1)*uiImgW+(c+0)]*(-1);
+			iSum+=byImg[(r+0)*uiImgW+(c+0)]*(4);
+			if(iSum<0){iSum=0;}
+			if(iSum>=255){iSum=255;}
+
+			pbyResult[r*uiImgW+c]=(BYTE)(iSum);
+		}
+	}
+	
+	if(bSameMemory==TRUE)
+	{
+		for(UINT r=0; r<uiImgH; r++)
+		{
+			for(UINT c=0; c<uiImgW; c++)
+			{
+				byResult[r*uiImgW+c]=byResultLocal[r*uiImgW+c];
+			}
+		}
+		delete [] byResultLocal;
+	}
+
+	return TRUE;
+}
+
 BOOL CreateMinMaxSumImg(ImgRGB* img,int iR0, int iC0, int iR1, int iC1,int iKernelWidth, int iKernelHeight, ImgRGB* imgMax, ImgRGB* imgMin, ImgMap* imgSum)
 {
 	if(iR0<0){return FALSE;}
