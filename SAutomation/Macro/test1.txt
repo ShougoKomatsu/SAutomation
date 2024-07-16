@@ -1,6 +1,7 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
+VarStr1=Int2Str(1234,%d)
 VarStr1=StrCombine(aaa,bbb);
 
 VarInt1=500
