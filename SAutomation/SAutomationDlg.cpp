@@ -755,10 +755,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
 	//	AfxMessageBox(szModuleName);
 
-	CStringArray aaaa;
-	aaaa.Add(_T("1234"));
-	aaaa.Add(_T("%%d"));
-	AfxMessageBox(Int2Str(0, _T("1234"),_T("%d")));
+//	CStringArray aaaa;
+//	aaaa.Add(_T("1234"));
+//	aaaa.Add(_T("%%d"));
+//	AfxMessageBox(Int2Str(0, _T("1234"),_T("%d")));
 	DWORD dwExeProcessIds[1024] = { 0 };
 	GetExeOtherProcessIds(szModuleName, dwExeProcessIds, dwCurrentProcessId);
 

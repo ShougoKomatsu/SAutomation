@@ -37,3 +37,6 @@ int Str2Int(int iScene, CString sArg);
 #define VARIABLE_SUB_INT (2)
 #define VARIABLE_MULT_INT (3)
 #define VARIABLE_DIV_INT (4)
+
+#define VARIABLE_STR (100)
+#define VARIABLE_COMBINE_STR (101)

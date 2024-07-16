@@ -1,6 +1,8 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
+VarStr1=StrCombine(aaa,bbb);
+
 VarInt1=500
 VarInt2=VarInt1
 first:

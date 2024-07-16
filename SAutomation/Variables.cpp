@@ -15,7 +15,7 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("MultInt"))==0){*iCommandType=VARIABLE_MULT_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
-
+	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	return FALSE;
 }
 
@@ -304,7 +304,6 @@ const CString Int2Str(int iScene, CString sArg, CString sFormat)
 	
 	return sOut;
 }
-
 int Str2Int(int iScene, CString sArg)
 {
 	CString sTemp;
@@ -410,6 +409,21 @@ int Flow_Assign(int iScene, CStringArray* saData)
 		{
 			int iTemp=GetIntValue(iScene, sDataLocal);
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_COMBINE_STR:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			CString sss;
+			sss.Format(_T("%s"),  StrCombine(iScene, sArg1, sArg2));
+			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), StrCombine(iScene, sArg1, sArg2)); 
 			return RETURN_NORMAL;
 		}
 	default:

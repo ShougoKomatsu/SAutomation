@@ -616,6 +616,10 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 		{
 			return Flow_Assign(*iSceneData, &saData);
 		}
+	case COMMAND_VARIABLE_STR:
+		{
+			return Flow_Assign(*iSceneData, &saData);
+		}
 	case COMMAND_ISEQUAL_INT:
 		{
 			return Flow_IsIntEqual(*iSceneData, &saData, sReturnParam);
