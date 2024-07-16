@@ -2,7 +2,8 @@
 waitkey(shift, off,-1)
 
 VarStr1=Int2Str(1234,%d)
-VarStr1=StrCombine(aaa,bbb);
+VarStr2=aaa
+VarStr3=StrCombine(VarStr1, VarStr2);
 
 VarInt1=500
 VarInt2=VarInt1

@@ -17,7 +17,12 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
-	return FALSE;
+
+
+	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
+
+	*iCommandType=VARIABLE_STR;
+	return TRUE;
 }
 
 
@@ -423,6 +428,11 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
 
 			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), StrCombine(iScene, sArg1, sArg2)); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_STR:
+		{
+			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"),GetStrValue(iScene, sDataLocal));
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_INT2STR:
