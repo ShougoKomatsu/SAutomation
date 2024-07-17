@@ -344,6 +344,59 @@ const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
 	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg1));
 	return sTemp.Mid(GetIntValue(iScene, sArg2),GetIntValue(iScene, sArg3));
 }
+const CString NowDateTime(CString sArg)
+{
+	CString sOut;
+
+	SYSTEMTIME st;
+	GetLocalTime(&st);
+
+	int iPlace=0;
+	sOut.Format(_T(""));
+	while(iPlace<=sArg.GetLength())
+	{
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("Y"))==0)
+		{
+			if(sArg.Mid(iPlace,4).CompareNoCase(_T("YYYY"))==0){CString sTemp; sTemp.Format(_T("%d"),st.wYear); sOut+=sTemp; iPlace+=4;}
+			else if(sArg.Mid(iPlace,2).CompareNoCase(_T("YY"))==0){CString sTemp; sTemp.Format(_T("%d"),(st.wYear%100)); sOut+=sTemp;iPlace+=2;}
+			else{return _T("");}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).Compare(_T("M"))==0)
+		{
+			if(sArg.Mid(iPlace,2).Compare(_T("MM"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMonth); sOut+=sTemp; iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wMonth); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("D"))==0)
+		{
+			if(sArg.Mid(iPlace,2).CompareNoCase(_T("dd"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wDay); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wDay); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("h"))==0)
+		{
+			if(sArg.Mid(iPlace,2).CompareNoCase(_T("hh"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wHour); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wHour); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).Compare(_T("m"))==0)
+		{
+			if(sArg.Mid(iPlace,2).Compare(_T("mm"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMinute); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wMinute); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("s"))==0)
+		{
+			if(sArg.Mid(iPlace,2).CompareNoCase(_T("ss"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wSecond); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wSecond); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		sOut+=sArg.Mid(iPlace,1);
+		iPlace++;
+	}
+	return sOut;
+}
 int Flow_Assign(int iScene, CStringArray* saData)
 {
 	int iCommandType;

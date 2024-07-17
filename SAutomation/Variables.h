@@ -41,3 +41,4 @@ int Str2Int(int iScene, CString sArg);
 #define VARIABLE_STR (100)
 #define VARIABLE_COMBINE_STR (101)
 #define VARIABLE_INT2STR (102)
+const CString NowDateTime(CString sArg);
