@@ -544,7 +544,7 @@ int ScreenShot(CStringArray* saCommands)
 {
 	ImgRGB imgRGB;
 	Screenshot(&imgRGB);
-	BOOL bRet=WriteImage(&imgRGB, saCommands->GetAt(1));
+	BOOL bRet=WriteImage(&imgRGB, saCommands->GetAt(0));
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }
@@ -630,6 +630,10 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_ISEQUAL_INT:
 		{
 			return Flow_IsIntEqual(*iSceneData, &saData, sReturnParam);
+		}
+	case COMMAND_SCREENSHOT:
+		{
+			return ScreenShot(&saData);
 		}
 	default:{return RETURN_FAILED;}
 	}

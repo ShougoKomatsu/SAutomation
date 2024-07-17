@@ -1,6 +1,8 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
+ScreenShot(d:\test.bmp)
+Exit
 VarStr1=Int2Str(1234,%d)
 VarStr2=aaa
 VarStr3=StrCombine(VarStr1, VarStr2);
