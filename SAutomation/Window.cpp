@@ -3,6 +3,7 @@
 
 #include "Window.h"
 #include "Common.h"
+#include "Variables.h"
 HWND g_hWnds[MAX_WINDOW_HANDLE];
 int g_iWnd=0;
 
@@ -171,7 +172,7 @@ BOOL GetWindowNameList(CStringArray* csNames)
 	return TRUE;
 }
 
-int WindowSize(CStringArray* saData)
+int WindowSize(int iScene, CStringArray* saData)
 {
 	HWND hwnd = GetForegroundWindow();
 	CRect	rect ;
@@ -183,14 +184,14 @@ int WindowSize(CStringArray* saData)
 
 	if(saData->GetCount()!=2){return -1;}
 
-	iWidth = _ttoi(saData->GetAt(0));
-	iHeight = _ttoi(saData->GetAt(1));
+	iWidth = GetValueInt(iScene, saData->GetAt(0));
+	iHeight = GetValueInt(iScene, saData->GetAt(1));
 	iLeft = rect.left;
 	iTop = rect.top;
 	SetWindowPos(hwnd, HWND_TOP,iLeft, iTop, iWidth, iHeight,SWP_NOMOVE) ;
 	return 0;
 }
-int WindowPos(CStringArray* saData)
+int WindowPos(int iScene, CStringArray* saData)
 {
 	HWND hwnd = GetForegroundWindow();
 	CRect	rect ;
@@ -204,8 +205,8 @@ int WindowPos(CStringArray* saData)
 	
 	iWidth = rect.Width();
 	iHeight = rect.Height();
-	iLeft = _ttoi(saData->GetAt(0));
-	iTop = _ttoi(saData->GetAt(1));
+	iLeft = GetValueInt(iScene, saData->GetAt(0));
+	iTop = GetValueInt(iScene, saData->GetAt(1));
 
 	SetWindowPos(hwnd, HWND_TOP,iLeft, iTop, iWidth, iHeight,SWP_NOSIZE) ;
 	return 0;
