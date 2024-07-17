@@ -65,7 +65,7 @@ struct ImgRGBPyramid
 
 struct ImgMap
 {
-	
+
 	int iWidth;
 	int iHeight;
 	UINT* uiMap;
@@ -75,10 +75,12 @@ struct ImgMap
 		if(iWidthIn<=0){return FALSE;}
 		if(iHeightIn<=0){return FALSE;}
 
+		if(iWidthIn*iHeightIn>(UINT_MAX>>8)){return FALSE;}
+
 		iWidth = iWidthIn;
 		iHeight = iHeightIn;
 		uiMap = new UINT[iWidth*iHeight];
-	memset(uiMap,0,iWidth*iHeight);
+		memset(uiMap,0,iWidth*iHeight);
 		return TRUE;
 	}
 	BOOL Init()

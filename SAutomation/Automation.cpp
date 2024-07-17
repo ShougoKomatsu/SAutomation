@@ -540,7 +540,14 @@ int FilndLabel(CStringArray* saCommands, CString sLabel)
 	}
 	return -1;
 }
-
+int ScreenShot(CStringArray* saCommands)
+{
+	ImgRGB imgRGB;
+	Screenshot(&imgRGB);
+	BOOL bRet=WriteImage(&imgRGB, saCommands->GetAt(1));
+	if(bRet !=TRUE){return RETURN_FAILED;}
+	return RETURN_NORMAL;
+}
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
 {
 	int iCommandType=COMMAND_UNDEFINED;
