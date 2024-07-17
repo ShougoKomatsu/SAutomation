@@ -1121,6 +1121,8 @@ BOOL FindModelPyramidRecursion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int
 }
 
 */
+
+
 BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int iC0, int iR1, int iC1)
 {
 	if(imgTarget == NULL){return FALSE;}
@@ -1182,6 +1184,401 @@ BOOL CorrelMap(ImgRGB* imgTarget, ImgRGB* imgModel, ImgMap* imgMap, int iR0, int
 	}
 	return TRUE;
 }
+
+inline void SumHorizontalLine(UINT* uiRSum, UINT* uiSumC, UINT uiImgW, UINT uiFilterHalfW)
+{
+	uiSumC[0]=uiRSum[0];
+	for(UINT cl=1; cl<=uiFilterHalfW; cl++)
+	{
+		uiSumC[0]+=uiRSum[cl];
+	}
+
+	for(UINT c=1; c<=uiFilterHalfW; c++)
+	{
+		uiSumC[c]=uiSumC[c-1]+uiRSum[c+uiFilterHalfW];
+	}
+	for(UINT c=uiFilterHalfW+1; c<uiImgW-uiFilterHalfW; c++)
+	{
+		uiSumC[c]=uiSumC[c-1]+uiRSum[c+uiFilterHalfW]-uiRSum[c-uiFilterHalfW-1];
+	}
+	for(INT c=uiImgW-uiFilterHalfW; c<uiImgW; c++)
+	{
+		uiSumC[c]=uiSumC[c-1]-uiRSum[c-uiFilterHalfW-1];
+	}
+	return;
+}
+
+void VerticalSumR0(BYTE* byImg, UINT* uiRSumData, UINT uiImgW, UINT uiFilterHalfH)
+{
+	for(UINT c=0; c<uiImgW; c++)
+	{
+		uiRSumData[c]=byImg[c];
+		for(UINT rl=1; rl<uiFilterHalfH; rl++)
+		{
+			uiRSumData[c]+=byImg[rl*uiImgW+c];
+		}
+	}
+	return;
+}
+
+
+inline void UpdateVerticalSum(BYTE* byImg, UINT* uiRSumData, UINT r_global, UINT uiImgW, UINT uiImgH, UINT uiFilterHalfH)
+{
+	if(r_global>uiFilterHalfH)
+	{
+		UINT uiROff = (r_global-uiFilterHalfH-1)*uiImgW;
+		for(UINT c=0; c<uiImgW; c++)
+		{
+			uiRSumData[c]-=byImg[uiROff+c];
+		}
+	}
+
+
+	if(r_global+uiFilterHalfH>=uiImgH){return;}
+
+	UINT uiROff=(r_global+uiFilterHalfH)*uiImgW;
+	for(UINT c=0; c<uiImgW; c++)
+	{
+		uiRSumData[c]+=byImg[uiROff+c];
+	}
+	return;
+}
+
+inline void DivideHorizontalLine(UINT* uiSum, BYTE* byMean, UINT uiImgW, UINT uiSumH, UINT uiFilterHalfW)
+{
+	UINT uiSumW=uiFilterHalfW+1;
+	for(UINT c=0; c<uiFilterHalfW; c++)
+	{
+		byMean[c]=uiSum[c]/(uiSumH*uiSumW);
+		uiSumW++;
+	}
+	UINT uiSumHW=uiSumH*uiSumW;
+	for(UINT c=uiImgW-uiFilterHalfW; c<uiImgW; c++)
+	{
+		uiSumW--;
+		byMean[c]=uiSum[c]/(uiSumH*uiSumW);
+	}
+}
+
+inline void MeanDivide(UINT* uiSum, BYTE* byMean, UINT uiImgW, UINT uiImgH, UINT uiFilterHalfW, UINT uiFilterHalfH)
+{
+	UINT uiSumH=uiFilterHalfH+1;
+	for(UINT r=0; r<uiFilterHalfH; r++)
+	{
+		DivideHorizontalLine(&(uiSum[r*uiImgW]), &(byMean[r*uiImgW]), uiImgW, uiSumH, uiFilterHalfW);
+		uiSumH++;
+	}
+
+	for(UINT r=uiFilterHalfH; r<uiImgH-uiFilterHalfH; r++)
+	{
+		DivideHorizontalLine(&(uiSum[r*uiImgW]), &(byMean[r*uiImgW]), uiImgW, uiSumH, uiFilterHalfW);
+	}
+
+	for(UINT r=uiImgH-uiFilterHalfH; r<uiImgH; r++)
+	{
+		uiSumH--;
+		DivideHorizontalLine(&(uiSum[r*uiImgW]), &(byMean[r*uiImgW]), uiImgW, uiSumH, uiFilterHalfW);
+	}
+}
+
+BOOL MeanFilter(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH, UINT uiFilterW, UINT uiFilterH)
+{
+	if(byImg==NULL){return FALSE;}
+	if(byResult == NULL){return FALSE;}
+	if(uiFilterW < 3){return FALSE;}
+	if(uiFilterH<3){return FALSE;}
+	if((uiFilterW%2)!=1){return FALSE;}
+	if((uiFilterH%2)!=1){return FALSE;}
+	if(uiImgW<uiFilterW){return FALSE;}
+	if(uiImgH<uiFilterH){return FALSE;}
+
+	if((uiFilterW*uiFilterH)>= (UINT_MAX >> 8)){return FALSE;}
+
+	UINT uiFilterHalfW = (uiFilterW-1)/2;
+	UINT uiFilterHalfH = (uiFilterH-1)/2;
+
+	UINT* uiImgSum=NULL;
+	uiImgSum=new UINT[uiImgW*uiImgH];
+	if(uiImgSum==NULL){return FALSE;}
+
+	
+	UINT* uiRSumData=NULL;
+	uiRSumData=new UINT[uiImgW*uiImgH];
+	if(uiRSumData==NULL){delete [] uiImgSum; return FALSE;}
+	VerticalSumR0(byImg, uiRSumData, uiImgW, uiFilterHalfH);
+	SumHorizontalLine(uiRSumData, &(uiImgSum[0*uiImgW]), uiImgW, uiFilterHalfW);
+	for(UINT r=1; r<uiImgH; r++)
+	{
+		UpdateVerticalSum(byImg, uiRSumData, r, uiImgW, uiImgH, uiFilterHalfH);
+		SumHorizontalLine(uiRSumData, &(uiImgSum[r*uiImgW]), uiImgW, uiFilterHalfW);
+	}
+	MeanDivide(uiImgSum, byResult, uiImgW, uiImgH, uiFilterHalfW, uiFilterHalfH);
+	delete [] uiImgSum;
+	delete [] uiRSumData;
+	return TRUE;
+}
+
+
+inline BYTE byMaxC(BYTE* byImg, UINT uiImgW, UINT r0, UINT c0, UINT uiFilterW, UINT* uiMaxCL)
+{
+	BYTE byMax=0;
+	*uiMaxCL=0;
+	for(UINT cl=0; cl<uiFilterW; cl++)
+	{
+		if(byMax<= byImg[r0 * uiImgW+c0+cl])
+		{
+			byMax=byImg[r0 * uiImgW+c0+cl];
+			*uiMaxCL=cl;
+		}
+	}
+	return byMax;
+}
+
+
+
+
+
+inline BYTE byMaxR(BYTE* byImg, UINT uiImgW, UINT r0, UINT c0, UINT uiFilterH, UINT* uiMaxRL)
+{
+	BYTE byMax=0;
+	for(int rl=0; rl<uiFilterH; rl++)
+	{
+		if(byMax<=byImg[(r0+rl)*uiImgW+c0])
+		{
+			byMax=byImg[(r0+rl)*uiImgW+c0];
+			*uiMaxRL=rl;
+		}
+	}
+	return byMax;
+}
+
+inline BYTE byMaxRC(BYTE* byImg, int iImgW, int r0, int c0, int iFilterW, int iFilterH)
+{
+	BYTE byMax=0;
+	for(int rl=0; rl<iFilterH; rl++)
+	{
+		for(int cl=0; cl<iFilterW; cl++)
+		{
+			if(byMax<=byImg[(r0+rl)*iImgW+cl+c0])
+			{
+				byMax=byImg[(r0+rl)*iImgW+cl+c0];
+			}
+		}
+	}
+	return byMax;
+}
+
+
+
+
+
+
+inline void UpdateRDirectionMax(BYTE* byImgExp, BYTE* byRMaxData, int r_origin, int iImgW, int iFilterHalfW, int iFilterHalfH, UINT* uiMaxPositions)
+{
+	if(r_origin==0)
+	{
+		for(int c=0; c<iImgW; c++)
+		{
+			byRMaxData[c+iFilterHalfW]=byMaxR(byImgExp, iImgW, r_origin+iFilterHalfH, c, iFilterHalfH+1, &(uiMaxPositions[c]));
+		}
+		return;
+	}
+
+	for(int c=0; c<iImgW; c++)
+	{
+		if(byRMaxData[c+iFilterHalfW] < byImgExp[(r_origin+2*iFilterHalfH)*iImgW+c])
+		{
+			byRMaxData[c+iFilterHalfW]=byImgExp[(r_origin+2*iFilterHalfH)*iImgW+c];
+			uiMaxPositions[c]=2*iFilterHalfH;
+			continue;
+		}
+
+		if(uiMaxPositions[c]==0)
+		{
+			byRMaxData[c+iFilterHalfW]=byMaxR(byImgExp, iImgW, r_origin, c, 2*iFilterHalfH+1, &(uiMaxPositions[c]));
+			continue;
+		}
+		(uiMaxPositions[c])--;
+	}
+}
+
+
+BOOL MaxFilter(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH, UINT uiFilterW, UINT uiFilterH)
+{
+	if(byImg!=NULL){return FALSE;}
+	if(byResult!=NULL){return FALSE;}
+
+	BYTE* byImgExpanded;
+	BYTE* byRMaxData;
+	UINT* uiMaxPositions;
+	UINT uiMaxPositionCL;
+
+	if((uiFilterW % 2)!=1){return FALSE;}
+	if((uiFilterH % 2)!=1){return FALSE;}
+
+	UINT uiFilterHalfW = (uiFilterW-1)/2;
+	UINT uiFilterHalfH = (uiFilterH-1)/2;
+	
+	BOOL bSameMemory=FALSE;
+	BYTE* byResultLocal;
+	BYTE* pbyResult;
+	if(byImg==byResult)
+	{
+		bSameMemory=TRUE;
+		byResultLocal=new BYTE[uiImgW*uiImgH];
+		pbyResult=byResultLocal;
+	}
+	else
+	{
+		pbyResult=byResult;
+	}
+
+	byImgExpanded = new BYTE[uiImgW*(uiImgH + 2 * uiFilterHalfH)];
+	byRMaxData = new BYTE[uiImgW + 2*uiFilterHalfW];
+	uiMaxPositions = new UINT[uiImgW];
+
+	memset(byImgExpanded, 0, uiImgW*(uiImgH + 2 * uiFilterHalfH));
+	for(UINT r=0; r<uiImgH; r++)
+	{
+		for(UINT c=0; c<uiImgW; c++)
+		{
+			byImgExpanded[(r + uiFilterHalfH)*uiImgW+c] = byImg[r*uiImgW+c];
+		}
+	}
+	memset(byRMaxData, 0, uiImgW + 2*uiFilterHalfW);
+	for(UINT r=0; r<uiImgH; r++)
+	{
+		UpdateRDirectionMax(byImgExpanded, byRMaxData, r, uiImgW, uiFilterHalfW, uiFilterHalfH, uiMaxPositions);
+
+		pbyResult[r*uiImgW+0]=byMaxC(byRMaxData, uiImgW + uiFilterHalfW, 0, 0, uiFilterW, &(uiMaxPositionCL));
+		for(UINT c=1; c<uiImgW; c++)
+		{
+			if(byRMaxData[c+2*uiFilterHalfW]>pbyResult[r*uiImgW+c-1])
+			{
+				pbyResult[r*uiImgW+c] = byRMaxData[c+2*uiFilterHalfW];
+				uiMaxPositionCL = 2*uiFilterHalfW;
+				continue;
+			}
+			if(uiMaxPositionCL==0)
+			{
+				pbyResult[r*uiImgW+c] = byMaxC(byRMaxData, uiImgW+2*uiFilterHalfW, 0, c, uiFilterW,&uiMaxPositionCL);
+				continue;
+			}
+			uiMaxPositionCL--;
+			pbyResult[r*uiImgW+c] = pbyResult[r*uiImgW+c-1];
+		}
+	}
+
+	if(bSameMemory==TRUE)
+	{
+		for(UINT r=0; r<uiImgH; r++)
+		{
+			for(UINT c=0; c<uiImgW; c++)
+			{
+				byResult[r*uiImgW+c]=byResultLocal[r*uiImgW+c];
+			}
+		}
+		delete [] byResultLocal;
+	}
+
+	delete [] uiMaxPositions;
+	delete [] byImgExpanded;
+	delete [] byRMaxData;
+	return TRUE;
+}
+BOOL InvertImage(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH)
+{
+	if(byImg!=NULL){return FALSE;}
+	if(byResult!=NULL){return FALSE;}
+	
+	for(UINT r=1; r<uiImgH-1; r++)
+	{
+		for(UINT c=1; c<uiImgW-1; c++)
+		{
+			byResult[r*uiImgW+c]=255-byResult[r*uiImgW+c];
+		}
+	}
+	return TRUE;
+}
+BOOL LaplacianFilter(BYTE* byImg, BYTE* byResult, UINT uiImgW, UINT uiImgH, UINT uiFilterW, UINT uiFilterH)
+{
+	if(byImg!=NULL){return FALSE;}
+	if(byResult!=NULL){return FALSE;}
+
+	BOOL bSameMemory=FALSE;
+	BYTE* byResultLocal;
+	BYTE* pbyResult;
+	if(byImg==byResult)
+	{
+		bSameMemory=TRUE;
+		byResultLocal=new BYTE[uiImgW*uiImgH];
+		pbyResult=byResultLocal;
+	}
+	else
+	{
+		pbyResult=byResult;
+	}
+
+
+	memset(pbyResult, 0, uiImgW*uiImgH);
+
+	for(UINT r=1; r<uiImgH-1; r++)
+	{
+		for(UINT c=1; c<uiImgW-1; c++)
+		{
+			int iSum=0;
+			iSum+=byImg[(r-1)*uiImgW+(c+0)]*(-1);
+			iSum+=byImg[(r+0)*uiImgW+(c-1)]*(-1);
+			iSum+=byImg[(r+0)*uiImgW+(c+1)]*(-1);
+			iSum+=byImg[(r+1)*uiImgW+(c+0)]*(-1);
+			iSum+=byImg[(r+0)*uiImgW+(c+0)]*(4);
+			if(iSum<0){iSum=0;}
+			if(iSum>=255){iSum=255;}
+
+			pbyResult[r*uiImgW+c]=(BYTE)(iSum);
+		}
+	}
+	
+	if(bSameMemory==TRUE)
+	{
+		for(UINT r=0; r<uiImgH; r++)
+		{
+			for(UINT c=0; c<uiImgW; c++)
+			{
+				byResult[r*uiImgW+c]=byResultLocal[r*uiImgW+c];
+			}
+		}
+		delete [] byResultLocal;
+	}
+
+	return TRUE;
+}
+
+BOOL CreateMinMaxSumImg(ImgRGB* img,int iR0, int iC0, int iR1, int iC1,int iKernelWidth, int iKernelHeight, ImgRGB* imgMax, ImgRGB* imgMin, ImgMap* imgSum)
+{
+	if(iR0<0){return FALSE;}
+	if(iC0<0){return FALSE;}
+	if(iR1>img->iHeight-1){return FALSE;}
+	if(iC1>img->iWidth-1){return FALSE;}
+	int iROIW=(iC1-iC0+1);
+	int iROIH=(iR1-iR0+1);
+
+	if(iROIW<iKernelWidth){return FALSE;}
+	if(iROIH<iKernelHeight){return FALSE;}
+
+	int iResultWidth = (iROIW/iKernelWidth) + (iROIW%iKernelWidth);
+	int iResultHeight= (iROIH/iKernelHeight) + (iROIH%iKernelHeight);
+	
+	imgMax->Set(iResultWidth, iResultHeight,img->iChannel);
+	imgMin->Set(iResultWidth, iResultHeight,img->iChannel);
+	imgSum->Set(iResultWidth, iResultHeight);
+
+	
+	return TRUE;
+}
+
+
+
 BOOL CorrelMapPyramid(ImgRGB* imgTarget, int iPointerTargetOffset, int iTargetWidth, int iTargetHeight, ImgRGB* imgModel, int iPointerModelOffset, int iModelWidth, int iModelHeight, ImgMap* imgMap, int iR0, int iC0, int iR1, int iC1)
 {
 	if(imgTarget == NULL){return FALSE;}
