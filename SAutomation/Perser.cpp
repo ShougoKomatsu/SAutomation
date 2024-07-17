@@ -68,7 +68,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(8).CompareNoCase(_T("mousemup"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
 	if(sDataTrim.Left(17).CompareNoCase(_T("setorigintowindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
 	if(sDataTrim.Left(16).CompareNoCase(_T("setorigintoimage"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE; return TRUE;}
-
+	
+	if(sDataTrim.Left(10).CompareNoCase(_T("screenshot"))==0){*iCommandType=COMMAND_SCREENSHOT; return TRUE;}
 
 
 	if(sDataTrim.Left(9).CompareNoCase(_T("waitimage"))==0){*iCommandType=COMMAND_WAIT_IMG; return TRUE;}
@@ -825,5 +826,17 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		*iCommandType = iType;
 		return TRUE;
 	}
+
+
+	
+	if(iType == COMMAND_SCREENSHOT)
+	{
+		ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+		ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+		saData->Add(sArg);
+		*iCommandType = iType;
+		return TRUE;
+	}
+
 	return FALSE;
 }
