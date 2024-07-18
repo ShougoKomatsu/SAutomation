@@ -1,4 +1,7 @@
 1 Waitkey(ctrl, off, -1) 0
 2 waitkey(shift, off,-1) 0
-3 ScreenShot(d:\test.bmp) 0
-4 Exit 10
+3 VarStr2=NowDateTime(YYYYMMDD_hhmmss) 0
+4 VarStr1=StrCombine(d:\,VarStr2) 0
+5 VarStr2=StrCombine(VarStr1,.bmp) 0
+6 ScreenShot(VarStr2) 0
+7 Exit 10
