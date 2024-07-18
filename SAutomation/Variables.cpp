@@ -17,7 +17,7 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
-
+	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 
@@ -499,6 +499,15 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
 
 			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_NOW_DATE_TIME:
+		{
+			CString sArg;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), NowDateTime(sArg)); 
 			return RETURN_NORMAL;
 		}
 	default:

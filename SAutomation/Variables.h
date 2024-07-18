@@ -25,7 +25,7 @@ int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
 int GetValueInt(int iScene, CString sArg);
 void AssignInt(int iScene, CString sArg, int iInput);
 
-CString GetValueString(int iScene, CString sArg);
+CString GetStrValue(int iScene, CString sArg);
 void AssignString(int iScene, CString sArg, CString sInput);
 
 const CString Int2Str(int iScene, CString sArg, CString sFormat);
@@ -41,4 +41,5 @@ int Str2Int(int iScene, CString sArg);
 #define VARIABLE_STR (100)
 #define VARIABLE_COMBINE_STR (101)
 #define VARIABLE_INT2STR (102)
+#define VARIABLE_NOW_DATE_TIME (103)
 const CString NowDateTime(CString sArg);

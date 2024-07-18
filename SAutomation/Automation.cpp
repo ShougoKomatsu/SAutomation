@@ -540,11 +540,11 @@ int FilndLabel(CStringArray* saCommands, CString sLabel)
 	}
 	return -1;
 }
-int ScreenShot(CStringArray* saCommands)
+int ScreenShot(int iScene, CStringArray* saCommands)
 {
 	ImgRGB imgRGB;
 	Screenshot(&imgRGB);
-	BOOL bRet=WriteImage(&imgRGB, saCommands->GetAt(0));
+	BOOL bRet=WriteImage(&imgRGB, GetStrValue(iScene, saCommands->GetAt(0)));
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }
@@ -633,7 +633,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 		}
 	case COMMAND_SCREENSHOT:
 		{
-			return ScreenShot(&saData);
+			return ScreenShot(*iSceneData, &saData);
 		}
 	default:{return RETURN_FAILED;}
 	}
