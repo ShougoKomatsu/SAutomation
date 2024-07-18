@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "Thread.h"
+#include "ImgProc.h"
 
 #pragma once
 #define MAX_VARIABLES (8)
 extern int g_iVar[MAX_THREAD][MAX_VARIABLES];
 extern CString g_sVar[MAX_THREAD][MAX_VARIABLES];
+extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
+
 
 int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
@@ -31,6 +34,8 @@ void AssignString(int iScene, CString sArg, CString sInput);
 const CString Int2Str(int iScene, CString sArg, CString sFormat);
 int Str2Int(int iScene, CString sArg);
 
+const CString NowDateTime(CString sArg);
+
 
 #define VARIABLE_INT (0)
 #define VARIABLE_ADD_INT (1)
@@ -42,4 +47,3 @@ int Str2Int(int iScene, CString sArg);
 #define VARIABLE_COMBINE_STR (101)
 #define VARIABLE_INT2STR (102)
 #define VARIABLE_NOW_DATE_TIME (103)
-const CString NowDateTime(CString sArg);

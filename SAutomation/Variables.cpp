@@ -4,6 +4,7 @@
 
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
+ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 
 BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 {
