@@ -1926,6 +1926,49 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 
 	return FALSE;
 }
+BOOL ImgRGB::Assign(ImgRGB* imgRGBIn)
+{
+	this->Set(imgRGBIn->iWidth,imgRGBIn->iHeight,imgRGBIn->iChannel);
+
+	if(this->iChannel==CHANNEL_1_24BGR)
+	{
+		for(int r=0; r<this->iHeight; r++)
+		{
+			for(int c=0; c<this->iWidth; c++)
+			{
+				this->byImg[3*(r*iWidth+c)+0]=imgRGBIn->byImg[3*(r*iWidth+c)+0];
+				this->byImg[3*(r*iWidth+c)+1]=imgRGBIn->byImg[3*(r*iWidth+c)+1];
+				this->byImg[3*(r*iWidth+c)+2]=imgRGBIn->byImg[3*(r*iWidth+c)+2];
+			}
+		}
+		return TRUE;
+	}
+	if(this->iChannel==CHANNEL_1_8)
+	{
+		for(int r=0; r<this->iHeight; r++)
+		{
+			for(int c=0; c<this->iWidth; c++)
+			{
+				this->byImg[r*iWidth+c]=imgRGBIn->byImg[r*iWidth+c];
+			}
+		}
+		return TRUE;
+	}
+	if(this->iChannel==CHANNEL_3_8)
+	{
+		for(int r=0; r<this->iHeight; r++)
+		{
+			for(int c=0; c<this->iWidth; c++)
+			{
+				this->byImgB[r*iWidth+c]=imgRGBIn->byImgB[r*iWidth+c];
+				this->byImgG[r*iWidth+c]=imgRGBIn->byImgG[r*iWidth+c];
+				this->byImgR[r*iWidth+c]=imgRGBIn->byImgR[r*iWidth+c];
+			}
+		}
+		return TRUE;
+	}
+	return TRUE;
+}
 BOOL ImgRGB::Assign(CString sFilePath)
 {
 

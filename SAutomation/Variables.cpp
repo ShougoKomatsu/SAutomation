@@ -56,7 +56,7 @@ int* GetIntValuePointer(int iScene, CString sArg)
 }
 
 
-CString GetStrValue(int iScene, CString sArg)
+const CString GetStrValue(int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return sArg;}
 
@@ -85,6 +85,34 @@ CString* GetStrValuePointer(int iScene, CString sArg)
 }
 
 
+const ImgRGB GetImgValue(int iScene, CString sArg)
+{
+	ImgRGB imgDummy;
+	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return imgDummy;}
+
+	imgDummy.Assign(GetImgValuePointer(iScene, sArg));
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarImg%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return g_imgRGB[iScene][iVarNameB1-1];}
+	}
+	return imgDummy;
+}
+
+ImgRGB* GetImgValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarImg%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
 
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {

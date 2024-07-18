@@ -54,6 +54,7 @@ struct ImgRGB
 	ImgRGB(){byImg = NULL; byImgR=NULL; byImgG=NULL; byImgB=NULL; Init();}
 	~ImgRGB(){Init();}
 	BOOL Assign(CString sFilePath);
+BOOL ImgRGB::Assign(ImgRGB* imgRGBIn);
 };
 struct ImgRGBPyramid
 {
