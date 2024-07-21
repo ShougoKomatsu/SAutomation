@@ -64,15 +64,20 @@ RETURN_SUB=106
 
 };
 
+enum ErrTreatValue
+{
+	ERROR_TREAT_UNDEFINED=(-1),
+	ERROR_TREAT_END=(0),
+	ERROR_TREAT_RESUME=(1),
+	ERROR_TREAT_GOTO=(2)
+};
+
+
 ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 
 extern CString g_sDir;
 
 
-#define ERROR_TREAT_UNDEFINED (-1)
-#define ERROR_TREAT_END (0)
-#define ERROR_TREAT_RESUME (1)
-#define ERROR_TREAT_GOTO (2)
 
 ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData);
 ReturnValue Input(CString sInputWithDblQuart);

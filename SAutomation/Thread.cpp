@@ -117,10 +117,10 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	int iLogLevel;
 	iLogLevel = (iData>>6)&0x07;
 
-	int iErrorTreat;
+	ErrTreatValue iErrorTreat;
 	iErrorTreat = ERROR_TREAT_END;
 	int iListLength;
-	int iRet;
+	ReturnValue iRet;
 	CString sLabel;
 	BOOL bExit;
 	StopWatch sw;

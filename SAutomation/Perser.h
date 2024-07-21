@@ -1,5 +1,10 @@
 #include "stdafx.h"
+#ifndef PERSER_DEFINE
+#define PERSER_DEFINE
+
 #include "MouseAutomation.h"
+#include "Automation.h"
+
 
 BOOL GetCommand(CString sDataLine, int* iCommandType);
 
@@ -8,6 +13,7 @@ BOOL ExtractData(const CString sInput, const CString sDelim, CString* sOut, CStr
 BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir);
 
 
-int GetErroTreat(CString sDataLine, CString* sLabel);
+ErrTreatValue GetErroTreat(CString sDataLine, CString* sLabel);
 
 BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel);
+#endif

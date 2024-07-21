@@ -252,7 +252,7 @@ BOOL GetKeyType(CString sInput, CString* sOut)
 	return TRUE;
 }
 
-int GetErroTreat(CString sDataLine, CString* sLabel)
+ErrTreatValue GetErroTreat(CString sDataLine, CString* sLabel)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
