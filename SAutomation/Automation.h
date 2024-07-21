@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Perser.h"	
+#ifndef AUTOMATION_DEFINE
+#define AUTOMATION_DEFINE
 
 #define COMMAND_UNDEFINED (0)
 #define COMMAND_COMMON (0)
@@ -43,28 +45,36 @@
 #define COMMAND_VARIABLE_INT (COMMAND_VARIABLE+1)
 #define COMMAND_ISEQUAL_INT (COMMAND_VARIABLE+2)
 #define COMMAND_VARIABLE_STR (COMMAND_VARIABLE+3)
+#define COMMAND_VARIABLE_IMG (COMMAND_VARIABLE+4)
 
-int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
+enum ReturnValue
+{
+RETURN_NORMAL=0,
+RETURN_FAILED=-1,
+RETURN_END=10,
+RETURN_HALT=-2,
+RETURN_ERROR_TREAT=11,
+RETURN_IF=100,
+RETURN_LABEL=101,
+RETURN_GOTO=102,
+RETURN_GOTO_BY_SWITCH=103,
+RETURN_CALL_SUB=104,
+RETURN_END_SUB=105,
+RETURN_SUB=106
+
+};
+
+ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 
 extern CString g_sDir;
 
-#define RETURN_NORMAL (0)
-#define RETURN_FAILED (-1)
-#define RETURN_END (10)
-#define RETURN_HALT (-2)
-#define RETURN_ERROR_TREAT (11)
-#define RETURN_IF (100)
-#define RETURN_LABEL (101)
-#define RETURN_GOTO (102)
-#define RETURN_GOTO_BY_SWITCH (103)
-#define RETURN_CALL_SUB (104)
-#define RETURN_END_SUB (105)
-#define RETURN_SUB (106)
 
 #define ERROR_TREAT_UNDEFINED (-1)
 #define ERROR_TREAT_END (0)
 #define ERROR_TREAT_RESUME (1)
 #define ERROR_TREAT_GOTO (2)
 
-int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData);
-BOOL Input(CString sInputWithDblQuart);
+ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData);
+ReturnValue Input(CString sInputWithDblQuart);
+
+#endif

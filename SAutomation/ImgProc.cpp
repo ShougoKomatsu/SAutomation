@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ImgProc.h"
 
-BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath)
+BOOL WriteImage(const ImgRGB* imgRGB, CString sFilePath)
 {
 	BITMAPINFOHEADER bmih;
 	BOOL bRet;
@@ -1924,6 +1924,49 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 	}
 
 
+	return FALSE;
+}
+BOOL ImgRGB::Assign(const ImgRGB* imgRGBIn)
+{
+	this->Set(imgRGBIn->iWidth,imgRGBIn->iHeight,imgRGBIn->iChannel);
+
+	if(iChannel==CHANNEL_1_24BGR)
+	{
+		for(int r=0; r<iHeight; r++)
+		{
+			for(int c=0; c<iWidth; c++)
+			{
+				this->byImg[3*(r*iWidth+c)+0]=imgRGBIn->byImg[3*(r*iWidth+c)+0];
+				this->byImg[3*(r*iWidth+c)+1]=imgRGBIn->byImg[3*(r*iWidth+c)+1];
+				this->byImg[3*(r*iWidth+c)+2]=imgRGBIn->byImg[3*(r*iWidth+c)+2];
+			}
+		}
+		return TRUE;
+	}
+	if(iChannel==CHANNEL_1_8)
+	{
+		for(int r=0; r<iHeight; r++)
+		{
+			for(int c=0; c<iWidth; c++)
+			{
+				this->byImg[r*iWidth+c]=imgRGBIn->byImg[r*iWidth+c];
+			}
+		}
+		return TRUE;
+	}
+	if(iChannel==CHANNEL_3_8)
+	{
+		for(int r=0; r<iHeight; r++)
+		{
+			for(int c=0; c<iWidth; c++)
+			{
+				this->byImgB[r*iWidth+c]=imgRGBIn->byImgB[r*iWidth+c];
+				this->byImgG[r*iWidth+c]=imgRGBIn->byImgG[r*iWidth+c];
+				this->byImgR[r*iWidth+c]=imgRGBIn->byImgR[r*iWidth+c];
+			}
+		}
+		return TRUE;
+	}
 	return FALSE;
 }
 BOOL ImgRGB::Assign(CString sFilePath)

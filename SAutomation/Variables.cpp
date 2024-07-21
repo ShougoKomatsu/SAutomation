@@ -4,12 +4,14 @@
 
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
+ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 
 BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=VARIABLE_ADD_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
@@ -17,10 +19,11 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
-
+	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 
+	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 	*iCommandType=VARIABLE_STR;
 	return TRUE;
 }
@@ -55,7 +58,7 @@ int* GetIntValuePointer(int iScene, CString sArg)
 }
 
 
-CString GetStrValue(int iScene, CString sArg)
+const CString GetStrValue(int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return sArg;}
 
@@ -84,7 +87,33 @@ CString* GetStrValuePointer(int iScene, CString sArg)
 }
 
 
+ImgRGB* GetImgValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return NULL;}
 
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarImg%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
+const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg)
+{
+	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarImg%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
 	int iInt1;
@@ -141,7 +170,7 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 	return (iInt1==iInt2);
 }
 
-int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
+ReturnValue Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
 {
 	if(IsIntEqual(iScene, saData->GetAt(0), saData->GetAt(1)))
 	{
@@ -397,7 +426,7 @@ const CString NowDateTime(CString sArg)
 	}
 	return sOut;
 }
-int Flow_Assign(int iScene, CStringArray* saData)
+ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 {
 	int iCommandType;
 
@@ -470,6 +499,19 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
 			return RETURN_NORMAL;
 		}
+	case VARIABLE_IMG:
+		{
+			ImgRGB* pImgRGB=(GetImgValuePointer(iScene, saData->GetAt(0)));
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+
+			if(sDataLocal.Left(6).CompareNoCase(_T("VarImg"))!=0)
+			{
+				pImgRGB->Assign(GetStrValue(iScene, sDataLocal));
+				return RETURN_NORMAL;
+			}
+			pImgRGB->Assign(GetImgValuePointerConst(iScene, sDataLocal));
+			return RETURN_NORMAL;
+		}
 	case VARIABLE_COMBINE_STR:
 		{
 			CString sArg1;
@@ -499,6 +541,15 @@ int Flow_Assign(int iScene, CStringArray* saData)
 			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
 
 			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_NOW_DATE_TIME:
+		{
+			CString sArg;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), NowDateTime(sArg)); 
 			return RETURN_NORMAL;
 		}
 	default:

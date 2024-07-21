@@ -1,7 +1,13 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
 
-ScreenShot(d:\test.bmp)
+VarImg1=d:\20240718_131406.bmp
+Exit
+VarStr2=NowDateTime(YYYYMMDD_hhmmss)
+VarStr1=StrCombine(d:\,VarStr2)
+VarStr2=StrCombine(VarStr1,.bmp)
+
+ScreenShot(VarStr2)
 Exit
 VarStr1=Int2Str(1234,%d)
 VarStr2=aaa
