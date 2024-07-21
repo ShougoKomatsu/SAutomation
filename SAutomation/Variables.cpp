@@ -11,6 +11,7 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=VARIABLE_ADD_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
@@ -22,6 +23,7 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 
+	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 	*iCommandType=VARIABLE_STR;
 	return TRUE;
 }
@@ -85,21 +87,6 @@ CString* GetStrValuePointer(int iScene, CString sArg)
 }
 
 
-const ImgRGB GetImgValue(int iScene, CString sArg)
-{
-	ImgRGB imgDummy;
-	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return imgDummy;}
-
-	imgDummy.Assign(GetImgValuePointer(iScene, sArg));
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarImg%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return g_imgRGB[iScene][iVarNameB1-1];}
-	}
-	return imgDummy;
-}
-
 ImgRGB* GetImgValuePointer(int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return NULL;}
@@ -114,6 +101,19 @@ ImgRGB* GetImgValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
+const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg)
+{
+	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarImg%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
 	int iInt1;
@@ -497,6 +497,20 @@ int Flow_Assign(int iScene, CStringArray* saData)
 		{
 			int iTemp=GetIntValue(iScene, sDataLocal);
 			(*GetIntValuePointer(iScene, saData->GetAt(0)))=iTemp;
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_IMG:
+		{
+
+			if(sDataLocal.Left(6).CompareNoCase(_T("VarImg"))!=0)
+			{
+				ImgRGB imgRGBTemp;
+				(GetImgValuePointer(iScene, saData->GetAt(0)))->Assign(GetStrValue(iScene, sDataLocal));
+				WriteImage((GetImgValuePointer(iScene, saData->GetAt(0))),_T("d:\\testtest.bmp"));
+				return RETURN_NORMAL;
+			}
+			(GetImgValuePointer(iScene, saData->GetAt(0)))->Assign(GetImgValuePointerConst(iScene, sDataLocal));
+			WriteImage((GetImgValuePointer(iScene, saData->GetAt(0))),_T("d:\\testtest.bmp"));
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_COMBINE_STR:

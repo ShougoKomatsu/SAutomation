@@ -1,5 +1,8 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
+
+VarImg1=d:\20240718_131406.bmp
+Exit
 VarStr2=NowDateTime(YYYYMMDD_hhmmss)
 VarStr1=StrCombine(d:\,VarStr2)
 VarStr2=StrCombine(VarStr1,.bmp)

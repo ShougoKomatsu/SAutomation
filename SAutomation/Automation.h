@@ -43,6 +43,7 @@
 #define COMMAND_VARIABLE_INT (COMMAND_VARIABLE+1)
 #define COMMAND_ISEQUAL_INT (COMMAND_VARIABLE+2)
 #define COMMAND_VARIABLE_STR (COMMAND_VARIABLE+3)
+#define COMMAND_VARIABLE_IMG (COMMAND_VARIABLE+4)
 
 int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 

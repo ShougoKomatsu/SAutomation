@@ -54,7 +54,7 @@ struct ImgRGB
 	ImgRGB(){byImg = NULL; byImgR=NULL; byImgG=NULL; byImgB=NULL; Init();}
 	~ImgRGB(){Init();}
 	BOOL Assign(CString sFilePath);
-BOOL ImgRGB::Assign(ImgRGB* imgRGBIn);
+	BOOL Assign(const ImgRGB* imgRGBIn);
 };
 struct ImgRGBPyramid
 {
@@ -103,4 +103,4 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, int* iFoundR, int* iFoundC, double dThreshPercent=0.0);
 BOOL FindModelPyramid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR, int* iFoundC);
 
-BOOL WriteImage(ImgRGB* imgRGB, CString sFilePath);
+BOOL WriteImage(const ImgRGB* imgRGB, CString sFilePath);

@@ -15,9 +15,8 @@ int* GetIntValuePointer(int iScene, CString sArg);
 const CString GetStringValue(int iScene, CString sArg);
 CString* GetStringValuePointer(int iScene, CString sArg);
 
-
-const ImgRGB GetImgValue(int iScene, CString sArg);
 ImgRGB* GetImgValuePointer(int iScene, CString sArg);
+const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg);
 
 int IntAdd(int iScene, CString sArg1, CString sArg2);
 int IntSub(int iScene, CString sArg1, CString sArg2);
@@ -50,3 +49,5 @@ const CString NowDateTime(CString sArg);
 #define VARIABLE_COMBINE_STR (101)
 #define VARIABLE_INT2STR (102)
 #define VARIABLE_NOW_DATE_TIME (103)
+
+#define VARIABLE_IMG (200)
