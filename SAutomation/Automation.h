@@ -1,5 +1,6 @@
-#include "stdafx.h"
-#include "Perser.h"	
+#include "stdafx.h"	
+#include "Common.h"
+#include "Perser.h"
 #ifndef AUTOMATION_DEFINE
 #define AUTOMATION_DEFINE
 
@@ -46,31 +47,6 @@
 #define COMMAND_ISEQUAL_INT (COMMAND_VARIABLE+2)
 #define COMMAND_VARIABLE_STR (COMMAND_VARIABLE+3)
 #define COMMAND_VARIABLE_IMG (COMMAND_VARIABLE+4)
-
-enum ReturnValue
-{
-RETURN_NORMAL=0,
-RETURN_FAILED=-1,
-RETURN_END=10,
-RETURN_HALT=-2,
-RETURN_ERROR_TREAT=11,
-RETURN_IF=100,
-RETURN_LABEL=101,
-RETURN_GOTO=102,
-RETURN_GOTO_BY_SWITCH=103,
-RETURN_CALL_SUB=104,
-RETURN_END_SUB=105,
-RETURN_SUB=106
-
-};
-
-enum ErrTreatValue
-{
-	ERROR_TREAT_UNDEFINED=(-1),
-	ERROR_TREAT_END=(0),
-	ERROR_TREAT_RESUME=(1),
-	ERROR_TREAT_GOTO=(2)
-};
 
 
 ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);

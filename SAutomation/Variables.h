@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Thread.h"
 #include "ImgProc.h"
-#include "Automation.h"
+#include "common.h"
 
 
 #pragma once

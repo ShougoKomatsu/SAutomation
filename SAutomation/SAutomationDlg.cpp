@@ -14,7 +14,6 @@
 #endif
 
 #include "InputDialog.h"
-#include "Automation.h"
 #include "Window.h"
 #include "variables.h"
 #define TIMER_DISP_MOUSPOS (100)

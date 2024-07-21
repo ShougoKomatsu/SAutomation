@@ -3,7 +3,6 @@
 #define PERSER_DEFINE
 
 #include "MouseAutomation.h"
-#include "Automation.h"
 
 
 BOOL GetCommand(CString sDataLine, int* iCommandType);
