@@ -501,16 +501,13 @@ int Flow_Assign(int iScene, CStringArray* saData)
 		}
 	case VARIABLE_IMG:
 		{
-
 			if(sDataLocal.Left(6).CompareNoCase(_T("VarImg"))!=0)
 			{
 				ImgRGB imgRGBTemp;
 				(GetImgValuePointer(iScene, saData->GetAt(0)))->Assign(GetStrValue(iScene, sDataLocal));
-				WriteImage((GetImgValuePointer(iScene, saData->GetAt(0))),_T("d:\\testtest.bmp"));
 				return RETURN_NORMAL;
 			}
 			(GetImgValuePointer(iScene, saData->GetAt(0)))->Assign(GetImgValuePointerConst(iScene, sDataLocal));
-			WriteImage((GetImgValuePointer(iScene, saData->GetAt(0))),_T("d:\\testtest.bmp"));
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_COMBINE_STR:
