@@ -170,7 +170,7 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 	return (iInt1==iInt2);
 }
 
-int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
+ReturnValue Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
 {
 	if(IsIntEqual(iScene, saData->GetAt(0), saData->GetAt(1)))
 	{
@@ -426,7 +426,7 @@ const CString NowDateTime(CString sArg)
 	}
 	return sOut;
 }
-int Flow_Assign(int iScene, CStringArray* saData)
+ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 {
 	int iCommandType;
 
@@ -501,13 +501,15 @@ int Flow_Assign(int iScene, CStringArray* saData)
 		}
 	case VARIABLE_IMG:
 		{
+			ImgRGB* pImgRGB=(GetImgValuePointer(iScene, saData->GetAt(0)));
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+
 			if(sDataLocal.Left(6).CompareNoCase(_T("VarImg"))!=0)
 			{
-				ImgRGB imgRGBTemp;
-				(GetImgValuePointer(iScene, saData->GetAt(0)))->Assign(GetStrValue(iScene, sDataLocal));
+				pImgRGB->Assign(GetStrValue(iScene, sDataLocal));
 				return RETURN_NORMAL;
 			}
-			(GetImgValuePointer(iScene, saData->GetAt(0)))->Assign(GetImgValuePointerConst(iScene, sDataLocal));
+			pImgRGB->Assign(GetImgValuePointerConst(iScene, sDataLocal));
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_COMBINE_STR:

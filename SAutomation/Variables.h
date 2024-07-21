@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Thread.h"
 #include "ImgProc.h"
+#include "Automation.h"
+
 
 #pragma once
 #define MAX_VARIABLES (8)
@@ -25,8 +27,8 @@ int IntDiv(int iScene, CString sArg1, CString sArg2);
 int IntAssign(int iScene, CString sArg, int iValue);
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
 
-int Flow_Assign(int iScene, CStringArray* saData);
-int Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_Assign(int iScene, CStringArray* saData);
+ReturnValue Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
 int GetValueInt(int iScene, CString sArg);
 void AssignInt(int iScene, CString sArg, int iInput);
 

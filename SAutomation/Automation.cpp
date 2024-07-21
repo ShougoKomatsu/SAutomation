@@ -11,7 +11,7 @@ CSAutomationDlg* g_dlg;
 #include "InputDialog.h"
 
 
-int K_SleepWithoutHalt(LPVOID Suspend, DWORD SleepMilliSec)
+ReturnValue K_SleepWithoutHalt(LPVOID Suspend, DWORD SleepMilliSec)
 {
 		ULONGLONG ullStartMilliSec;
 		ULONGLONG ullSuspendStartMilliSec;
@@ -34,7 +34,7 @@ int K_SleepWithoutHalt(LPVOID Suspend, DWORD SleepMilliSec)
 		return RETURN_NORMAL;
 }
 
-int K_SleepWithoutSuspend(LPVOID Halt, DWORD SleepMilliSec)
+ReturnValue K_SleepWithoutSuspend(LPVOID Halt, DWORD SleepMilliSec)
 {
 		ULONGLONG ullStartMilliSec;
 		ullStartMilliSec = GetTickCount64();
@@ -46,7 +46,7 @@ int K_SleepWithoutSuspend(LPVOID Halt, DWORD SleepMilliSec)
 		return RETURN_NORMAL;
 }
 
-int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
+ReturnValue K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 {
 	if((Halt == NULL)&&(Suspend == NULL))	{Sleep(SleepMilliSec);return RETURN_NORMAL;}
 	if(Halt == NULL)						{return K_SleepWithoutHalt(Suspend, SleepMilliSec);}
@@ -78,7 +78,7 @@ int K_Sleep(LPVOID Halt, LPVOID Suspend, DWORD SleepMilliSec)
 }
 
 
-int KeyDownAndUp(BYTE bySendKey)
+ReturnValue KeyDownAndUp(BYTE bySendKey)
 {
 	INPUT inputs[2] = {};
 
@@ -93,7 +93,7 @@ int KeyDownAndUp(BYTE bySendKey)
 	return RETURN_NORMAL;
 }
 
-int KeyDownAndUpUnicode(TCHAR tch)
+ReturnValue KeyDownAndUpUnicode(TCHAR tch)
 {
 	INPUT input[2];
 	input[0].type = INPUT_KEYBOARD;
@@ -114,7 +114,7 @@ int KeyDownAndUpUnicode(TCHAR tch)
 	return RETURN_NORMAL;
 }
 
-int KeyDownUnicode(TCHAR tch)
+ReturnValue KeyDownUnicode(TCHAR tch)
 {
 	INPUT input[1];
 	input[0].type = INPUT_KEYBOARD;
@@ -128,7 +128,7 @@ int KeyDownUnicode(TCHAR tch)
 	return RETURN_NORMAL;
 }
 
-int KeyUpUnicode(TCHAR tch)
+ReturnValue KeyUpUnicode(TCHAR tch)
 {
 	INPUT input[1];
 
@@ -143,7 +143,7 @@ int KeyUpUnicode(TCHAR tch)
 	return RETURN_NORMAL;
 }
 
-int KeyDown(BYTE bySendKey)
+ReturnValue KeyDown(BYTE bySendKey)
 {
 	INPUT inputs[1] = {};
 
@@ -154,7 +154,7 @@ int KeyDown(BYTE bySendKey)
 	return RETURN_NORMAL;
 }
 
-int KeyUp(BYTE bySendKey)
+ReturnValue KeyUp(BYTE bySendKey)
 {
 	INPUT inputs[1] = {};
 
@@ -166,7 +166,7 @@ int KeyUp(BYTE bySendKey)
 	return RETURN_NORMAL;
 }
 
-int GetInput(CStringArray* saData, CString* sReturnParam)
+ReturnValue GetInput(CStringArray* saData, CString* sReturnParam)
 {
 	g_dlg->cInput.m_saParam.Copy(*saData);
 	g_dlg->	cInput.DoModal();
@@ -174,7 +174,7 @@ int GetInput(CStringArray* saData, CString* sReturnParam)
 	return RETURN_GOTO_BY_SWITCH;
 }
 
-int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
+ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 {
 	BYTE byDataLocal;
 	byDataLocal = 0;
@@ -291,7 +291,7 @@ int GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 #include "ImgProc.h"
 #include "Variables.h"
 
-int WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	
 	int iWaitOn;
@@ -326,10 +326,10 @@ int WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 	int iFoundR, iFoundC;
-	int iRet;
 	BOOL bFirstTime;
 	bFirstTime=TRUE;
 	Screenshot(&imgModel);
+	ReturnValue iRet;
 	iRet = K_Sleep(Halt, Suspend, iTickMillisec);
 	if(iRet<0){return iRet;}
 	while(1)
@@ -357,7 +357,7 @@ int WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 
 }
 
-int WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
@@ -419,7 +419,7 @@ int WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 		if((iWaitOn == 0) && (bRet == FALSE)) {return RETURN_NORMAL;}
 
 
-		int iRet=K_Sleep(Halt, Suspend, 1);
+		ReturnValue iRet=K_Sleep(Halt, Suspend, 1);
 		if(iRet<0){return iRet;}
 		if(iTimeOutMilliSec>=0)
 		{
@@ -433,7 +433,7 @@ int WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-int WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 
 	int iWaitOn;
@@ -441,7 +441,7 @@ int WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	BYTE byKey;
 	BOOL bUnicode;
 	TCHAR tch;
-	int iRet;
+	ReturnValue iRet;
 	int iTimeOutMillisec;
 	
 	iRet = GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &byKey);
@@ -487,7 +487,7 @@ int WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-int KeyDownAndUp(CStringArray* saData)
+ReturnValue KeyDownAndUp(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
@@ -500,7 +500,7 @@ int KeyDownAndUp(CStringArray* saData)
 }
 
 
-int KeyDown(CStringArray* saData)
+ReturnValue KeyDown(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
@@ -514,7 +514,7 @@ int KeyDown(CStringArray* saData)
 
 
 
-int KeyUp(CStringArray* saData)
+ReturnValue KeyUp(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
@@ -540,7 +540,7 @@ int FilndLabel(CStringArray* saCommands, CString sLabel)
 	}
 	return -1;
 }
-int ScreenShot(int iScene, CStringArray* saCommands)
+ReturnValue ScreenShot(int iScene, CStringArray* saCommands)
 {
 	ImgRGB imgRGB;
 	Screenshot(&imgRGB);
@@ -548,7 +548,7 @@ int ScreenShot(int iScene, CStringArray* saCommands)
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }
-int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
+ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
 {
 	int iCommandType=COMMAND_UNDEFINED;
 	BOOL bRet;
@@ -615,9 +615,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	case COMMAND_ERROR_TREAT:{return RETURN_ERROR_TREAT;}
 	case COMMAND_SWITCH_BY_INPUT:
 		{
-			int iRet;
-			iRet = GetInput(&saData, sReturnParam);
-			return iRet;
+			return  GetInput(&saData, sReturnParam);
 		}
 	case COMMAND_VARIABLE_INT:
 		{
@@ -643,7 +641,7 @@ int OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Speci
 	}
 	return RETURN_FAILED;
 }
-BOOL Input(CString sInputWithDblQuart)
+ReturnValue Input(CString sInputWithDblQuart)
 {
 	int iPosL;
 	int iPosR;
@@ -665,7 +663,7 @@ BOOL Input(CString sInputWithDblQuart)
 	}
 	if(iPosL==iPosR)
 	{
-		return FALSE;
+		return RETURN_FAILED;
 	}
 	for(int i=iPosL; i<=iPosR; i++)
 	{
@@ -698,5 +696,5 @@ BOOL Input(CString sInputWithDblQuart)
 	*/
 	}
 
-	return TRUE;
+	return RETURN_NORMAL;
 }

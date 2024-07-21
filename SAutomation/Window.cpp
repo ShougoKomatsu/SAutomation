@@ -37,11 +37,11 @@ BOOL isProcessExist(CString sExePath)
 	return FALSE;
 }
 
-int RunExe(CString sExePath)
+ReturnValue RunExe(CString sExePath)
 {
 	BOOL bAlreadyExist = FALSE;
 	bAlreadyExist = isProcessExist(sExePath);
-	if(bAlreadyExist==TRUE){return 0;}
+	if(bAlreadyExist==TRUE){return RETURN_NORMAL;}
 
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
@@ -56,21 +56,21 @@ int RunExe(CString sExePath)
 
 	CreateProcess(NULL,  szTmp, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
 	delete [] szTmp;
-	return 0;
+	return RETURN_NORMAL;
 }
 
-int Maximize()
+ReturnValue Maximize()
 {
 	HWND hwnd = GetForegroundWindow();
 	ShowWindow( hwnd, SW_MAXIMIZE );
-	return 0;
+	return RETURN_NORMAL;
 }
 
-int Minimize()
+ReturnValue Minimize()
 {
 	HWND hwnd = GetForegroundWindow();
 	ShowWindow( hwnd, SW_MINIMIZE );
-	return 0;
+	return RETURN_NORMAL;
 }
 BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam)
 {
@@ -124,19 +124,19 @@ BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch)
 }
 
 
-int SetWindowForward(CString sTargetName)
+ReturnValue SetWindowForward(CString sTargetName)
 {
 	BOOL bRet;
 	HWND hwnd;
 	bRet = GetHandleByName(sTargetName, &hwnd);
-	if(bRet != TRUE){return -1;}
+	if(bRet != TRUE){return RETURN_FAILED;}
 
 //	bRet = ShowWindow(g_hWnds[iTargetHandle], SW_SHOW);
 //	if(bRet != TRUE){return -1;}
 	bRet = SetForegroundWindow(hwnd);
 //	if(bRet != TRUE){return -1;}
 
-	return 0;
+	return RETURN_NORMAL;
 }
 
 
@@ -172,7 +172,7 @@ BOOL GetWindowNameList(CStringArray* csNames)
 	return TRUE;
 }
 
-int WindowSize(int iScene, CStringArray* saData)
+ReturnValue WindowSize(int iScene, CStringArray* saData)
 {
 	HWND hwnd = GetForegroundWindow();
 	CRect	rect ;
@@ -182,16 +182,16 @@ int WindowSize(int iScene, CStringArray* saData)
 	int iWidth;
 	int iHeight;
 
-	if(saData->GetCount()!=2){return -1;}
+	if(saData->GetCount()!=2){return RETURN_FAILED;}
 
 	iWidth = GetValueInt(iScene, saData->GetAt(0));
 	iHeight = GetValueInt(iScene, saData->GetAt(1));
 	iLeft = rect.left;
 	iTop = rect.top;
 	SetWindowPos(hwnd, HWND_TOP,iLeft, iTop, iWidth, iHeight,SWP_NOMOVE) ;
-	return 0;
+	return RETURN_NORMAL;
 }
-int WindowPos(int iScene, CStringArray* saData)
+ReturnValue WindowPos(int iScene, CStringArray* saData)
 {
 	HWND hwnd = GetForegroundWindow();
 	CRect	rect ;
@@ -201,7 +201,7 @@ int WindowPos(int iScene, CStringArray* saData)
 	int iWidth;
 	int iHeight;
 
-	if(saData->GetCount()!=2){return -1;}
+	if(saData->GetCount()!=2){return RETURN_FAILED;}
 	
 	iWidth = rect.Width();
 	iHeight = rect.Height();
@@ -209,5 +209,5 @@ int WindowPos(int iScene, CStringArray* saData)
 	iTop = GetValueInt(iScene, saData->GetAt(1));
 
 	SetWindowPos(hwnd, HWND_TOP,iLeft, iTop, iWidth, iHeight,SWP_NOSIZE) ;
-	return 0;
+	return RETURN_NORMAL;
 }

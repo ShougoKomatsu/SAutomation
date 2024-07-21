@@ -27,39 +27,39 @@
 #define COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW (COMMAND_MOUSE+100+6)
 #define COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE (COMMAND_MOUSE+100+7)
 
-int MouseLDownAbs(UINT nX, UINT nY);
-int MouseLDown(int iScene, CStringArray* saData);
-int MouseRDownAbs(UINT nX, UINT nY);
-int MouseRDown(int iScene, CStringArray* saData);
-int MouseMDownAbs(UINT nX, UINT nY);
-int MouseMDown(int iScene, CStringArray* saData);
+ReturnValue MouseLDownAbs(UINT nX, UINT nY);
+ReturnValue MouseLDown(int iScene, CStringArray* saData);
+ReturnValue MouseRDownAbs(UINT nX, UINT nY);
+ReturnValue MouseRDown(int iScene, CStringArray* saData);
+ReturnValue MouseMDownAbs(UINT nX, UINT nY);
+ReturnValue MouseMDown(int iScene, CStringArray* saData);
 
-int MouseLUpAbs(UINT nX, UINT nY);
-int MouseLUp(int iScene, CStringArray* saData);
-int MouseRUpAbs(UINT nX, UINT nY);
-int MouseRUp(int iScene, CStringArray* saData);
-int MouseMUpAbs(UINT nX, UINT nY);
-int MouseMUp(int iScene, CStringArray* saData);
+ReturnValue MouseLUpAbs(UINT nX, UINT nY);
+ReturnValue MouseLUp(int iScene, CStringArray* saData);
+ReturnValue MouseRUpAbs(UINT nX, UINT nY);
+ReturnValue MouseRUp(int iScene, CStringArray* saData);
+ReturnValue MouseMUpAbs(UINT nX, UINT nY);
+ReturnValue MouseMUp(int iScene, CStringArray* saData);
 
-int MoveMouseAbs(UINT nX, UINT nY);
-int MoveMouse(int iScene, CStringArray* saData);
+ReturnValue MoveMouseAbs(UINT nX, UINT nY);
+ReturnValue MoveMouse(int iScene, CStringArray* saData);
 
-int MoveMouseIncl(int iX, int iY);
-int MoveMouseIncl(int iScene, CStringArray* saData);
+ReturnValue MoveMouseIncl(int iX, int iY);
+ReturnValue MoveMouseIncl(int iScene, CStringArray* saData);
 
-int MouseVWheel(int iWheel);
-int MouseVWheel(int iScene, CStringArray* saData);
+ReturnValue MouseVWheel(int iWheel);
+ReturnValue MouseVWheel(int iScene, CStringArray* saData);
 
-int MouseLClick(UINT nX, UINT nY);
-int MouseLClick(int iScene, CStringArray* saData);
-int MouseRClick(UINT nX, UINT nY);
-int MouseRClick(int iScene, CStringArray* saData);
-int MouseMClick(UINT nX, UINT nY);
-int MouseMClick(int iScene, CStringArray* saData);
+ReturnValue MouseLClick(UINT nX, UINT nY);
+ReturnValue MouseLClick(int iScene, CStringArray* saData);
+ReturnValue MouseRClick(UINT nX, UINT nY);
+ReturnValue MouseRClick(int iScene, CStringArray* saData);
+ReturnValue MouseMClick(UINT nX, UINT nY);
+ReturnValue MouseMClick(int iScene, CStringArray* saData);
 
 extern int g_iClickDulation;
-int MoveMouseToImage(int iScene, CStringArray* saData);
-int MouseSetOriginToWindow(int iScene, CStringArray* saData);
-int MouseSetOriginToImage(int iScene, CStringArray* saData);
+ReturnValue MoveMouseToImage(int iScene, CStringArray* saData);
+ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData);
+ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData);
 
 void ChangeMouseOrigin(UINT uiX, UINT uiY);

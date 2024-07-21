@@ -1,20 +1,20 @@
 #include "stdafx.h"
 
 #include "ImgProc.h"
-
+#include "Automation.h"
 
 #define MAX_WINDOW_HANDLE (4096)
 BOOL isProcessExist(CString sExePath);
 
-int RunExe(CString sExePath);
-int Maximize();
+ReturnValue RunExe(CString sExePath);
+ReturnValue Maximize();
 
-int Minimize();
+ReturnValue Minimize();
 
 BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam);
-int SetWindowForward(CString sTargetName);
-int WindowSize(int iScene, CStringArray* saData);
-int WindowPos(int iScene, CStringArray* saData);
+ReturnValue SetWindowForward(CString sTargetName);
+ReturnValue WindowSize(int iScene, CStringArray* saData);
+ReturnValue WindowPos(int iScene, CStringArray* saData);
 
 BOOL GetWindowNameList(CStringArray* caNames);
 BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch=TRUE);
