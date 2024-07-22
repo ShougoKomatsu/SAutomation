@@ -162,12 +162,6 @@ int IntDiv(int iScene, CString sArg1, CString sArg2)
 	return iInt1/iInt2;
 }
 
-int IntAssign(int iScene, CString sArg, int iValue)
-{
-	(*GetIntValuePointer(iScene, sArg))=iValue;
-
-	return 0;
-}
 
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 {
