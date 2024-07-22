@@ -14,7 +14,7 @@ extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
 
-const CString GetStringValue(int iScene, CString sArg);
+const CString GetStrValue(int iScene, CString sArg);
 CString* GetStringValuePointer(int iScene, CString sArg);
 
 ImgRGB* GetImgValuePointer(int iScene, CString sArg);
@@ -30,10 +30,8 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
 ReturnValue Flow_Assign(int iScene, CStringArray* saData);
 ReturnValue Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
 
-//int GetValueInt(int iScene, CString sArg);
 void AssignInt(int iScene, CString sArg, int iInput);
 
-const CString GetStrValue(int iScene, CString sArg);
 void AssignString(int iScene, CString sArg, CString sInput);
 
 const CString Int2Str(int iScene, CString sArg, CString sFormat);
