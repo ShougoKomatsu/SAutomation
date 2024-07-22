@@ -15,7 +15,7 @@ int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
 
 const CString GetStrValue(int iScene, CString sArg);
-CString* GetStringValuePointer(int iScene, CString sArg);
+CString* GetStrValuePointer(int iScene, CString sArg);
 
 ImgRGB* GetImgValuePointer(int iScene, CString sArg);
 const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg);
