@@ -29,6 +29,15 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 }
 
 
+//int GetValueInt(int iScene, CString sArg)
+//{
+//	if(sArg.GetLength()<0){return 0;}
+//	if(sArg.Left(1).CompareNoCase(_T("v"))==0) {return GetIntValue(iScene, sArg);}
+//	return _ttoi(sArg);
+//}
+
+
+
 int GetIntValue(int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarInt"))!=0){return _ttoi(sArg);}
@@ -181,13 +190,6 @@ ReturnValue Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnPa
 	return RETURN_NORMAL;
 }
 
-
-int GetValueInt(int iScene, CString sArg)
-{
-	if(sArg.GetLength()<0){return 0;}
-	if(sArg.Left(1).CompareNoCase(_T("v"))==0) {return GetIntValue(iScene, sArg);}
-	return _ttoi(sArg);
-}
 
 void AssignInt(int iScene, CString sArg, int iInput)
 {
