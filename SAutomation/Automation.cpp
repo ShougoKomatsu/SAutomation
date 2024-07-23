@@ -637,6 +637,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		{
 			return ScreenShot(*iSceneData, &saData);
 		}
+	case COMMAND_WRITE_IMAGE:
+		{
+			return Flow_WriteImage(*iSceneData, &saData);
+		}
 	default:{return RETURN_FAILED;}
 	}
 	return RETURN_FAILED;

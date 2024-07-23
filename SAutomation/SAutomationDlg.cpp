@@ -785,6 +785,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	TCHAR szData[MAX_PATH];
 	GetCurrentDirectory(sizeof(szData)/sizeof(TCHAR),szData);
+
 	m_sDir.Format(_T("%s"),szData);
 	g_sDir.Format(_T("%s"),szData);
 

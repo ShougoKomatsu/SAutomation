@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ImgProc.h"
-
+#include "Variables.h"
 BOOL WriteImage(const ImgRGB* imgRGB, CString sFilePath)
 {
 	BITMAPINFOHEADER bmih;
@@ -2040,6 +2040,18 @@ BOOL ImgRGB::Assign(CString sFilePath)
 
 	return TRUE;
 }
+
+ReturnValue Flow_WriteImage(int iScene, CStringArray* saData)
+{
+	ImgRGB* imgRGB=GetImgValuePointer(iScene, saData->GetAt(0));
+	if(imgRGB == NULL){return RETURN_FAILED;}
+
+	BOOL bRet = WriteImage(imgRGB, saData->GetAt(1));
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	return RETURN_NORMAL;
+}
+
 /*
 BOOL Search()
 {
