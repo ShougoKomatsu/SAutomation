@@ -33,7 +33,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("pagedown"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("home"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("end"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("printscreen"))==0){*iCommandType=COMMAND_SCREENSHOT; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("printscreen"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
 	if(sDataTrim.Left(13).CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
@@ -68,6 +68,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(17).CompareNoCase(_T("setorigintowindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
 	if(sDataTrim.Left(16).CompareNoCase(_T("setorigintoimage"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE; return TRUE;}
 	
+	if(sDataTrim.Left(10).CompareNoCase(_T("screenshot"))==0){*iCommandType=COMMAND_SCREENSHOT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("screenshot"))==0){*iCommandType=COMMAND_SCREENSHOT; return TRUE;}
 
 
