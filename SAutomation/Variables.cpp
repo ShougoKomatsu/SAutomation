@@ -5,6 +5,7 @@
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
+Point g_point[MAX_THREAD][MAX_VARIABLES];
 
 BOOL GetCommandVariable(int iVariableType, CString sDataLine, int* iCommandType)
 {
@@ -34,7 +35,13 @@ BOOL GetCommandVariable(int iVariableType, CString sDataLine, int* iCommandType)
 	case VARIABLE_IMG:
 		{
 			if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
+			if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
+			if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
 			if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
+		}
+	case VARIABLE_POINT:
+		{
+			if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=VARIABLE_POINT; return TRUE;}
 		}
 	}
 	return FALSE;
@@ -48,6 +55,7 @@ BOOL GetCommandVariable(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
+	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=VARIABLE_POINT; return TRUE;}
 
 	return FALSE;
 }
@@ -101,7 +109,7 @@ const CString GetStrValue(int iScene, CString sArg)
 		if(sArg.CompareNoCase(sVarName)==0){return g_sVar[iScene][iVarNameB1-1];}
 	}
 
-	return 0;
+	return sArg;
 }
 
 CString* GetStrValuePointer(int iScene, CString sArg)
@@ -146,6 +154,35 @@ const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg)
 
 	return NULL;
 }
+
+Point* GetPointValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
+Point GetPointValue(int iScene, CString sArg)
+{
+	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
+		if(sArg.CompareNoCase(sVarName)==0){return (g_point[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
 	int iInt1;
@@ -574,6 +611,35 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 
 			(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), NowDateTime(sArg)); 
 			return RETURN_NORMAL;
+		}
+	case VARIABLE_SCREENSHOT:
+		{
+			
+			ImgRGB* pImgRGB=(GetImgValuePointer(iScene, saData->GetAt(0)));
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+
+			Screenshot(pImgRGB);
+		}
+	case VARIABLE_CROP_IMAGE:
+		{
+			
+			ImgRGB* pImgRGB=(GetImgValuePointer(iScene, saData->GetAt(0)));
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+			
+			ImgRGB* pImgRGBIn=(GetImgValuePointer(iScene, saData->GetAt(1)));
+			if(pImgRGBIn == NULL){return RETURN_FAILED;}
+
+			CropImage(pImgRGBIn, pImgRGB, GetIntValue(iScene, saData->GetAt(2)) , GetIntValue(iScene, saData->GetAt(3)), GetIntValue(iScene, saData->GetAt(4)), GetIntValue(iScene, saData->GetAt(5)));
+		}
+	case VARIABLE_POINT:
+		{
+			Point* pPoint=(GetPointValuePointer(iScene, saData->GetAt(0)));
+			if(pPoint == NULL){return RETURN_FAILED;}
+			
+			pPoint=(GetPointValuePointer(iScene, saData->GetAt(1)));
+			if(pPoint == NULL){return RETURN_FAILED;}
+
+			(GetPointValuePointer(iScene, saData->GetAt(0)))->Set(pPoint->r, pPoint->c);
 		}
 	default:
 		{

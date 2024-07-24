@@ -5,11 +5,21 @@
 
 
 #pragma once
+struct Point
+{
+	int r;
+	int c;
+	Point(){r=0; c=0;}
+	Point(Point* pointIn){r=pointIn->r; c=pointIn->c;}
+	Point(int rIn, int cIn){Set(rIn, cIn);}
+	void Set(int rIn, int cIn){r=rIn; c=cIn;}
+};
+
 #define MAX_VARIABLES (8)
 extern int g_iVar[MAX_THREAD][MAX_VARIABLES];
 extern CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
-
+extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 
 int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
@@ -50,3 +60,7 @@ const CString NowDateTime(CString sArg);
 #define VARIABLE_NOW_DATE_TIME (103)
 
 #define VARIABLE_IMG (200)
+#define VARIABLE_CROP_IMAGE (201)
+#define VARIABLE_SCREENSHOT (202)
+
+#define VARIABLE_POINT (300)
