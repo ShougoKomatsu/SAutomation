@@ -13,6 +13,7 @@ struct Point
 	Point(Point* pointIn){r=pointIn->r; c=pointIn->c;}
 	Point(int rIn, int cIn){Set(rIn, cIn);}
 	void Set(int rIn, int cIn){r=rIn; c=cIn;}
+	Point operator = (Point pIn){Set(pIn.r, pIn.c);}
 };
 
 #define MAX_VARIABLES (8)
@@ -64,3 +65,7 @@ const CString NowDateTime(CString sArg);
 #define VARIABLE_SCREENSHOT (202)
 
 #define VARIABLE_POINT (300)
+#define VARIABLE_POINT_GET_R (301)
+#define VARIABLE_POINT_GET_C (302)
+#define VARIABLE_POINT_SET_R (303)
+#define VARIABLE_POINT_SET_C (304)
