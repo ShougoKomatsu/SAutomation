@@ -483,10 +483,61 @@ const CString NowDateTime(CString sArg)
 	}
 	return sOut;
 }
+ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
+{
+	CString sArg;
+	int iOperandSrc;
+	BOOL bRet = GetOperandDst(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	switch(iOperandSrc)
+	{
+	case VARIABLE_COMBINE_STR:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			sDstPointer->Format(_T("%s"), StrCombine(iScene, sArg1, sArg2)); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_STR:
+		{
+			sDstPointer->Format(_T("%s"),GetStrValue(iScene, sDataLocal));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_INT2STR:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			sDstPointer->Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_NOW_DATE_TIME:
+		{
+			CString sArg;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			sDstPointer->Format(_T("%s"), NowDateTime(sArg)); 
+			return RETURN_NORMAL;
+		}
+	}
+	return RETURN_FAILED;
+}
 
 ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal)
-{
-	
+{	
 	int iOperandSrc;
 	BOOL bRet = GetOperandDst(sDataLocal, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
@@ -575,7 +626,51 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal)
 	}
 	return RETURN_FAILED;
 }
+ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CStringArray* saDataLocal)
+{
 
+	
+	int iOperandSrc;
+	BOOL bRet = GetOperandDst(saDataLocal->GetAt(0), &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	ImgRGB* pImgRGB=imgRGBDst;
+
+	CString sArg;
+
+	switch(iOperandSrc)
+	{
+	case VARIABLE_IMG:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+
+			if(saDataLocal->GetAt(0).Left(6).CompareNoCase(_T("VarImg"))!=0)
+			{
+				pImgRGB->Assign(GetStrValue(iScene, saDataLocal->GetAt(0)));
+				return RETURN_NORMAL;
+			}
+			pImgRGB->Assign(GetImgValuePointerConst(iScene, saDataLocal->GetAt(0)));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_SCREENSHOT:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+
+			Screenshot(pImgRGB);
+		}
+	case VARIABLE_CROP_IMAGE:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+
+			ImgRGB* pImgRGBIn=(GetImgValuePointer(iScene, saDataLocal->GetAt(0)));
+			if(pImgRGBIn == NULL){return RETURN_FAILED;}
+
+			CropImage(pImgRGBIn, pImgRGB, GetIntValue(iScene, saDataLocal->GetAt(1)) , GetIntValue(iScene, saDataLocal->GetAt(2)), GetIntValue(iScene, saDataLocal->GetAt(3)), GetIntValue(iScene, saDataLocal->GetAt(4)));
+		}
+	}
+
+	return RETURN_FAILED;
+}
 ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 {
 	int iOperandFrom;
@@ -607,92 +702,13 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 		}
 	case VARIABLE_STR:
 		{
-
-			switch(iOperandSrc)
-			{
-			case VARIABLE_COMBINE_STR:
-				{
-					CString sArg1;
-					CString sArg2;
-					ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-					ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-					if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-					ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-					if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
-
-					(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), StrCombine(iScene, sArg1, sArg2)); 
-					return RETURN_NORMAL;
-				}
-			case VARIABLE_STR:
-				{
-					(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"),GetStrValue(iScene, sDataLocal));
-					return RETURN_NORMAL;
-				}
-			case VARIABLE_INT2STR:
-				{
-					CString sArg1;
-					CString sArg2;
-					ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-					ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-					if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-					ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-					if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
-
-					(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
-					return RETURN_NORMAL;
-				}
-			case VARIABLE_NOW_DATE_TIME:
-				{
-					CString sArg;
-					ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-					ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-
-					(*GetStrValuePointer(iScene, saData->GetAt(0))).Format(_T("%s"), NowDateTime(sArg)); 
-					return RETURN_NORMAL;
-				}
-			}
-			return RETURN_FAILED;
+			return SetStrValue(GetStrValuePointer(iScene, saData->GetAt(0)),iScene, sDataLocal);
 		}
 	case VARIABLE_IMG:
 		{
-
-			switch(iOperandSrc)
-			{
-			case VARIABLE_IMG:
-				{
-					ImgRGB* pImgRGB=(GetImgValuePointer(iScene, saData->GetAt(0)));
-					if(pImgRGB == NULL){return RETURN_FAILED;}
-
-					if(sDataLocal.Left(6).CompareNoCase(_T("VarImg"))!=0)
-					{
-						pImgRGB->Assign(GetStrValue(iScene, sDataLocal));
-						return RETURN_NORMAL;
-					}
-					pImgRGB->Assign(GetImgValuePointerConst(iScene, sDataLocal));
-					return RETURN_NORMAL;
-				}
-			case VARIABLE_SCREENSHOT:
-				{
-
-					ImgRGB* pImgRGB=(GetImgValuePointer(iScene, saData->GetAt(0)));
-					if(pImgRGB == NULL){return RETURN_FAILED;}
-
-					Screenshot(pImgRGB);
-				}
-			case VARIABLE_CROP_IMAGE:
-				{
-
-					ImgRGB* pImgRGB=(GetImgValuePointer(iScene, saData->GetAt(0)));
-					if(pImgRGB == NULL){return RETURN_FAILED;}
-
-					ImgRGB* pImgRGBIn=(GetImgValuePointer(iScene, saData->GetAt(1)));
-					if(pImgRGBIn == NULL){return RETURN_FAILED;}
-
-					CropImage(pImgRGBIn, pImgRGB, GetIntValue(iScene, saData->GetAt(2)) , GetIntValue(iScene, saData->GetAt(3)), GetIntValue(iScene, saData->GetAt(4)), GetIntValue(iScene, saData->GetAt(5)));
-				}
-			}
-
-			return RETURN_FAILED;
+			CStringArray saDataLocal;
+			for(int i=1; saData->GetCount(); i++){saDataLocal.Add(saData->GetAt(i));}
+			return SetImgValue(GetImgValuePointer(iScene, saData->GetAt(0)),iScene, &saDataLocal);
 		}
 	case VARIABLE_POINT:
 		{
