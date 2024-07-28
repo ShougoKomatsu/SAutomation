@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "Common.h"
+
 #pragma once
 #define CHANNEL_UNDEFINED (0)
 #define CHANNEL_1_8 (1)
@@ -104,3 +106,4 @@ BOOL FindModel(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, i
 BOOL FindModelPyramid(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, int iC1, double dThreshPercent, int* iFoundR, int* iFoundC);
 
 BOOL WriteImage(const ImgRGB* imgRGB, CString sFilePath);
+ReturnValue Flow_WriteImage(int iScene, CStringArray* saData);

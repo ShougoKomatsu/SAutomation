@@ -1,6 +1,9 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
-
+VarImg1=ScreenShot
+VarImg2=CropImage(VarImg1,100,200,300,400)
+WriteImage(VarImg2, d:\aaa.bmp)
+Exit
 VarImg1=d:\20240718_131406.bmp
 Exit
 VarStr2=NowDateTime(YYYYMMDD_hhmmss)

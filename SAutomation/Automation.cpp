@@ -302,12 +302,12 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 	int iR0, iC0, iR1, iC1;
 
-	iTickMillisec = GetValueInt(iScene, saData->GetAt(0));
+	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
 
-	iC0=GetValueInt(iScene, saData->GetAt(1));
-	iR0=GetValueInt(iScene, saData->GetAt(2));
-	iC1=GetValueInt(iScene, saData->GetAt(3));
-	iR1=GetValueInt(iScene, saData->GetAt(4));
+	iC0=GetIntValue(iScene, saData->GetAt(1));
+	iR0=GetIntValue(iScene, saData->GetAt(2));
+	iC1=GetIntValue(iScene, saData->GetAt(3));
+	iR1=GetIntValue(iScene, saData->GetAt(4));
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
@@ -315,7 +315,7 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 
 	if(saData->GetCount()==6){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = GetValueInt(iScene, saData->GetAt(6));}
+	else {iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(6));}
 
 	
 	ImgRGB imgModelCropped;
@@ -370,10 +370,10 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
 
-	iC0=GetValueInt(iScene, saData->GetAt(1));
-	iR0=GetValueInt(iScene, saData->GetAt(2));
-	iC1=GetValueInt(iScene, saData->GetAt(3));
-	iR1=GetValueInt(iScene, saData->GetAt(4));
+	iC0=GetIntValue(iScene, saData->GetAt(1));
+	iR0=GetIntValue(iScene, saData->GetAt(2));
+	iC1=GetIntValue(iScene, saData->GetAt(3));
+	iR1=GetIntValue(iScene, saData->GetAt(4));
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
@@ -381,7 +381,7 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 
 	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetValueInt(iScene, saData->GetAt(6));}
+	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
 
 
 
@@ -453,7 +453,7 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 
 	
 	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = GetValueInt(iScene, saData->GetAt(2));}
+	else {iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(2));}
 
 	if(bUnicode == TRUE)
 	{
@@ -559,7 +559,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 
 	switch(iCommandType)
 	{
-	case COMMAND_DELAY:{return K_Sleep(Halt, Suspend, GetValueInt(*iSceneData, saData.GetAt(0)));}
+	case COMMAND_DELAY:{return K_Sleep(Halt, Suspend, GetIntValue(*iSceneData, saData.GetAt(0)));}
 
 	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
 	case COMMAND_MOUSE_R_DOWN:{MoveMouse(*iSceneData, &saData);return MouseRDown(*iSceneData, &saData);}
@@ -636,6 +636,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_SCREENSHOT:
 		{
 			return ScreenShot(*iSceneData, &saData);
+		}
+	case COMMAND_WRITE_IMAGE:
+		{
+			return Flow_WriteImage(*iSceneData, &saData);
 		}
 	default:{return RETURN_FAILED;}
 	}
