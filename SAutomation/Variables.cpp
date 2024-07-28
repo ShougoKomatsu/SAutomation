@@ -31,13 +31,12 @@ BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
-	*iCommandType=VARIABLE_STR;
-	return TRUE;
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
 	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
-	return FALSE;
+	*iCommandType=VARIABLE_STR;
+	return TRUE;
 }
 
 BOOL GetOperandDst(CString sDataLine, int* iCommandType)
@@ -487,7 +486,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 {
 	CString sArg;
 	int iOperandSrc;
-	BOOL bRet = GetOperandDst(sDataLocal, &iOperandSrc);
+	BOOL bRet = GetOperandSrc(sDataLocal, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	switch(iOperandSrc)
@@ -539,7 +538,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal)
 {	
 	int iOperandSrc;
-	BOOL bRet = GetOperandDst(sDataLocal, &iOperandSrc);
+	BOOL bRet = GetOperandSrc(sDataLocal, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CString sArg;
@@ -626,17 +625,23 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal)
 	}
 	return RETURN_FAILED;
 }
-ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CStringArray* saDataLocal)
+ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 {
-
 	
+	CStringArray saData;
+	saData.RemoveAll();
+	CString sArg;
+	CString sDataLocal;
+
+	ExtractData(sData, _T("("), &sArg, &sDataLocal);
+
 	int iOperandSrc;
-	BOOL bRet = GetOperandDst(saDataLocal->GetAt(0), &iOperandSrc);
+	BOOL bRet = GetOperandSrc(sArg, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
+
 
 	ImgRGB* pImgRGB=imgRGBDst;
 
-	CString sArg;
 
 	switch(iOperandSrc)
 	{
@@ -644,12 +649,12 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CStringArray* saDataLocal
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			if(saDataLocal->GetAt(0).Left(6).CompareNoCase(_T("VarImg"))!=0)
+			if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0)
 			{
-				pImgRGB->Assign(GetStrValue(iScene, saDataLocal->GetAt(0)));
+				pImgRGB->Assign(GetStrValue(iScene, sArg));
 				return RETURN_NORMAL;
 			}
-			pImgRGB->Assign(GetImgValuePointerConst(iScene, saDataLocal->GetAt(0)));
+			pImgRGB->Assign(GetImgValuePointerConst(iScene, sArg));
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_SCREENSHOT:
@@ -657,15 +662,32 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CStringArray* saDataLocal
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
 			Screenshot(pImgRGB);
+			return RETURN_NORMAL;
 		}
 	case VARIABLE_CROP_IMAGE:
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			ImgRGB* pImgRGBIn=(GetImgValuePointer(iScene, saDataLocal->GetAt(0)));
+
+			ExtractData(sData, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			saData.Add(sArg);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			saData.Add(sArg);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			saData.Add(sArg);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			saData.Add(sArg);
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			saData.Add(sArg);
+			if(saData.GetCount()<4){return RETURN_FAILED;}
+			
+			ImgRGB* pImgRGBIn=(GetImgValuePointer(iScene, saData.GetAt(0)));
 			if(pImgRGBIn == NULL){return RETURN_FAILED;}
 
-			CropImage(pImgRGBIn, pImgRGB, GetIntValue(iScene, saDataLocal->GetAt(1)) , GetIntValue(iScene, saDataLocal->GetAt(2)), GetIntValue(iScene, saDataLocal->GetAt(3)), GetIntValue(iScene, saDataLocal->GetAt(4)));
+
+			CropImage(pImgRGBIn, pImgRGB,  GetIntValue(iScene, saData.GetAt(1)), GetIntValue(iScene, saData.GetAt(2)), GetIntValue(iScene, saData.GetAt(3)),GetIntValue(iScene, saData.GetAt(4)));
+			return RETURN_NORMAL;
 		}
 	}
 
@@ -673,8 +695,6 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CStringArray* saDataLocal
 }
 ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 {
-	int iOperandFrom;
-
 	BOOL bRet;
 	CString sArg;
 	CString sDataLocal;
@@ -683,9 +703,6 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 	bRet = GetOperandDst(saData->GetAt(0),&iOperandDst);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
-	int iOperandSrc;
-	bRet = GetOperandDst(sDataLocal, &iOperandSrc);
-	if(bRet != TRUE){return RETURN_FAILED;}
 	switch(iOperandDst)
 	{
 	case VARIABLE_POINT_SET_R:
@@ -706,12 +723,14 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 		}
 	case VARIABLE_IMG:
 		{
-			CStringArray saDataLocal;
-			for(int i=1; saData->GetCount(); i++){saDataLocal.Add(saData->GetAt(i));}
-			return SetImgValue(GetImgValuePointer(iScene, saData->GetAt(0)),iScene, &saDataLocal);
+			return SetImgValue(GetImgValuePointer(iScene, saData->GetAt(0)),iScene, sDataLocal);
 		}
 	case VARIABLE_POINT:
 		{
+
+			int iOperandSrc;
+			bRet = GetOperandSrc(sDataLocal, &iOperandSrc);
+			if(bRet != TRUE){return RETURN_FAILED;}
 
 			switch(iOperandSrc)
 			{

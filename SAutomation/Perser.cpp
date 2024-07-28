@@ -795,6 +795,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
 			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
 			if(sArg.GetLength()<7){return FALSE;}
+			saData->Add(sArg);
 			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
 			if(sArg.GetLength()<4){return FALSE;}
 			if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg);sArg.Format(_T("%s\\%s"),g_sDir,sTemp);}
@@ -802,6 +803,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 			if((saData->GetCount())!=2){return FALSE;}
 			*iCommandType = iType;
+			return TRUE;
 		}
 	}
 	return FALSE;
