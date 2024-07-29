@@ -1,5 +1,6 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
+VarPoint1=Point(1,2)
 VarImg1=ScreenShot
 VarImg2=CropImage(VarImg1,100,200,300,400)
 WriteImage(VarImg2, d:\aaa.bmp)

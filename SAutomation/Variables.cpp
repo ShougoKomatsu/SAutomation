@@ -20,12 +20,21 @@ BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
+		if(sDataTrim.GetLength() != 11){return FALSE;}
 		if(sDataTrim.Mid(8,1).SpanIncluding(_T("01234567")).Compare(sDataTrim.Mid(8,1))!=0){return FALSE;}
+		if(sDataTrim.Mid(9,1).Compare(_T(",")) != 0){return FALSE;}
 
 		if(sDataTrim.Right(1).CompareNoCase(_T("r"))==0){*iCommandType=VARIABLE_POINT_GET_R; return TRUE;}
 		if(sDataTrim.Right(1).CompareNoCase(_T("c"))==0){*iCommandType=VARIABLE_POINT_GET_C; return TRUE;}
 
 		return FALSE;
+	}
+	if(sDataTrim.Left(5).CompareNoCase(_T("Point")) == 0)
+	{
+		if(sDataTrim.Mid(5,1).Compare(_T("("))!=0){return FALSE;}
+		if(sDataTrim.Right(1).Compare(_T(")"))!=0){return FALSE;}
+		*iCommandType=VARIABLE_POINT_DIRECT; 
+		return TRUE;
 	}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
@@ -743,6 +752,21 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 					if(pPoint == NULL){return RETURN_FAILED;}
 
 					(GetPointValuePointer(iScene, saData->GetAt(0)))->Set(pPoint->r, pPoint->c);
+					return RETURN_NORMAL;
+				}
+			case VARIABLE_POINT_DIRECT:
+				{
+					Point* pPoint=(GetPointValuePointer(iScene, saData->GetAt(0)));
+					if(pPoint == NULL){return RETURN_FAILED;}
+
+					CString sArg1;
+					CString sArg2;
+					ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+					ExtractData(sDataLocal, _T(","), &sArg1, &sDataLocal);
+					ExtractData(sDataLocal, _T(")"), &sArg2, &sDataLocal);
+	
+					pPoint->Set(GetIntValue(iScene, sArg1), GetIntValue(iScene, sArg2));
+					return RETURN_NORMAL;
 				}
 			}
 			return RETURN_FAILED;
