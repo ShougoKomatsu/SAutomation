@@ -1,0 +1,8 @@
+1 Waitkey(ctrl, off, -1) 0
+2 waitkey(shift, off,-1) 0
+3 VarPoint1=Point(10,20) 0
+4 MousePos(VarPoint1) 0
+5 VarImg1=ScreenShot 0
+6 VarImg2=CropImage(VarImg1,100,200,300,400) 0
+7 WriteImage(VarImg2, d:\aaa.bmp) 0
+8 Exit 10
