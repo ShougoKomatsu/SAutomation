@@ -31,6 +31,10 @@ CString* GetStrValuePointer(int iScene, CString sArg);
 ImgRGB* GetImgValuePointer(int iScene, CString sArg);
 const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg);
 
+
+Point* GetPointValuePointer(int iScene, CString sArg);
+Point GetPointValue(int iScene, CString sArg);
+
 int IntAdd(int iScene, CString sArg1, CString sArg2);
 int IntSub(int iScene, CString sArg1, CString sArg2);
 int IntMult(int iScene, CString sArg1, CString sArg2);
@@ -69,3 +73,5 @@ const CString NowDateTime(CString sArg);
 #define VARIABLE_POINT_GET_C (302)
 #define VARIABLE_POINT_SET_R (303)
 #define VARIABLE_POINT_SET_C (304)
+#define VARIABLE_POINT_DIRECT (305)
+#define VARIABLE_POINT_MOUSE_POS (306)
