@@ -74,3 +74,4 @@ const CString NowDateTime(CString sArg);
 #define VARIABLE_POINT_SET_R (303)
 #define VARIABLE_POINT_SET_C (304)
 #define VARIABLE_POINT_DIRECT (305)
+#define VARIABLE_POINT_MOUSE_POS (306)

@@ -2,6 +2,7 @@
 #include "variables.h"
 #include "perser.h"
 #include "Common.h"
+#include "MouseAutomation.h"
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
@@ -36,6 +37,8 @@ BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
 		*iCommandType=VARIABLE_POINT_DIRECT; 
 		return TRUE;
 	}
+	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
@@ -766,6 +769,15 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 					ExtractData(sDataLocal, _T(")"), &sArg2, &sDataLocal);
 	
 					pPoint->Set(GetIntValue(iScene, sArg1), GetIntValue(iScene, sArg2));
+					return RETURN_NORMAL;
+				}
+			case VARIABLE_POINT_MOUSE_POS:
+				{
+					Point* pPoint=(GetPointValuePointer(iScene, saData->GetAt(0)));
+					if(pPoint == NULL){return RETURN_FAILED;}
+
+					pPoint->Set(g_iR, g_iC);
+
 					return RETURN_NORMAL;
 				}
 			}
