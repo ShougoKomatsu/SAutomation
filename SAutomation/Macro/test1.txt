@@ -1,5 +1,7 @@
 ﻿Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
+VarInt1=1
+VarInt1+=2
 VarPoint1=MousePos
 MousePos(VarPoint1)
 VarImg1=ScreenShot

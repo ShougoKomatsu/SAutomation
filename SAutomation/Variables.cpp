@@ -13,6 +13,11 @@ BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 
+	//=‚Ìˆ—
+	//=‚Ìˆ—
+
+	sDataTrim.Format(_T("%s"),sDataTrim.Trim(_T(" \t")));
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=VARIABLE_ADD_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
@@ -652,6 +657,26 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal)
 			if(pimgRGB == NULL){return RETURN_FAILED;}
 			
 			(*iDstPointer)=pimgRGB->iHeight;
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_ADD_ITSELF_INT:
+		{
+			(*iDstPointer)+=GetIntValue(iScene, sDataLocal);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_SUB_ITSELF_INT:
+		{
+			(*iDstPointer)-=GetIntValue(iScene, sDataLocal);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_MULT_ITSELF_INT:
+		{
+			(*iDstPointer)*=GetIntValue(iScene, sDataLocal);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_DIV_ITSELF_INT:
+		{
+			(*iDstPointer)/=GetIntValue(iScene, sDataLocal);
 			return RETURN_NORMAL;
 		}
 	default:
