@@ -43,7 +43,16 @@ BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
-	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0)
+	{
+		if((sDataTrim.GetLength() != 7)
+			&&(sDataTrim.GetLength() != 13)
+		&&(sDataTrim.GetLength() != 14)){return FALSE;}
+		if(sDataTrim.Right(7).CompareNoCase(_T(".Height"))==0){*iCommandType=VARIABLE_IMG_HEIGHT; return TRUE;}
+		if(sDataTrim.Right(6).CompareNoCase(_T(".Width"))==0){*iCommandType=VARIABLE_IMG_WIDTH; return TRUE;}
+		*iCommandType=VARIABLE_IMG;
+		return TRUE;
+	}
 	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
 	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
@@ -623,6 +632,26 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal)
 		{
 			Point pointTemp = GetPointValue(iScene, sDataLocal);
 			(*iDstPointer)=pointTemp.c;
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_IMG_WIDTH:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			if(pimgRGB == NULL){return RETURN_FAILED;}
+			
+			(*iDstPointer)=pimgRGB->iWidth;
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_IMG_HEIGHT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			if(pimgRGB == NULL){return RETURN_FAILED;}
+			
+			(*iDstPointer)=pimgRGB->iHeight;
 			return RETURN_NORMAL;
 		}
 	default:
