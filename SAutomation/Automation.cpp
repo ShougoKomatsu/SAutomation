@@ -302,22 +302,32 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 	int iR0, iC0, iR1, iC1;
 
-	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
-
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
+	int* iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(0));
+	if(iSrc==NULL){return RETURN_FAILED;}
+	iTickMillisec = *iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(1));
+	if(iSrc==NULL){return RETURN_FAILED;}
+	iC0=*iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(2));
+	if(iSrc==NULL){return RETURN_FAILED;}
+	iR0=*iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(3));
+	if(iSrc==NULL){return RETURN_FAILED;}
+	iC1=*iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(4));
+	if(iSrc==NULL){return RETURN_FAILED;}
+	iR1=*iSrc;
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(6));
 	if(saData->GetCount()==6){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(6));}
+	else {iTimeOutMillisec =(*iSrc);}
 
-	
+
 	ImgRGB imgModelCropped;
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
@@ -370,18 +380,24 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
 
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
+	int* iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(1));
+	iC0=*iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(2));
+	iR0=*iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(3));
+	iC1=*iSrc;
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(4));
+	iR1=*iSrc;
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
+	iSrc = GetIntValuePointer(iScene, saData->GetAt(6));
 
 	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
+	else {iTimeOutMilliSec = (*iSrc);}
 
 
 
@@ -452,8 +468,9 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 	else{return RETURN_FAILED;}
 
 	
+	int* iSrc = GetIntValuePointer(iScene, saData->GetAt(2));
 	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(2));}
+	else {iTimeOutMillisec =(*iSrc);}
 
 	if(bUnicode == TRUE)
 	{
@@ -559,7 +576,11 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 
 	switch(iCommandType)
 	{
-	case COMMAND_DELAY:{return K_Sleep(Halt, Suspend, GetIntValue(*iSceneData, saData.GetAt(0)));}
+	case COMMAND_DELAY:
+		{
+			int* iSrc=GetIntValuePointer(*iSceneData, saData.GetAt(0));
+		return K_Sleep(Halt, Suspend, *iSrc);
+		}
 
 	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
 	case COMMAND_MOUSE_R_DOWN:{MoveMouse(*iSceneData, &saData);return MouseRDown(*iSceneData, &saData);}

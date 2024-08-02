@@ -184,8 +184,15 @@ ReturnValue WindowSize(int iScene, CStringArray* saData)
 
 	if(saData->GetCount()!=2){return RETURN_FAILED;}
 
-	iWidth = GetIntValue(iScene, saData->GetAt(0));
-	iHeight = GetIntValue(iScene, saData->GetAt(1));
+	int* iSrc;
+	iSrc=GetIntValuePointer(iScene, saData->GetAt(0));
+	if(iSrc==NULL){return RETURN_FAILED;}
+	iWidth = *iSrc;
+
+	iSrc=GetIntValuePointer(iScene, saData->GetAt(1));
+	if(iSrc==NULL){return RETURN_FAILED;}
+	iHeight = *iSrc;
+
 	iLeft = rect.left;
 	iTop = rect.top;
 	SetWindowPos(hwnd, HWND_TOP,iLeft, iTop, iWidth, iHeight,SWP_NOMOVE) ;
@@ -196,8 +203,8 @@ ReturnValue WindowPos(int iScene, CStringArray* saData)
 	HWND hwnd = GetForegroundWindow();
 	CRect	rect ;
 	GetWindowRect(hwnd,&rect) ;
-	int iLeft;
-	int iTop;
+	int* iLeft;
+	int* iTop;
 	int iWidth;
 	int iHeight;
 
@@ -205,9 +212,11 @@ ReturnValue WindowPos(int iScene, CStringArray* saData)
 	
 	iWidth = rect.Width();
 	iHeight = rect.Height();
-	iLeft = GetIntValue(iScene, saData->GetAt(0));
-	iTop = GetIntValue(iScene, saData->GetAt(1));
 
-	SetWindowPos(hwnd, HWND_TOP,iLeft, iTop, iWidth, iHeight,SWP_NOSIZE) ;
+
+	iLeft = GetIntValuePointer(iScene, saData->GetAt(0));
+	iTop = GetIntValuePointer(iScene, saData->GetAt(1));
+
+	SetWindowPos(hwnd, HWND_TOP,*iLeft, *iTop, iWidth, iHeight,SWP_NOSIZE) ;
 	return RETURN_NORMAL;
 }

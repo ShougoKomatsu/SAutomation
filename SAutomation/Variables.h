@@ -22,7 +22,7 @@ extern CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 
-int GetIntValue(int iScene, CString sArg);
+//int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
 
 const CString GetStrValue(int iScene, CString sArg);
@@ -52,7 +52,7 @@ int Str2Int(int iScene, CString sArg);
 
 const CString NowDateTime(CString sArg);
 
-
+#define VARIABLE_UNDEFINED (-1)
 #define VARIABLE_INT (0)
 #define VARIABLE_ADD_INT (1)
 #define VARIABLE_SUB_INT (2)
