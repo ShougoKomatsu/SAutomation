@@ -8,16 +8,24 @@ CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 Point g_point[MAX_THREAD][MAX_VARIABLES];
 
-BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
+BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+	
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
+	*iCommandType=VARIABLE_STR;
+	return TRUE;
+}
 
-	//=ÇÃèàóù
-	//=ÇÃèàóù
-
-	sDataTrim.Format(_T("%s"),sDataTrim.Trim(_T(" \t")));
-
+BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+	
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=VARIABLE_ADD_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
@@ -35,6 +43,26 @@ BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
 
 		return FALSE;
 	}
+
+	return TRUE;
+}
+
+BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+	
+	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
+	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
+
+	return TRUE;
+}
+BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("Point")) == 0)
 	{
 		if(sDataTrim.Mid(5,1).Compare(_T("("))!=0){return FALSE;}
@@ -43,26 +71,6 @@ BOOL GetOperandSrc(CString sDataLine, int* iCommandType)
 		return TRUE;
 	}
 	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
-
-	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
-	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
-	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
-	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0)
-	{
-		if((sDataTrim.GetLength() != 7)
-			&&(sDataTrim.GetLength() != 13)
-		&&(sDataTrim.GetLength() != 14)){return FALSE;}
-		if(sDataTrim.Right(7).CompareNoCase(_T(".Height"))==0){*iCommandType=VARIABLE_IMG_HEIGHT; return TRUE;}
-		if(sDataTrim.Right(6).CompareNoCase(_T(".Width"))==0){*iCommandType=VARIABLE_IMG_WIDTH; return TRUE;}
-		*iCommandType=VARIABLE_IMG;
-		return TRUE;
-	}
-	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
-	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
-	*iCommandType=VARIABLE_STR;
-	return TRUE;
 }
 
 BOOL GetOperandDst(CString sDataLine, int* iCommandType)
@@ -512,7 +520,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 {
 	CString sArg;
 	int iOperandSrc;
-	BOOL bRet = GetOperandSrc(sDataLocal, &iOperandSrc);
+	BOOL bRet = GetOperandStrSrc(sDataLocal, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	switch(iOperandSrc)
@@ -564,7 +572,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal)
 {	
 	int iOperandSrc;
-	BOOL bRet = GetOperandSrc(sDataLocal, &iOperandSrc);
+	BOOL bRet = GetOperandIntSrc(sDataLocal, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CString sArg;
@@ -702,7 +710,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 	ExtractData(sData, _T("("), &sArg, &sDataLocal);
 
 	int iOperandSrc;
-	BOOL bRet = GetOperandSrc(sArg, &iOperandSrc);
+	BOOL bRet = GetOperandImgSrc(sArg, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 
@@ -795,7 +803,7 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 		{
 
 			int iOperandSrc;
-			bRet = GetOperandSrc(sDataLocal, &iOperandSrc);
+			bRet = GetOperandPointSrc(sDataLocal, &iOperandSrc);
 			if(bRet != TRUE){return RETURN_FAILED;}
 
 			switch(iOperandSrc)
