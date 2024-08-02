@@ -561,7 +561,9 @@ ReturnValue ScreenShot(int iScene, CStringArray* saCommands)
 {
 	ImgRGB imgRGB;
 	Screenshot(&imgRGB);
-	BOOL bRet=WriteImage(&imgRGB, GetStrValue(iScene, saCommands->GetAt(0)));
+
+	CString* sSrc=GetStrValuePointer(iScene, saCommands->GetAt(0));
+	BOOL bRet=WriteImage(&imgRGB, *sSrc);
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }

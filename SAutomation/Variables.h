@@ -25,7 +25,7 @@ extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 //int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
 
-const CString GetStrValue(int iScene, CString sArg);
+//const CString sSrc=GetStrValuePointer(int iScene, CString sArg);
 CString* GetStrValuePointer(int iScene, CString sArg);
 
 ImgRGB* GetImgValuePointer(int iScene, CString sArg);

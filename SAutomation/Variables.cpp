@@ -148,6 +148,7 @@ int* GetIntValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
+/*
 
 const CString GetStrValue(int iScene, CString sArg)
 {
@@ -162,7 +163,7 @@ const CString GetStrValue(int iScene, CString sArg)
 
 	return sArg;
 }
-
+*/
 CString* GetStrValuePointer(int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return NULL;}
@@ -450,21 +451,25 @@ const CString Int2Str(int iScene, CString sArg, CString sFormat)
 int Str2Int(int iScene, CString sArg)
 {
 	CString sTemp;
-	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg));
+	CString* sSrc=GetStrValuePointer(iScene, sArg);
+	sTemp.Format(_T("%s"), *sSrc);
 	return _ttoi(sTemp);
 }
 
 const CString StrCombine(int iScene, CString sArg1, CString sArg2)
 {
 	CString sTemp;
-	sTemp.Format(_T("%s%s"), GetStrValue(iScene, sArg1),GetStrValue(iScene, sArg2));
+	CString* sSrc1= GetStrValuePointer(iScene, sArg1);
+	CString* sSrc2=GetStrValuePointer(iScene, sArg2);
+	sTemp.Format(_T("%s%s"),*sSrc1,*sSrc2);
 	return sTemp;
 }
 
 const CString StrLeft(int iScene, CString sArg1, CString sArg2)
 {
 	CString sTemp;
-	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg1));
+	CString* sSrc=GetStrValuePointer(iScene, sArg1);
+	sTemp.Format(_T("%s"), *sSrc);
 	int* iSrc=GetIntValuePointer(iScene, sArg2);
 	return sTemp.Left(*iSrc);
 }
@@ -472,7 +477,8 @@ const CString StrLeft(int iScene, CString sArg1, CString sArg2)
 const CString StrRight(int iScene, CString sArg1, CString sArg2)
 {
 	CString sTemp;
-	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg1));
+	CString* sSrc=GetStrValuePointer(iScene, sArg1);
+	sTemp.Format(_T("%s"), *sSrc);
 	int* iSrc=GetIntValuePointer(iScene, sArg2);
 	return sTemp.Right(*iSrc);
 }
@@ -480,7 +486,8 @@ const CString StrRight(int iScene, CString sArg1, CString sArg2)
 const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
 {
 	CString sTemp;
-	sTemp.Format(_T("%s"), GetStrValue(iScene, sArg1));
+	CString* sSrc=GetStrValuePointer(iScene, sArg1);
+	sTemp.Format(_T("%s"), *sSrc);
 
 	int* iSrc1=GetIntValuePointer(iScene, sArg2);
 	int* iSrc2=GetIntValuePointer(iScene, sArg3);
@@ -563,7 +570,8 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 		}
 	case VARIABLE_STR:
 		{
-			sDstPointer->Format(_T("%s"),GetStrValue(iScene, sDataLocal));
+			CString* sSrc=GetStrValuePointer(iScene, sDataLocal);
+			sDstPointer->Format(_T("%s"),*sSrc);
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_INT2STR:
@@ -742,7 +750,8 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 
 			if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0)
 			{
-				pImgRGB->Assign(GetStrValue(iScene, sArg));
+				CString* sSrc=GetStrValuePointer(iScene, sArg);
+				pImgRGB->Assign(*sSrc);
 				return RETURN_NORMAL;
 			}
 			pImgRGB->Assign(GetImgValuePointerConst(iScene, sArg));
