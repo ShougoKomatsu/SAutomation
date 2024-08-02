@@ -220,6 +220,7 @@ Point* GetPointValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
+/*
 Point GetPointValue(int iScene, CString sArg)
 {
 	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
@@ -233,7 +234,7 @@ Point GetPointValue(int iScene, CString sArg)
 
 	return NULL;
 }
-
+*/
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
 	int* iInt1;
@@ -662,14 +663,14 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 		}
 	case VARIABLE_POINT_GET_R:
 		{
-			Point pointTemp = GetPointValue(iScene, sDataLocal);
-			iSrcValue=pointTemp.r;
+			Point* pointTemp = GetPointValuePointer(iScene, sDataLocal);
+			iSrcValue=pointTemp->r;
 			break;
 		}
 	case VARIABLE_POINT_GET_C:
 		{
-			Point pointTemp = GetPointValue(iScene, sDataLocal);
-			iSrcValue=pointTemp.c;
+			Point* pointTemp = GetPointValuePointer(iScene, sDataLocal);
+			iSrcValue=pointTemp->c;
 			break;
 		}
 	case VARIABLE_IMG_WIDTH:

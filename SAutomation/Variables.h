@@ -33,7 +33,7 @@ const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg);
 
 
 Point* GetPointValuePointer(int iScene, CString sArg);
-Point GetPointValue(int iScene, CString sArg);
+//Point GetPointValue(int iScene, CString sArg);
 
 int IntAdd(int iScene, CString sArg1, CString sArg2);
 int IntSub(int iScene, CString sArg1, CString sArg2);
