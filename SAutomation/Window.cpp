@@ -184,14 +184,14 @@ ReturnValue WindowSize(int iScene, CStringArray* saData)
 
 	if(saData->GetCount()!=2){return RETURN_FAILED;}
 
-	int* iSrc;
-	iSrc=GetIntValuePointer(iScene, saData->GetAt(0));
-	if(iSrc==NULL){return RETURN_FAILED;}
-	iWidth = *iSrc;
+	int* piSrc;
+	piSrc=GetIntValuePointer(iScene, saData->GetAt(0));
+	if(piSrc==NULL){return RETURN_FAILED;}
+	iWidth = *piSrc;
 
-	iSrc=GetIntValuePointer(iScene, saData->GetAt(1));
-	if(iSrc==NULL){return RETURN_FAILED;}
-	iHeight = *iSrc;
+	piSrc=GetIntValuePointer(iScene, saData->GetAt(1));
+	if(piSrc==NULL){return RETURN_FAILED;}
+	iHeight = *piSrc;
 
 	iLeft = rect.left;
 	iTop = rect.top;

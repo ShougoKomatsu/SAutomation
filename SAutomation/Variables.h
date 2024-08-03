@@ -10,7 +10,7 @@ struct Point
 	int r;
 	int c;
 	Point(){r=0; c=0;}
-	Point(Point* pointIn){r=pointIn->r; c=pointIn->c;}
+	Point(Point* pPointIn){r=pPointIn->r; c=pPointIn->c;}
 	Point(int rIn, int cIn){Set(rIn, cIn);}
 	void Set(int rIn, int cIn){r=rIn; c=cIn;}
 	Point operator = (Point pIn){Set(pIn.r, pIn.c);}
