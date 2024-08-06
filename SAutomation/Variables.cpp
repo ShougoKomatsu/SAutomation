@@ -325,7 +325,7 @@ Point* GetPointValuePointer(int iScene, CString sArg)
 	{
 		CString sVarName;
 		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
+		if(sArg.Left(9).CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
 	}
 
 	return NULL;
