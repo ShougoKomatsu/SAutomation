@@ -382,13 +382,13 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 	int* piSrc;
 	piSrc = GetIntValuePointer(iScene, saData->GetAt(1));
-	iC0=*piSrc;
+	if(piSrc==NULL){iC0=_ttoi(saData->GetAt(1));}else{iC0=*piSrc;}
 	piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
-	iR0=*piSrc;
+	if(piSrc==NULL){iR0=_ttoi(saData->GetAt(1));}else{iR0=*piSrc;}
 	piSrc = GetIntValuePointer(iScene, saData->GetAt(3));
-	iC1=*piSrc;
+	if(piSrc==NULL){iC1=_ttoi(saData->GetAt(1));}else{iC1=*piSrc;}
 	piSrc = GetIntValuePointer(iScene, saData->GetAt(4));
-	iR1=*piSrc;
+	if(piSrc==NULL){iR1=_ttoi(saData->GetAt(1));}else{iR1=*piSrc;}
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
@@ -467,10 +467,11 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 	else if(saData->GetAt(1).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	
+	int iSrc;
 	int* piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
+	if(piSrc==NULL){iSrc=_ttoi(saData->GetAt(2));}else{iSrc=(*piSrc);}
 	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec =(*piSrc);}
+	else {iTimeOutMillisec =iSrc;}
 
 	if(bUnicode == TRUE)
 	{
@@ -583,8 +584,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	{
 	case COMMAND_DELAY:
 		{
+			int iSrc;
 			int* piSrc=GetIntValuePointer(*iSceneData, saData.GetAt(0));
-		return K_Sleep(Halt, Suspend, *piSrc);
+			if(piSrc==NULL){iSrc=_ttoi(saData.GetAt(0));}else{iSrc=(*piSrc);}
+		return K_Sleep(Halt, Suspend, iSrc);
 		}
 
 	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
@@ -670,6 +673,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_WRITE_IMAGE:
 		{
 			return Flow_WriteImage(*iSceneData, &saData);
+		}
+	case COMMAND_MESSAGEBOX:
+		{
+			return MessageBox(*iSceneData, &saData);
 		}
 	default:{return RETURN_FAILED;}
 	}

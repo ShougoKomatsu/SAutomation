@@ -36,7 +36,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	{
 		if(sDataTrim.GetLength() != 11){return FALSE;}
 		if(sDataTrim.Mid(8,1).SpanIncluding(_T("01234567")).Compare(sDataTrim.Mid(8,1))!=0){return FALSE;}
-		if(sDataTrim.Mid(9,1).Compare(_T(",")) != 0){return FALSE;}
+		if(sDataTrim.Mid(9,1).Compare(_T(".")) != 0){return FALSE;}
 
 		if(sDataTrim.Right(1).CompareNoCase(_T("r"))==0){*iCommandType=VARIABLE_POINT_GET_R; return TRUE;}
 		if(sDataTrim.Right(1).CompareNoCase(_T("c"))==0){*iCommandType=VARIABLE_POINT_GET_C; return TRUE;}
@@ -44,7 +44,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 		return FALSE;
 	}
 
-	return TRUE;
+	return FALSE;
 }
 
 BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
@@ -127,6 +127,116 @@ int GetIntValuePointer(int iScene, CString sArg)
 	return 0;
 }
 */
+
+int GetIntValue(int iScene, CString sDataLocal)
+{
+	int iOperandSrc;
+	BOOL bRet = GetOperandIntSrc(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	CString sArg;
+	
+	switch(iOperandSrc)
+	{
+	case VARIABLE_ADD_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			return IntAdd(iScene, sArg1, sArg2);
+		}
+	case VARIABLE_SUB_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+
+			return IntSub(iScene, sArg1, sArg2);
+		}
+	case VARIABLE_MULT_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+			
+			return IntMult(iScene, sArg1, sArg2);
+		}
+	case VARIABLE_DIV_INT:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
+			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+			
+			return IntDiv(iScene, sArg1, sArg2);
+		}
+	case VARIABLE_INT:
+		{
+			int iSrc;
+			int* piSrc;
+
+			piSrc=GetIntValuePointer(iScene, sDataLocal);
+			if(piSrc==NULL){iSrc=_ttoi(sArg);}else{ iSrc=(*piSrc);}
+
+			return iSrc;
+		}
+	case VARIABLE_POINT_GET_R:
+		{
+			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
+			if(pPointSrc==NULL){return 0;}
+			return pPointSrc->r;
+		}
+	case VARIABLE_POINT_GET_C:
+		{
+			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
+			if(pPointSrc==NULL){return 0;}
+			return pPointSrc->c;
+		}
+	case VARIABLE_IMG_WIDTH:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			if(pimgRGB == NULL){return 0;}
+			
+			return pimgRGB->iWidth;
+		}
+	case VARIABLE_IMG_HEIGHT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			if(pimgRGB == NULL){return 0;}
+			
+			return pimgRGB->iHeight;
+		}
+	default:
+		{
+			if(sDataLocal.SpanIncluding(_T("0123456789")).CompareNoCase(sDataLocal)==0)
+			{
+				return _ttoi(sDataLocal);
+			}
+			return 0;
+		}
+	}
+	return 0;
+}
 
 int* GetIntValuePointer(int iScene, CString sArg)
 {
@@ -238,55 +348,31 @@ Point GetPointValue(int iScene, CString sArg)
 */
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
-	int* piSrc;
-	int iSrc1;
-	int iSrc2;
+	int iSrc1=GetIntValue(iScene, sArg1);
+	int iSrc2=GetIntValue(iScene, sArg2);
 	
-	piSrc = GetIntValuePointer(iScene, sArg1);
-	if(piSrc==NULL){iSrc1=_ttoi(sArg1);}else{iSrc1=(*piSrc);}
-	piSrc = GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc2=_ttoi(sArg2);}else{iSrc2=(*piSrc);}
-
 	return iSrc1+iSrc2;
 }
 
 int IntSub(int iScene, CString sArg1, CString sArg2)
 {
-	int* piSrc;
-	int iSrc1;
-	int iSrc2;
+	int iSrc1=GetIntValue(iScene, sArg1);
+	int iSrc2=GetIntValue(iScene, sArg2);
 	
-	piSrc = GetIntValuePointer(iScene, sArg1);
-	if(piSrc==NULL){iSrc1=_ttoi(sArg1);}else{iSrc1=(*piSrc);}
-	piSrc = GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc2=_ttoi(sArg2);}else{iSrc2=(*piSrc);}
-
 	return iSrc1-iSrc2;
 }
 int IntMult(int iScene, CString sArg1, CString sArg2)
 {
-	int* piSrc;
-	int iSrc1;
-	int iSrc2;
-	
-	piSrc = GetIntValuePointer(iScene, sArg1);
-	if(piSrc==NULL){iSrc1=_ttoi(sArg1);}else{iSrc1=(*piSrc);}
-	piSrc = GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc2=_ttoi(sArg2);}else{iSrc2=(*piSrc);}
+	int iSrc1=GetIntValue(iScene, sArg1);
+	int iSrc2=GetIntValue(iScene, sArg2);
 
 	return iSrc1*iSrc2;
 }
 
 int IntDiv(int iScene, CString sArg1, CString sArg2)
 {
-	int* piSrc;
-	int iSrc1;
-	int iSrc2;
-	
-	piSrc = GetIntValuePointer(iScene, sArg1);
-	if(piSrc==NULL){iSrc1=_ttoi(sArg1);}else{iSrc1=(*piSrc);}
-	piSrc = GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc2=_ttoi(sArg2);}else{iSrc2=(*piSrc);}
+	int iSrc1=GetIntValue(iScene, sArg1);
+	int iSrc2=GetIntValue(iScene, sArg2);
 
 	return iSrc1/iSrc2;
 }
@@ -294,14 +380,8 @@ int IntDiv(int iScene, CString sArg1, CString sArg2)
 
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 {
-	int* piSrc;
-	int iSrc1;
-	int iSrc2;
-	
-	piSrc = GetIntValuePointer(iScene, sArg1);
-	if(piSrc==NULL){iSrc1=_ttoi(sArg1);}else{iSrc1=(*piSrc);}
-	piSrc = GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc2=_ttoi(sArg2);}else{iSrc2=(*piSrc);}
+	int iSrc1=GetIntValue(iScene, sArg1);
+	int iSrc2=GetIntValue(iScene, sArg2);
 
 	return (iSrc1==iSrc2);
 }
@@ -454,10 +534,7 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 #define FORMATO (_T("%d"))
 const CString Int2Str(int iScene, CString sArg, CString sFormat)
 {
-	int* piSrc;
-	int iSrc;
-	piSrc = GetIntValuePointer(iScene, sArg);
-	if(piSrc==NULL){iSrc=_ttoi(sArg);}else{ iSrc=(*piSrc);}
+	int iSrc=GetIntValue(iScene, sArg);
 
 	CString sOut;
 
@@ -505,9 +582,7 @@ const CString StrLeft(int iScene, CString sArg1, CString sArg2)
 	psSrc=GetStrValuePointer(iScene, sArg1);
 	if(psSrc==NULL){sSrc.Format(_T("%s"), sArg1);}else{sSrc.Format(_T("%s"), *psSrc);}
 
-	int iSrc;
-	int* piSrc=GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc=_ttoi(sArg2);}else{ iSrc=(*piSrc);}
+	int iSrc=GetIntValue(iScene, sArg2);
 
 	CString sTemp;
 	sTemp.Format(_T("%"),sSrc.Left(iSrc));
@@ -521,12 +596,10 @@ const CString StrRight(int iScene, CString sArg1, CString sArg2)
 	psSrc=GetStrValuePointer(iScene, sArg1);
 	if(psSrc==NULL){sSrc.Format(_T("%s"), sArg1);}else{sSrc.Format(_T("%s"), *psSrc);}
 
-	int iSrc;
-	int* piSrc=GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc=_ttoi(sArg2); piSrc=&iSrc;}
+	int iSrc=GetIntValue(iScene, sArg2);
 
 	CString sTemp;
-	sTemp.Format(_T("%"),sSrc.Right(*piSrc));
+	sTemp.Format(_T("%"),sSrc.Right(iSrc));
 	return sTemp;
 }
 
@@ -537,14 +610,9 @@ const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
 	psSrc=GetStrValuePointer(iScene, sArg1);
 	if(psSrc==NULL){sSrc.Format(_T("%s"), sArg1);}else{sSrc.Format(_T("%s"), *psSrc);}
 
-	int iSrc1, iSrc2;
-	int* piSrc;
-	piSrc=GetIntValuePointer(iScene, sArg2);
-	if(piSrc==NULL){iSrc1=_ttoi(sArg2);}else{ iSrc1=(*piSrc);}
-
-	piSrc=GetIntValuePointer(iScene, sArg3);
-	if(piSrc==NULL){iSrc2=_ttoi(sArg3); }else{ iSrc2=(*piSrc);}
-
+	int iSrc1=GetIntValue(iScene, sArg2);
+	int iSrc2=GetIntValue(iScene, sArg3);
+	
 	CString sTemp;
 	sTemp.Format(_T("%"),sSrc.Mid(iSrc1, iSrc2));
 	return sTemp;
@@ -667,124 +735,15 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CString sArg;
-	int iSrcValue;
+	int iSrcValue=GetIntValue(iScene, sDataLocal);
 
-	switch(iOperandSrc)
-	{
-	case VARIABLE_ADD_INT:
-		{
-			CString sArg1;
-			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
-
-			iSrcValue=IntAdd(iScene, sArg1, sArg2);
-			break;
-		}
-	case VARIABLE_SUB_INT:
-		{
-			CString sArg1;
-			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
-
-			iSrcValue=IntSub(iScene, sArg1, sArg2);
-			break;
-		}
-	case VARIABLE_MULT_INT:
-		{
-			CString sArg1;
-			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
-			
-			iSrcValue=IntMult(iScene, sArg1, sArg2);
-			break;
-		}
-	case VARIABLE_DIV_INT:
-		{
-			CString sArg1;
-			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
-			
-			iSrcValue=IntDiv(iScene, sArg1, sArg2);
-			break;
-		}
-	case VARIABLE_INT:
-		{
-			int iSrc;
-			int* piSrc;
-
-			piSrc=GetIntValuePointer(iScene, sDataLocal);
-				if(piSrc==NULL){iSrc=_ttoi(sArg);}else{ iSrc=(*piSrc);}
-
-			iSrcValue=iSrc;
-			break;
-		}
-	case VARIABLE_POINT_GET_R:
-		{
-			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
-			iSrcValue=pPointSrc->r;
-			break;
-		}
-	case VARIABLE_POINT_GET_C:
-		{
-			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
-			iSrcValue=pPointSrc->c;
-			break;
-		}
-	case VARIABLE_IMG_WIDTH:
-		{
-			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
-
-			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
-			if(pimgRGB == NULL){return RETURN_FAILED;}
-			
-			iSrcValue=pimgRGB->iWidth;
-			break;
-		}
-	case VARIABLE_IMG_HEIGHT:
-		{
-			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
-
-			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
-			if(pimgRGB == NULL){return RETURN_FAILED;}
-			
-			iSrcValue=pimgRGB->iHeight;
-			break;
-		}
-	default:
-		{
-			if(sDataLocal.SpanIncluding(_T("0123456789")).CompareNoCase(sDataLocal)==0)
-			{
-				iSrcValue=_ttoi(sDataLocal);
-				break;
-			}
-			return RETURN_FAILED;
-		}
-	}
-
-	int iTemp=(*iDstPointer); 
 	switch(iSelfSrc)
 	{
-	case VARIABLE_SELF_SRC_NONE:{(*iDstPointer)=iSrcValue; return RETURN_NORMAL;}
-	case VARIABLE_SELF_SRC_ADD:{(*iDstPointer)=iTemp+iSrcValue; return RETURN_NORMAL;}
-	case VARIABLE_SELF_SRC_SUB:{(*iDstPointer)=iTemp-iSrcValue; return RETURN_NORMAL;}
-	case VARIABLE_SELF_SRC_MULT:{(*iDstPointer)=iTemp*iSrcValue; return RETURN_NORMAL;}
-	case VARIABLE_SELF_SRC_DIV:{(*iDstPointer)=iTemp/iSrcValue; return RETURN_NORMAL;}
+	case VARIABLE_SELF_SRC_NONE:{(*iDstPointer) = iSrcValue; return RETURN_NORMAL;}
+	case VARIABLE_SELF_SRC_ADD:{(*iDstPointer) += iSrcValue; return RETURN_NORMAL;}
+	case VARIABLE_SELF_SRC_SUB:{(*iDstPointer) -= iSrcValue; return RETURN_NORMAL;}
+	case VARIABLE_SELF_SRC_MULT:{(*iDstPointer) *= iSrcValue; return RETURN_NORMAL;}
+	case VARIABLE_SELF_SRC_DIV:{(*iDstPointer) /= iSrcValue; return RETURN_NORMAL;}
 	}
 
 	return RETURN_FAILED;
@@ -853,19 +812,10 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			ImgRGB* pImgRGBIn=(GetImgValuePointer(iScene, saData.GetAt(0)));
 			if(pImgRGBIn == NULL){return RETURN_FAILED;}
 
-			int iSrc1, iSrc2, iSrc3, iSrc4;
-			int* piSrc;
-			piSrc=GetIntValuePointer(iScene, saData.GetAt(1));
-			if(piSrc==NULL){iSrc1=_ttoi( saData.GetAt(1)); }else{iSrc1=(*piSrc);}
-
-			piSrc=GetIntValuePointer(iScene, saData.GetAt(2));
-			if(piSrc==NULL){iSrc2=_ttoi( saData.GetAt(2));} else{iSrc2=(*piSrc);}
-
-			piSrc=GetIntValuePointer(iScene, saData.GetAt(3));
-			if(piSrc==NULL){iSrc3=_ttoi( saData.GetAt(3)); }else{iSrc3=(*piSrc);}
-
-			piSrc=GetIntValuePointer(iScene, saData.GetAt(4));
-			if(piSrc==NULL){iSrc4=_ttoi( saData.GetAt(4)); }else{iSrc4=(*piSrc);}
+			int iSrc1=GetIntValue(iScene, saData.GetAt(1));
+			int iSrc2=GetIntValue(iScene, saData.GetAt(2));
+			int iSrc3=GetIntValue(iScene, saData.GetAt(3));
+			int iSrc4=GetIntValue(iScene, saData.GetAt(4));
 
 			CropImage(pImgRGBIn, pImgRGB, iSrc1, iSrc2, iSrc3, iSrc4 );
 			return RETURN_NORMAL;
@@ -901,12 +851,9 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T(","), &sArg1, &sDataLocal);
 			ExtractData(sDataLocal, _T(")"), &sArg2, &sDataLocal);
 
-			int iSrc1, iSrc2;
-			int* piSrc;
-			piSrc=GetIntValuePointer(iScene, sArg1);
-			if(piSrc==NULL){iSrc1=_ttoi(sArg1);}else{iSrc1=(*piSrc);}
-			piSrc=GetIntValuePointer(iScene, sArg2);
-			if(piSrc==NULL){iSrc2=_ttoi(sArg2);}else{iSrc2=(*piSrc);}
+			int iSrc1=GetIntValue(iScene, sArg1);
+			int iSrc2=GetIntValue(iScene, sArg2);
+
 			pPoint->Set(iSrc1, iSrc2);
 			return RETURN_NORMAL;
 		}
@@ -967,6 +914,38 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 			return SetPointValue(pPointDst, iScene, saData->GetAt(1));
 		}
 	default:{return RETURN_FAILED;}
+	}
+
+	return RETURN_FAILED;
+}
+
+ReturnValue MessageBox(int iScene, CStringArray* saData)
+{
+
+	BOOL bRet;
+	int iCommandType;
+	bRet = GetOperandIntSrc(saData->GetAt(0), &iCommandType);
+	if(bRet == TRUE)
+	{
+		CString sMes;
+		int iSrc=GetIntValue(iScene, saData->GetAt(0));
+
+		sMes.Format(_T("%d"),iSrc);
+		AfxMessageBox(sMes);
+		return RETURN_NORMAL;
+	}
+
+	bRet = GetOperandStrSrc(saData->GetAt(0), &iCommandType);
+	if(bRet == TRUE)
+	{
+		CString sMes;
+		CString sSrc;
+		CString* psSrc;
+		psSrc=GetStrValuePointer(iScene, saData->GetAt(0));
+		if(psSrc==NULL){sSrc.Format(_T("%s"),saData->GetAt(0));}else{sSrc.Format(_T("%S"),(psSrc));}
+
+		AfxMessageBox(sSrc);
+		return RETURN_NORMAL;
 	}
 
 	return RETURN_FAILED;

@@ -3,6 +3,8 @@ waitkey(shift, off,-1)
 VarInt1=1
 VarInt1+=2
 VarPoint1=MousePos
+MsgBox(VarPoint1.r)
+Exit
 MousePos(VarPoint1)
 VarImg1=ScreenShot
 VarInt1=VarImg1.Width
