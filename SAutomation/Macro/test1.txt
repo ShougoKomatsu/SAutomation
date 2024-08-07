@@ -3,7 +3,9 @@ waitkey(shift, off,-1)
 VarInt1=1
 VarInt1+=2
 VarPoint1=MousePos
-MsgBox(VarPoint1.r)
+MsgBox(VarPoint1.c)
+VarPoint1.c=10
+MsgBox(VarPoint1.c)
 Exit
 MousePos(VarPoint1)
 VarImg1=ScreenShot

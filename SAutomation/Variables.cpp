@@ -95,8 +95,8 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 	{
 		if(sDataTrim.Mid(8,1).SpanIncluding(_T("01234567")).Compare(sDataTrim.Mid(8,1))!=0){return FALSE;}
 
-		//		if(sDataTrim.Right(1).CompareNoCase(_T("r"))==0){*iCommandType=VARIABLE_POINT_R; return TRUE;}
-		//		if(sDataTrim.Right(1).CompareNoCase(_T("c"))==0){*iCommandType=VARIABLE_POINT_C; return TRUE;}
+		if(sDataTrim.Right(1).CompareNoCase(_T("r"))==0){*iCommandType=VARIABLE_POINT_SET_R; return TRUE;}
+		if(sDataTrim.Right(1).CompareNoCase(_T("c"))==0){*iCommandType=VARIABLE_POINT_SET_C; return TRUE;}
 		*iCommandType=VARIABLE_POINT; 
 		return TRUE;
 	}
@@ -192,7 +192,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			int* piSrc;
 
 			piSrc=GetIntValuePointer(iScene, sDataLocal);
-			if(piSrc==NULL){iSrc=_ttoi(sArg);}else{ iSrc=(*piSrc);}
+			if(piSrc==NULL){iSrc=_ttoi(sDataLocal);}else{ iSrc=(*piSrc);}
 
 			return iSrc;
 		}
@@ -297,7 +297,7 @@ ImgRGB* GetImgValuePointer(int iScene, CString sArg)
 	{
 		CString sVarName;
 		sVarName.Format(_T("VarImg%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
+		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
 	}
 
 	return NULL;
@@ -311,7 +311,7 @@ const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg)
 	{
 		CString sVarName;
 		sVarName.Format(_T("VarImg%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
+		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_imgRGB[iScene][iVarNameB1-1]);}
 	}
 
 	return NULL;
@@ -325,7 +325,7 @@ Point* GetPointValuePointer(int iScene, CString sArg)
 	{
 		CString sVarName;
 		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
-		if(sArg.Left(9).CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
+		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
 	}
 
 	return NULL;
@@ -887,6 +887,8 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 		{
 			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
+			CString sss;
+			sss.Format(_T("%s"), saData->GetAt(1));
 			return SetIntValue(&(pPointDst->c), iScene, saData->GetAt(1),iSelfSrc);
 		}
 	case VARIABLE_INT:

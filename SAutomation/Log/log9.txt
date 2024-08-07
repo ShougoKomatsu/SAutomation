@@ -3,5 +3,7 @@
 3 VarInt1=1 0
 4 VarInt1+=2 0
 5 VarPoint1=MousePos 0
-6 MsgBox(VarPoint1.r) 0
-7 
+6 MsgBox(VarPoint1.c) 0
+7 VarPoint1.c=10 0
+8 MsgBox(VarPoint1.c) 0
+9 Exit 10
