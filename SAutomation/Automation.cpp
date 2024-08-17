@@ -468,10 +468,17 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 	else{return RETURN_FAILED;}
 
 	int iSrc;
-	int* piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
-	if(piSrc==NULL){iSrc=_ttoi(saData->GetAt(2));}else{iSrc=(*piSrc);}
-	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec =iSrc;}
+	if(saData->GetCount()>=3)
+	{
+		int* piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
+		if(piSrc==NULL){iSrc=_ttoi(saData->GetAt(2));}else{iSrc=(*piSrc);}
+		if(saData->GetCount()<3){iTimeOutMillisec=-1;}
+		else {iTimeOutMillisec =iSrc;}
+	}
+	else
+	{
+		iTimeOutMillisec=-1;
+	}
 
 	if(bUnicode == TRUE)
 	{
