@@ -54,6 +54,8 @@ const CString NowDateTime(CString sArg);
 
 ReturnValue MessageBox(int iScene, CStringArray* saData);
 
+const CString StrCombine(int iScene, CString sArg1, CString sArg2);
+
 #define VARIABLE_UNDEFINED (-1)
 #define VARIABLE_INT (0)
 #define VARIABLE_ADD_INT (1)

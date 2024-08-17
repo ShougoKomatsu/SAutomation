@@ -291,6 +291,63 @@ int GetIntValue(int iScene, CString sDataLocal)
 	return 0;
 }
 
+const CString GetStrValue(int iScene, CString sDataLocal)
+{
+	CString sOut;
+	CString sArg;
+	int iOperandSrc;
+	BOOL bRet = GetOperandStrSrc(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return sOut;}
+
+	switch(iOperandSrc)
+	{
+	case VARIABLE_COMBINE_STR:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+
+			sOut.Format(_T("%s"), StrCombine(iScene, sArg1, sArg2)); 
+			return sOut;
+		}
+	case VARIABLE_STR:
+		{
+			CString* psSrc;
+			CString sSrc;
+			psSrc=GetStrValuePointer(iScene, sDataLocal);
+			if(psSrc==NULL){sSrc.Format(_T("%s"),sDataLocal);}else{sSrc.Format(_T("%s"),*psSrc);}
+			sOut.Format(_T("%s"),sSrc);
+			return sOut;
+		}
+	case VARIABLE_INT2STR:
+		{
+			CString sArg1;
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+
+			sOut.Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
+			return sOut;
+		}
+	case VARIABLE_NOW_DATE_TIME:
+		{
+			CString sArg;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			sOut.Format(_T("%s"), NowDateTime(sArg)); 
+			return sOut;
+		}
+	default :
+		{
+			sOut.Format(_T("%s"),sDataLocal); 
+			return sOut;
+
+		}
+	}
+	return sOut;
+}
+
 int* GetIntValuePointer(int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarInt"))!=0){return NULL;}
@@ -616,12 +673,10 @@ int Str2Int(int iScene, CString sArg)
 const CString StrCombine(int iScene, CString sArg1, CString sArg2)
 {
 	CString sSrc1, sSrc2;
-	CString* psSrc;
-	psSrc= GetStrValuePointer(iScene, sArg1);
-	if(psSrc==NULL){sSrc1.Format(_T("%s"), sArg1);}else{sSrc1.Format(_T("%s"), *psSrc);}
 
-	psSrc=GetStrValuePointer(iScene, sArg2);
-	if(psSrc==NULL){sSrc2.Format(_T("%s"), sArg2);}else{sSrc2.Format(_T("%s"), *psSrc);}
+	sSrc1.Format(_T("%s"),GetStrValue(iScene, sArg1));
+
+	sSrc2.Format(_T("%s"),GetStrValue(iScene, sArg2));
 
 	CString sTemp;
 	sTemp.Format(_T("%s%s"),sSrc1,sSrc2);
@@ -735,17 +790,9 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	{
 	case VARIABLE_COMBINE_STR:
 		{
-			CString sArg1;
-			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+		sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
 
-			sDstPointer->Format(_T("%s"), StrCombine(iScene, sArg1, sArg2)); 
-			return RETURN_NORMAL;
-		}
+
 	case VARIABLE_STR:
 		{
 			CString* psSrc;
