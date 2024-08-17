@@ -216,11 +216,8 @@ int GetIntValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
 			return IntSub(iScene, sArg1, sArg2);
 		}
@@ -228,11 +225,8 @@ int GetIntValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			
 			return IntMult(iScene, sArg1, sArg2);
 		}
@@ -240,11 +234,8 @@ int GetIntValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			
 			return IntDiv(iScene, sArg1, sArg2);
 		}
