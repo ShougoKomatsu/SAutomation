@@ -273,9 +273,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					}
 					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; 
-				
-				return TRUE;}
+				if(bFound == TRUE){*iFoundR = iTargetR+iModelHeight/2; *iFoundC = iTargetC+iModelWidth/2; return TRUE;}
 			}
 		}
 	}
@@ -299,7 +297,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					}
 					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+				if(bFound == TRUE){*iFoundR = iTargetR+iModelHeight/2; *iFoundC = iTargetC+iModelWidth/2; return TRUE;}
 				break;
 			}
 		}
@@ -324,7 +322,7 @@ BOOL IsInRegion(ImgRGB* imgTarget, ImgRGB* imgModel, int iR0, int iC0, int iR1, 
 					}
 					if(bFound == FALSE){break;}
 				}
-				if(bFound == TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+				if(bFound == TRUE){*iFoundR = iTargetR+iModelHeight/2; *iFoundC = iTargetC+iModelWidth/2; return TRUE;}
 				break;
 			}
 		}
@@ -1870,7 +1868,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					}
 					if(bOK_R==FALSE){break;}
 				}
-				if(bOK_R==TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC;return TRUE;}
+				if(bOK_R==TRUE){*iFoundR = iTargetR+iModelHeight/2; *iFoundC = iTargetC+iModelWidth/2;return TRUE;}
 			}
 		}
 	}
@@ -1894,7 +1892,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					}
 					if(bOK_R==FALSE){break;}
 				}
-				if(bOK_R==TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+				if(bOK_R==TRUE){*iFoundR = iTargetR+iModelHeight/2; *iFoundC = iTargetC+iModelWidth/2; return TRUE;}
 			}
 		}
 	}
@@ -1918,7 +1916,7 @@ BOOL IsInRegionMask(ImgRGB* imgTarget, ImgRGB* imgModel, ImgRGB* imgMask, int iR
 					}
 					if(bOK_R==FALSE){break;}
 				}
-				if(bOK_R==TRUE){*iFoundR = iTargetR; *iFoundC = iTargetC; return TRUE;}
+				if(bOK_R==TRUE){*iFoundR = iTargetR+iModelHeight/2; *iFoundC = iTargetC+iModelWidth/2; return TRUE;}
 			}
 		}
 	}
