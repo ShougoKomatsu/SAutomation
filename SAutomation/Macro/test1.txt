@@ -1,8 +1,19 @@
-﻿Waitkey(ctrl, off, -1)
+﻿VarStr1=StrCombine(StrCombine(aa,bb),cc)
+
+Exit
+
+Waitkey(ctrl, off, -1)
 waitkey(shift, off,-1)
+VarInt1=1
+VarInt1+=2
 VarPoint1=MousePos
+MsgBox(VarPoint1.c)
+VarPoint1.c=10
+MsgBox(VarPoint1.c)
+Exit
 MousePos(VarPoint1)
 VarImg1=ScreenShot
+VarInt1=VarImg1.Width
 VarImg2=CropImage(VarImg1,100,200,300,400)
 WriteImage(VarImg2, d:\aaa.bmp)
 Exit

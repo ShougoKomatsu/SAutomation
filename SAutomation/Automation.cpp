@@ -302,22 +302,32 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 	int iR0, iC0, iR1, iC1;
 
-	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
-
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
+	int* piSrc;
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(0));
+	if(piSrc==NULL){return RETURN_FAILED;}
+	iTickMillisec = *piSrc;
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(1));
+	if(piSrc==NULL){return RETURN_FAILED;}
+	iC0=*piSrc;
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
+	if(piSrc==NULL){return RETURN_FAILED;}
+	iR0=*piSrc;
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(3));
+	if(piSrc==NULL){return RETURN_FAILED;}
+	iC1=*piSrc;
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(4));
+	if(piSrc==NULL){return RETURN_FAILED;}
+	iR1=*piSrc;
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(6));
 	if(saData->GetCount()==6){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(6));}
+	else {iTimeOutMillisec =(*piSrc);}
 
-	
+
 	ImgRGB imgModelCropped;
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
@@ -370,18 +380,24 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
 
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
+	int* piSrc;
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(1));
+	if(piSrc==NULL){iC0=_ttoi(saData->GetAt(1));}else{iC0=*piSrc;}
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
+	if(piSrc==NULL){iR0=_ttoi(saData->GetAt(1));}else{iR0=*piSrc;}
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(3));
+	if(piSrc==NULL){iC1=_ttoi(saData->GetAt(1));}else{iC1=*piSrc;}
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(4));
+	if(piSrc==NULL){iR1=_ttoi(saData->GetAt(1));}else{iR1=*piSrc;}
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
+	piSrc = GetIntValuePointer(iScene, saData->GetAt(6));
 
 	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
+	else {iTimeOutMilliSec = (*piSrc);}
 
 
 
@@ -451,9 +467,11 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 	else if(saData->GetAt(1).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	
+	int iSrc;
+	int* piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
+	if(piSrc==NULL){iSrc=_ttoi(saData->GetAt(2));}else{iSrc=(*piSrc);}
 	if(saData->GetCount()<3){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(2));}
+	else {iTimeOutMillisec =iSrc;}
 
 	if(bUnicode == TRUE)
 	{
@@ -544,7 +562,12 @@ ReturnValue ScreenShot(int iScene, CStringArray* saCommands)
 {
 	ImgRGB imgRGB;
 	Screenshot(&imgRGB);
-	BOOL bRet=WriteImage(&imgRGB, GetStrValue(iScene, saCommands->GetAt(0)));
+
+	CString sSrc;
+	CString* psSrc=GetStrValuePointer(iScene, saCommands->GetAt(0));
+	if(psSrc==NULL){sSrc.Format(_T("%s"),saCommands->GetAt(0));}else{sSrc.Format(_T("%s"),*psSrc);}
+
+	BOOL bRet=WriteImage(&imgRGB, sSrc);
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }
@@ -559,7 +582,13 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 
 	switch(iCommandType)
 	{
-	case COMMAND_DELAY:{return K_Sleep(Halt, Suspend, GetIntValue(*iSceneData, saData.GetAt(0)));}
+	case COMMAND_DELAY:
+		{
+			int iSrc;
+			int* piSrc=GetIntValuePointer(*iSceneData, saData.GetAt(0));
+			if(piSrc==NULL){iSrc=_ttoi(saData.GetAt(0));}else{iSrc=(*piSrc);}
+		return K_Sleep(Halt, Suspend, iSrc);
+		}
 
 	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
 	case COMMAND_MOUSE_R_DOWN:{MoveMouse(*iSceneData, &saData);return MouseRDown(*iSceneData, &saData);}
@@ -644,6 +673,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_WRITE_IMAGE:
 		{
 			return Flow_WriteImage(*iSceneData, &saData);
+		}
+	case COMMAND_MESSAGEBOX:
+		{
+			return MessageBox(*iSceneData, &saData);
 		}
 	default:{return RETURN_FAILED;}
 	}

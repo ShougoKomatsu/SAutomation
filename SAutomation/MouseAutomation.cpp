@@ -14,7 +14,8 @@ ReturnValue MouseVWheel(int iWheel)
 
 ReturnValue MouseVWheel(int iScene, CStringArray* saData)
 {
-	return MouseVWheel(GetIntValue(iScene, saData->GetAt(0)));
+	int iSrc=GetIntValue(iScene, saData->GetAt(0));
+	return MouseVWheel(iSrc);
 }
 
 
@@ -56,7 +57,9 @@ ReturnValue MoveMouse(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MoveMouse(p->c,p->r);
 	}
-	return MoveMouse(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MoveMouse(iSrc1, iSrc2);
 }
 
 
@@ -71,7 +74,9 @@ ReturnValue MouseLDown(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseLDown(p->c,p->r);
 	}
-	return MouseLDown(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseLDown(iSrc1, iSrc2);
 }
 ReturnValue MouseRDown(int iScene, CStringArray* saData)
 {
@@ -84,7 +89,9 @@ ReturnValue MouseRDown(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseRDown(p->c,p->r);
 	}
-	return MouseRDown(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseRDown(iSrc1, iSrc2);
 }
 
 ReturnValue MouseMDown(int iScene, CStringArray* saData)
@@ -98,7 +105,9 @@ ReturnValue MouseMDown(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseMDown(p->c,p->r);
 	}
-	return MouseMDown(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseMDown(iSrc1, iSrc2);
 }
 
 
@@ -115,7 +124,12 @@ ReturnValue MouseLUp(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseLUp(p->c,p->r);
 	}
-	return MouseLUp(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1, iSrc2;
+	int* piSrc1=GetIntValuePointer(iScene, saData->GetAt(0));
+	if(piSrc1==NULL){iSrc1=_ttoi(saData->GetAt(0));}else{iSrc1=(*piSrc1);}
+	int* piSrc2=GetIntValuePointer(iScene, saData->GetAt(1));
+	if(piSrc2==NULL){iSrc2=_ttoi(saData->GetAt(1));}else{iSrc2=(*piSrc2);}
+	return MouseLUp(iSrc1, iSrc2);
 }
 
 ReturnValue MouseRUp(int iScene, CStringArray* saData)
@@ -129,7 +143,9 @@ ReturnValue MouseRUp(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseRUp(p->c,p->r);
 	}
-	return MouseRUp(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseRUp(iSrc1, iSrc2);
 }
 
 ReturnValue MouseMUp(int iScene, CStringArray* saData)
@@ -143,7 +159,9 @@ ReturnValue MouseMUp(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseMUp(p->c,p->r);
 	}
-	return MouseMUp(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseMUp(iSrc1, iSrc2);
 }
 
 
@@ -185,7 +203,9 @@ ReturnValue MouseLClick(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseLClick(p->c,p->r);
 	}
-	return MouseLClick(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseLClick(iSrc1, iSrc2);
 }
 ReturnValue MouseRClick(int iScene, CStringArray* saData)
 {
@@ -198,7 +218,9 @@ ReturnValue MouseRClick(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseRClick(p->c,p->r);
 	}
-	return MouseRClick(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseRClick(iSrc1, iSrc2);
 }
 
 ReturnValue MouseMClick(int iScene, CStringArray* saData)
@@ -212,7 +234,9 @@ ReturnValue MouseMClick(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseMClick(p->c,p->r);
 	}
-	return MouseMClick(GetIntValue(iScene, saData->GetAt(0)),GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MouseMClick(iSrc1, iSrc2);
 }
 
 
@@ -223,7 +247,9 @@ ReturnValue MoveMouseIncl(int iX, int iY)
 
 ReturnValue MoveMouseIncl(int iScene, CStringArray* saData)
 {
-	return MoveMouseIncl(GetIntValue(iScene, saData->GetAt(0)), GetIntValue(iScene, saData->GetAt(1)));
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	return MoveMouseIncl(iSrc1, iSrc2);
 }
 
 
@@ -262,11 +288,11 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	int iR0, iC0, iR1, iC1;
 
 	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
-
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
+	
+	iC0 = GetIntValue(iScene, saData->GetAt(1));
+	iR0 = GetIntValue(iScene, saData->GetAt(2));
+	iC1 = GetIntValue(iScene, saData->GetAt(3));
+	iR1 = GetIntValue(iScene, saData->GetAt(4));
 
 
 
@@ -321,7 +347,6 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	iR0=GetIntValue(iScene, saData->GetAt(2));
 	iC1=GetIntValue(iScene, saData->GetAt(3));
 	iR1=GetIntValue(iScene, saData->GetAt(4));
-
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;

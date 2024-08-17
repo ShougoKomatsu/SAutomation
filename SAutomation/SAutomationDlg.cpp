@@ -723,6 +723,7 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 		CloseHandle(hProcess);
 	}
 }
+
 #include "ImgProc.h"
 BOOL CSAutomationDlg::OnInitDialog()
 {
@@ -754,6 +755,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
 	//	AfxMessageBox(szModuleName);
 
+//	CString sToken;
+//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
+//	ExtractToken(_T("aaa,bbb,ccc"),1,&sToken);
+//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
 //	CStringArray aaaa;
 //	aaaa.Add(_T("1234"));
 //	aaaa.Add(_T("%%d"));
