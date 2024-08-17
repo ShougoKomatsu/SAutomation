@@ -15,4 +15,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 ErrTreatValue GetErroTreat(CString sDataLine, CString* sLabel);
 
 BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel);
+
+BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken);
+
+
 #endif

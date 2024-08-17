@@ -36,6 +36,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("printscreen"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
+	if(sDataTrim.Left(10).CompareNoCase(_T("IsEqualInt"))==0){*iCommandType=COMMAND_ISEQUAL_INT; return TRUE;}
 	if(sDataTrim.Left(13).CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
@@ -282,6 +283,70 @@ ErrTreatValue GetErroTreat(CString sDataLine, CString* sLabel)
 	return ERROR_TREAT_UNDEFINED;
 }
 
+BOOL ExtractToken(CString sInput, int iIndexIn, CString* sToken)
+{
+	int iOpenNum=0;
+	int iCloseNum=0;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
+	}
+	if(iOpenNum != iCloseNum){return FALSE;}
+	
+	int iStart=0;
+	int iTokenIndex=0;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
+
+		if(iOpenNum!=iCloseNum){continue;}
+		if(sInput.Mid(i,1).Compare(_T(","))!=0){continue;}
+
+		if(iTokenIndex==iIndexIn)
+		{
+			sToken->Format(_T("%s"), sInput.Mid(iStart, i-iStart));
+			return TRUE;
+		}
+		iStart=i+1;
+		iTokenIndex++;
+	}
+
+	if(iTokenIndex==iIndexIn)
+	{
+		sToken->Format(_T("%s"), sInput.Mid(iStart, sInput.GetLength()-iStart));
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken)
+{
+	int iOpenNum=0;
+	int iCloseNum=0;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
+	}
+	if(iOpenNum != iCloseNum){return FALSE;}
+
+	int iStart;
+	int iEnd;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iStart=i;break;}
+	}
+	for(int i=sInput.GetLength()-1; i>=0; i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iEnd=i;break;}
+	}
+
+	return  ExtractToken(sInput.Mid(iStart+1,iEnd-iStart-1), iIndexIn, sToken);
+
+}
+
 BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel)
 {
 	CString sDataTrim;
@@ -352,66 +417,72 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_L_DOWN:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
 			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_MOUSE_L_UP:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
 			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_MOUSE_R_DOWN:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
 			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_MOUSE_R_UP:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
 			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_MOUSE_M_DOWN:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
 			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_MOUSE_M_UP:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
 			*iCommandType = iType;
 			return TRUE;
