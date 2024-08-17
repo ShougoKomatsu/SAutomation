@@ -1,8 +1,10 @@
-﻿
-Wait Ctrl off
-Wait Shift off
+﻿Retry:
+OnError goto First
 
-
-
-MousePosIncl(-20,-10)
+WaitImage(Retry.bmp, 855, 140, 1040, 1020, on, 0)
+MousePosToImage(Retry.bmp, 855, 140, 1040, 1020)
 LMouse Click
+500						
+LMouse Click(	500	,	500	)
+100
+Goto Retry

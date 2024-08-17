@@ -379,26 +379,21 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iR0, iC0, iR1, iC1;
 
 	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
-
-	int* piSrc;
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(1));
-	if(piSrc==NULL){iC0=_ttoi(saData->GetAt(1));}else{iC0=*piSrc;}
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
-	if(piSrc==NULL){iR0=_ttoi(saData->GetAt(1));}else{iR0=*piSrc;}
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(3));
-	if(piSrc==NULL){iC1=_ttoi(saData->GetAt(1));}else{iC1=*piSrc;}
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(4));
-	if(piSrc==NULL){iR1=_ttoi(saData->GetAt(1));}else{iR1=*piSrc;}
+	
+	iC0 = GetIntValue(iScene, saData->GetAt(1));
+	iR0 = GetIntValue(iScene, saData->GetAt(2));
+	iC1 = GetIntValue(iScene, saData->GetAt(3));
+	iR1 = GetIntValue(iScene, saData->GetAt(4));
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(6));
 
 	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = (*piSrc);}
-
+	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
+	
+	
 
 
 	ImgRGB imgModel;

@@ -281,7 +281,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 		}
 	default:
 		{
-			if(sDataLocal.SpanIncluding(_T("0123456789")).CompareNoCase(sDataLocal)==0)
+			if(sDataLocal.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataLocal)==0)
 			{
 				return _ttoi(sDataLocal);
 			}
