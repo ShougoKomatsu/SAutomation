@@ -128,6 +128,71 @@ int GetIntValuePointer(int iScene, CString sArg)
 }
 */
 
+BOOL ExtractToken(CString sInput, int iIndexIn, CString* sToken)
+{
+	int iOpenNum=0;
+	int iCloseNum=0;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
+	}
+	if(iOpenNum != iCloseNum){return FALSE;}
+	
+	int iStart=0;
+	int iTokenIndex=0;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
+
+		if(iOpenNum!=iCloseNum){continue;}
+		if(sInput.Mid(i,1).Compare(_T(","))!=0){continue;}
+
+		if(iTokenIndex==iIndexIn)
+		{
+			sToken->Format(_T("%s"), sInput.Mid(iStart, i-iStart));
+			return TRUE;
+		}
+		iStart=i+1;
+		iTokenIndex++;
+	}
+
+	if(iTokenIndex==iIndexIn)
+	{
+		sToken->Format(_T("%s"), sInput.Mid(iStart, sInput.GetLength()-iStart));
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken)
+{
+	int iOpenNum=0;
+	int iCloseNum=0;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
+	}
+	if(iOpenNum != iCloseNum){return FALSE;}
+
+	int iStart;
+	int iEnd;
+	for(int i=0; i<sInput.GetLength(); i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T("("))==0){iStart=i;break;}
+	}
+	for(int i=sInput.GetLength()-1; i>=0; i++)
+	{
+		if(sInput.Mid(i,1).Compare(_T(")"))==0){iEnd=i;break;}
+	}
+
+	return  ExtractToken(sInput.Mid(iStart+1,iEnd-iStart-1), iIndexIn, sToken);
+
+}
+
+
 int GetIntValue(int iScene, CString sDataLocal)
 {
 	int iOperandSrc;
@@ -142,11 +207,8 @@ int GetIntValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
 			return IntAdd(iScene, sArg1, sArg2);
 		}

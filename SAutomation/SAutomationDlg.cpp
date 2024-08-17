@@ -724,43 +724,6 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 	}
 }
 
-BOOL ExtractToken(CString sInput, int iIndexIn, CString* sToken)
-{
-	int iOpenNum=0;
-	int iCloseNum=0;
-	for(int i=0; i<sInput.GetLength(); i++)
-	{
-		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
-		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
-	}
-	if(iOpenNum != iCloseNum){return FALSE;}
-	
-	int iStart=0;
-	int iTokenIndex=0;
-	for(int i=0; i<sInput.GetLength(); i++)
-	{
-		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
-		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
-
-		if(iOpenNum!=iCloseNum){continue;}
-		if(sInput.Mid(i,1).Compare(_T(","))!=0){continue;}
-
-		if(iTokenIndex==iIndexIn)
-		{
-			sToken->Format(_T("%s"), sInput.Mid(iStart, i-iStart));
-			return TRUE;
-		}
-		iStart=i+1;
-		iTokenIndex++;
-	}
-
-	if(iTokenIndex==iIndexIn)
-	{
-		sToken->Format(_T("%s"), sInput.Mid(iStart, sInput.GetLength()-iStart));
-		return TRUE;
-	}
-	return FALSE;
-}
 #include "ImgProc.h"
 BOOL CSAutomationDlg::OnInitDialog()
 {
@@ -792,10 +755,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
 	//	AfxMessageBox(szModuleName);
 
-	CString sToken;
-	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
-	ExtractToken(_T("aaa,bbb,ccc"),1,&sToken);
-	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
+//	CString sToken;
+//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
+//	ExtractToken(_T("aaa,bbb,ccc"),1,&sToken);
+//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
 //	CStringArray aaaa;
 //	aaaa.Add(_T("1234"));
 //	aaaa.Add(_T("%%d"));
