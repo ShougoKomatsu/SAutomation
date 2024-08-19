@@ -331,14 +331,17 @@ BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken)
 		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
 	}
 	if(iOpenNum != iCloseNum){return FALSE;}
+	if(iOpenNum==0){sToken->Format(_T("")); return TRUE;}
 
 	int iStart;
 	int iEnd;
+	iStart=0;
 	for(int i=0; i<sInput.GetLength(); i++)
 	{
 		if(sInput.Mid(i,1).Compare(_T("("))==0){iStart=i;break;}
 	}
-	for(int i=sInput.GetLength()-1; i>=0; i++)
+	iEnd = sInput.GetLength()-1;
+	for(int i=sInput.GetLength()-1; i>=0; i--)
 	{
 		if(sInput.Mid(i,1).Compare(_T(")"))==0){iEnd=i;break;}
 	}
@@ -489,29 +492,29 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_MOVE:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			saData->Add(sArg);
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			saData->Add(sArg);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_MOUSE_MOVE_INCL:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			saData->Add(sArg);
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			saData->Add(sArg);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_WHEEL:
 		{
-			CString sTemp;
-			ExtractData(sDataLocal, _T("("), &sArg, &sTemp);
-			ExtractData(sTemp, _T(")"), &sArg, &sTemp);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){*iCommandType=iType; saData->Add(sArg); return TRUE;}
 
 
@@ -523,11 +526,12 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_L_CLICK:
 		{
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			if((saData->GetCount()!=0) && (saData->GetCount()!=2)){return FALSE;}
 			*iCommandType = iType;
 			return TRUE;

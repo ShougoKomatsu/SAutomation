@@ -1,4 +1,5 @@
-﻿
+﻿LMouse Click
+Exit
 Start:
 
 VarInt1=0
