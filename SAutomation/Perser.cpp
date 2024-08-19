@@ -385,6 +385,22 @@ BOOL CountArgsInTheParameter(CString sParameter, int* iCount)
 	*iCount = iCountLocal;
 	return TRUE;
 }
+BOOL CountToken(CString sParameter, int* iCount)
+{
+	if(sParameter.GetLength()<=0){*iCount=0; return TRUE;}
+	int i=0;
+	CString sDummy;
+	BOOL bRet;
+	while(1)
+	{
+		bRet = ExtractToken(sParameter,i,&sDummy);
+		if(bRet != TRUE){break;}
+		i++;
+	}
+	
+	*iCount = i+1;
+	return TRUE;
+}
 BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir)
 {
 	int iType;
