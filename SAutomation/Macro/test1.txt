@@ -1,4 +1,4 @@
-﻿LMouse Click
+﻿SwitchByInput(aaa, -1, bbb, First, ccc, noborder)
 Exit
 Start:
 

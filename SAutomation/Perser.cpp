@@ -398,7 +398,23 @@ BOOL CountToken(CString sParameter, int* iCount)
 		i++;
 	}
 	
-	*iCount = i+1;
+	*iCount = i;
+	return TRUE;
+}
+BOOL CountTokenInBracket(CString sParameter, int* iCount)
+{
+	if(sParameter.GetLength()<=0){*iCount=0; return TRUE;}
+	int i=0;
+	CString sDummy;
+	BOOL bRet;
+	while(1)
+	{
+		bRet = ExtractTokenInBracket(sParameter,i,&sDummy);
+		if(bRet != TRUE){break;}
+		i++;
+	}
+	
+	*iCount = i;
 	return TRUE;
 }
 BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CStringArray* saData, CString sDir)
@@ -856,24 +872,21 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	case COMMAND_GOTO:{*iCommandType = iType;return TRUE;}
 	case COMMAND_SWITCH_BY_INPUT:
 		{
+
 			CString sParameter;
 			int iArgCount;
-			ExtractData(sDataLocal, _T("("), &sArg, &sParameter);
-			ExtractData(sParameter, _T(")"), &sArg, &sParameter);
-			CountArgsInTheParameter(sArg, &iArgCount);
+			bRet = CountTokenInBracket(sDataLocal, &iArgCount);
+			if(bRet != TRUE){return FALSE;}
 			if(iArgCount<6){return FALSE;}
 			if((iArgCount%2)!=0){return FALSE;}
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
+		
 			for(int i=0; i<iArgCount-1; i++)
 			{
-				ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
 				if(sArg.GetLength()<=0){return FALSE;}
 				saData->Add(sArg);
 			}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			saData->Add(sArg);
-
-
+			
 			*iCommandType = iType;
 			return TRUE;
 		}
