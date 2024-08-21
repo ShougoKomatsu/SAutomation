@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #pragma once
+extern CString g_sDir;
 
 
 BOOL GetFileName(CString sFilePath, CString* sFileName);

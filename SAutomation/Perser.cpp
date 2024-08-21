@@ -602,8 +602,6 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }}
-			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
@@ -743,8 +741,6 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	case COMMAND_WAIT_IMG:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }}
-			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
@@ -795,8 +791,6 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	case COMMAND_MOUSE_MOVE_TO_IMG:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			if(sArg.GetLength()>2){if(sArg.GetAt(1)!=':'){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }}
-			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), sDir,sTemp); }
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
@@ -925,7 +919,6 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()<4){return FALSE;}
-			if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg);sArg.Format(_T("%s\\%s"),g_sDir,sTemp);}
 			saData->Add(sArg);
 
 			if((saData->GetCount())!=2){return FALSE;}
