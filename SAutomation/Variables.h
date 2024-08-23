@@ -11,9 +11,9 @@ struct Point
 	int c;
 	Point(){r=0; c=0;}
 	Point(Point* pPointIn){r=pPointIn->r; c=pPointIn->c;}
-	Point(int rIn, int cIn){Set(rIn, cIn);}
-	void Set(int rIn, int cIn){r=rIn; c=cIn;}
-	Point operator = (Point pIn){Set(pIn.r, pIn.c);}
+	Point( int cIn,int rIn){Set(cIn,rIn);}
+	void Set(int cIn,int rIn){r=rIn; c=cIn;}
+	Point operator = (Point pIn){Set(pIn.c,pIn.r);}
 };
 
 #define MAX_VARIABLES (8)
