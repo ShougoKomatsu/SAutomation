@@ -452,6 +452,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_L_DOWN:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -464,6 +474,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_L_UP:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -476,6 +496,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_R_DOWN:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -488,6 +518,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_R_UP:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -500,6 +540,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_M_DOWN:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -512,6 +562,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_M_UP:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -524,6 +584,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_MOVE:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -558,6 +628,15 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_L_CLICK:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -570,6 +649,15 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_R_CLICK:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
@@ -582,6 +670,15 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MOUSE_M_CLICK:
 		{
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if(iCount==1)
+			{
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				if((sArg.GetLength()==9)&&(sArg.Left(8).CompareNoCase(_T("VarPoint"))==0)&&((sArg.Right(1).SpanIncluding(_T("01234567")).Compare(sArg.Right(1))==0)))
+				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
+				return FALSE;
+			}
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
