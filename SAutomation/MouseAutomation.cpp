@@ -287,8 +287,12 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
 
-	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
-	
+	CString sArg;
+	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sModelFilePath.Format(_T("%s"), sArg);
+
 	iC0 = GetIntValue(iScene, saData->GetAt(1));
 	iR0 = GetIntValue(iScene, saData->GetAt(2));
 	iC1 = GetIntValue(iScene, saData->GetAt(3));
@@ -340,8 +344,12 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	BOOL bRet;
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
-
-	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
+	
+	CString sArg;
+	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sModelFilePath.Format(_T("%s"), sArg);
 
 	iC0=GetIntValue(iScene, saData->GetAt(1));
 	iR0=GetIntValue(iScene, saData->GetAt(2));

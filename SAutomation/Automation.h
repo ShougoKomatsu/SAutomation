@@ -54,7 +54,6 @@
 
 ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 
-extern CString g_sDir;
 
 
 

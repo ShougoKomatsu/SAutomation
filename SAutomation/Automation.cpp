@@ -5,7 +5,6 @@
 #include "Variables.h"
 #include "Window.h"
 
-CString g_sDir;
 CSAutomationDlg* g_dlg;
 
 #include "InputDialog.h"
@@ -377,9 +376,13 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
-
-	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
 	
+	CString sArg;
+	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sModelFilePath.Format(_T("%s"), sArg);
+
 	iC0 = GetIntValue(iScene, saData->GetAt(1));
 	iR0 = GetIntValue(iScene, saData->GetAt(2));
 	iC1 = GetIntValue(iScene, saData->GetAt(3));
@@ -544,21 +547,6 @@ ReturnValue KeyUp(CStringArray* saData)
 	if(bUnicode == TRUE){return KeyUpUnicode(tch);}
 
 	return KeyUp(bySendKey);
-}
-int FilndLabel(CStringArray* saCommands, CString sLabel)
-{
-	CString sCommand;
-	for(int i=0; i<saCommands->GetCount(); i++)
-	{
-		sCommand.Format(_T("%s"), saCommands->GetAt(i));
-		sCommand.Trim(_T(" \t"));
-
-		if(sCommand.GetLength()!=sLabel.GetLength()+1){continue;}
-		if(sCommand.GetAt(sLabel.GetLength())!=':'){continue;}
-
-		if(sCommand.Left(sLabel.GetLength()).CompareNoCase(sLabel)==0){return i;}
-	}
-	return -1;
 }
 ReturnValue ScreenShot(int iScene, CStringArray* saCommands)
 {
