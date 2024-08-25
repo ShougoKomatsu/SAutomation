@@ -875,17 +875,15 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			Point* pPointSrc=(GetPointValuePointer(iScene, sDataLocal));
 			if(pPointSrc == NULL){return RETURN_FAILED;}
 
-			pPoint->Set(pPointSrc->r, pPointSrc->c);
+			pPoint->Set( pPointSrc->c,pPointSrc->r);
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_POINT_DIRECT:
 		{
-			CString sArg;
 			CString sArg1;
 			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg1, &sDataLocal);
-			ExtractData(sDataLocal, _T(")"), &sArg2, &sDataLocal);
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,0,&sArg2);
 
 			int iSrc1=GetIntValue(iScene, sArg1);
 			int iSrc2=GetIntValue(iScene, sArg2);
@@ -896,7 +894,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 	case VARIABLE_POINT_MOUSE_POS:
 		{
 
-			pPoint->Set(g_iR, g_iC);
+			pPoint->Set(g_iC,g_iR);
 
 			return RETURN_NORMAL;
 		}
