@@ -742,21 +742,15 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			CString sArg2;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg1.Format(_T("%s"), sArg);}
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			if(sArg.GetLength()>0){sArg2.Format(_T("%s"), sArg);}
-
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			bRet = ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			sDstPointer->Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_NOW_DATE_TIME:
 		{
 			CString sArg;
-			ExtractData(sDataLocal, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
 			sDstPointer->Format(_T("%s"), NowDateTime(sArg)); 
 			return RETURN_NORMAL;
 		}
