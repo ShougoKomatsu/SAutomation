@@ -787,12 +787,9 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 {
 
-	CStringArray saData;
-	saData.RemoveAll();
 	CString sArg;
-	CString sDataLocal;
-
-	ExtractData(sData, _T("("), &sArg, &sDataLocal);
+	CString sDummy;
+	ExtractData(sData, _T("("), &sArg, &sDummy);
 
 	int iOperandSrc;
 	BOOL bRet = GetOperandImgSrc(sArg, &iOperandSrc);
@@ -831,27 +828,31 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
+			
+			CString sArg0;
+			CString sArg1;
+			CString sArg2;
+			CString sArg3;
+			CString sArg4;
+			bRet = ExtractTokenInBracket(sData,0,&sArg0);
+			if(bRet != TRUE){return RETURN_FAILED;} 
+			bRet = ExtractTokenInBracket(sData,1,&sArg1);
+			if(bRet != TRUE){return RETURN_FAILED;} 
+			bRet = ExtractTokenInBracket(sData,2,&sArg2);
+			if(bRet != TRUE){return RETURN_FAILED;} 
+			bRet = ExtractTokenInBracket(sData,3,&sArg3);
+			if(bRet != TRUE){return RETURN_FAILED;} 
+			bRet = ExtractTokenInBracket(sData,4,&sArg4);
+			if(bRet != TRUE){return RETURN_FAILED;} 
 
-			ExtractData(sData, _T("("), &sArg, &sDataLocal);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			saData.Add(sArg);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			saData.Add(sArg);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			saData.Add(sArg);
-			ExtractData(sDataLocal, _T(","), &sArg, &sDataLocal);
-			saData.Add(sArg);
-			ExtractData(sDataLocal, _T(")"), &sArg, &sDataLocal);
-			saData.Add(sArg);
-			if(saData.GetCount()<4){return RETURN_FAILED;}
 
-			ImgRGB* pImgRGBIn=(GetImgValuePointer(iScene, saData.GetAt(0)));
+			ImgRGB* pImgRGBIn=GetImgValuePointer(iScene, sArg0);
 			if(pImgRGBIn == NULL){return RETURN_FAILED;}
 
-			int iSrc1=GetIntValue(iScene, saData.GetAt(1));
-			int iSrc2=GetIntValue(iScene, saData.GetAt(2));
-			int iSrc3=GetIntValue(iScene, saData.GetAt(3));
-			int iSrc4=GetIntValue(iScene, saData.GetAt(4));
+			int iSrc1=GetIntValue(iScene, sArg1);
+			int iSrc2=GetIntValue(iScene, sArg2);
+			int iSrc3=GetIntValue(iScene, sArg3);
+			int iSrc4=GetIntValue(iScene, sArg4);
 
 			CropImage(pImgRGBIn, pImgRGB, iSrc1, iSrc2, iSrc3, iSrc4 );
 			return RETURN_NORMAL;
