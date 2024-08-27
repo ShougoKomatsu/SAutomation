@@ -301,30 +301,20 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 	int iR0, iC0, iR1, iC1;
 
-	int* piSrc;
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(0));
-	if(piSrc==NULL){return RETURN_FAILED;}
-	iTickMillisec = *piSrc;
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(1));
-	if(piSrc==NULL){return RETURN_FAILED;}
-	iC0=*piSrc;
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
-	if(piSrc==NULL){return RETURN_FAILED;}
-	iR0=*piSrc;
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(3));
-	if(piSrc==NULL){return RETURN_FAILED;}
-	iC1=*piSrc;
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(4));
-	if(piSrc==NULL){return RETURN_FAILED;}
-	iR1=*piSrc;
+	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
+	iC0=GetIntValue(iScene, saData->GetAt(1));
+	iR0=GetIntValue(iScene, saData->GetAt(2));
+	iC1=GetIntValue(iScene, saData->GetAt(3));
+	iR1=GetIntValue(iScene, saData->GetAt(4));
 
-	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
-	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	CString sArg;
+	sArg.Format(_T("%s"),GetStrValue(iScene, saData->GetAt(5)));
+	if(sArg.CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(sArg.CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	piSrc = GetIntValuePointer(iScene, saData->GetAt(6));
-	if(saData->GetCount()==6){iTimeOutMillisec=-1;}
-	else {iTimeOutMillisec =(*piSrc);}
+	iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(6));
+	if(iTimeOutMillisec==6){iTimeOutMillisec=-1;}
 
 
 	ImgRGB imgModelCropped;
