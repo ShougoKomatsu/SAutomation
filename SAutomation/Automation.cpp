@@ -541,8 +541,7 @@ ReturnValue ScreenShot(int iScene, CStringArray* saCommands)
 	Screenshot(&imgRGB);
 
 	CString sSrc;
-	CString* psSrc=GetStrValuePointer(iScene, saCommands->GetAt(0));
-	if(psSrc==NULL){sSrc.Format(_T("%s"),saCommands->GetAt(0));}else{sSrc.Format(_T("%s"),*psSrc);}
+	sSrc.Format(_T("%s"),GetStrValue(iScene, saCommands->GetAt(0)));
 
 	BOOL bRet=WriteImage(&imgRGB, sSrc);
 	if(bRet !=TRUE){return RETURN_FAILED;}
