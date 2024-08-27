@@ -458,10 +458,7 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 	int iSrc;
 	if(saData->GetCount()>=3)
 	{
-		int* piSrc = GetIntValuePointer(iScene, saData->GetAt(2));
-		if(piSrc==NULL){iSrc=_ttoi(saData->GetAt(2));}else{iSrc=(*piSrc);}
-		if(saData->GetCount()<3){iTimeOutMillisec=-1;}
-		else {iTimeOutMillisec =iSrc;}
+		iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(2));
 	}
 	else
 	{
