@@ -574,12 +574,9 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	{
 	case COMMAND_DELAY:
 		{
-			int iSrc;
-			int* piSrc=GetIntValuePointer(*iSceneData, saData.GetAt(0));
-			if(piSrc==NULL){iSrc=_ttoi(saData.GetAt(0));}else{iSrc=(*piSrc);}
-		return K_Sleep(Halt, Suspend, iSrc);
+			int iSrc=GetIntValue(*iSceneData, saData.GetAt(0));
+			return K_Sleep(Halt, Suspend, iSrc);
 		}
-
 	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
 	case COMMAND_MOUSE_R_DOWN:{MoveMouse(*iSceneData, &saData);return MouseRDown(*iSceneData, &saData);}
 	case COMMAND_MOUSE_M_DOWN:{MoveMouse(*iSceneData, &saData);return MouseMDown(*iSceneData, &saData);}
