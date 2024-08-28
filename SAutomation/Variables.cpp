@@ -432,7 +432,7 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 	return (iSrc1==iSrc2);
 }
 
-ReturnValue Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
+ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
 {
 	if(IsIntEqual(iScene, saData->GetAt(0), saData->GetAt(1)))
 	{

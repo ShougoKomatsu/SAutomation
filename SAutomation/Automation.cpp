@@ -635,9 +635,9 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		{
 			return Flow_Assign(*iSceneData, &saData);
 		}
-	case COMMAND_ISEQUAL_INT:
+	case COMMAND_AREEQUAL_INT:
 		{
-			return Flow_IsIntEqual(*iSceneData, &saData, sReturnParam);
+			return Flow_AreIntEqual(*iSceneData, &saData, sReturnParam);
 		}
 	case COMMAND_SCREENSHOT:
 		{
