@@ -43,6 +43,7 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
 
 ReturnValue Flow_Assign(int iScene, CStringArray* saData);
 ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam);
 
 void AssignInt(int iScene, CString sArg, int iInput);
 void AssignString(int iScene, CString sArg, CString sInput);

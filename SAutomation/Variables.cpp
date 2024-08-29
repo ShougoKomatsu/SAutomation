@@ -443,6 +443,76 @@ ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnP
 	return RETURN_NORMAL;
 }
 
+ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam)
+{
+
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene,  saData->GetAt(2));
+
+
+	if((saData->GetAt(1).Compare(_T("="))==0) || (saData->GetAt(1).Compare(_T("=="))==0))
+	{
+		if (iSrc1==iSrc2)
+		{
+			sReturnParam->Format(_T("%s"), saData->GetAt(3));
+			return RETURN_GOTO_BY_SWITCH;
+		}
+		return RETURN_NORMAL;
+	}
+	
+	if(saData->GetAt(1).Compare(_T(">"))==0)
+	{
+		if (iSrc1>iSrc2)
+		{
+			sReturnParam->Format(_T("%s"), saData->GetAt(3));
+			return RETURN_GOTO_BY_SWITCH;
+		}
+		return RETURN_NORMAL;
+	}
+	
+	if(saData->GetAt(1).Compare(_T(">="))==0)
+	{
+		if (iSrc1>=iSrc2)
+		{
+			sReturnParam->Format(_T("%s"), saData->GetAt(3));
+			return RETURN_GOTO_BY_SWITCH;
+		}
+		return RETURN_NORMAL;
+	}
+	
+	if(saData->GetAt(1).Compare(_T("<="))==0)
+	{
+		if (iSrc1<=iSrc2)
+		{
+			sReturnParam->Format(_T("%s"), saData->GetAt(3));
+			return RETURN_GOTO_BY_SWITCH;
+		}
+		return RETURN_NORMAL;
+	}
+	
+	if(saData->GetAt(1).Compare(_T("<="))==0)
+	{
+		if (iSrc1<=iSrc2)
+		{
+			sReturnParam->Format(_T("%s"), saData->GetAt(3));
+			return RETURN_GOTO_BY_SWITCH;
+		}
+		return RETURN_NORMAL;
+	}
+	
+	if((saData->GetAt(1).Compare(_T("<>"))==0) || (saData->GetAt(1).Compare(_T("!="))==0))
+	{
+		if (iSrc1!=iSrc2)
+		{
+			sReturnParam->Format(_T("%s"), saData->GetAt(3));
+			return RETURN_GOTO_BY_SWITCH;
+		}
+		return RETURN_NORMAL;
+	}
+
+	return RETURN_FAILED;
+}
+
 
 void AssignInt(int iScene, CString sArg, int iInput)
 {

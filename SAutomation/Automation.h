@@ -50,6 +50,7 @@
 #define COMMAND_VARIABLE_STR (COMMAND_VARIABLE+3)
 #define COMMAND_VARIABLE_IMG (COMMAND_VARIABLE+4)
 #define COMMAND_VARIABLE_POINT (COMMAND_VARIABLE+5)
+#define COMMAND_COMPARE (COMMAND_VARIABLE+6)
 
 
 ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
