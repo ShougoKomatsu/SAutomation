@@ -124,11 +124,8 @@ ReturnValue MouseLUp(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseLUp(p->c,p->r);
 	}
-	int iSrc1, iSrc2;
-	int* piSrc1=GetIntValuePointer(iScene, saData->GetAt(0));
-	if(piSrc1==NULL){iSrc1=_ttoi(saData->GetAt(0));}else{iSrc1=(*piSrc1);}
-	int* piSrc2=GetIntValuePointer(iScene, saData->GetAt(1));
-	if(piSrc2==NULL){iSrc2=_ttoi(saData->GetAt(1));}else{iSrc2=(*piSrc2);}
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
 	return MouseLUp(iSrc1, iSrc2);
 }
 
