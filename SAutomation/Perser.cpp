@@ -308,6 +308,7 @@ BOOL ExtractToken(CString sInput, int iIndexIn, CString* sToken)
 		if(iTokenIndex==iIndexIn)
 		{
 			sToken->Format(_T("%s"), sInput.Mid(iStart, i-iStart));
+			sToken->Trim(_T(" \t"));
 			return TRUE;
 		}
 		iStart=i+1;
@@ -317,6 +318,7 @@ BOOL ExtractToken(CString sInput, int iIndexIn, CString* sToken)
 	if(iTokenIndex==iIndexIn)
 	{
 		sToken->Format(_T("%s"), sInput.Mid(iStart, sInput.GetLength()-iStart));
+		sToken->Trim(_T(" \t"));
 		return TRUE;
 	}
 	return FALSE;

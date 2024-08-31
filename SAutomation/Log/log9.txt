@@ -1,3 +1,0 @@
-1 VarPoint1=Point(10,120) 0
-2 MousePos(VarPoint1) 0
-3 Exit 10
