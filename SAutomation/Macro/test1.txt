@@ -1,2 +1,2 @@
 ﻿
-WaitImage(menu2.bmp, 	1030	,	110	,	1080	,	1000	,	on	,	500	)
+LMouse Click 
