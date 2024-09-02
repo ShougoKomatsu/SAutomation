@@ -1159,6 +1159,18 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 }
 
 
+void ResetVariable(int iScene)
+{
+	for(int i=0; i<MAX_VARIABLES; i++)
+	{
+		g_iVar[iScene][i]=0;
+		g_sVar[iScene][i].Format(_T(""));
+		g_imgRGB[iScene][i].Init();
+		g_point[iScene][i].Set(0,0);
+	}
+
+	return;
+}
 void CSAutomationDlg::Operate(int iID)
 {
 	UpdateData(TRUE);
