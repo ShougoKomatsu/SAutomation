@@ -8,26 +8,26 @@
 #include "afxcmn.h"
 #include "InputDialog.h"
 
-#define HOTKEY_ID_0 (10)
-#define HOTKEY_ID_1 (11)
-#define HOTKEY_ID_2 (12)
-#define HOTKEY_ID_3 (13)
-#define HOTKEY_ID_4 (14)
-#define HOTKEY_ID_5 (15)
-#define HOTKEY_ID_6 (16)
-#define HOTKEY_ID_7 (17)
-#define HOTKEY_ID_8 (18)
-#define HOTKEY_ID_9 (19)
-#define HOTKEY_ID_10 (20)
-#define HOTKEY_ID_11 (21)
-#define HOTKEY_ID_12 (22)
-#define HOTKEY_ID_13 (23)
-#define HOTKEY_ID_14 (24)
-#define HOTKEY_ID_15 (25)
+#define HOTKEY_SCENE_0 (10)
+#define HOTKEY_SCENE_1 (11)
+#define HOTKEY_SCENE_2 (12)
+#define HOTKEY_SCENE_3 (13)
+#define HOTKEY_SCENE_4 (14)
+#define HOTKEY_SCENE_5 (15)
+#define HOTKEY_SCENE_6 (16)
+#define HOTKEY_SCENE_7 (17)
+#define HOTKEY_SCENE_8 (18)
+#define HOTKEY_SCENE_9 (19)
+#define HOTKEY_SCENE_10 (20)
+#define HOTKEY_SCENE_11 (21)
+#define HOTKEY_SCENE_12 (22)
+#define HOTKEY_SCENE_13 (23)
+#define HOTKEY_SCENE_14 (24)
+#define HOTKEY_SCENE_15 (25)
 
 #define HOTKEY_ENABLE (30)
 
-#define HOTKEY_ID_ESCAPE (100)
+#define HOTKEY_ESCAPE (100)
 
 struct OperationInfo
 {
@@ -60,9 +60,9 @@ protected:
 	BOOL TrayNotifyIconMessage(DWORD dwMessage);
 	BOOL ChangeIcon(int iIcon);
 
-	void Operate(int iID);
+	void Operate(int iScene);
 
-	void ResetHotkey(int iID);
+	void ResetHotkey(int iScene);
 
 	void ToggleEnable();
 
