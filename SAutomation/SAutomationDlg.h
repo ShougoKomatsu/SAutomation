@@ -30,9 +30,7 @@
 #define HOTKEY_ID_ESCAPE (100)
 
 struct OperationInfo
-{
-	BOOL bLoop;
-	
+{	
 	CString sHotkey;
 	BOOL bUseCtrl;
 	BOOL bUseShift;

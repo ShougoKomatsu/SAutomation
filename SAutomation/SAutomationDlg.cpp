@@ -537,9 +537,6 @@ void CSAutomationDlg::ReadSettings()
 		GetPrivateProfileString(sSection,_T("UseWin"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 		if(wcscmp(szData,_T("1"))==0){m_OpeInfo[iID].bUseWin=TRUE;}
 		else{m_OpeInfo[iID].bUseWin=FALSE;}
-
-		GetPrivateProfileString(sSection,_T("Loop"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		m_OpeInfo[iID].bLoop=_ttoi(szData);
 	}
 
 	GetPrivateProfileString(_T("Hotkey"),_T("EnableKey"),_T(" "),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
@@ -591,9 +588,6 @@ void CSAutomationDlg::SaveSettings()
 		if(m_combo[iID].GetCurSel()<0){sData.Format(_T("b"));}
 		else{m_combo[iID].GetLBText(m_combo[iID].GetCurSel(),tch); sData.Format(_T("%s"), tch);}
 		WritePrivateProfileString(sSection,_T("Hotkey"),sData,sFilePath);
-
-		sData.Format(_T("%d"),((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00+iID))->GetCheck());	
-		WritePrivateProfileString(sSection,_T("Loop"),sData,sFilePath);
 
 		sUseCtrl.Format(_T("0"));
 		sUseShift.Format(_T("0"));
@@ -836,7 +830,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 			if((char(m_OpeInfo[iID].sHotkey.GetAt(0))>='0') && (char(m_OpeInfo[iID].sHotkey.GetAt(0))<='9')){m_OpeInfo[iID].dwHotKey = char(m_OpeInfo[iID].sHotkey.GetAt(0))-'0'+0x30;}
 		}
 		m_sEditStatus[iID].Format(_T("Stand by"));
-		((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00 + iID))->SetCheck(m_OpeInfo[iID].bLoop);
 		m_sEditFileName[iID].Format(_T("%s"),m_OpeInfo[iID].sFileName);
 		UpdateData(FALSE);
 
@@ -1195,9 +1188,7 @@ void CSAutomationDlg::Operate(int iID)
 	}
 
 	iParam = iLogLevel<<6;
-	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00+iID))->GetCheck();
 	iParam += 1<<5;
-	iParam+=(iChecked<<4)+iID;
 	m_OpeInfo[iID].m_bRunning=TRUE;
 	g_hThread[iID] = CreateThread(NULL, 0, CommandThread, (LPVOID)(&iParam), 0, &dwThreadID);
 	while(iParam!=0){Sleep(10);}
