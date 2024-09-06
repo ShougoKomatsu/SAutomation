@@ -1187,7 +1187,7 @@ void CSAutomationDlg::Operate(int iID)
 		if(wcscmp(tch,_T("All"))==0){iLogLevel=5;}
 	}
 
-	iParam = iLogLevel<<6;
+	iParam = iLogLevel<<PARAM_LOGLEVEL_SHIFT;
 	iParam += iID;
 	m_OpeInfo[iID].m_bRunning=TRUE;
 	g_hThread[iID] = CreateThread(NULL, 0, CommandThread, (LPVOID)(&iParam), 0, &dwThreadID);

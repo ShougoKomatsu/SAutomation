@@ -9,3 +9,9 @@ DWORD WINAPI GetKeyThread(LPVOID arg);
 
 DWORD WINAPI GetStepKeyThread(LPVOID arg);
 DWORD WINAPI CommandThread(LPVOID arg);
+
+#define PARAM_LOGLEVEL_SHIFT (6)
+#define PARAM_LOGLEVEL_MASK (0x07)
+
+#define PARAM_SCENE_SHIFT (0)
+#define PARAM_SCENE_MASK (0x0F)

@@ -91,7 +91,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	(*(int*)arg) = 0;  
 
 	int iScene;
-	iScene = (iData&0x0F);
+	iScene = (iData>>PARAM_SCENE_SHIFT)&PARAM_SCENE_MASK;
 	BOOL bRet;
 
 	bRet = ReadTextFile(g_sFilePath[iScene],&saCommands);
@@ -113,7 +113,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	}
 
 	int iLogLevel;
-	iLogLevel = (iData>>6)&0x07;
+	iLogLevel = (iData>>PARAM_LOGLEVEL_SHIFT)&PARAM_LOGLEVEL_MASK;
 
 	ErrTreatValue iErrorTreat;
 	iErrorTreat = ERROR_TREAT_END;
