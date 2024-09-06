@@ -407,6 +407,15 @@ BOOL CountToken(CString sParameter, int* iCount)
 BOOL CountTokenInBracket(CString sParameter, int* iCount)
 {
 	if(sParameter.GetLength()<=0){*iCount=0; return TRUE;}
+
+	BOOL bBracketExist=FALSE;
+	for(int i=0; i<sParameter.GetLength(); i++)
+	{
+		if(sParameter.Mid(i,1).Compare(_T("("))==0){bBracketExist=TRUE; break;}
+	}
+	if(bBracketExist==FALSE){*iCount=0; return TRUE;}
+
+
 	int i=0;
 	CString sDummy;
 	BOOL bRet;
