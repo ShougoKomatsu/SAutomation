@@ -1206,7 +1206,6 @@ void CSAutomationDlg::Operate(int iScene)
 		if(wcscmp(tch,_T("All"))==0){iLogLevel=5;}
 	}
 
-	ResetVariable(iScene);
 
 	iParam = iLogLevel<<6;
 	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00+iScene))->GetCheck();
