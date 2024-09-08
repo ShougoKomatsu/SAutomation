@@ -154,37 +154,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(3).CompareNoCase(_T("end sub"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
 
 	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
-	//-------------------------------------------------------
-	if((sDataTrim.Left(1).CompareNoCase(_T("<"))==0)&&(sDataTrim.Left(1).CompareNoCase(_T(">"))==0))
-	{
-		CString sRemaindRepeat;
-		sRemaindRepeat.Format(_T("%s"), sDataTrim.Mid(1,sDataTrim.GetLength()-2));
-		sRemaindRepeat.Trim(_T(" \t"));
-		if(sRemaindRepeat.Left(1).CompareNoCase(_T("r"))==0)
-		{
-			int iRepeat;
-			iRepeat = _ttoi(sRemaindRepeat.Right(sRemaindRepeat.GetLength()-1));
-			if(iRepeat>=1)
-			{
-				*iCommandType = COMMAND_REPEAT;
-				return TRUE;
-			}
-		}
-		else{return FALSE;}
-	}
-
-	if((sDataTrim.Left(1).CompareNoCase(_T("<"))==0)&&(sDataTrim.Left(1).CompareNoCase(_T(">"))==0))
-	{
-		CString sRemaindRepeat;
-		sRemaindRepeat.Format(_T("%s"), sDataTrim.Mid(1,sDataTrim.GetLength()-2));
-		sRemaindRepeat.Trim(_T(" \t"));
-		if(sRemaindRepeat.Left(2).CompareNoCase(_T("/r"))==0)
-		{
-			*iCommandType = COMMAND_REPEAT_END;
-			return TRUE;
-		}
-		else{return FALSE;}
-	}
 
 	return FALSE;
 }
@@ -447,21 +416,6 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	switch(iType)
 	{
 	case COMMAND_NOTING:{*iCommandType = COMMAND_NOTING; return TRUE;}
-	case COMMAND_REPEAT:
-		{
-			CString sID;
-			sID.Format(_T("%d"),(*iSceneData));
-			saData->Add(sID);
-			(*iSceneData)=(*iSceneData)+1;
-
-			ExtractData(sDataLocal, _T("r"), &sArg, &sDataLocal);
-			int iRepeat;
-			CString sRepeat;
-			iRepeat=_ttoi(sArg);
-			sRepeat.Format(_T("%d"),iRepeat);
-			saData->Add(sRepeat);
-			return TRUE;
-		}
 	case COMMAND_MOUSE_L_DOWN:
 		{
 			int iCount;

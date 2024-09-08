@@ -537,9 +537,6 @@ void CSAutomationDlg::ReadSettings()
 		GetPrivateProfileString(sSection,_T("UseWin"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 		if(wcscmp(szData,_T("1"))==0){m_OpeInfo[iScene].bUseWin=TRUE;}
 		else{m_OpeInfo[iScene].bUseWin=FALSE;}
-
-		GetPrivateProfileString(sSection,_T("Loop"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		m_OpeInfo[iScene].bLoop=_ttoi(szData);
 	}
 
 	GetPrivateProfileString(_T("Hotkey"),_T("EnableKey"),_T(" "),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
@@ -591,9 +588,6 @@ void CSAutomationDlg::SaveSettings()
 		if(m_combo[iScene].GetCurSel()<0){sData.Format(_T("b"));}
 		else{m_combo[iScene].GetLBText(m_combo[iScene].GetCurSel(),tch); sData.Format(_T("%s"), tch);}
 		WritePrivateProfileString(sSection,_T("Hotkey"),sData,sFilePath);
-
-		sData.Format(_T("%d"),((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00+iScene))->GetCheck());	
-		WritePrivateProfileString(sSection,_T("Loop"),sData,sFilePath);
 
 		sUseCtrl.Format(_T("0"));
 		sUseShift.Format(_T("0"));
@@ -836,7 +830,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 			if((char(m_OpeInfo[iScene].sHotkey.GetAt(0))>='0') && (char(m_OpeInfo[iScene].sHotkey.GetAt(0))<='9')){m_OpeInfo[iScene].dwHotKey = char(m_OpeInfo[iScene].sHotkey.GetAt(0))-'0'+0x30;}
 		}
 		m_sEditStatus[iScene].Format(_T("Stand by"));
-		((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00 + iScene))->SetCheck(m_OpeInfo[iScene].bLoop);
 		m_sEditFileName[iScene].Format(_T("%s"),m_OpeInfo[iScene].sFileName);
 		UpdateData(FALSE);
 
@@ -1206,13 +1199,11 @@ void CSAutomationDlg::Operate(int iScene)
 		if(wcscmp(tch,_T("All"))==0){iLogLevel=5;}
 	}
 
-
-	iParam = iLogLevel<<6;
-	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_REPEAT_00+iScene))->GetCheck();
-	iParam += 1<<5;
-	iParam+=(iChecked<<4)+iScene;
+	iParam = iLogLevel<<PARAM_LOGLEVEL_SHIFT;
+	iParam += iScene;
 	m_OpeInfo[iScene].m_bRunning=TRUE;
 	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(&iParam), 0, &dwThreadID);
+
 	while(iParam!=0){Sleep(10);}
 
 	m_sEditStatus[iScene].Format(_T("Running"));
