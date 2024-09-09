@@ -8,6 +8,9 @@
 #include "afxcmn.h"
 #include "InputDialog.h"
 
+CStdioFile g_cf[MAX_THREAD];
+
+
 #define HOTKEY_SCENE_0 (10)
 #define HOTKEY_SCENE_1 (11)
 #define HOTKEY_SCENE_2 (12)
