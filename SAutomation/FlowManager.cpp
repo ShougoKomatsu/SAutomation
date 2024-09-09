@@ -15,7 +15,7 @@ void ResetProgramCounter(int iScene)
 }
 
 
-int SearchLable(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
+int SearchLable(CStringArray* saData, CString sLabel, int iScene)
 {
 	for(int i=0; i<saData->GetCount(); i++)
 	{
@@ -26,11 +26,11 @@ int SearchLable(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
 		sTrim.Format(_T("%s"), sTemp.Left(sTemp.GetLength()-1));
 		sTrim.Trim(_T(" \t"));
 
-		if(iLog>=5)
+		if(g_iLogLevel[iScene]>=5)
 		{
 			CString sWrite;
 			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);
-			cf->WriteString(sWrite);
+			g_cf[iScene].WriteString(sWrite);
 		}
 		if(sTrim.CompareNoCase(sLabel)==0){return i;}
 	}
@@ -38,7 +38,7 @@ int SearchLable(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
 }
 
 
-int SearchSubRoutine(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf)
+int SearchSubRoutine(CStringArray* saData, CString sLabel, int iScene)
 {
 	for(int i=0; i<saData->GetCount(); i++)
 	{
@@ -53,11 +53,11 @@ int SearchSubRoutine(CStringArray* saData, CString sLabel, int iLog, CStdioFile*
 
 		sTrim.Trim(_T(" \t"));
 
-		if(iLog>=5)
+		if(g_iLogLevel[iScene]>=5)
 		{
 			CString sWrite;
 			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);
-			cf->WriteString(sWrite);
+			g_cf[iScene].WriteString(sWrite);
 		}
 		if(sTrim.CompareNoCase(sLabel)==0){return i;}
 	}
