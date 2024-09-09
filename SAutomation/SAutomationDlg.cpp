@@ -22,6 +22,7 @@
 
 CStdioFile g_cf[MAX_THREAD];
 CString g_sLogFilePath[MAX_THREAD];
+int g_iLogLevel[MAX_THREAD];
 
 
 HWND g_hWnd;

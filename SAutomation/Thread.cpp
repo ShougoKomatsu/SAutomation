@@ -6,7 +6,7 @@
 #include "Variables.h"
 #include "FlowManager.h"
 
-#define TREAT_TO_EXIT_THREAD if(iLogLevel>=1){g_cf[iScene].Close();}g_bHalt = FALSE;\
+#define TREAT_TO_EXIT_THREAD if(g_iLogLevel[iScene]>=1){g_cf[iScene].Close();}g_bHalt = FALSE;\
 	ChangeMouseOrigin(0, 0);\
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);\
 	TerminateThread(hGetKey, 0);\
@@ -112,8 +112,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		g_iVar[iScene][i]=0;
 	}
 
-	int iLogLevel;
-	iLogLevel = (iData>>PARAM_LOGLEVEL_SHIFT)&PARAM_LOGLEVEL_MASK;
+	g_iLogLevel[iScene] = (iData>>PARAM_LOGLEVEL_SHIFT)&PARAM_LOGLEVEL_MASK;
 
 	ErrTreatValue iErrorTreat;
 	iErrorTreat = ERROR_TREAT_END;
@@ -123,7 +122,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	BOOL bExit;
 	StopWatch sw;
 	g_sFilePath[iScene].Format(_T("%s\\Log\\log%d.txt"), g_sDir, iScene);
-	if(iLogLevel>=1)
+	if(g_iLogLevel[iScene]>=1)
 	{
 		BOOL bRet;
 		bRet = g_cf[iScene].Open(g_sFilePath[iScene],CFile::modeCreate|CFile::modeWrite);
@@ -135,16 +134,16 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	for(int i=0; i<iListLength; i++)
 	{
 		sWrite.Format(_T("%d "), i+1);
-		if(iLogLevel>=1){g_cf[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
 		bExit = FALSE;
 		if(g_bHalt == TRUE){TREAT_TO_EXIT_THREAD; return 0;}
 
 		sWrite.Format(_T("%s "), saCommands.GetAt(i));
-		if(iLogLevel>=1){g_cf[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
 		CString sReturnParam;
 		iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
 		sWrite.Format(_T("%d\n"), iRet);
-		if(iLogLevel>=1){g_cf[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
 		switch(iRet)
 		{
 		case RETURN_HALT:{TREAT_TO_EXIT_THREAD; return 0;}
@@ -166,16 +165,16 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		case RETURN_FAILED:
 			{
 				sWrite.Format(_T("iErrorTreat = %d %s\n"), iErrorTreat, sLabel);
-				if(iLogLevel>=1){g_cf[iScene].WriteString(sWrite);}
+				if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
 				switch(iErrorTreat)
 				{
 				case ERROR_TREAT_RESUME:{break;}
 				case ERROR_TREAT_GOTO:
 					{
 						PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
-						int iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &g_cf[iScene]);
+						int iLabel = SearchLable(&saCommands,sLabel, g_iLogLevel[iScene], &g_cf[iScene]);
 						sWrite.Format(_T("iLabel = %d\n"), iLabel);
-						if(iLogLevel>=1){g_cf[iScene].WriteString(sWrite);}
+						if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
 						if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 						i=iLabel-1;
@@ -188,7 +187,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		case RETURN_GOTO:
 			{
 				PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
-				int iLabel = SearchLable(&saCommands,sLabel, iLogLevel, &g_cf[iScene]);
+				int iLabel = SearchLable(&saCommands,sLabel, g_iLogLevel[iScene], &g_cf[iScene]);
 				if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 				i=iLabel-1;
@@ -196,7 +195,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			}
 		case RETURN_GOTO_BY_SWITCH:
 			{
-				int iLabel = SearchLable(&saCommands,sReturnParam, iLogLevel, &g_cf[iScene]);
+				int iLabel = SearchLable(&saCommands,sReturnParam, g_iLogLevel[iScene], &g_cf[iScene]);
 				if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 				i=iLabel-1;
@@ -206,7 +205,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			{
 				if(g_iNowLevel[iScene]>=MAX_LEVEL){TREAT_TO_EXIT_THREAD; return 0;}
 
-				int iLabel = SearchSubRoutine(&saCommands, sReturnParam, iLogLevel, &g_cf[iScene]);
+				int iLabel = SearchSubRoutine(&saCommands, sReturnParam, g_iLogLevel[iScene], &g_cf[iScene]);
 				if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 				g_iProgramCounter[iScene][g_iNowLevel[iScene]]=i;
