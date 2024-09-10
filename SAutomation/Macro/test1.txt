@@ -1,2 +1,3 @@
-﻿
-LMouse Click 
+﻿VarInt1=1
+VarInt2=VarInt1
+CompareIntValue(VarInt1,=,VarInt2,test)

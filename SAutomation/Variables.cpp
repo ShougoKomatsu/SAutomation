@@ -181,7 +181,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			int* piSrc;
 
 			piSrc=GetIntValuePointer(iScene, sDataLocal);
-			if(piSrc==NULL){iSrc=_ttoi(sDataLocal);}else{ iSrc=(*piSrc);}
+			if(piSrc==NULL){iSrc=_ttoi(sDataLocal);}else{ iSrc=(*piSrc);LOG_OUTPUT(iScene, sDataLocal, iSrc);}
 
 			return iSrc;
 		}

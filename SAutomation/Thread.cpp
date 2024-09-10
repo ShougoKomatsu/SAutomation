@@ -6,7 +6,7 @@
 #include "Variables.h"
 #include "FlowManager.h"
 
-#define TREAT_TO_EXIT_THREAD if(g_iLogLevel[iScene]>=1){g_cf[iScene].Close();}g_bHalt = FALSE;\
+#define TREAT_TO_EXIT_THREAD if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].Close();}}g_bHalt = FALSE;\
 	ChangeMouseOrigin(0, 0);\
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);\
 	TerminateThread(hGetKey, 0);\
@@ -134,16 +134,16 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	for(int i=0; i<iListLength; i++)
 	{
 		sWrite.Format(_T("%d "), i+1);
-		if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].WriteString(sWrite);}}}
 		bExit = FALSE;
 		if(g_bHalt == TRUE){TREAT_TO_EXIT_THREAD; return 0;}
 
 		sWrite.Format(_T("%s "), saCommands.GetAt(i));
-		if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].WriteString(sWrite);}}
 		CString sReturnParam;
 		iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
 		sWrite.Format(_T("%d\n"), iRet);
-		if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].WriteString(sWrite);}}
 		switch(iRet)
 		{
 		case RETURN_HALT:{TREAT_TO_EXIT_THREAD; return 0;}
@@ -165,7 +165,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		case RETURN_FAILED:
 			{
 				sWrite.Format(_T("iErrorTreat = %d %s\n"), iErrorTreat, sLabel);
-				if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
+				if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].WriteString(sWrite);}}
 				switch(iErrorTreat)
 				{
 				case ERROR_TREAT_RESUME:{break;}
@@ -174,7 +174,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 						PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
 						int iLabel = SearchLable(&saCommands,sLabel, iScene);
 						sWrite.Format(_T("iLabel = %d\n"), iLabel);
-						if(g_iLogLevel[iScene]>=1){g_cf[iScene].WriteString(sWrite);}
+						if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].WriteString(sWrite);}}
 						if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 						i=iLabel-1;

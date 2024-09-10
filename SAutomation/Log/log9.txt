@@ -1,0 +1,6 @@
+1 VarInt1=1 0
+2 VarInt2=VarInt1 <VarInt1 = 1> 0
+3 CompareIntValue(VarInt1,=,VarInt2,test) <VarInt1 = 1> <VarInt2 = 1> 103
+"VarInt1=", "test"
+"VarInt2=VarInt", "test"
+"CompareIntValue(VarInt1,=,VarInt2,test", "test"

@@ -2,6 +2,7 @@
 
 #pragma once
 extern CString g_sDir;
+#define LOG_OUTPUT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_cf[iScene].WriteString(sWrite);}}
 
 
 BOOL GetFileName(CString sFilePath, CString* sFileName);
