@@ -181,7 +181,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			int* piSrc;
 
 			piSrc=GetIntValuePointer(iScene, sDataLocal);
-			if(piSrc==NULL){iSrc=_ttoi(sDataLocal);}else{ iSrc=(*piSrc);LOG_OUTPUT(iScene, sDataLocal, iSrc);}
+			if(piSrc==NULL){iSrc=_ttoi(sDataLocal);}else{ iSrc=(*piSrc);LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);}
 
 			return iSrc;
 		}
@@ -189,31 +189,37 @@ int GetIntValue(int iScene, CString sDataLocal)
 		{
 			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
 			if(pPointSrc==NULL){return 0;}
+			LOG_OUTPUT_POINT(iScene, sDataLocal, pPointSrc);
 			return pPointSrc->r;
 		}
 	case VARIABLE_POINT_GET_C:
 		{
 			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
 			if(pPointSrc==NULL){return 0;}
+			LOG_OUTPUT_POINT(iScene, sDataLocal, pPointSrc);
 			return pPointSrc->c;
 		}
 	case VARIABLE_IMG_WIDTH:
 		{
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
-			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
-			if(pimgRGB == NULL){return 0;}
+			int iSrc;
+			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);			
+			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iWidth;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 			
-			return pimgRGB->iWidth;
+			return iSrc;
 		}
 	case VARIABLE_IMG_HEIGHT:
 		{
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
-
-			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
-			if(pimgRGB == NULL){return 0;}
 			
-			return pimgRGB->iHeight;
+			int iSrc;
+			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iHeight;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+			
+			return iSrc;
 		}
 	default:
 		{
@@ -254,6 +260,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			psSrc=GetStrValuePointer(iScene, sDataLocal);
 			if(psSrc==NULL){sSrc.Format(_T("%s"),sDataLocal);}else{sSrc.Format(_T("%s"),*psSrc);}
 			sOut.Format(_T("%s"),sSrc);
+			LOG_OUTPUT_STR(iScene, sDataLocal, sSrc);
 			return sOut;
 		}
 	case VARIABLE_INT2STR:
@@ -272,6 +279,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 
 			sOut.Format(_T("%s"), NowDateTime(sArg)); 
+			LOG_OUTPUT_STR(iScene, sDataLocal, sOut);
 			return sOut;
 		}
 	default :
@@ -651,6 +659,7 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 const CString Int2Str(int iScene, CString sArg, CString sFormat)
 {
 	int iSrc=GetIntValue(iScene, sArg);
+	LOG_OUTPUT_STR(iScene, _T("Format"), sFormat);
 
 	CString sOut;
 
