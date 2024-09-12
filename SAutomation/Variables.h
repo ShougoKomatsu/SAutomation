@@ -27,6 +27,7 @@ int* GetIntValuePointer(int iScene, CString sArg);
 
 //const CString sSrc=GetStrValuePointer(int iScene, CString sArg);
 CString* GetStrValuePointer(int iScene, CString sArg);
+const CString GetStrValue(int iScene, CString sDataLocal);
 
 ImgRGB* GetImgValuePointer(int iScene, CString sArg);
 const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg);
@@ -68,6 +69,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_SUB_ITSELF_INT (8)
 #define VARIABLE_MULT_ITSELF_INT (9)
 #define VARIABLE_DIV_ITSELF_INT (10)
+#define VARIABLE_IMG_VALUE (11)
 
 #define VARIABLE_STR (100)
 #define VARIABLE_COMBINE_STR (101)
