@@ -91,6 +91,101 @@ BOOL WriteImage(const ImgRGB* imgRGB, CString sFilePath)
 
 	return TRUE;
 }
+BOOL GetValue(ImgRGB* imgRGBin, int iR, int iC, int* iValueR, int* iValueG, int* iValueB)
+{
+	if(imgRGBin==NULL){return FALSE;}
+	if(iR<0){return FALSE;}
+	if(iC<0){return FALSE;}
+	if(iR>=imgRGBin->iHeight){return FALSE;}
+	if(iC>=imgRGBin->iWidth){return FALSE;}
+
+	if(imgRGBin->iChannel==CHANNEL_1_24BGR)
+	{
+		*iValueB=imgRGBin->byImg[3*(iR*imgRGBin->iWidth+iC)+0];
+		*iValueG=imgRGBin->byImg[3*(iR*imgRGBin->iWidth+iC)+1];
+		*iValueR=imgRGBin->byImg[3*(iR*imgRGBin->iWidth+iC)+2];
+		return TRUE;
+	}
+	if(imgRGBin->iChannel==CHANNEL_3_8)
+	{
+		*iValueB=imgRGBin->byImgB[iR*imgRGBin->iWidth+iC];
+		*iValueG=imgRGBin->byImgG[iR*imgRGBin->iWidth+iC];
+		*iValueR=imgRGBin->byImgR[iR*imgRGBin->iWidth+iC];
+		return TRUE;
+	}
+	if(imgRGBin->iChannel==CHANNEL_1_8)
+	{
+		*iValueB=imgRGBin->byImg[iR*imgRGBin->iWidth+iC];
+		*iValueG=imgRGBin->byImg[iR*imgRGBin->iWidth+iC];
+		*iValueR=imgRGBin->byImg[iR*imgRGBin->iWidth+iC];
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL GetValueInRegion(ImgRGB* imgRGBin, int iR0, int iC0, int iR1, int iC1, double* dValueR, double* dValueG, double* dValueB)
+{
+	if(imgRGBin==NULL){return FALSE;}
+	if(iR0>iR1){return FALSE;}
+	if(iC0>iC1){return FALSE;}
+	if(iR0<0){return FALSE;}
+	if(iC0<0){return FALSE;}
+	if(iR1>=imgRGBin->iHeight-1){return FALSE;}
+	if(iC1>=imgRGBin->iWidth-1){return FALSE;}
+
+	ULONGLONG ullSumR=0;
+	ULONGLONG ullSumG=0;
+	ULONGLONG ullSumB=0;
+	if(imgRGBin->iChannel==CHANNEL_1_24BGR)
+	{
+		for(int r=iR0; r<=iR1; r++)
+		{
+			for(int c=iC0; c<=iC1; c++)
+			{
+				ullSumB+=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+0];
+				ullSumG+=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+1];
+				ullSumR+=imgRGBin->byImg[3*(r*imgRGBin->iWidth+c)+2];
+			}
+		}
+		*dValueB=ullSumB/((iR1-iR0+1)*(iC1-iC0+1)*1.0);
+		*dValueG=ullSumG/((iR1-iR0+1)*(iC1-iC0+1)*1.0);
+		*dValueR=ullSumR/((iR1-iR0+1)*(iC1-iC0+1)*1.0);
+		return TRUE;
+	}
+
+	if(imgRGBin->iChannel==CHANNEL_3_8)
+	{
+		for(int r=iR0; r<=iR1; r++)
+		{
+			for(int c=iC0; c<=iC1; c++)
+			{
+				ullSumB+=imgRGBin->byImgB[r*imgRGBin->iWidth+c];
+				ullSumG+=imgRGBin->byImgG[r*imgRGBin->iWidth+c];
+				ullSumR+=imgRGBin->byImgR[r*imgRGBin->iWidth+c];
+			}
+		}
+		*dValueB=ullSumB/((iR1-iR0+1)*(iC1-iC0+1)*1.0);
+		*dValueG=ullSumG/((iR1-iR0+1)*(iC1-iC0+1)*1.0);
+		*dValueR=ullSumR/((iR1-iR0+1)*(iC1-iC0+1)*1.0);
+		return TRUE;
+	}
+
+	if(imgRGBin->iChannel==CHANNEL_1_8)
+	{
+		for(int r=iR0; r<=iR1; r++)
+		{
+			for(int c=iC0; c<=iC1; c++)
+			{
+				ullSumB+=imgRGBin->byImg[r*imgRGBin->iWidth+c];
+			}
+		}
+		*dValueB=ullSumB/((iR1-iR0+1)*(iC1-iC0+1)*1.0);
+		*dValueG=(*dValueB);
+		*dValueR=(*dValueB);
+		return TRUE;
+	}
+	return FALSE;
+}
 
 BOOL CropImage(ImgRGB* imgRGBin, ImgRGB* imgRGBout, int iR0, int iC0, int iR1, int iC1)
 {

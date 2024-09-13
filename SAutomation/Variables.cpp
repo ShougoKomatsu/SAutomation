@@ -231,6 +231,34 @@ int GetIntValue(int iScene, CString sDataLocal)
 			
 			return iSrc;
 		}
+	case VARIABLE_IMG_VALUE:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			if(pimgRGB == NULL){return 0;}
+
+			CString sC;
+			ExtractTokenInBracket(sDataLocal,0,&sC);
+			int iC;
+			iC=GetIntValue(iScene, sC);
+
+			CString sR;
+			ExtractTokenInBracket(sDataLocal,1,&sR);
+			int iR;
+			iR=GetIntValue(iScene, sR);
+
+			CString sColorTemp;
+			ExtractTokenInBracket(sDataLocal,2,&sColorTemp);
+			CString sColor;
+			sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
+			
+			int iValueR, iValueG, iValueB;
+			GetValue(pimgRGB, iR, iC,&iValueR, &iValueG, &iValueB);
+			if(sColor.CompareNoCase(_T("R"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);*/return iValueR;}
+			if(sColor.CompareNoCase(_T("G"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);*/return iValueG;}
+			if(sColor.CompareNoCase(_T("B"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);*/return iValueB;}
+			return 0;
+		}
 	default:
 		{
 			if(sDataLocal.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataLocal)==0)
