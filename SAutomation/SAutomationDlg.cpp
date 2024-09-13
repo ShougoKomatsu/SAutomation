@@ -20,6 +20,11 @@
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
 
+CStdioFile g_cf[MAX_THREAD];
+CString g_sLogFilePath[MAX_THREAD];
+int g_iLogLevel[MAX_THREAD];
+
+
 HWND g_hWnd;
 double g_dSpeedMult=1.0;
 

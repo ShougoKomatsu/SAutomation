@@ -1,2 +1,6 @@
-﻿
-LMouse Click 
+﻿VarPoint1=MousePos
+VarInt1=VarPoint1.r
+VarInt2=VarInt1
+VarStr1=aaa
+VarStr2=VarStr1
+CompareIntValue(VarInt1,=,VarInt2,test)
