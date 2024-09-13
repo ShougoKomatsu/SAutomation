@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+CString g_sDir;
 
 BOOL GetFileName(CString sFilePath, CString* sFileName)
 {
