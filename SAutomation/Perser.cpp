@@ -75,6 +75,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 
 	if(sDataTrim.Left(9).CompareNoCase(_T("waitimage"))==0){*iCommandType=COMMAND_WAIT_IMG; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("waitColor"))==0){*iCommandType=COMMAND_WAIT_COLOR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("waitupdate"))==0){*iCommandType=COMMAND_WAIT_UPDATE; return TRUE;}
 
 	if(sDataTrim.Left(12).CompareNoCase(_T("mouseposincl"))==0){*iCommandType=COMMAND_MOUSE_MOVE_INCL; return TRUE;}

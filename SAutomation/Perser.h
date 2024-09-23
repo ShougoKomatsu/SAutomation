@@ -18,5 +18,6 @@ BOOL PerseLabelFromGotoStatement(CString sData, CString* sLabel);
 
 BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken);
 
+BOOL CountTokenInBracket(CString sParameter, int* iCount);
 
 #endif

@@ -237,26 +237,63 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
 			if(pimgRGB == NULL){return 0;}
 
-			CString sC;
-			ExtractTokenInBracket(sDataLocal,0,&sC);
-			int iC;
-			iC=GetIntValue(iScene, sC);
+			int iTokenNum;
+			CountTokenInBracket(sDataLocal, &iTokenNum);
 
-			CString sR;
-			ExtractTokenInBracket(sDataLocal,1,&sR);
-			int iR;
-			iR=GetIntValue(iScene, sR);
+			if(iTokenNum==3)
+			{
+				CString sC;
+				ExtractTokenInBracket(sDataLocal,0,&sC);
+				int iC;
+				iC=GetIntValue(iScene, sC);
 
-			CString sColorTemp;
-			ExtractTokenInBracket(sDataLocal,2,&sColorTemp);
-			CString sColor;
-			sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
-			
-			int iValueR, iValueG, iValueB;
-			GetValue(pimgRGB, iR, iC,&iValueR, &iValueG, &iValueB);
-			if(sColor.CompareNoCase(_T("R"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);*/return iValueR;}
-			if(sColor.CompareNoCase(_T("G"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);*/return iValueG;}
-			if(sColor.CompareNoCase(_T("B"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);*/return iValueB;}
+				CString sR;
+				ExtractTokenInBracket(sDataLocal,1,&sR);
+				int iR;
+				iR=GetIntValue(iScene, sR);
+
+				CString sColorTemp;
+				ExtractTokenInBracket(sDataLocal,2,&sColorTemp);
+				CString sColor;
+				sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
+
+				int iValueR, iValueG, iValueB;
+				GetValue(pimgRGB, iR, iC,&iValueR, &iValueG, &iValueB);
+				if(sColor.CompareNoCase(_T("R"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);return iValueR;}
+				if(sColor.CompareNoCase(_T("G"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);return iValueG;}
+				if(sColor.CompareNoCase(_T("B"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);return iValueB;}
+			}
+			else if(iTokenNum==5)
+			{
+				CString sArg;
+				int iC1;
+				int iR1;
+				int iC2;
+				int iR2;
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				iC1=GetIntValue(iScene, sArg);
+				ExtractTokenInBracket(sDataLocal,1,&sArg);
+				iR1=GetIntValue(iScene, sArg);
+				ExtractTokenInBracket(sDataLocal,2,&sArg);
+				iC2=GetIntValue(iScene, sArg);
+				ExtractTokenInBracket(sDataLocal,3,&sArg);
+				iR2=GetIntValue(iScene, sArg);
+
+				CString sColorTemp;
+				ExtractTokenInBracket(sDataLocal,4,&sColorTemp);
+				CString sColor;
+				sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
+
+				double dValueR, dValueG, dValueB;
+				GetValueInRegion(pimgRGB, iR1, iC1, iR2, iC2, &dValueR, &dValueG, &dValueB);
+				int iValueR, iValueG, iValueB;
+				iValueR=int(dValueR+0.5);
+				iValueG=int(dValueG+0.5);
+				iValueB=int(dValueB+0.5);
+				if(sColor.CompareNoCase(_T("R"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);return iValueR;}
+				if(sColor.CompareNoCase(_T("G"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);return iValueG;}
+				if(sColor.CompareNoCase(_T("B"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);return iValueB;}
+			}
 			return 0;
 		}
 	default:
