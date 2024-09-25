@@ -8,5 +8,5 @@ extern int g_iProgramCounter[MAX_THREAD][MAX_LEVEL];
 
 void ResetProgramCounter(int iScene);
 
-int SearchLable(CStringArray* saData, CString sLabel, int iLog,  CStdioFile* cf);
-int SearchSubRoutine(CStringArray* saData, CString sLabel, int iLog, CStdioFile* cf);
+int SearchLable(CStringArray* saData, CString sLabel, int iScene);
+int SearchSubRoutine(CStringArray* saData, CString sLabel, int iScene);

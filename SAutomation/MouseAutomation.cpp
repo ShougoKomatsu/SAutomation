@@ -124,11 +124,8 @@ ReturnValue MouseLUp(int iScene, CStringArray* saData)
 		if(p==NULL){return RETURN_FAILED;}
 		return MouseLUp(p->c,p->r);
 	}
-	int iSrc1, iSrc2;
-	int* piSrc1=GetIntValuePointer(iScene, saData->GetAt(0));
-	if(piSrc1==NULL){iSrc1=_ttoi(saData->GetAt(0));}else{iSrc1=(*piSrc1);}
-	int* piSrc2=GetIntValuePointer(iScene, saData->GetAt(1));
-	if(piSrc2==NULL){iSrc2=_ttoi(saData->GetAt(1));}else{iSrc2=(*piSrc2);}
+	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
 	return MouseLUp(iSrc1, iSrc2);
 }
 
@@ -287,8 +284,12 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
 
-	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
-	
+	CString sArg;
+	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sModelFilePath.Format(_T("%s"), sArg);
+
 	iC0 = GetIntValue(iScene, saData->GetAt(1));
 	iR0 = GetIntValue(iScene, saData->GetAt(2));
 	iC1 = GetIntValue(iScene, saData->GetAt(3));
@@ -340,8 +341,12 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	BOOL bRet;
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
-
-	sModelFilePath.Format(_T("%s"), saData->GetAt(0));
+	
+	CString sArg;
+	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sModelFilePath.Format(_T("%s"), sArg);
 
 	iC0=GetIntValue(iScene, saData->GetAt(1));
 	iR0=GetIntValue(iScene, saData->GetAt(2));

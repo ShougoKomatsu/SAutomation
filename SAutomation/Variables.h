@@ -11,9 +11,9 @@ struct Point
 	int c;
 	Point(){r=0; c=0;}
 	Point(Point* pPointIn){r=pPointIn->r; c=pPointIn->c;}
-	Point(int rIn, int cIn){Set(rIn, cIn);}
-	void Set(int rIn, int cIn){r=rIn; c=cIn;}
-	Point operator = (Point pIn){Set(pIn.r, pIn.c);}
+	Point( int cIn,int rIn){Set(cIn,rIn);}
+	void Set(int cIn,int rIn){r=rIn; c=cIn;}
+	Point operator = (Point pIn){Set(pIn.c,pIn.r);}
 };
 
 #define MAX_VARIABLES (8)
@@ -25,7 +25,7 @@ extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
 
-//const CString sSrc=GetStrValuePointer(int iScene, CString sArg);
+const CString GetStrValue(int iScene, CString sDataLocal);
 CString* GetStrValuePointer(int iScene, CString sArg);
 const CString GetStrValue(int iScene, CString sDataLocal);
 
@@ -43,7 +43,8 @@ int IntDiv(int iScene, CString sArg1, CString sArg2);
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
 
 ReturnValue Flow_Assign(int iScene, CStringArray* saData);
-ReturnValue Flow_IsIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam);
 
 void AssignInt(int iScene, CString sArg, int iInput);
 void AssignString(int iScene, CString sArg, CString sInput);
