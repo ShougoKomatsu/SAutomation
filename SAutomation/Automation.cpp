@@ -559,7 +559,6 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 	else if(saData->GetAt(1).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	int iSrc;
 	if(saData->GetCount()>=3)
 	{
 		iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(2));

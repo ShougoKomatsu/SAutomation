@@ -50,7 +50,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 
 		if(sDataTrim.Right(5).CompareNoCase(_T("Width"))==0){*iCommandType=VARIABLE_IMG_WIDTH; return TRUE;}
 		if(sDataTrim.Right(6).CompareNoCase(_T("Height"))==0){*iCommandType=VARIABLE_IMG_HEIGHT; return TRUE;}
-//		if((sDataTrim.Mid(10,6).Compare(_T("Value(")) == 0) && sDataTrim.Right(1).CompareNoCase(_T(")"))==0){*iCommandType = VARIABLE_IMG_VALUE; return TRUE;}
+		if((sDataTrim.Mid(10,6).Compare(_T("Value(")) == 0) && sDataTrim.Right(1).CompareNoCase(_T(")"))==0){*iCommandType = VARIABLE_IMG_VALUE; return TRUE;}
 		return FALSE;
 	}
 
@@ -254,9 +254,9 @@ int GetIntValue(int iScene, CString sDataLocal)
 			
 			int iValueR, iValueG, iValueB;
 			GetValue(pimgRGB, iR, iC,&iValueR, &iValueG, &iValueB);
-			if(sColor.CompareNoCase(_T("R"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);*/return iValueR;}
-			if(sColor.CompareNoCase(_T("G"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);*/return iValueG;}
-			if(sColor.CompareNoCase(_T("B"))==0){/*LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);*/return iValueB;}
+			if(sColor.CompareNoCase(_T("R"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);return iValueR;}
+			if(sColor.CompareNoCase(_T("G"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);return iValueG;}
+			if(sColor.CompareNoCase(_T("B"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);return iValueB;}
 			return 0;
 		}
 	default:
