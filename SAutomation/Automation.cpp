@@ -168,6 +168,7 @@ ReturnValue KeyUp(BYTE bySendKey)
 ReturnValue GetInput(CStringArray* saData, CString* sReturnParam)
 {
 	g_dlg->cInput.m_saParam.Copy(*saData);
+	g_dlg->cInput.m_bInputMulti=TRUE;
 	g_dlg->	cInput.DoModal();
 	sReturnParam->Format(_T("%s"), g_dlg->cInput.m_sResultLabel);
 	return RETURN_GOTO_BY_SWITCH;

@@ -13,6 +13,7 @@ IMPLEMENT_DYNAMIC(CInputDialog, CDialogEx)
 
 CInputDialog::CInputDialog(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CInputDialog::IDD, pParent)
+	, m_sReturnValue(_T(""))
 {
 	m_sLabel = NULL;
 	m_byKey=NULL;
@@ -29,6 +30,7 @@ CInputDialog::~CInputDialog()
 void CInputDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT1, m_sReturnValue);
 }
 
 
@@ -43,6 +45,8 @@ BOOL CInputDialog::PreTranslateMessage(MSG* pMsg)
 {
 	if(pMsg->message==WM_KEYUP)
 	{
+		if(m_bInputMulti==FALSE)
+		{
 		for(int i=0; i<m_iKeyNum; i++)
 		{
 			if(pMsg->wParam == m_byKey[i])
@@ -51,6 +55,13 @@ BOOL CInputDialog::PreTranslateMessage(MSG* pMsg)
 			}
 		}
 		OnOK();
+		}
+
+		if(pMsg->wParam==VK_RETURN)
+		{
+			UpdateData(TRUE);
+			OnOK();
+		}
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);
@@ -82,6 +93,15 @@ BOOL CInputDialog::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	if(m_bInputMulti==TRUE)
+	{
+		((CButton*)GetDlgItem(IDC_EDIT1))->ShowWindow(SW_SHOW);
+		((CButton*)GetDlgItem(IDC_EDIT1))->SetFocus();
+	}
+	else
+	{
+		((CButton*)GetDlgItem(IDC_EDIT1))->ShowWindow(SW_HIDE);
+	}
 	BOOL bRet;
 	bRet = PerseParameter();
 	if(bRet != TRUE){m_sLabel[0].Format(_T("")); return FALSE;}

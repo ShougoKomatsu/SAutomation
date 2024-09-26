@@ -3,6 +3,8 @@
 #include "perser.h"
 #include "Common.h"
 #include "MouseAutomation.h"
+#include "InputDialog.h"
+
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
@@ -1113,5 +1115,30 @@ ReturnValue MessageBox(int iScene, CStringArray* saData)
 		return RETURN_NORMAL;
 	}
 
+	return RETURN_FAILED;
+}
+
+ReturnValue InputValue(int iScene, CStringArray* saData)
+{
+	g_dlg->cInput.m_saParam.Copy(*saData);
+	g_dlg->	cInput.DoModal();
+	CString sReturnParam;
+	sReturnParam.Format(_T("%s"), g_dlg->cInput.m_sResultLabel);
+	if(saData->GetAt(0).Left(6).CompareNoCase(_T("VarInt"))==0)
+	{
+		int* iDst;
+		iDst=GetIntValuePointer(iScene, saData->GetAt(0));
+		if(iDst == NULL){return RETURN_FAILED;}
+		*iDst=_ttoi(sReturnParam);
+		return RETURN_NORMAL;
+	}
+	if(saData->GetAt(0).Left(6).CompareNoCase(_T("VarStr"))==0)
+	{
+		CString* sDst;
+		sDst=GetStrValuePointer(iScene, saData->GetAt(0));
+		if(sDst == NULL){return RETURN_FAILED;}
+		sDst->Format(_T("%s"),sReturnParam);
+		return RETURN_NORMAL;
+	}
 	return RETURN_FAILED;
 }
