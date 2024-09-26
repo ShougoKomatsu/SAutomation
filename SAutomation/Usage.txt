@@ -64,24 +64,28 @@ SetOriginToWindow(ウインドウ名(部分一致))
 ウィンドウの移動に合わせた自動更新はされないので、必要に応じて再実行すること。
 
 ----------------------------------------------------------------------------
-SetOriginToImage(文字列, 整数, 整数, 整数, 整数)
+SetOriginToImage(ファイル名, 探索領域左上X, 探索領域左上Y, 探索領域右下X, 探索領域右下X)
 画像の移動に合わせた自動更新はされないので、必要に応じて再実行すること。
 
-----------------------------------------------------------------------------
-MouseLClick(整数, 整数)
-MouseLDown(整数, 整数)
-MouseLUp(整数, 整数)
-MouseRClick(整数, 整数)
-MouseRDown(整数, 整数)
-MouseRUp(整数, 整数)
-MouseMClick(整数, 整数)
-MouseMDown(整数, 整数)
-MouseMUp(整数, 整数)
+ファイル名: 文字列。ファイルパスもしくはMacro\Model内のファイル名
+探索領域: 整数
 
-MousePos(整数, 整数)
-MousePosIncl(整数, 整数)
+----------------------------------------------------------------------------
+MouseLClick(X, Y)
+MouseLDown(X, Y)
+MouseLUp(X, Y)
+MouseRClick(X, Y)
+MouseRDown(X, Y)
+MouseRUp(X, Y)
+MouseMClick(X, Y)
+MouseMDown(X, Y)
+MouseMUp(X, Y)
+
+MousePos(X, Y)
+MousePosIncl(X, Y)
 Wheel(整数)
 
+X, Y: 整数
 現在の位置で動作
 MouseLClick
 MouseLDown
@@ -239,15 +243,17 @@ VarStrt1～VarStr8
 文字列変数名 = NowDateTime(文字列変数名or文字列) //現在時刻文字変換
 
 
+ファイルから画像読み込み画像型変数に代入する
 VarImg1～VarImg8
 画像変数名=文字列変数名or文字列
-ファイルから画像読み込み
 
+画面全体のスクリーンショットを撮り画像型変数に代入する
 画像変数名=ScreenShot
-画面全体のスクリーンショット
 
-画像変数名=CropImage(画像変数名, 整数変数名or整数値, 整数変数名or整数値, 整数変数名or整数値, 整数変数名or整数値)
-画像切り出し
+画像切り出し画像型変数に代入する
+画像変数名=CropImage(画像変数名, 範囲左上X, 範囲左上Y, 範囲右下X, 範囲右下Y)
 
-WriteImage(画像変数名, 文字列変数名or文字列)
-画像保存
+範囲: 整数
+
+画像型変数をファイルに保存する
+WriteImage(画像変数名, ファイルパス)
