@@ -15,6 +15,8 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
@@ -28,6 +30,8 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=VARIABLE_ADD_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
@@ -297,6 +301,17 @@ int GetIntValue(int iScene, CString sDataLocal)
 				if(sColor.CompareNoCase(_T("B"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);return iValueB;}
 			}
 			return 0;
+		}
+	case VARIABLE_INPUT:
+		{
+			CStringArray saData;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData.Add(sArg);
+			saData.Add(_T("-1"));
+			g_dlg->cInput.m_bInputMulti=TRUE;
+			g_dlg->cInput.m_saParam.Copy(saData);
+			g_dlg->	cInput.DoModal();
+			return _ttoi(g_dlg->cInput.m_sReturnValue);
 		}
 	default:
 		{
@@ -1115,30 +1130,5 @@ ReturnValue MessageBox(int iScene, CStringArray* saData)
 		return RETURN_NORMAL;
 	}
 
-	return RETURN_FAILED;
-}
-
-ReturnValue InputValue(int iScene, CStringArray* saData)
-{
-	g_dlg->cInput.m_saParam.Copy(*saData);
-	g_dlg->	cInput.DoModal();
-	CString sReturnParam;
-	sReturnParam.Format(_T("%s"), g_dlg->cInput.m_sResultLabel);
-	if(saData->GetAt(0).Left(6).CompareNoCase(_T("VarInt"))==0)
-	{
-		int* iDst;
-		iDst=GetIntValuePointer(iScene, saData->GetAt(0));
-		if(iDst == NULL){return RETURN_FAILED;}
-		*iDst=_ttoi(sReturnParam);
-		return RETURN_NORMAL;
-	}
-	if(saData->GetAt(0).Left(6).CompareNoCase(_T("VarStr"))==0)
-	{
-		CString* sDst;
-		sDst=GetStrValuePointer(iScene, saData->GetAt(0));
-		if(sDst == NULL){return RETURN_FAILED;}
-		sDst->Format(_T("%s"),sReturnParam);
-		return RETURN_NORMAL;
-	}
 	return RETURN_FAILED;
 }

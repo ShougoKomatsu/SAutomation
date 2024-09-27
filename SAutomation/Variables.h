@@ -89,6 +89,8 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_POINT_DIRECT (305)
 #define VARIABLE_POINT_MOUSE_POS (306)
 
+#define VARIABLE_INPUT (400)
+
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)
 #define VARIABLE_SELF_SRC_SUB (2)

@@ -57,13 +57,13 @@ BOOL CInputDialog::PreTranslateMessage(MSG* pMsg)
 		OnOK();
 		}
 
-		if(pMsg->wParam==VK_RETURN)
-		{
-			UpdateData(TRUE);
-			OnOK();
-		}
 	}
 
+	if(pMsg->wParam==VK_RETURN)
+	{
+		UpdateData(TRUE);
+		OnOK();
+	}
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 BOOL CInputDialog::PerseParameter()
@@ -95,8 +95,14 @@ BOOL CInputDialog::OnInitDialog()
 
 	if(m_bInputMulti==TRUE)
 	{
+		m_sReturnValue.Format(_T(""));
+		UpdateData(FALSE);
+		SetWindowText(_T("Input"));
 		((CButton*)GetDlgItem(IDC_EDIT1))->ShowWindow(SW_SHOW);
 		((CButton*)GetDlgItem(IDC_EDIT1))->SetFocus();
+		((CButton*)GetDlgItem(IDC_STATIC_INSTRUCTION))->SetWindowText(m_saParam.GetAt(0));
+		((CButton*)GetDlgItem(IDC_STATIC_MESSAGE))->SetWindowText(_T(""));
+		return TRUE;
 	}
 	else
 	{
