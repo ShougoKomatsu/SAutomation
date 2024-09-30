@@ -1,5 +1,5 @@
-﻿VarInt1=Input(test)
-msgbox(varint1)
+﻿VarStr1=Input(test)
+msgbox(varstr1)
 VarPoint1=MousePos
 VarInt1=VarPoint1.r
 VarInt2=VarInt1

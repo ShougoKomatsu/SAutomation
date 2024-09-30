@@ -15,7 +15,7 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
-	if(sDataTrim.CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
@@ -373,6 +373,17 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			sOut.Format(_T("%s"), NowDateTime(sArg)); 
 			LOG_OUTPUT_STR(iScene, sDataLocal, sOut);
 			return sOut;
+		}
+	case VARIABLE_INPUT:
+		{
+			CStringArray saData;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData.Add(sArg);
+			saData.Add(_T("-1"));
+			g_dlg->cInput.m_bInputMulti=TRUE;
+			g_dlg->cInput.m_saParam.Copy(saData);
+			g_dlg->	cInput.DoModal();
+			return g_dlg->cInput.m_sReturnValue;
 		}
 	default :
 		{
@@ -910,6 +921,18 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			CString sArg;
 			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
 			sDstPointer->Format(_T("%s"), NowDateTime(sArg)); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_INPUT:
+		{
+			CStringArray saData;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData.Add(sArg);
+			saData.Add(_T("-1"));
+			g_dlg->cInput.m_bInputMulti=TRUE;
+			g_dlg->cInput.m_saParam.Copy(saData);
+			g_dlg->	cInput.DoModal();
+			sDstPointer->Format(_T("%s"), g_dlg->cInput.m_sReturnValue); 
 			return RETURN_NORMAL;
 		}
 	}
