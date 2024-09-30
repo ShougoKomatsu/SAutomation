@@ -1,16 +1,2 @@
-1 VarStr1=Input(test) 0
-2 msgbox(varstr1) <varstr1 = ar7ara> 0
-3 VarPoint1=MousePos 0
-4 VarInt1=VarPoint1.r <VarPoint = (554, 874)> 0
-5 VarInt2=VarInt1 <VarInt1 = 554> 0
-6 VarStr1=aaa <aaa = aaa> 0
-7 VarStr2=VarStr1 <VarStr1 = aaa> 0
-8 CompareIntValue(VarInt1,=,VarInt2,test) <VarInt1 = 554> <VarInt2 = 554> 103
-"VarStr1=Input(test", "test"
-"msgbox(varstr1", "test"
-"VarPoint1=MousePo", "test"
-"VarInt1=VarPoint1.", "test"
-"VarInt2=VarInt", "test"
-"VarStr1=aa", "test"
-"VarStr2=VarStr", "test"
-"CompareIntValue(VarInt1,=,VarInt2,test", "test"
+1 VarInt1=1 0
+2 VarInt2=VarInt1 <VarInt1 = 1> 0

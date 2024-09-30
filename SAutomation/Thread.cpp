@@ -110,6 +110,9 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	for(int i=0; i<MAX_VARIABLES; i++)
 	{
 		g_iVar[iScene][i]=0;
+		g_sVar[iScene][i].Format(_T(""));
+		g_point[iScene][i].Set(0, 0);
+		g_imgRGB[iScene][i].Init();
 	}
 
 	g_iLogLevel[iScene] = (iData>>PARAM_LOGLEVEL_SHIFT)&PARAM_LOGLEVEL_MASK;
