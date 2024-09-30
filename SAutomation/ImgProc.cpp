@@ -91,6 +91,31 @@ BOOL WriteImage(const ImgRGB* imgRGB, CString sFilePath)
 
 	return TRUE;
 }
+
+BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
+{
+	if(imgIn==NULL){return FALSE;}
+	if(imgOut==NULL){return FALSE;}
+	if(imgIn==imgOut){return FALSE;}//‚¢‚¸‚ê‘Î‰ž‚·‚é
+
+	if(sDstColor.CompareNoCase(_T("hsv"))==0)
+	{
+		imgOut->Set(imgIn->iWidth, imgIn->iWidth, CHANNEL_3_8);
+		{
+			for(int r=0; r<imgIn->iHeight; r++)
+			{
+				for(int c=0; c<imgIn->iWidth; c++)
+				{
+					BYTE byR=imgIn->byImgR[r*imgIn->iWidth+c];
+					BYTE byG=imgIn->byImgR[r*imgIn->iWidth+c];
+					BYTE byB=imgIn->byImgR[r*imgIn->iWidth+c];
+				}
+			}
+		}
+	}
+
+}
+
 BOOL GetValue(ImgRGB* imgRGBin, int iR, int iC, int* iValueR, int* iValueG, int* iValueB)
 {
 	if(imgRGBin==NULL){return FALSE;}
