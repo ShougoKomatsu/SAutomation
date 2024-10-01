@@ -168,6 +168,7 @@ ReturnValue KeyUp(BYTE bySendKey)
 ReturnValue GetInput(CStringArray* saData, CString* sReturnParam)
 {
 	g_dlg->cInput.m_saParam.Copy(*saData);
+	g_dlg->cInput.m_bInputMulti=TRUE;
 	g_dlg->	cInput.DoModal();
 	sReturnParam->Format(_T("%s"), g_dlg->cInput.m_sResultLabel);
 	return RETURN_GOTO_BY_SWITCH;
@@ -493,7 +494,6 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 		else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
 	}
 
-
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 	ImgRGB imgTarget;
@@ -524,7 +524,6 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 		if((iWaitOn == 1) && (bColorBeing == TRUE)) {return RETURN_NORMAL;}
 		if((iWaitOn == 0) && (bColorBeing == FALSE)) {return RETURN_NORMAL;}
 
-
 		ReturnValue iRet=K_Sleep(Halt, Suspend, 1);
 		if(iRet<0){return iRet;}
 		if(iTimeOutMilliSec>=0)
@@ -538,7 +537,6 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 	return RETURN_NORMAL;
 }
-
 
 
 ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)

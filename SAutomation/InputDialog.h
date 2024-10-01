@@ -9,7 +9,7 @@ class CInputDialog : public CDialogEx
 
 public:
 		CStringArray m_saParam;
-	
+	BOOL m_bInputMulti;
 	CString m_sMessage;
 	int m_iTimeOutMilliSec;
 	BYTE* m_byKey;
@@ -31,5 +31,6 @@ protected:
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual BOOL OnInitDialog();
+	CString m_sReturnValue;
 };
 

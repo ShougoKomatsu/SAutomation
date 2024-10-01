@@ -3,6 +3,8 @@
 #include "perser.h"
 #include "Common.h"
 #include "MouseAutomation.h"
+#include "InputDialog.h"
+
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
@@ -13,6 +15,8 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
@@ -26,6 +30,8 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("AddInt"))==0){*iCommandType=VARIABLE_ADD_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
@@ -237,27 +243,72 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
 			if(pimgRGB == NULL){return 0;}
 
-			CString sC;
-			ExtractTokenInBracket(sDataLocal,0,&sC);
-			int iC;
-			iC=GetIntValue(iScene, sC);
+			int iTokenNum;
+			CountTokenInBracket(sDataLocal, &iTokenNum);
 
-			CString sR;
-			ExtractTokenInBracket(sDataLocal,1,&sR);
-			int iR;
-			iR=GetIntValue(iScene, sR);
+			if(iTokenNum==3)
+			{
+				CString sR, sC;
+				ExtractTokenInBracket(sDataLocal,0,&sC);
+				ExtractTokenInBracket(sDataLocal,1,&sR);
+				int iR, iC;
+				iC=GetIntValue(iScene, sC);
+				iR=GetIntValue(iScene, sR);
 
-			CString sColorTemp;
-			ExtractTokenInBracket(sDataLocal,2,&sColorTemp);
-			CString sColor;
-			sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
-			
-			int iValueR, iValueG, iValueB;
-			GetValue(pimgRGB, iR, iC,&iValueR, &iValueG, &iValueB);
-			if(sColor.CompareNoCase(_T("R"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);return iValueR;}
-			if(sColor.CompareNoCase(_T("G"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);return iValueG;}
-			if(sColor.CompareNoCase(_T("B"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);return iValueB;}
+				CString sColorTemp;
+				ExtractTokenInBracket(sDataLocal,2,&sColorTemp);
+				CString sColor;
+				sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
+
+				int iValueR, iValueG, iValueB;
+				GetValue(pimgRGB, iR, iC,&iValueR, &iValueG, &iValueB);
+				if(sColor.CompareNoCase(_T("R"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);return iValueR;}
+				if(sColor.CompareNoCase(_T("G"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);return iValueG;}
+				if(sColor.CompareNoCase(_T("B"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);return iValueB;}
+			}
+			else if(iTokenNum==5)
+			{
+				CString sArg;
+				int iC1;
+				int iR1;
+				int iC2;
+				int iR2;
+				ExtractTokenInBracket(sDataLocal,0,&sArg);
+				iC1=GetIntValue(iScene, sArg);
+				ExtractTokenInBracket(sDataLocal,1,&sArg);
+				iR1=GetIntValue(iScene, sArg);
+				ExtractTokenInBracket(sDataLocal,2,&sArg);
+				iC2=GetIntValue(iScene, sArg);
+				ExtractTokenInBracket(sDataLocal,3,&sArg);
+				iR2=GetIntValue(iScene, sArg);
+
+				CString sColorTemp;
+				ExtractTokenInBracket(sDataLocal,4,&sColorTemp);
+				CString sColor;
+				sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
+
+				double dValueR, dValueG, dValueB;
+				GetValueInRegion(pimgRGB, iR1, iC1, iR2, iC2, &dValueR, &dValueG, &dValueB);
+				int iValueR, iValueG, iValueB;
+				iValueR=int(dValueR+0.5);
+				iValueG=int(dValueG+0.5);
+				iValueB=int(dValueB+0.5);
+				if(sColor.CompareNoCase(_T("R"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueR);return iValueR;}
+				if(sColor.CompareNoCase(_T("G"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueG);return iValueG;}
+				if(sColor.CompareNoCase(_T("B"))==0){LOG_OUTPUT_INT(iScene, sDataLocal, iValueB);return iValueB;}
+			}
 			return 0;
+		}
+	case VARIABLE_INPUT:
+		{
+			CStringArray saData;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData.Add(sArg);
+			saData.Add(_T("-1"));
+			g_dlg->cInput.m_bInputMulti=TRUE;
+			g_dlg->cInput.m_saParam.Copy(saData);
+			g_dlg->	cInput.DoModal();
+			return _ttoi(g_dlg->cInput.m_sReturnValue);
 		}
 	default:
 		{
@@ -319,6 +370,17 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			sOut.Format(_T("%s"), NowDateTime(sArg)); 
 			LOG_OUTPUT_STR(iScene, sDataLocal, sOut);
 			return sOut;
+		}
+	case VARIABLE_INPUT:
+		{
+			CStringArray saData;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData.Add(sArg);
+			saData.Add(_T("-1"));
+			g_dlg->cInput.m_bInputMulti=TRUE;
+			g_dlg->cInput.m_saParam.Copy(saData);
+			g_dlg->	cInput.DoModal();
+			return g_dlg->cInput.m_sReturnValue;
 		}
 	default :
 		{
@@ -856,6 +918,18 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			CString sArg;
 			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
 			sDstPointer->Format(_T("%s"), NowDateTime(sArg)); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_INPUT:
+		{
+			CStringArray saData;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData.Add(sArg);
+			saData.Add(_T("-1"));
+			g_dlg->cInput.m_bInputMulti=TRUE;
+			g_dlg->cInput.m_saParam.Copy(saData);
+			g_dlg->	cInput.DoModal();
+			sDstPointer->Format(_T("%s"), g_dlg->cInput.m_sReturnValue); 
 			return RETURN_NORMAL;
 		}
 	}
