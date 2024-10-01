@@ -1,2 +1,1 @@
-﻿VarInt1=1
-VarInt2=VarInt1
+﻿WaitColor(R, 0, 1, 0, 0, on) 

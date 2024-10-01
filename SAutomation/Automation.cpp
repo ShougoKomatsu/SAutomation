@@ -438,68 +438,91 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	return RETURN_NORMAL;
 }
 
-
 ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
 	int iTimeOutMilliSec;
 
-	if(saData->GetCount()<=6){return RETURN_FAILED;}
+	BOOL bRegion;
+	if((saData->GetCount()==8) || (saData->GetCount()==9)){bRegion = TRUE;}
+	else if((saData->GetCount()==6) || (saData->GetCount()==7)){bRegion = FALSE;}
+	else{return RETURN_FAILED;}
 
 	CString sModelFilePath;
 	int iR0, iC0, iR1, iC1;
 
 	CString sArg;
-	int iValue;
-	iValue = GetIntValue(iScene, saData->GetAt(0));
 	CString sColor;
-	sColor.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(1)));
+	sColor.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
 	
 	if((sColor.CompareNoCase(_T("R"))!=0) && (sColor.CompareNoCase(_T("G"))!=0) && (sColor.CompareNoCase(_T("B"))!=0)){return RETURN_FAILED;}
 
 	int iLower;
-	iLower = GetIntValue(iScene, saData->GetAt(2));
+	iLower = GetIntValue(iScene, saData->GetAt(1));
 	int iUpper;
-	iUpper = GetIntValue(iScene, saData->GetAt(3));
+	iUpper = GetIntValue(iScene, saData->GetAt(2));
 
-	if(saData->GetCount()==10)
+
+
+	if(bRegion == TRUE)
 	{
-		iC0 = GetIntValue(iScene, saData->GetAt(4));
-		iR0 = GetIntValue(iScene, saData->GetAt(5));
-		iC1 = GetIntValue(iScene, saData->GetAt(6));
-		iR1 = GetIntValue(iScene, saData->GetAt(7));
+		iC0 = GetIntValue(iScene, saData->GetAt(3));
+		iR0 = GetIntValue(iScene, saData->GetAt(4));
+		iC1 = GetIntValue(iScene, saData->GetAt(5));
+		iR1 = GetIntValue(iScene, saData->GetAt(6));
 
-		if(saData->GetAt(8).CompareNoCase(_T("on"))==0){iWaitOn=1;}
-		else if(saData->GetAt(8).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+		if(saData->GetAt(7).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+		else if(saData->GetAt(7).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 		else{return RETURN_FAILED;}
 
 
-		if(saData->GetCount()==9){iTimeOutMilliSec=-1;}
-		else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(9));}
+		if(saData->GetCount()==8){iTimeOutMilliSec=-1;}
+		else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(8));}
 	}
-	
+	else
+	{
+		iC0 = GetIntValue(iScene, saData->GetAt(3));
+		iR0 = GetIntValue(iScene, saData->GetAt(4));
 
+		if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+		else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+		else{return RETURN_FAILED;}
+
+
+		if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
+		else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
+	}
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 	ImgRGB imgTarget;
 	BOOL bRet;
-	int iFoundR, iFoundC;
 	while(1)
 	{
 		Screenshot(&imgTarget);
 
 		double dValueR, dValueG, dValueB;
-		bRet = GetValueInRegion(&imgTarget,iR0, iC0, iR1, iC1, &dValueR, &dValueG, &dValueB);	
+		BOOL bColorBeing;
 
-		if(sColor.CompareNoCase(_T("R"))==0){if((iLower <= dValueR) && (dValueR<=iUpper)){bRet = TRUE;}else{bRet = FALSE;}}
-		if(sColor.CompareNoCase(_T("G"))==0){if((iLower <= dValueG) && (dValueG<=iUpper)){bRet = TRUE;}else{bRet = FALSE;}}
-		if(sColor.CompareNoCase(_T("B"))==0){if((iLower <= dValueB) && (dValueB<=iUpper)){bRet = TRUE;}else{bRet = FALSE;}}
+		if(bRegion == TRUE)
+		{
+			bRet = GetValueInRegion(&imgTarget,iR0, iC0, iR1, iC1, &dValueR, &dValueG, &dValueB);
+		}
+		else
+		{
+			int iValueR, iValueG, iValueB;
+			bRet = GetValue(&imgTarget,iR0, iC0, &iValueR, &iValueG, &iValueB);	
+			dValueR=iValueR;
+			dValueG=iValueG;
+			dValueB=iValueB;
+		}
+		if(sColor.CompareNoCase(_T("R"))==0){if((iLower <= dValueR) && (dValueR<=iUpper)){bColorBeing = TRUE;}else{bColorBeing = FALSE;}}
+		if(sColor.CompareNoCase(_T("G"))==0){if((iLower <= dValueG) && (dValueG<=iUpper)){bColorBeing = TRUE;}else{bColorBeing = FALSE;}}
+		if(sColor.CompareNoCase(_T("B"))==0){if((iLower <= dValueB) && (dValueB<=iUpper)){bColorBeing = TRUE;}else{bColorBeing = FALSE;}}
 
-		if((iWaitOn == 1) && (bRet == TRUE)) {return RETURN_NORMAL;}
-		if((iWaitOn == 0) && (bRet == FALSE)) {return RETURN_NORMAL;}
-
+		if((iWaitOn == 1) && (bColorBeing == TRUE)) {return RETURN_NORMAL;}
+		if((iWaitOn == 0) && (bColorBeing == FALSE)) {return RETURN_NORMAL;}
 
 		ReturnValue iRet=K_Sleep(Halt, Suspend, 1);
 		if(iRet<0){return iRet;}
@@ -534,7 +557,6 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 	else if(saData->GetAt(1).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	int iSrc;
 	if(saData->GetCount()>=3)
 	{
 		iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(2));
@@ -672,6 +694,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_WAIT:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_KEY:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_IMG:{return WaitForImage(*iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_COLOR:{return WaitForColor(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}

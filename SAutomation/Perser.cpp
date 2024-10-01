@@ -75,7 +75,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 
 	if(sDataTrim.Left(9).CompareNoCase(_T("waitimage"))==0){*iCommandType=COMMAND_WAIT_IMG; return TRUE;}
-	if(sDataTrim.Left(9).CompareNoCase(_T("waitColor"))==0){*iCommandType=COMMAND_WAIT_COLOR; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("WaitColor"))==0){*iCommandType=COMMAND_WAIT_COLOR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("waitupdate"))==0){*iCommandType=COMMAND_WAIT_UPDATE; return TRUE;}
 
 	if(sDataTrim.Left(12).CompareNoCase(_T("mouseposincl"))==0){*iCommandType=COMMAND_MOUSE_MOVE_INCL; return TRUE;}
@@ -298,6 +298,7 @@ BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken)
 {
 	int iOpenNum=0;
 	int iCloseNum=0;
+	sToken->Format(_T(""));
 	for(int i=0; i<sInput.GetLength(); i++)
 	{
 		if(sInput.Mid(i,1).Compare(_T("("))==0){iOpenNum++;}
@@ -824,6 +825,41 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			
 			ExtractTokenInBracket(sDataLocal,6,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_WAIT_COLOR:
+		{
+			int iArgCount;
+			bRet = CountTokenInBracket(sDataLocal, &iArgCount);
+			if((iArgCount != 6) && (iArgCount != 7) && (iArgCount != 8) && (iArgCount != 9)){return FALSE;}
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			ExtractTokenInBracket(sDataLocal,2,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,3,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			ExtractTokenInBracket(sDataLocal,4,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			ExtractTokenInBracket(sDataLocal,5,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,6,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,7,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,8,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
 			*iCommandType = iType;
 			return TRUE;
 		}

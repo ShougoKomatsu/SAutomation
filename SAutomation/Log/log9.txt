@@ -1,2 +1,0 @@
-1 VarInt1=1 0
-2 VarInt2=VarInt1 <VarInt1 = 1> 0

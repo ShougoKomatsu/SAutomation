@@ -56,7 +56,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 
 		if(sDataTrim.Right(5).CompareNoCase(_T("Width"))==0){*iCommandType=VARIABLE_IMG_WIDTH; return TRUE;}
 		if(sDataTrim.Right(6).CompareNoCase(_T("Height"))==0){*iCommandType=VARIABLE_IMG_HEIGHT; return TRUE;}
-//		if((sDataTrim.Mid(10,6).Compare(_T("Value(")) == 0) && sDataTrim.Right(1).CompareNoCase(_T(")"))==0){*iCommandType = VARIABLE_IMG_VALUE; return TRUE;}
+		if((sDataTrim.Mid(10,6).Compare(_T("Value(")) == 0) && sDataTrim.Right(1).CompareNoCase(_T(")"))==0){*iCommandType = VARIABLE_IMG_VALUE; return TRUE;}
 		return FALSE;
 	}
 
@@ -248,14 +248,11 @@ int GetIntValue(int iScene, CString sDataLocal)
 
 			if(iTokenNum==3)
 			{
-				CString sC;
+				CString sR, sC;
 				ExtractTokenInBracket(sDataLocal,0,&sC);
-				int iC;
-				iC=GetIntValue(iScene, sC);
-
-				CString sR;
 				ExtractTokenInBracket(sDataLocal,1,&sR);
-				int iR;
+				int iR, iC;
+				iC=GetIntValue(iScene, sC);
 				iR=GetIntValue(iScene, sR);
 
 				CString sColorTemp;
