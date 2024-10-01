@@ -113,7 +113,7 @@ BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
 			}
 		}
 	}
-
+	return TRUE;
 }
 
 BOOL GetValue(ImgRGB* imgRGBin, int iR, int iC, int* iValueR, int* iValueG, int* iValueB)
