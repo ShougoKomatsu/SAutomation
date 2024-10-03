@@ -6,6 +6,7 @@
 #define CHANNEL_1_8 (1)
 #define CHANNEL_3_8 (3)
 #define CHANNEL_1_24BGR (24)
+#define CHANNEL_3_FLOAT (103)
 
 struct ImgRGB
 {
@@ -15,6 +16,9 @@ struct ImgRGB
 	BYTE* byImgR;
 	BYTE* byImgG;
 	BYTE* byImgB;
+	double* dImg1;
+	double* dImg2;
+	double* dImg3;
 	BYTE* byImg;
 	BOOL Set(int iWidthIn, int iHeightIn, int iChannelIn)
 	{
@@ -25,6 +29,12 @@ struct ImgRGB
 		iWidth = iWidthIn;
 		iHeight = iHeightIn;
 		iChannel = iChannelIn;
+		if(iChannel == CHANNEL_3_FLOAT)
+		{
+			dImg1 = new double[iWidth*iHeight];
+			dImg2 = new double[iWidth*iHeight];
+			dImg3 = new double[iWidth*iHeight];
+		}
 		if(iChannel == CHANNEL_1_8)
 		{
 			byImg = new BYTE[iWidth*iHeight];
@@ -48,12 +58,15 @@ struct ImgRGB
 		if(byImgR!=NULL){delete [] byImgR; byImgR=NULL;}
 		if(byImgG!=NULL){delete [] byImgG; byImgG=NULL;}
 		if(byImgB!=NULL){delete [] byImgB; byImgB=NULL;}
+		if(dImg1!=NULL){delete [] dImg1; dImg1=NULL;}
+		if(dImg2!=NULL){delete [] dImg2; dImg2=NULL;}
+		if(dImg3!=NULL){delete [] dImg3; dImg3=NULL;}
 		iWidth=0;
 		iHeight=0;
 		iChannel=CHANNEL_UNDEFINED;
 		return TRUE;
 	}
-	ImgRGB(){byImg = NULL; byImgR=NULL; byImgG=NULL; byImgB=NULL; Init();}
+	ImgRGB(){byImg = NULL; byImgR=NULL; byImgG=NULL; byImgB=NULL; dImg1=NULL; dImg2=NULL; dImg3=NULL;Init();}
 	~ImgRGB(){Init();}
 	BOOL Assign(CString sFilePath);
 	BOOL Assign(const ImgRGB* imgRGBIn);

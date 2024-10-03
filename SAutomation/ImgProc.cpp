@@ -101,18 +101,89 @@ BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
 	if(sDstColor.CompareNoCase(_T("hsv"))==0)
 	{
 		imgOut->Set(imgIn->iWidth, imgIn->iWidth, CHANNEL_3_8);
+		
+		for(int r=0; r<imgIn->iHeight; r++)
 		{
-			for(int r=0; r<imgIn->iHeight; r++)
+			for(int c=0; c<imgIn->iWidth; c++)
 			{
-				for(int c=0; c<imgIn->iWidth; c++)
+				BYTE byR=imgIn->byImgR[r*imgIn->iWidth+c];
+				BYTE byG=imgIn->byImgG[r*imgIn->iWidth+c];
+				BYTE byB=imgIn->byImgB[r*imgIn->iWidth+c];
+
+				BYTE byMax=(byR>=byG ? (byR >= byB ? byR : (byG>=byB ? byG : byB)) : (byG>=byB ? byG : byB));
+				BYTE byMin=(byR<=byG ? (byR <= byB ? byR : (byB<=byG ? byB : byG)) : (byB<=byG ? byB : byG));
+				if(byMax==0)
 				{
-					BYTE byR=imgIn->byImgR[r*imgIn->iWidth+c];
-					BYTE byG=imgIn->byImgR[r*imgIn->iWidth+c];
-					BYTE byB=imgIn->byImgR[r*imgIn->iWidth+c];
+					imgOut->byImgR[r*imgIn->iWidth+c] =0;
+					imgOut->byImgG[r*imgIn->iWidth+c] =0;
+					imgOut->byImgB[r*imgIn->iWidth+c] =0;
+					continue;
+				}
+
+				if(byMax==byR)
+				{
+					if(byMin==byG)
+					{
+						//byMin==byG==byB‚Ì‚Æ‚«AbyMin=byB‚É‚È‚é‚Ì‚Å‚±‚±‚É‚Í—ˆ‚È‚¢
+						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(5+(byMax-byB)/byMax));
+					}
+					else
+					{
+						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(0+(byMax-byG)/byMax));
+					}
+				}
+				if(byMax==byG)
+				{
+					if(byMin==byB)
+					{
+						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(1+(byMax-byR)/byMax));
+					}
+					else
+					{
+						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(2+(byMax-byB)/byMax));
+					}
+				}
+				if(byMax==byB)
+				{
+					if(byMin==byR)
+					{
+						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(3+(byMax-byG)/byMax));
+					}
+					else
+					{
+						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(4+(byMax-byR)/byMax));
+					}
+				}
+				imgOut->byImgG[r*imgIn->iWidth+c] = BYTE(255*(byMax-byMin)/(byMax*1.0));
+				imgOut->byImgB[r*imgIn->iWidth+c] = byMax;
+					
+			}
+		}
+		return TRUE;
+	}
+	/*
+	if(sDstColor.CompareNoCase(_T("rgb"))==0)
+	{
+		imgOut->Set(imgIn->iWidth, imgIn->iWidth, CHANNEL_3_8);
+		
+		for(int r=0; r<imgIn->iHeight; r++)
+		{
+			for(int c=0; c<imgIn->iWidth; c++)
+			{
+				BYTE byH=imgIn->byImgR[r*imgIn->iWidth+c];
+				BYTE byS=imgIn->byImgG[r*imgIn->iWidth+c];
+				BYTE byV=imgIn->byImgB[r*imgIn->iWidth+c];
+
+				if(byH<=256/6.0)
+				{
+					imgOut->byImgR[r*imgIn->iWidth+c] = byV;
+					imgOut->byImgG[r*imgIn->iWidth+c] = 1 - s*(1-h-i) byV-byS;
+					imgOut->byImgB[r*imgIn->iWidth+c] = 1-byS;
 				}
 			}
 		}
 	}
+	*/
 	return TRUE;
 }
 
