@@ -100,7 +100,7 @@ BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
 
 	if(sDstColor.CompareNoCase(_T("hsv"))==0)
 	{
-		imgOut->Set(imgIn->iWidth, imgIn->iWidth, CHANNEL_3_8);
+		imgOut->Set(imgIn->iWidth, imgIn->iWidth, CHANNEL_3_FLOAT);
 		
 		for(int r=0; r<imgIn->iHeight; r++)
 		{
@@ -114,9 +114,9 @@ BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
 				BYTE byMin=(byR<=byG ? (byR <= byB ? byR : (byB<=byG ? byB : byG)) : (byB<=byG ? byB : byG));
 				if(byMax==0)
 				{
-					imgOut->byImgR[r*imgIn->iWidth+c] =0;
-					imgOut->byImgG[r*imgIn->iWidth+c] =0;
-					imgOut->byImgB[r*imgIn->iWidth+c] =0;
+					imgOut->dImg1[r*imgIn->iWidth+c] =0;
+					imgOut->dImg2[r*imgIn->iWidth+c] =0;
+					imgOut->dImg3[r*imgIn->iWidth+c] =0;
 					continue;
 				}
 
@@ -125,37 +125,37 @@ BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
 					if(byMin==byG)
 					{
 						//byMin==byG==byB‚Ì‚Æ‚«AbyMin=byB‚É‚È‚é‚Ì‚Å‚±‚±‚É‚Í—ˆ‚È‚¢
-						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(5+(byMax-byB)/byMax));
+						imgOut->dImg1[r*imgIn->iWidth+c] = 60.0*(5+(byMax-byB)/(byMax*1.0));
 					}
 					else
 					{
-						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(0+(byMax-byG)/byMax));
+						imgOut->dImg1[r*imgIn->iWidth+c] = 60.0*(0+(byMax-byG)/(byMax*1.0));
 					}
 				}
 				if(byMax==byG)
 				{
 					if(byMin==byB)
 					{
-						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(1+(byMax-byR)/byMax));
+						imgOut->dImg1[r*imgIn->iWidth+c] = 60.0*(1+(byMax-byR)/(byMax*1.0));
 					}
 					else
 					{
-						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(2+(byMax-byB)/byMax));
+						imgOut->dImg1[r*imgIn->iWidth+c] = 60.0*(2+(byMax-byB)/(byMax*1.0));
 					}
 				}
 				if(byMax==byB)
 				{
 					if(byMin==byR)
 					{
-						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(3+(byMax-byG)/byMax));
+						imgOut->dImg1[r*imgIn->iWidth+c] = 60.0*(3+(byMax-byG)/(byMax*1.0));
 					}
 					else
 					{
-						imgOut->byImgR[r*imgIn->iWidth+c] = BYTE((256.0/6.0)*(4+(byMax-byR)/byMax));
+						imgOut->dImg1[r*imgIn->iWidth+c] = 60.0*(4+(byMax-byR)/(byMax*1.0));
 					}
 				}
-				imgOut->byImgG[r*imgIn->iWidth+c] = BYTE(255*(byMax-byMin)/(byMax*1.0));
-				imgOut->byImgB[r*imgIn->iWidth+c] = byMax;
+				imgOut->dImg2[r*imgIn->iWidth+c] = (byMax-byMin)/(byMax*1.0);
+				imgOut->dImg3[r*imgIn->iWidth+c] = byMax;
 					
 			}
 		}
