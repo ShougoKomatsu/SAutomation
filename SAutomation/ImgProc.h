@@ -9,7 +9,36 @@
 #define CHANNEL_3_FLOAT (103)
 
 #define CAP_BYTE(arg) (arg<0 ? 0 : (arg>255 ? 255 : BYTE(arg)))
+struct ImgRegion
+{
+	int* iImg;
+		int iWidth;
+	int iHeight;
+	int iChannel;//è´óàégÇ§Ç©Ç‡ÇµÇÍÇ»Ç¢
+	BOOL Set(int iWidthIn, int iHeightIn)
+	{
+		Init();
+		if(iWidthIn<=0){return FALSE;}
+		if(iHeightIn<=0){return FALSE;}
 
+		iWidth = iWidthIn;
+		iHeight = iHeightIn;
+		iChannel = 0;
+			iImg= new int[iWidth*iHeight*3];
+		return TRUE;
+	}
+	BOOL Init()
+	{
+		if(iImg!=NULL){delete [] iImg; iImg=NULL;}
+		iWidth=0;
+		iHeight=0;
+		iChannel=CHANNEL_UNDEFINED;
+		return TRUE;
+	}
+	ImgRegion(){iImg = NULL;Init();}
+	~ImgRegion(){Init();}
+
+};
 struct ImgRGB
 {
 	int iWidth;
