@@ -57,7 +57,19 @@ BOOL WriteImage(const ImgRGB* imgRGB, CString sFilePath)
 	BYTE* byOutBuf;
 
 	byOutBuf = new BYTE[iBitSize];
-
+	
+	if(imgRGB->iChannel==CHANNEL_3_FLOAT)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = CAP_BYTE(imgRGB->dImg1[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c]*(256/360.0));
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = CAP_BYTE(imgRGB->dImg2[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c]*255);
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = CAP_BYTE(imgRGB->dImg3[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c]);
+			}
+		}
+	}
 	if(imgRGB->iChannel==CHANNEL_3_8)
 	{
 		for(int r=0; r<imgRGB->iHeight; r++)
@@ -161,29 +173,62 @@ BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
 		}
 		return TRUE;
 	}
-	/*
+	
 	if(sDstColor.CompareNoCase(_T("rgb"))==0)
 	{
+		if(imgIn->iChannel!=CHANNEL_3_FLOAT){return FALSE;}
+
 		imgOut->Set(imgIn->iWidth, imgIn->iWidth, CHANNEL_3_8);
 		
 		for(int r=0; r<imgIn->iHeight; r++)
 		{
 			for(int c=0; c<imgIn->iWidth; c++)
 			{
-				BYTE byH=imgIn->byImgR[r*imgIn->iWidth+c];
-				BYTE byS=imgIn->byImgG[r*imgIn->iWidth+c];
-				BYTE byV=imgIn->byImgB[r*imgIn->iWidth+c];
+				double dH=imgIn->dImg1[r*imgIn->iWidth+c];
+				double dS=imgIn->dImg2[r*imgIn->iWidth+c];
+				double dV=imgIn->dImg3[r*imgIn->iWidth+c];
 
-				if(byH<=256/6.0)
+				if(dH<=60.0)
 				{
-					imgOut->byImgR[r*imgIn->iWidth+c] = byV;
-					imgOut->byImgG[r*imgIn->iWidth+c] = 1 - s*(1-h-i) byV-byS;
-					imgOut->byImgB[r*imgIn->iWidth+c] = 1-byS;
+					imgOut->byImgR[r*imgIn->iWidth+c] = dV;
+					imgOut->byImgG[r*imgIn->iWidth+c] = dV*(dS*((dH-0)/60.0));
+					imgOut->byImgB[r*imgIn->iWidth+c] = dV*(1 - dS);
+				}
+				else if(dH<=120.0)
+				{
+					imgOut->byImgR[r*imgIn->iWidth+c] = dV*(dS*(dH-60.0)/60.0);
+					imgOut->byImgG[r*imgIn->iWidth+c] = dV;
+					imgOut->byImgB[r*imgIn->iWidth+c] = dV*(1 - dS);
+				}
+				else if(dH<=180.0)
+				{
+					imgOut->byImgR[r*imgIn->iWidth+c] = dV*(1 - dS);
+					imgOut->byImgG[r*imgIn->iWidth+c] = dV;
+					imgOut->byImgB[r*imgIn->iWidth+c] = dV*(dS*(dH-120.0)/60.0);
+				}
+				else if(dH<=240.0)
+				{
+					imgOut->byImgR[r*imgIn->iWidth+c] = dV*(1 - dS);
+					imgOut->byImgG[r*imgIn->iWidth+c] = dV*(dS*(dH-180.0)/60.0);
+					imgOut->byImgB[r*imgIn->iWidth+c] = dV;
+				}
+				else if(dH<=300.0)
+				{
+					imgOut->byImgR[r*imgIn->iWidth+c] = dV*(dS*(dH-240.0)/60.0);
+					imgOut->byImgG[r*imgIn->iWidth+c] = dV*(1 - dS);
+					imgOut->byImgB[r*imgIn->iWidth+c] = dV;
+				}
+				else
+				{
+					imgOut->byImgR[r*imgIn->iWidth+c] = dV;
+					imgOut->byImgG[r*imgIn->iWidth+c] = dV*(1 - dS);
+					imgOut->byImgB[r*imgIn->iWidth+c] = dV*(dS*(dH-300.0)/60.0);
 				}
 			}
 		}
+		return TRUE;
 	}
-	*/
+	
 	return TRUE;
 }
 

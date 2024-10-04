@@ -8,6 +8,8 @@
 #define CHANNEL_1_24BGR (24)
 #define CHANNEL_3_FLOAT (103)
 
+#define CAP_BYTE(arg) (arg<0 ? 0 : (arg>255 ? 255 : BYTE(arg)))
+
 struct ImgRGB
 {
 	int iWidth;
