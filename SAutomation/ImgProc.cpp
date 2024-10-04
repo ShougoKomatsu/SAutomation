@@ -232,6 +232,47 @@ BOOL ConvertImage(ImgRGB* imgIn, ImgRGB* imgOut,CString sDstColor)
 	return TRUE;
 }
 
+BOOL Decompose3(ImgRGB* imgIn, ImgRGB* imgR, ImgRGB* imgG, ImgRGB* imgB)
+{
+	if((imgIn->iChannel != CHANNEL_3_8) && (imgIn->iChannel != CHANNEL_1_24BGR)){return FALSE;}
+	imgR->Set(imgIn->iWidth, imgIn->iHeight, CHANNEL_1_8);
+	imgG->Set(imgIn->iWidth, imgIn->iHeight, CHANNEL_1_8);
+	imgB->Set(imgIn->iWidth, imgIn->iHeight, CHANNEL_1_8);
+
+	if(imgIn->iChannel==CHANNEL_3_8)
+	{
+		for(int r=0; r<imgIn->iHeight; r++)
+		{
+			for(int c=0; c<imgIn->iWidth; c++)
+			{
+				imgR->byImg[r*imgR->iWidth+c]=imgIn->byImgR[r*imgIn->iWidth+c];
+				imgG->byImg[r*imgG->iWidth+c]=imgIn->byImgG[r*imgIn->iWidth+c];
+				imgB->byImg[r*imgB->iWidth+c]=imgIn->byImgB[r*imgIn->iWidth+c];
+			}
+		}
+		return TRUE;
+	}
+
+	if(imgIn->iChannel==CHANNEL_1_24BGR)
+	{
+		for(int r=0; r<imgIn->iHeight; r++)
+		{
+			for(int c=0; c<imgIn->iWidth; c++)
+			{
+				imgB->byImg[r*imgB->iWidth+c]=imgIn->byImg[3*(r*imgIn->iWidth+c)+0];
+				imgG->byImg[r*imgG->iWidth+c]=imgIn->byImg[3*(r*imgIn->iWidth+c)+1];
+				imgR->byImg[r*imgR->iWidth+c]=imgIn->byImg[3*(r*imgIn->iWidth+c)+2];
+			}
+		}
+		return TRUE;
+	}
+	return FALSE;
+}
+BOOL Threshold(ImgRGB* imgRGBin, BYTE byThreshMin, BYTE byThreshMax, ImgRegion* imgRegionOut)
+{
+
+}
+
 BOOL GetValue(ImgRGB* imgRGBin, int iR, int iC, int* iValueR, int* iValueG, int* iValueB)
 {
 	if(imgRGBin==NULL){return FALSE;}

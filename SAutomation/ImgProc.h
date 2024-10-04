@@ -12,7 +12,7 @@
 struct ImgRegion
 {
 	int* iImg;
-		int iWidth;
+	int iWidth;
 	int iHeight;
 	int iChannel;//è´óàégÇ§Ç©Ç‡ÇµÇÍÇ»Ç¢
 	BOOL Set(int iWidthIn, int iHeightIn)
@@ -24,7 +24,7 @@ struct ImgRegion
 		iWidth = iWidthIn;
 		iHeight = iHeightIn;
 		iChannel = 0;
-			iImg= new int[iWidth*iHeight*3];
+		iImg= new int[iWidth*iHeight*3];
 		return TRUE;
 	}
 	BOOL Init()
@@ -37,8 +37,8 @@ struct ImgRegion
 	}
 	ImgRegion(){iImg = NULL;Init();}
 	~ImgRegion(){Init();}
-
 };
+
 struct ImgRGB
 {
 	int iWidth;
