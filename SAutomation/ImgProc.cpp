@@ -268,9 +268,37 @@ BOOL Decompose3(ImgRGB* imgIn, ImgRGB* imgR, ImgRGB* imgG, ImgRGB* imgB)
 	}
 	return FALSE;
 }
+
+BOOL Compose3(ImgRGB* imgR, ImgRGB* imgG, ImgRGB* imgB, ImgRGB* imgOut)
+{
+	if(imgR->iChannel != CHANNEL_1_8){return FALSE;}
+	if(imgG->iChannel != CHANNEL_1_8){return FALSE;}
+	if(imgB->iChannel != CHANNEL_1_8){return FALSE;}
+	if(imgR->iHeight != imgG->iHeight){return FALSE;}
+	if(imgR->iHeight != imgB->iHeight){return FALSE;}
+	if(imgR->iWidth != imgG->iWidth){return FALSE;}
+	if(imgR->iWidth != imgB->iWidth){return FALSE;}
+
+	imgOut->Set(imgR->iWidth, imgR->iHeight, CHANNEL_3_8);
+
+		for(int r=0; r<imgR->iHeight; r++)
+		{
+			for(int c=0; c<imgR->iWidth; c++)
+			{
+				imgOut->byImgR[r*imgOut->iWidth+c]=imgR->byImg[r*imgR->iWidth+c];
+				imgOut->byImgG[r*imgOut->iWidth+c]=imgR->byImg[r*imgG->iWidth+c];
+				imgOut->byImgB[r*imgOut->iWidth+c]=imgR->byImg[r*imgB->iWidth+c];
+			}
+		}
+		return TRUE;
+	}
+
+
+	return FALSE;
+}
 BOOL Threshold(ImgRGB* imgRGBin, BYTE byThreshMin, BYTE byThreshMax, ImgRegion* imgRegionOut)
 {
-
+	return TRUE;
 }
 
 BOOL GetValue(ImgRGB* imgRGBin, int iR, int iC, int* iValueR, int* iValueG, int* iValueB)
