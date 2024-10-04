@@ -281,23 +281,40 @@ BOOL Compose3(ImgRGB* imgR, ImgRGB* imgG, ImgRGB* imgB, ImgRGB* imgOut)
 
 	imgOut->Set(imgR->iWidth, imgR->iHeight, CHANNEL_3_8);
 
-		for(int r=0; r<imgR->iHeight; r++)
+	for(int r=0; r<imgR->iHeight; r++)
+	{
+		for(int c=0; c<imgR->iWidth; c++)
 		{
-			for(int c=0; c<imgR->iWidth; c++)
+			imgOut->byImgR[r*imgOut->iWidth+c]=imgR->byImg[r*imgR->iWidth+c];
+			imgOut->byImgG[r*imgOut->iWidth+c]=imgR->byImg[r*imgG->iWidth+c];
+			imgOut->byImgB[r*imgOut->iWidth+c]=imgR->byImg[r*imgB->iWidth+c];
+		}
+	}
+	return TRUE;
+}
+
+
+BOOL Threshold(ImgRGB* imgIn, BYTE byThreshMin, BYTE byThreshMax, ImgRegion* imgRegionOut)
+{
+	if(imgIn->iChannel != CHANNEL_1_8){return FALSE;}
+
+	imgRegionOut->Set(imgIn->iWidth, imgIn->iHeight);
+	memset(imgRegionOut->uiImg, 0, sizeof(UINT)*imgIn->iWidth*imgIn->iHeight);
+
+	for(int r=0; r<imgIn->iHeight; r++)
+	{
+		for(int c=0; c<imgIn->iWidth; c++)
+		{
+			if(imgIn->byImg[r*imgIn->iWidth+c] >= byThreshMin)
 			{
-				imgOut->byImgR[r*imgOut->iWidth+c]=imgR->byImg[r*imgR->iWidth+c];
-				imgOut->byImgG[r*imgOut->iWidth+c]=imgR->byImg[r*imgG->iWidth+c];
-				imgOut->byImgB[r*imgOut->iWidth+c]=imgR->byImg[r*imgB->iWidth+c];
+				if(imgIn->byImg[r*imgIn->iWidth+c] <= byThreshMax)
+				{
+					imgRegionOut->uiImg[r*imgIn->iWidth+c]=1;
+				}
+
 			}
 		}
-		return TRUE;
 	}
-
-
-	return FALSE;
-}
-BOOL Threshold(ImgRGB* imgRGBin, BYTE byThreshMin, BYTE byThreshMax, ImgRegion* imgRegionOut)
-{
 	return TRUE;
 }
 

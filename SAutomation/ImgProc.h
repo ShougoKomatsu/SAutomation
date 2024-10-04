@@ -9,9 +9,24 @@
 #define CHANNEL_3_FLOAT (103)
 
 #define CAP_BYTE(arg) (arg<0 ? 0 : (arg>255 ? 255 : BYTE(arg)))
+
+enum RECTANGLE_TYPE
+{
+	TYPE_UNDEFINED = 0,
+	TYPE_RECTANGLE1 = 1
+};
+
+struct Rectangle
+{
+	int iR0;
+	int iR1;
+	int iC0;
+	int iC1;
+	int iType;
+};
 struct ImgRegion
 {
-	int* iImg;
+	UINT* uiImg;
 	int iWidth;
 	int iHeight;
 	int iChannel;//è´óàégÇ§Ç©Ç‡ÇµÇÍÇ»Ç¢
@@ -24,18 +39,18 @@ struct ImgRegion
 		iWidth = iWidthIn;
 		iHeight = iHeightIn;
 		iChannel = 0;
-		iImg= new int[iWidth*iHeight*3];
+		uiImg= new UINT[iWidth*iHeight*3];
 		return TRUE;
 	}
 	BOOL Init()
 	{
-		if(iImg!=NULL){delete [] iImg; iImg=NULL;}
+		if(uiImg!=NULL){delete [] uiImg; uiImg=NULL;}
 		iWidth=0;
 		iHeight=0;
 		iChannel=CHANNEL_UNDEFINED;
 		return TRUE;
 	}
-	ImgRegion(){iImg = NULL;Init();}
+	ImgRegion(){uiImg = NULL;Init();}
 	~ImgRegion(){Init();}
 };
 
