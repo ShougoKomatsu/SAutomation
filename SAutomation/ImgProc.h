@@ -1,7 +1,8 @@
+
 #include "stdafx.h"
 #include "Common.h"
 
-#include "simgproc_ex.h"
+#include "SImgProc_ex.h"
 #pragma comment(lib, "simgproc.lib")
 #pragma once
 

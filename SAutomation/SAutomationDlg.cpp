@@ -16,6 +16,8 @@
 #include "InputDialog.h"
 #include "Window.h"
 #include "variables.h"
+#include "ImgProc.h"
+
 #define TIMER_DISP_MOUSPOS (100)
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
@@ -723,7 +725,6 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 	}
 }
 
-#include "ImgProc.h"
 BOOL CSAutomationDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
