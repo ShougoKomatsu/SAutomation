@@ -9,6 +9,7 @@ int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 Point g_point[MAX_THREAD][MAX_VARIABLES];
+Object g_obj[MAX_THREAD][MAX_VARIABLES];
 
 BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 {
