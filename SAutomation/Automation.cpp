@@ -5,9 +5,12 @@
 #include "Variables.h"
 #include "Window.h"
 
+#include "ImgProc.h"
+#include "Variables.h"
+#include "InputDialog.h"
+
 CSAutomationDlg* g_dlg;
 
-#include "InputDialog.h"
 
 
 ReturnValue K_SleepWithoutHalt(LPVOID Suspend, DWORD SleepMilliSec)
@@ -288,8 +291,6 @@ ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	return RETURN_NORMAL;
 }
 
-#include "ImgProc.h"
-#include "Variables.h"
 
 ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
