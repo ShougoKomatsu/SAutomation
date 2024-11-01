@@ -21,3 +21,22 @@ ReturnValue Flow_WriteImage(int iScene, CStringArray* saData)
 
 	return RETURN_NORMAL;
 }
+
+
+/*
+ReturnValue Flow_Threshold(int iScene, CStringArray* saData, CString* sReturnParam)
+{
+	
+	ImgRGB* imgRGB=GetImgValuePointer(iScene, saData->GetAt(0));
+	if(imgRGB == NULL){return RETURN_FAILED;}
+
+	BYTE byMin=GetIntValue(iScene, saData->GetAt(1));
+	BYTE byMax=GetIntValue(iScene, saData->GetAt(2));
+	Object* obj=GetObjValuePointer(iScene, saData->GetAt(3));
+	Threshold(imgRGB, byMin, byMax,obj);
+
+		return RETURN_GOTO_BY_SWITCH;
+
+	return RETURN_NORMAL;
+}
+*/

@@ -734,6 +734,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		{
 			return Flow_Assign(*iSceneData, &saData);
 		}
+	case COMMAND_VARIABLE_OBJ:
+		{
+			return Flow_Assign(*iSceneData, &saData);
+		}
 	case COMMAND_VARIABLE_POINT:
 		{
 			return Flow_Assign(*iSceneData, &saData);

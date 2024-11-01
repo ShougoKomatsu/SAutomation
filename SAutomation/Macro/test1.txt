@@ -1,1 +1,4 @@
-﻿WaitColor(R, 0, 1, 0, 0, on) 
+﻿VarImg1=ScreenShot
+VarImg2=Decompose3(VarImg1,R);
+VarObj1=Threshold(VarImg2,0,128)
+WaitColor(R, 0, 1, 0, 0, on) 

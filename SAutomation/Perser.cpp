@@ -116,6 +116,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=COMMAND_VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=COMMAND_VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=COMMAND_VARIABLE_IMG; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=COMMAND_VARIABLE_OBJ; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=COMMAND_VARIABLE_POINT; return TRUE;}
 	if(sDataTrim.GetLength()==2)
 	{
@@ -930,6 +931,17 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_VARIABLE_IMG:
+		{
+			if(sDataLocal.Find(_T("="))<0){return FALSE;}
+			
+			ExtractData(sDataLocal, _T("="), &sArg, &sDataLocal);
+			saData->Add(sArg);
+			saData->Add(sDataLocal);
+
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_VARIABLE_OBJ:
 		{
 			if(sDataLocal.Find(_T("="))<0){return FALSE;}
 			

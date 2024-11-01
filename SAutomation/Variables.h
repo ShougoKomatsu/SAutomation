@@ -30,6 +30,7 @@ const CString GetStrValue(int iScene, CString sDataLocal);
 CString* GetStrValuePointer(int iScene, CString sArg);
 const CString GetStrValue(int iScene, CString sDataLocal);
 
+Object* GetObjValuePointer(int iScene, CString sArg);
 ImgRGB* GetImgValuePointer(int iScene, CString sArg);
 const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg);
 
@@ -81,6 +82,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_IMG (200)
 #define VARIABLE_CROP_IMAGE (201)
 #define VARIABLE_SCREENSHOT (202)
+#define VARIABLE_IMG_DECOMPOSE (203)
 
 #define VARIABLE_POINT (300)
 #define VARIABLE_POINT_GET_R (301)
@@ -91,6 +93,10 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_POINT_MOUSE_POS (306)
 
 #define VARIABLE_INPUT (400)
+
+#define VARIABLE_OBJECT (500)
+#define VARIABLE_OBJECT_THRESHLD (501)
+#define VARIABLE_OBJECT_CONNECTION (502)
 
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)
