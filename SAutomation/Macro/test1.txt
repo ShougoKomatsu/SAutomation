@@ -1,4 +1,12 @@
 ﻿VarImg1=ScreenShot
-VarImg2=Decompose3(VarImg1,R);
+VarImg2=Decompose3(VarImg1,R)
 VarObj1=Threshold(VarImg2,0,128)
-WaitColor(R, 0, 1, 0, 0, on) 
+VarObj2=Connection(VarObj1,4)
+VarObj3=SelectShape(VarObj2,area, 10, 10000000)
+VarObj4=SortRegion(VarObj3, area, dsc)
+VarObj5=SelectObj(VarObj4,0)
+VarPoint1=ObjectCenter(VarObj5)
+
+MousePos(VarPoint1)
+MouseLClick
+//WaitColor(R, 0, 1, 0, 0, on) 

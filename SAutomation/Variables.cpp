@@ -19,6 +19,9 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(5).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("Threshold"))==0){*iCommandType=VARIABLE_OBJECT_THRESHLD; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("Connection"))==0){*iCommandType=VARIABLE_OBJECT_CONNECTION; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("SelectShape"))==0){*iCommandType=VARIABLE_OBJECT_SELECT_SHAPE; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("SelectObj"))==0){*iCommandType=VARIABLE_OBJECT_SELECT_OBJ; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("SortRegion"))==0){*iCommandType=VARIABLE_OBJECT_SORT_REGION; return TRUE;}
 
 	*iCommandType=VARIABLE_OBJECT;
 	return TRUE;
@@ -102,6 +105,7 @@ BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
 		return TRUE;
 	}
 	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
 
 	return RETURN_FAILED;
 }
@@ -1047,6 +1051,65 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 
 			return RETURN_NORMAL;
 		}
+	case VARIABLE_OBJECT_SELECT_OBJ:
+		{
+			CString sArg0;
+			CString sArg1;
+			bRet = ExtractTokenInBracket(sData,0,&sArg0);
+			bRet = ExtractTokenInBracket(sData,1,&sArg1);
+
+			Object* objSrc;
+			objSrc=GetObjValuePointer(iScene, sArg0);
+
+			int iID=GetIntValue(iScene, sArg1);
+			SelectObj(objSrc, iID, objectDst);
+
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_OBJECT_SELECT_SHAPE:
+		{
+			CString sArg0;
+			CString sArg1;
+			CString sArg2;
+			CString sArg3;
+			bRet = ExtractTokenInBracket(sData,0,&sArg0);
+			bRet = ExtractTokenInBracket(sData,1,&sArg1);
+			bRet = ExtractTokenInBracket(sData,2,&sArg2);
+			bRet = ExtractTokenInBracket(sData,3,&sArg3);
+
+			Object* objSrc;
+			objSrc=GetObjValuePointer(iScene, sArg0);
+			CString sFeature;
+			sFeature.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			double dMin ,dMax;
+			dMin=GetIntValue(iScene, sArg2);
+			dMax=GetIntValue(iScene, sArg3);
+
+			SelectShape(objSrc, objectDst,sFeature, dMin, dMax);
+
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_OBJECT_SORT_REGION:
+		{
+			CString sArg0;
+			CString sArg1;
+			CString sArg2;
+			CString sArg3;
+			bRet = ExtractTokenInBracket(sData,0,&sArg0);
+			bRet = ExtractTokenInBracket(sData,1,&sArg1);
+			bRet = ExtractTokenInBracket(sData,2,&sArg2);
+
+			Object* objSrc;
+			objSrc=GetObjValuePointer(iScene, sArg0);
+			CString sMode;
+			sMode.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			CString sAscDsc;
+			sAscDsc.Format(_T("%s"), GetStrValue(iScene, sArg2));
+
+			SortRegion(objSrc, sMode, sAscDsc, objectDst);
+
+			return RETURN_NORMAL;
+		}
 	}
 	return RETURN_FAILED;
 }
@@ -1187,6 +1250,35 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 
 			pPoint->Set(g_iC,g_iR);
 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_POINT_OBJECT_CENTER:
+		{
+			
+			CString sArg1;
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			ExtractTokenInBracket(sDataLocal,0,&sArg2);
+
+			Object* objSrc;
+			objSrc=GetObjValuePointer(iScene, sArg1);
+			int iLength;
+			iLength=objSrc->m_uiMaxLabel+1;
+			double* dA;
+			double* dR;
+			double* dC;
+			dA=new double[iLength];
+			dR=new double[iLength];
+			dC=new double[iLength];
+
+
+			AreaCenter(objSrc, dA, dR, dC, iLength);
+			
+			pPoint->Set(dR[0], dC[0]);
+
+			delete [] dA;
+			delete [] dR;
+			delete [] dC;
 			return RETURN_NORMAL;
 		}
 	}
