@@ -229,6 +229,41 @@ End sub
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 変数機能
 
+整数型変数: VarInt1～VarInt8
+文字列型変数: VarStr1～VarStr8
+画像型変数: VarImg1～VarImg8
+領域型変数: VarObj1～VarObj8
+座標型変数: VarPoint1～VarPoint8
+
+-----------------------------------
+画像処理
+
+
+画像型変数 = Decompose3(画像型変数, 文字列型変数);
+R, G, B
+
+領域型変数 = Threshold(画像型変数, 整数型変数, 整数型変数)
+領域型変数 = SortRegion(領域型変数, 文字列型変数, 文字列型変数);
+Area, Row, Column
+Asc, Dsc
+
+領域型変数 = SelectObj(領域型変数, 整数型変数);
+
+領域型変数 = GenRectangle1(整数型変数, 整数型変数, 整数型変数, 整数型変数);
+
+画像型変数 = ReduceDomain(画像型変数, 領域型変数)
+
+領域型変数 = SelectShape(領域型変数, 文字列型変数, 整数型変数, 整数型変数);
+Area, Row, Column
+
+領域型変数 = Connection(領域型変数, 整数型変数)
+4, 8
+
+座標型変数 = ObjectCenter(領域型変数)
+
+
+
+
 変数名
 VarInt1～VarInt8
 整数変数名 = AddInt(整数変数名, 整数変数名or整数値) // +=
