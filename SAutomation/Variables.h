@@ -83,6 +83,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_CROP_IMAGE (201)
 #define VARIABLE_SCREENSHOT (202)
 #define VARIABLE_IMG_DECOMPOSE (203)
+#define VARIABLE_IMG_REDUCE_DOMAIN (204)
 
 #define VARIABLE_POINT (300)
 #define VARIABLE_POINT_GET_R (301)
@@ -101,6 +102,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_OBJECT_SELECT_OBJ (503)
 #define VARIABLE_OBJECT_SELECT_SHAPE (504)
 #define VARIABLE_OBJECT_SORT_REGION (505)
+#define VARIABLE_OBJECT_GEN_RECTANGLE1 (506)
 
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)

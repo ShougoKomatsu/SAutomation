@@ -22,6 +22,7 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(11).CompareNoCase(_T("SelectShape"))==0){*iCommandType=VARIABLE_OBJECT_SELECT_SHAPE; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("SelectObj"))==0){*iCommandType=VARIABLE_OBJECT_SELECT_OBJ; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("SortRegion"))==0){*iCommandType=VARIABLE_OBJECT_SORT_REGION; return TRUE;}
+	if(sDataTrim.Left(13).CompareNoCase(_T("GenRectangle1"))==0){*iCommandType=VARIABLE_OBJECT_GEN_RECTANGLE1; return TRUE;}
 
 	*iCommandType=VARIABLE_OBJECT;
 	return TRUE;
@@ -86,6 +87,7 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
 	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("ReduceDomain"))==0){*iCommandType=VARIABLE_IMG_REDUCE_DOMAIN; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("Decompose3"))==0){*iCommandType=VARIABLE_IMG_DECOMPOSE; return TRUE;}
 	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
@@ -1110,6 +1112,28 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 
 			return RETURN_NORMAL;
 		}
+	case VARIABLE_OBJECT_GEN_RECTANGLE1:
+		{
+			CString sArg0;
+			CString sArg1;
+			CString sArg2;
+			CString sArg3;
+			bRet = ExtractTokenInBracket(sData,0,&sArg0);
+			bRet = ExtractTokenInBracket(sData,1,&sArg1);
+			bRet = ExtractTokenInBracket(sData,2,&sArg2);
+			bRet = ExtractTokenInBracket(sData,3,&sArg3);
+			
+			int iR0, iR1, iC0, iC1;
+			iC0=GetIntValue(iScene, sArg0);
+			iR0=GetIntValue(iScene, sArg1);
+			iC1=GetIntValue(iScene, sArg2);
+			iR1=GetIntValue(iScene, sArg3);
+
+			bRet = GenRectangle1(objectDst, iR0, iC0, iR1, iC1);
+			if(bRet != TRUE){return RETURN_FAILED;}
+
+			return RETURN_NORMAL;
+		}
 	}
 	return RETURN_FAILED;
 }
@@ -1209,6 +1233,29 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(sArg1.CompareNoCase(_T("B"))==0){pImgRGB->Assign(&imgB);return RETURN_NORMAL;}
 
 			return RETURN_FAILED;
+		}
+	case VARIABLE_IMG_REDUCE_DOMAIN:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+
+			
+			CString sArg0;
+			CString sArg1;
+			bRet = ExtractTokenInBracket(sData,0,&sArg0);
+			if(bRet != TRUE){return RETURN_FAILED;} 
+			bRet = ExtractTokenInBracket(sData,1,&sArg1);
+			if(bRet != TRUE){return RETURN_FAILED;} 
+
+
+			ImgRGB* pImgRGBIn=GetImgValuePointer(iScene, sArg0);
+			if(pImgRGBIn == NULL){return RETURN_FAILED;}
+
+			Object* objRegion=GetObjValuePointer(iScene, sArg1);
+			if(objRegion == NULL){return RETURN_FAILED;}
+
+			bRet = ReduceDomain(pImgRGBIn, objRegion, pImgRGB);
+			if(bRet != TRUE){return RETURN_FAILED;}
+			return RETURN_NORMAL;
 		}
 	}
 
