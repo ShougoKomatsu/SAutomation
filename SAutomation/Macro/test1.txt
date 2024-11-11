@@ -1,1 +1,14 @@
-﻿WaitColor(R, 0, 1, 0, 0, on) 
+﻿VarImg1=ScreenShot
+VarImg2=Decompose3(VarImg1,R)
+VarObj1=GenRectangle1(100,300,400,500)
+VarImg3=ReduceDomain(VarImg2,VarObj1)
+VarObj1=Threshold(VarImg3,0,128)
+VarObj2=Connection(VarObj1,4)
+VarObj3=SelectShape(VarObj2,area, 10, 10000000)
+VarObj4=SortRegion(VarObj3, row, dsc)
+VarObj5=SelectObj(VarObj4,0)
+VarPoint1=ObjectCenter(VarObj5)
+
+MousePos(VarPoint1)
+MouseLClick
+//WaitColor(R, 0, 1, 0, 0, on) 
