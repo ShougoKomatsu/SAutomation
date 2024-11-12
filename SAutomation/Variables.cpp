@@ -1321,7 +1321,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 
 			AreaCenter(objSrc, dA, dR, dC, iLength);
 			
-			pPoint->Set(dR[0], dC[0]);
+			pPoint->Set(dC[0], dR[0]);
 
 			delete [] dA;
 			delete [] dR;
