@@ -1303,9 +1303,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 		{
 			
 			CString sArg1;
-			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			ExtractTokenInBracket(sDataLocal,0,&sArg2);
 
 			Object* objSrc;
 			objSrc=GetObjValuePointer(iScene, sArg1);
@@ -1320,7 +1318,8 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 
 
 			AreaCenter(objSrc, dA, dR, dC, iLength);
-			
+			LOG_OUTPUT_INT(iScene, sArg1,dC[0]);
+			LOG_OUTPUT_INT(iScene, sArg1,dR[0]);
 			pPoint->Set(dC[0], dR[0]);
 
 			delete [] dA;
