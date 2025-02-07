@@ -214,3 +214,29 @@ ReturnValue WindowPos(int iScene, CStringArray* saData)
 	SetWindowPos(hwnd, HWND_TOP,iLeft, iTop, iWidth, iHeight,SWP_NOSIZE) ;
 	return RETURN_NORMAL;
 }
+
+BOOL GetForegroundWindowPos(int* iLeft, int* iTop, int* iWidth, int* iHeight)
+{
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd==NULL){return FALSE;}
+	
+	CRect rect;
+	GetWindowRect(hwnd, &rect);
+	*iLeft=rect.left;
+	*iTop=rect.top;
+	*iWidth=rect.Width();
+	*iHeight=rect.Height();
+	return TRUE;
+}
+const CString GetForegroundWindowName()
+{
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd==NULL){return _T("");}
+
+	WCHAR wszWindowName[MAX_PATH];
+	GetWindowText(hwnd,wszWindowName,MAX_PATH);
+	
+	CString sWindowName;
+	sWindowName.Format(_T("%s"), wszWindowName);
+	return sWindowName;
+}

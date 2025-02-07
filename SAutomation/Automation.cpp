@@ -649,6 +649,27 @@ ReturnValue ScreenShot(int iScene, CStringArray* saCommands)
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }
+
+ReturnValue ScreenShotForegroundWindow(int iScene, CStringArray* saCommands)
+{
+	ImgRGB imgRGB;
+	ImgRGB imgRGBCropped;
+	Screenshot(&imgRGB);
+	int iLeft;
+	int iTop;
+	int iWidth;
+	int iHeight;
+
+	GetForegroundWindowPos(&iLeft, &iTop, &iWidth, &iHeight);
+	CropImage(&imgRGB, &imgRGBCropped, iTop, iLeft, iTop+iHeight-1, iLeft+iWidth-1);
+	CString sSrc;
+	sSrc.Format(_T("%s"),GetStrValue(iScene, saCommands->GetAt(0)));
+
+	BOOL bRet=WriteImage(&imgRGBCropped, sSrc);
+	if(bRet !=TRUE){return RETURN_FAILED;}
+	return RETURN_NORMAL;
+}
+
 ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
 {
 	int iCommandType=COMMAND_UNDEFINED;
@@ -753,6 +774,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_SCREENSHOT:
 		{
 			return ScreenShot(*iSceneData, &saData);
+		}
+	case COMMAND_SCREENSHOT_FOREGROUND_WINDOW:
+		{
+			return ScreenShotForegroundWindow(*iSceneData, &saData);
 		}
 	case COMMAND_WRITE_IMAGE:
 		{

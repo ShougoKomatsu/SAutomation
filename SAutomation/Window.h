@@ -19,3 +19,8 @@ ReturnValue WindowPos(int iScene, CStringArray* saData);
 BOOL GetWindowNameList(CStringArray* caNames);
 BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch=TRUE);
 BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch = TRUE);
+
+
+const CString GetForegroundWindowName();
+
+BOOL GetForegroundWindowPos(int* iLeft, int* iTop, int* iWidth, int* iHeight);

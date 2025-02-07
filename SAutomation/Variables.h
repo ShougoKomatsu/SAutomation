@@ -53,7 +53,6 @@ void AssignString(int iScene, CString sArg, CString sInput);
 
 const CString Int2Str(int iScene, CString sArg, CString sFormat);
 int Str2Int(int iScene, CString sArg);
-const CString GetForegroundWIndowName();
 const CString NowDateTime(CString sArg);
 
 ReturnValue MessageBox(int iScene, CStringArray* saData);
@@ -85,6 +84,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_SCREENSHOT (202)
 #define VARIABLE_IMG_DECOMPOSE (203)
 #define VARIABLE_IMG_REDUCE_DOMAIN (204)
+#define VARIABLE_SCREENSHOT_FOREGROUND_WINDOW (205)
 
 #define VARIABLE_POINT (300)
 #define VARIABLE_POINT_GET_R (301)

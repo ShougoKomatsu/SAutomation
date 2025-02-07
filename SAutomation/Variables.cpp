@@ -4,7 +4,7 @@
 #include "Common.h"
 #include "MouseAutomation.h"
 #include "InputDialog.h"
-
+#include "Window.h"
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
@@ -407,7 +407,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		}
 	case VARIABLE_TOPMOST_WINDOW_NAME:
 		{
-			return GetForegroundWIndowName();
+			return GetForegroundWindowName();
 		}
 	default :
 		{
@@ -873,18 +873,6 @@ const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
 	return sTemp;
 }
 
-const CString GetForegroundWIndowName()
-{
-	HWND hwnd = GetForegroundWindow();
-	if(hwnd==NULL){return _T("");}
-
-	WCHAR wszWindowName[MAX_PATH];
-	GetWindowText(hwnd,wszWindowName,MAX_PATH);
-	
-	CString sWindowName;
-	sWindowName.Format(_T("%s"), wszWindowName);
-	return sWindowName;
-}
 const CString NowDateTime(CString sArg)
 {
 	CString sOut;
@@ -988,7 +976,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 		
 	case VARIABLE_TOPMOST_WINDOW_NAME:
 		{
-			sDstPointer->Format(_T("%s"), GetForegroundWIndowName()); 
+			sDstPointer->Format(_T("%s"), GetForegroundWindowName()); 
 			return RETURN_NORMAL;
 		}
 	}
@@ -1197,6 +1185,27 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
 			Screenshot(pImgRGB);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_SCREENSHOT_FOREGROUND_WINDOW:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+			ImgRGB imgRGB;
+			ImgRGB imgRGBCropped;;
+			Screenshot(&imgRGB);
+			int iLeft;
+			int iTop;
+			int iWidth;
+			int iHeight;
+
+			bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth, &iHeight);
+			if(bRet != TRUE){return RETURN_FAILED;}
+
+			bRet = CropImage(&imgRGB, &imgRGBCropped, iTop, iLeft, iTop+iHeight-1, iLeft+iWidth-1);
+			if(bRet != TRUE){return RETURN_FAILED;}
+
+			pImgRGB->Assign(&imgRGBCropped);
+
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_CROP_IMAGE:

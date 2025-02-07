@@ -70,6 +70,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(17).CompareNoCase(_T("setorigintowindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
 	if(sDataTrim.Left(16).CompareNoCase(_T("setorigintoimage"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE; return TRUE;}
 	
+	if(sDataTrim.Left(26).CompareNoCase(_T("screenshotForeGroundWindow"))==0){*iCommandType=COMMAND_SCREENSHOT_FOREGROUND_WINDOW; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("screenshot"))==0){*iCommandType=COMMAND_SCREENSHOT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("WriteImage"))==0){*iCommandType=COMMAND_WRITE_IMAGE; return TRUE;}
 
@@ -1026,6 +1027,13 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_SCREENSHOT:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData->Add(sArg);
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_SCREENSHOT_FOREGROUND_WINDOW:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData->Add(sArg);
