@@ -54,6 +54,7 @@
 #define COMMAND_COMPARE (COMMAND_VARIABLE+6)
 #define COMMAND_VARIABLE_INPUT (COMMAND_VARIABLE+7)
 #define COMMAND_VARIABLE_OBJ (COMMAND_VARIABLE+8)
+#define COMMAND_AREEQUAL_STR (COMMAND_VARIABLE+9)
 
 
 ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);

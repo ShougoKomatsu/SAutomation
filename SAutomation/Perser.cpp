@@ -37,7 +37,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	//-------------------------------------------------------
 	if(sDataTrim.Left(7).CompareNoCase(_T("Compare"))==0){*iCommandType=COMMAND_COMPARE; return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("AreEqualInt"))==0){*iCommandType=COMMAND_AREEQUAL_INT; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("AreEqualInt"))==0){*iCommandType=COMMAND_AREEQUAL_INT; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("AreEqualStr"))==0){*iCommandType=COMMAND_AREEQUAL_STR; return TRUE;}
 	if(sDataTrim.Left(13).CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
@@ -998,6 +999,19 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_AREEQUAL_INT:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			ExtractTokenInBracket(sDataLocal,2,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_AREEQUAL_STR:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}

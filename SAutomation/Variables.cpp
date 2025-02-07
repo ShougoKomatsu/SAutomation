@@ -573,12 +573,40 @@ int IntDiv(int iScene, CString sArg1, CString sArg2)
 }
 
 
+BOOL IsStrEqual(int iScene, CString sArg1, CString sArg2)
+{
+	CString sSrc1;
+	CString sSrc2;
+	
+	sSrc1.Format(_T("%s"), GetStrValue(iScene, sArg1));
+	sSrc2.Format(_T("%s"), GetStrValue(iScene, sArg2));
+
+	if(sSrc1.Compare(sSrc2)==0)
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
 BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 {
 	int iSrc1=GetIntValue(iScene, sArg1);
 	int iSrc2=GetIntValue(iScene, sArg2);
 
 	return (iSrc1==iSrc2);
+}
+
+
+
+ReturnValue Flow_AreStrEqual(int iScene, CStringArray* saData, CString* sReturnParam)
+{
+	if(IsStrEqual(iScene, saData->GetAt(0), saData->GetAt(1)))
+	{
+		sReturnParam->Format(_T("%s"), saData->GetAt(2));
+		return RETURN_GOTO_BY_SWITCH;
+	}
+
+	return RETURN_NORMAL;
 }
 
 ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)

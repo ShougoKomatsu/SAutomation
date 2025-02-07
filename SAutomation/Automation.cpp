@@ -767,6 +767,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		{
 			return Flow_AreIntEqual(*iSceneData, &saData, sReturnParam);
 		}
+	case COMMAND_AREEQUAL_STR:
+		{
+			return Flow_AreStrEqual(*iSceneData, &saData, sReturnParam);
+		}
 	case COMMAND_COMPARE:
 		{
 			return Flow_Compare(*iSceneData, &saData, sReturnParam);
