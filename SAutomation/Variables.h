@@ -53,7 +53,7 @@ void AssignString(int iScene, CString sArg, CString sInput);
 
 const CString Int2Str(int iScene, CString sArg, CString sFormat);
 int Str2Int(int iScene, CString sArg);
-
+const CString GetForegroundWIndowName();
 const CString NowDateTime(CString sArg);
 
 ReturnValue MessageBox(int iScene, CStringArray* saData);
@@ -78,6 +78,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_COMBINE_STR (101)
 #define VARIABLE_INT2STR (102)
 #define VARIABLE_NOW_DATE_TIME (103)
+#define VARIABLE_TOPMOST_WINDOW_NAME (104)
 
 #define VARIABLE_IMG (200)
 #define VARIABLE_CROP_IMAGE (201)
