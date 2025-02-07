@@ -34,7 +34,7 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
-	if(sDataTrim.Left(17).CompareNoCase(_T("TopMostWindowName"))==0){*iCommandType=VARIABLE_TOPMOST_WINDOW_NAME; return TRUE;}
+	if(sDataTrim.Left(20).CompareNoCase(_T("ForegroundWindowName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_NAME; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
@@ -405,7 +405,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			g_dlg->	cInput.DoModal();
 			return g_dlg->cInput.m_sReturnValue;
 		}
-	case VARIABLE_TOPMOST_WINDOW_NAME:
+	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			return GetForegroundWindowName();
 		}
@@ -974,7 +974,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			return RETURN_NORMAL;
 		}
 		
-	case VARIABLE_TOPMOST_WINDOW_NAME:
+	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			sDstPointer->Format(_T("%s"), GetForegroundWindowName()); 
 			return RETURN_NORMAL;
