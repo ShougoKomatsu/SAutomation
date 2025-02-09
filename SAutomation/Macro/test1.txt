@@ -1,4 +1,13 @@
-﻿VarImg1=ScreenShot
+﻿varstr1=a1234567
+msgbox(varstr1)
+varstr2=left(varstr1,3)
+msgbox(left(varstr1,3))
+varstr2=right(varstr1,4)
+msgbox(right(varstr1,4))
+varstr2=mid(varstr1,3,3)
+msgbox(mid(varstr1,3,3))
+
+VarImg1=ScreenShot
 VarImg2=Decompose3(VarImg1,R)
 VarObj1=GenRectangle1(100,300,400,500)
 VarImg3=ReduceDomain(VarImg2,VarObj1)

@@ -40,6 +40,9 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("Left"))==0){*iCommandType=VARIABLE_STR_LEFT; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("Right"))==0){*iCommandType=VARIABLE_STR_RIGHT; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("Mid"))==0){*iCommandType=VARIABLE_STR_MID; return TRUE;}
 	*iCommandType=VARIABLE_STR;
 	return TRUE;
 }
@@ -408,6 +411,40 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			return GetForegroundWindowName();
+		}
+	case VARIABLE_STR_LEFT:
+		{
+			CString sArg1;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			int iArg2;
+			iArg2 = GetIntValue(iScene, sArg2);
+			return sArg1.Left(iArg2);
+		}
+	case VARIABLE_STR_RIGHT:
+		{
+			CString sArg1;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			int iArg2;
+			iArg2 = GetIntValue(iScene, sArg2);
+			return sArg1.Right(iArg2);
+		}
+	case VARIABLE_STR_MID:
+		{
+			CString sArg1;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			CString sArg3;
+			ExtractTokenInBracket(sDataLocal,2,&sArg3);
+			int iArg2;
+			iArg2 = GetIntValue(iScene, sArg2);
+			int iArg3;
+			iArg3 = GetIntValue(iScene, sArg3);
+			return sArg1.Mid(iArg2, iArg3);
 		}
 	default :
 		{
@@ -1005,6 +1042,46 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			sDstPointer->Format(_T("%s"), GetForegroundWindowName()); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_STR_LEFT:
+		{
+			CString sArg1;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			int iArg2;
+			iArg2 = GetIntValue(iScene, sArg2);
+			sDstPointer->Format(_T("%s"), sArg1.Left(iArg2));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_STR_RIGHT:
+		{
+			CString sArg1;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			int iArg2;
+			iArg2 = GetIntValue(iScene, sArg2);
+			sDstPointer->Format(_T("%s"), sArg1.Right(iArg2));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_STR_MID:
+		{
+			CString sArg1;
+			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			CString sArg3;
+			ExtractTokenInBracket(sDataLocal,2,&sArg3);
+			int iArg2;
+			iArg2 = GetIntValue(iScene, sArg2);
+			int iArg3;
+			iArg3 = GetIntValue(iScene, sArg3);
+			sDstPointer->Format(_T("%s"), sArg1.Mid(iArg2, iArg3));
 			return RETURN_NORMAL;
 		}
 	}
