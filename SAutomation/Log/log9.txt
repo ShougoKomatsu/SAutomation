@@ -1,21 +1,2 @@
-1 varstr1=a1234567 <a1234567 = a1234567> 0
-2 msgbox(varstr1) <varstr1 = a1234567> 0
-3 varstr2=left(varstr1,3) <varstr1 = a1234567> 0
-4 msgbox(left(varstr1,3)) 0
-5 varstr2=right(varstr1,4) <varstr1 = a1234567> 0
-6 msgbox(right(varstr1,4)) 0
-7 varstr2=mid(varstr1,3,3) <varstr1 = a1234567> 0
-8 msgbox(mid(varstr1,3,3)) 0
-9 VarImg1=ScreenShot 0
-10 VarImg2=Decompose3(VarImg1,R) 0
-11 VarObj1=GenRectangle1(100,300,400,500) 0
-12 VarImg3=ReduceDomain(VarImg2,VarObj1) 0
-13 VarObj1=Threshold(VarImg3,0,128) 0
-14 VarObj2=Connection(VarObj1,4) 0
-15 VarObj3=SelectShape(VarObj2,area, 10, 10000000) <area = area> 0
-16 VarObj4=SortRegion(VarObj3, row, dsc) <row = row> <dsc = dsc> 0
-17 VarObj5=SelectObj(VarObj4,0) 0
-18 VarPoint1=ObjectCenter(VarObj5) 0
-19 MousePos(VarPoint1) 0
-20 MouseLClick 0
-21 //WaitColor(R, 0, 1, 0, 0, on)  0
+1 WaitKey(Ctrl, OFF) 0
+2 MsgBox(aa) <aa = aa> 0

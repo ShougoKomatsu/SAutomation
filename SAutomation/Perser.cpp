@@ -753,7 +753,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			}
 			else
 			{
-				ExtractTokenInBracket(sDataLocal,2,&sArg);
+				ExtractTokenInBracket(sDataLocal,1,&sArg);
 				saData->Add(sArg);
 			}
 
