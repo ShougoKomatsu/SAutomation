@@ -744,16 +744,18 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType=iType;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData->Add(sArg);
-			
+
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			saData->Add(sArg);
+
+			ExtractTokenInBracket(sDataLocal,2,&sArg);
 			if(sArg.GetLength()<=0)
 			{
-				saData->Add(sArg);
 				saData->Add(_T("-1"));
 			}
 			else
 			{
-				ExtractTokenInBracket(sDataLocal,1,&sArg);
+				ExtractTokenInBracket(sDataLocal,2,&sArg);
 				saData->Add(sArg);
 			}
 
