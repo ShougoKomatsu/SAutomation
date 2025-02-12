@@ -22,5 +22,7 @@ BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch = T
 
 
 const CString GetForegroundWindowName();
+const CString GetForegroundWindowClassName();
+
 
 BOOL GetForegroundWindowPos(int* iLeft, int* iTop, int* iWidth, int* iHeight);

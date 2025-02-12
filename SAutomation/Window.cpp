@@ -240,3 +240,16 @@ const CString GetForegroundWindowName()
 	sWindowName.Format(_T("%s"), wszWindowName);
 	return sWindowName;
 }
+
+const CString GetForegroundWindowClassName()
+{
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd==NULL){return _T("");}
+
+	WCHAR wszWindowName[MAX_PATH];
+	GetClassName(hwnd,wszWindowName,MAX_PATH);
+	
+	CString sWindowName;
+	sWindowName.Format(_T("%s"), wszWindowName);
+	return sWindowName;
+}
