@@ -790,11 +790,11 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		}
 	case COMMAND_MESSAGEBOX:
 		{
-			return MessageBox(*iSceneData, &saData);
+			return MessageBox_My(*iSceneData, &saData);
 		}
 	case COMMAND_LIST_DLG_ITEMS:
 		{
-			return ListCtrlItems();
+			return ListDlgItems();
 		}
 	default:{return RETURN_FAILED;}
 	}
