@@ -260,6 +260,12 @@ UINT GetDlgItem_My(CString sText, int iRank)
 	if(hwnd==NULL){return 0;}
 	
 	TCHAR tch[MAX_PATH];
+	int iRankLocal=0;
+	int iRankNow=0;
+
+	if(iRank<=0){iRankLocal=0;}
+	else{iRankLocal=iRank;}
+
 	for(UINT i=0; i<65535; i++)
 	{
 		UINT uiRet = GetDlgItemText(hwnd,i,tch,MAX_PATH);
@@ -268,7 +274,11 @@ UINT GetDlgItem_My(CString sText, int iRank)
 		CString sTemp;
 		sTemp.Format(_T("%s"), tch);
 
-		if(sTemp.Compare(sText)==0){return i;}
+		if(sTemp.Compare(sText)==0)
+		{
+			if(iRankNow==iRankLocal){return i;}
+			iRankNow++;
+		}
 	}
 	return 0;
 }
