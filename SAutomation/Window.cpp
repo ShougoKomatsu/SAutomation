@@ -254,6 +254,83 @@ const CString GetForegroundWindowClassName()
 	return sWindowName;
 }
 
+BOOL GetWindowRect_My(UINT iID, CRect* rect)
+{
+	/*
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd == NULL){return FALSE;}
+	HWND hwnd_item;
+	hwnd_item=GetDlgItem(hwnd, iID);
+	if(hwnd_item == NULL){return FALSE;}
+	*/
+
+	return GetWindowRect((HWND)iID, rect);;
+}
+BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam);
+
+#define MAX_CTRL_NUM (1024)
+HWND g_hCtrlHandles[MAX_CTRL_NUM];
+
+BOOL CALLBACK EnumChildProc( HWND hWnd, LPARAM lParam )
+{
+	TCHAR   tch[ 1024 ];
+	int  iCount = *(int*)lParam;
+
+	if(iCount>=MAX_CTRL_NUM){return FALSE;}
+
+	GetWindowText( hWnd, tch, sizeof(tch) ); 
+	if(_tcslen(tch)<=0){return TRUE;}
+
+	g_hCtrlHandles[iCount]=hWnd;
+	*(int*)lParam = iCount+1;
+	return TRUE;
+}
+
+
+ReturnValue ListDlgItems()
+{
+	CString sMes;
+	BOOL bRet;
+	int iCommandType;
+	HWND hwnd;
+	TCHAR tch[MAX_PATH];
+	hwnd=GetForegroundWindow();
+	int iListLength;
+	iListLength=0;
+	sMes.Format(_T(""));
+
+	int iCount = 0;
+	EnumChildWindows( hwnd, EnumChildProc, (LPARAM)&iCount );
+
+	for(int i=0; i<iCount; i++)
+	{
+		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
+		if(uiRet<=0){continue;}
+		if(_tcslen(tch)<=0){continue;}
+
+		if(sMes.GetLength()>0)
+		{
+			sMes.Format(_T("%s\n%d: %s"),sMes, g_hCtrlHandles[i], tch);
+		}
+		else
+		{
+			sMes.Format(_T("%d: %s"), g_hCtrlHandles[i], tch);
+		}
+		iListLength++;
+		if(iListLength>=10)
+		{
+			AfxMessageBox(sMes);
+			iListLength=0;
+			sMes.Format(_T(""));
+		}
+	}
+	if(iListLength>0)
+	{
+		AfxMessageBox(sMes);
+	}
+
+	return RETURN_NORMAL;
+}
 UINT GetDlgItem_My(CString sText, int iRank)
 {
 	HWND hwnd = GetForegroundWindow();
@@ -265,10 +342,13 @@ UINT GetDlgItem_My(CString sText, int iRank)
 
 	if(iRank<=0){iRankLocal=0;}
 	else{iRankLocal=iRank;}
+	
+	int iCount = 0;
+	EnumChildWindows( hwnd, EnumChildProc, (LPARAM)&iCount );
 
-	for(UINT i=0; i<65535; i++)
+	for(UINT i=0; i<iCount; i++)
 	{
-		UINT uiRet = GetDlgItemText(hwnd,i,tch,MAX_PATH);
+		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
 		if(uiRet<=0){continue;}
 		if(_tcslen(tch)<=0){continue;}
 		CString sTemp;
@@ -276,41 +356,9 @@ UINT GetDlgItem_My(CString sText, int iRank)
 
 		if(sTemp.Compare(sText)==0)
 		{
-			if(iRankNow==iRankLocal){return i;}
+			if(iRankNow==iRankLocal){return (int)g_hCtrlHandles[i];}
 			iRankNow++;
 		}
 	}
 	return 0;
-}
-
-BOOL GetWindowRect_My(UINT iID, CRect* rect)
-{
-	HWND hwnd = GetForegroundWindow();
-	if(hwnd == NULL){return FALSE;}
-	HWND hwnd_item;
-	hwnd_item=GetDlgItem(hwnd, iID);
-	if(hwnd_item == NULL){return FALSE;}
-	
-	return GetWindowRect(hwnd_item, rect);;
-}
-ReturnValue ListDlgItems()
-{
-	CString sMes;
-	BOOL bRet;
-	int iCommandType;
-	HWND hwnd;
-	TCHAR tch[MAX_PATH];
-	hwnd=GetForegroundWindow();
-	for(int i=0; i<65535; i++)
-	{
-		UINT uiRet = GetDlgItemText(hwnd,i,tch,MAX_PATH);
-		if(uiRet<=0){continue;}
-		if(_tcslen(tch)<=0){continue;}
-
-		CString sMes;
-		sMes.Format(_T("%d\n%s"), i, tch);
-		AfxMessageBox(sMes);
-	}
-
-	return RETURN_NORMAL;
 }

@@ -1,3 +1,6 @@
-﻿VarInt1=DlgItem(E X I T)
+﻿
+ListDlgItems
+
+VarInt1=DlgItem(E X I T)
 
 mousepostoitem(VarInt1)
