@@ -256,16 +256,18 @@ const CString GetForegroundWindowClassName()
 
 BOOL GetWindowRect_My(UINT iID, CRect* rect)
 {
-	/*
+	
 	HWND hwnd = GetForegroundWindow();
 	if(hwnd == NULL){return FALSE;}
 	HWND hwnd_item;
 	hwnd_item=GetDlgItem(hwnd, iID);
 	if(hwnd_item == NULL){return FALSE;}
-	*/
+	
 
-	return GetWindowRect((HWND)iID, rect);;
+	return GetWindowRect(hwnd_item, rect);;
 }
+
+
 BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam);
 
 #define MAX_CTRL_NUM (1024)
@@ -305,16 +307,17 @@ ReturnValue ListDlgItems()
 	for(int i=0; i<iCount; i++)
 	{
 		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
+		int iID = GetDlgCtrlID(g_hCtrlHandles[i]);
 		if(uiRet<=0){continue;}
 		if(_tcslen(tch)<=0){continue;}
 
 		if(sMes.GetLength()>0)
 		{
-			sMes.Format(_T("%s\n%d: %s"),sMes, g_hCtrlHandles[i], tch);
+			sMes.Format(_T("%s\n%d: %s"),sMes, iID, tch);
 		}
 		else
 		{
-			sMes.Format(_T("%d: %s"), g_hCtrlHandles[i], tch);
+			sMes.Format(_T("%d: %s"), iID, tch);
 		}
 		iListLength++;
 		if(iListLength>=10)
@@ -331,7 +334,7 @@ ReturnValue ListDlgItems()
 
 	return RETURN_NORMAL;
 }
-UINT GetDlgItem_My(CString sText, int iRank)
+int GetDlgItem_My(CString sText, int iRank)
 {
 	HWND hwnd = GetForegroundWindow();
 	if(hwnd==NULL){return 0;}
@@ -356,7 +359,7 @@ UINT GetDlgItem_My(CString sText, int iRank)
 
 		if(sTemp.Compare(sText)==0)
 		{
-			if(iRankNow==iRankLocal){return (int)g_hCtrlHandles[i];}
+			if(iRankNow==iRankLocal){return GetDlgCtrlID(g_hCtrlHandles[i]);}
 			iRankNow++;
 		}
 	}
