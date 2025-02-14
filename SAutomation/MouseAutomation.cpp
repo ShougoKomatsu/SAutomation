@@ -332,6 +332,20 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 }
 
 
+ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()<=0){return RETURN_FAILED;}
+	
+	int iItem = GetIntValue(iScene, saData->GetAt(0));
+	CRect rect;
+	GetWindowRect_My(iItem,&rect);
+
+	
+	MoveMouseAbs((rect.left+rect.right)/2, (rect.top+rect.bottom)/2);
+
+	return RETURN_NORMAL;
+
+}
 
 ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 {

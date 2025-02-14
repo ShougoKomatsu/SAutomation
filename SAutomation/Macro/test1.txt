@@ -1,2 +1,3 @@
-﻿WaitKey(Ctrl, OFF)
-MsgBox(aa)
+﻿VarInt1=DlgItem(E X I T)
+
+mousepostoitem(VarInt1)

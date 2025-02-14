@@ -1,2 +1,2 @@
-1 WaitKey(Ctrl, OFF) 0
-2 MsgBox(aa) <aa = aa> 0
+1 VarInt1=DlgItem(E X I T) <E X I T = E X I T> 0
+2 mousepostoitem(VarInt1) <VarInt1 = 1> 0

@@ -60,6 +60,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("MultInt"))==0){*iCommandType=VARIABLE_MULT_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_DLG_ITEM; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
@@ -336,6 +337,19 @@ int GetIntValue(int iScene, CString sDataLocal)
 			g_dlg->cInput.m_saParam.Copy(saData);
 			g_dlg->	cInput.DoModal();
 			return _ttoi(g_dlg->cInput.m_sReturnValue);
+		}
+	case VARIABLE_DLG_ITEM:
+		{
+			CString sText;
+			int iRank;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()<=0){iRank=0;}
+			else{iRank=GetIntValue(iScene,sArg);}
+			
+			return GetDlgItem_My(sText, iRank);
 		}
 	default:
 		{
@@ -1562,4 +1576,26 @@ ReturnValue MessageBox(int iScene, CStringArray* saData)
 	}
 
 	return RETURN_FAILED;
+}
+
+ReturnValue ListCtrlItems()
+{
+	CString sMes;
+	BOOL bRet;
+	int iCommandType;
+	HWND hwnd;
+	TCHAR tch[MAX_PATH];
+	hwnd=GetForegroundWindow();
+	for(int i=0; i<65535; i++)
+	{
+		UINT uiRet = GetDlgItemText(hwnd,i,tch,MAX_PATH);
+		if(uiRet<=0){continue;}
+		if(_tcslen(tch)<=0){continue;}
+
+		CString sMes;
+		sMes.Format(_T("%d\n%s"), i, tch);
+		AfxMessageBox(sMes);
+	}
+
+	return RETURN_NORMAL;
 }

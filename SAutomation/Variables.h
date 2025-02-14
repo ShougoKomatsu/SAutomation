@@ -59,6 +59,7 @@ const CString NowDateTime(CString sArg);
 
 ReturnValue MessageBox(int iScene, CStringArray* saData);
 
+			ReturnValue ListCtrlItems();
 const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 
 #define VARIABLE_UNDEFINED (-1)
@@ -74,6 +75,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_MULT_ITSELF_INT (9)
 #define VARIABLE_DIV_ITSELF_INT (10)
 #define VARIABLE_IMG_VALUE (11)
+#define VARIABLE_DLG_ITEM (12)
 
 #define VARIABLE_STR (100)
 #define VARIABLE_COMBINE_STR (101)

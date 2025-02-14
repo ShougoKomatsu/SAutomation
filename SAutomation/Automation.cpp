@@ -705,6 +705,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(*iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(*iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(*iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(*iSceneData, &saData);}
 
 	case COMMAND_WHEEL:{return MouseVWheel(*iSceneData, &saData);}
 
@@ -790,6 +791,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_MESSAGEBOX:
 		{
 			return MessageBox(*iSceneData, &saData);
+		}
+	case COMMAND_LIST_DLG_ITEMS:
+		{
+			return ListCtrlItems();
 		}
 	default:{return RETURN_FAILED;}
 	}
