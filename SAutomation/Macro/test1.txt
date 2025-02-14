@@ -1,1 +1,2 @@
-﻿ListDlgItems
+﻿VarInt1=DlgItem(E X I T)
+MsgBox(VarInt1)

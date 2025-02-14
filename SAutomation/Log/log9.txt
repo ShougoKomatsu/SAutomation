@@ -1,0 +1,2 @@
+1 VarInt1=DlgItem(E X I T) <E X I T = E X I T> 0
+2 MsgBox(VarInt1) <VarInt1 = 1> 0

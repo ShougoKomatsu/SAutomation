@@ -253,3 +253,22 @@ const CString GetForegroundWindowClassName()
 	sWindowName.Format(_T("%s"), wszWindowName);
 	return sWindowName;
 }
+
+UINT GetDlgItem_My(CString sText, int iRank)
+{
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd==NULL){return 0;}
+	
+	TCHAR tch[MAX_PATH];
+	for(UINT i=0; i<65535; i++)
+	{
+		UINT uiRet = GetDlgItemText(hwnd,i,tch,MAX_PATH);
+		if(uiRet<=0){continue;}
+		if(_tcslen(tch)<=0){continue;}
+		CString sTemp;
+		sTemp.Format(_T("%s"), tch);
+
+		if(sTemp.Compare(sText)==0){return i;}
+	}
+	return 0;
+}
