@@ -57,9 +57,8 @@ const CString Int2Str(int iScene, CString sArg, CString sFormat);
 int Str2Int(int iScene, CString sArg);
 const CString NowDateTime(CString sArg);
 
-ReturnValue MessageBox(int iScene, CStringArray* saData);
+ReturnValue MessageBox_My(int iScene, CStringArray* saData);
 
-			ReturnValue ListCtrlItems();
 const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 
 #define VARIABLE_UNDEFINED (-1)
