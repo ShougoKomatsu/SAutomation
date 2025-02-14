@@ -103,6 +103,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(5).CompareNoCase(_T("keyup"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
 	if(sDataTrim.Left(3).CompareNoCase(_T("key"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("MsgBox"))==0){*iCommandType=COMMAND_MESSAGEBOX; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("ListDlgItems"))==0){*iCommandType=COMMAND_LIST_DLG_ITEMS; return TRUE;}
 
 	//-------------------------------------------------------
 	if(sDataTrim.CompareNoCase(_T("enter"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -1060,6 +1061,11 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData->Add(sArg);
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_LIST_DLG_ITEMS:
+		{
 			*iCommandType = iType;
 			return TRUE;
 		}

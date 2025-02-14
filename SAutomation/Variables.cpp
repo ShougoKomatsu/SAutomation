@@ -1563,3 +1563,24 @@ ReturnValue MessageBox(int iScene, CStringArray* saData)
 
 	return RETURN_FAILED;
 }
+
+ReturnValue ListCtrlItems()
+{
+	CString sMes;
+	BOOL bRet;
+	int iCommandType;
+	HWND hwnd;
+	TCHAR tch[MAX_PATH];
+	hwnd=GetForegroundWindow();
+	for(int i=0; i<65535; i++)
+	{
+		UINT uiRet = GetDlgItemText(hwnd,i,tch,MAX_PATH);
+		if(uiRet<=0){continue;}
+		CString sMes;
+
+		sMes.Format(_T("%d\n%s"), i, tch);
+		AfxMessageBox(sMes);
+	}
+
+	return RETURN_NORMAL;
+}

@@ -1,2 +1,0 @@
-1 WaitKey(Ctrl, OFF) 0
-2 MsgBox(aa) <aa = aa> 0

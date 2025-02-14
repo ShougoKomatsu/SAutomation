@@ -1,2 +1,1 @@
-﻿WaitKey(Ctrl, OFF)
-MsgBox(aa)
+﻿ListDlgItems
