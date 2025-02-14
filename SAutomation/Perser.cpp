@@ -82,6 +82,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.Left(12).CompareNoCase(_T("mouseposincl"))==0){*iCommandType=COMMAND_MOUSE_MOVE_INCL; return TRUE;}
 	if(sDataTrim.Left(15).CompareNoCase(_T("mousepostoimage"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_IMG; return TRUE;}
+	if(sDataTrim.Left(14).CompareNoCase(_T("mousepostoitem"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_ITEM; return TRUE;}
 	if((sDataTrim.Left(8).CompareNoCase(_T("mousepos"))==0) && (sDataTrim.Left(11).CompareNoCase(_T("mouseposrel"))!=0)){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
 	if(sDataTrim.Left(5).CompareNoCase(_T("wheel"))==0){*iCommandType=COMMAND_WHEEL; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
@@ -909,6 +910,13 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			
 			ExtractTokenInBracket(sDataLocal,4,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_MOUSE_MOVE_TO_ITEM:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			*iCommandType = iType;
 			return TRUE;

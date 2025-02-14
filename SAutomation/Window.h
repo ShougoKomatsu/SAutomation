@@ -27,3 +27,4 @@ const CString GetForegroundWindowClassName();
 
 BOOL GetForegroundWindowPos(int* iLeft, int* iTop, int* iWidth, int* iHeight);
 UINT GetDlgItem_My(CString sText, int iRank);
+BOOL GetWindowRect_My(UINT iID, CRect* rect);

@@ -272,3 +272,14 @@ UINT GetDlgItem_My(CString sText, int iRank)
 	}
 	return 0;
 }
+
+BOOL GetWindowRect_My(UINT iID, CRect* rect)
+{
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd == NULL){return FALSE;}
+	HWND hwnd_item;
+	hwnd_item=GetDlgItem(hwnd, iID);
+	if(hwnd_item == NULL){return FALSE;}
+	
+	return GetWindowRect(hwnd_item, rect);;
+}
