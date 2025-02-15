@@ -1,3 +1,3 @@
-1 ListDlgItems 0
-2 VarInt1=DlgItem(E X I T) <E X I T = E X I T> 0
-3 mousepostoitem(VarInt1) <VarInt1 = 1> 0
+1 VarPoint1=ForegroundWindowLU 0
+2 MousePos(VarPoint1) <VarPoint = (426, 701)> <VarPoint = (426, 701)> 0
+3 exit 10
