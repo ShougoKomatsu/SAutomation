@@ -590,36 +590,12 @@ void CSAutomationDlg::SaveSettings()
 
 		WritePrivateProfileString(sSection,_T("FileName"),m_sEditFileName[iScene],sFilePath);
 
-		CString sData;
-		TCHAR tch[8];
-		if(m_combo[iScene].GetCurSel()<0){sData.Format(_T("b"));}
-		else{m_combo[iScene].GetLBText(m_combo[iScene].GetCurSel(),tch); sData.Format(_T("%s"), tch);}
-		WritePrivateProfileString(sSection,_T("Hotkey"),sData,sFilePath);
+		WritePrivateProfileString(sSection,_T("Hotkey"),m_OpeInfo[iScene].sHotkey, sFilePath);
 
-		sUseCtrl.Format(_T("0"));
-		sUseShift.Format(_T("0"));
-		sUseAlt.Format(_T("0"));
-		sUseWin.Format(_T("0"));
-
-		if(m_comboUseCtrl[iScene].GetCurSel()<0){sData.Format(_T("0"));}
-		else
-		{
-			m_comboUseCtrl[iScene].GetLBText(m_comboUseCtrl[iScene].GetCurSel(),tch);
-			if(wcscmp(tch,_T("Ctrl"))==0){sUseCtrl.Format(_T("1"));}
-			if(wcscmp(tch,_T("Shift"))==0){sUseShift.Format(_T("1"));}
-			if(wcscmp(tch,_T("Alt"))==0){sUseAlt.Format(_T("1"));}
-			if(wcscmp(tch,_T("Win"))==0){sUseWin.Format(_T("1"));}
-		}
-
-		if(m_comboUseShift[iScene].GetCurSel()<0){sData.Format(_T("0"));}
-		else
-		{
-			m_comboUseShift[iScene].GetLBText(m_comboUseShift[iScene].GetCurSel(),tch);
-			if(wcscmp(tch,_T("Ctrl"))==0){sUseCtrl.Format(_T("1"));}
-			if(wcscmp(tch,_T("Shift"))==0){sUseShift.Format(_T("1"));}
-			if(wcscmp(tch,_T("Alt"))==0){sUseAlt.Format(_T("1"));}
-			if(wcscmp(tch,_T("Win"))==0){sUseWin.Format(_T("1"));}
-		}
+		sUseCtrl.Format(_T("%d"), m_OpeInfo[iScene].bUseCtrl);
+		sUseShift.Format(_T("%d"), m_OpeInfo[iScene].bUseShift);
+		sUseAlt.Format(_T("%d"), m_OpeInfo[iScene].bUseAlt);
+		sUseWin.Format(_T("%d"), m_OpeInfo[iScene].bUseWin);
 
 		WritePrivateProfileString(sSection,_T("UseCtrl"),sUseCtrl,sFilePath);
 		WritePrivateProfileString(sSection,_T("UseShift"),sUseShift,sFilePath);
@@ -810,7 +786,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 	ReadSettings();
 	g_dlg=this;
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
-	for(int iScene= 0 ; iScene<MAX_THREAD; iScene++)
+
+	for(int iScene= 0 ; iScene<16; iScene++)
 	{
 		g_hThread[iScene] = NULL;
 		if(m_OpeInfo[iScene].sHotkey.GetLength()>=2)
@@ -1367,8 +1344,8 @@ void CSAutomationDlg::ResetHotkey(int iScene)
 	UnregisterHotKey(NULL, HOTKEY_SCENE_0+iScene);
 
 	TCHAR tch[8];
-	if(m_combo[iScene].GetCurSel()<0){return;}
-	m_combo[iScene].GetLBText(m_combo[iScene].GetCurSel(),tch);
+	if(m_combo[iScene % 16].GetCurSel()<0){return;}
+	m_combo[iScene % 16].GetLBText(m_combo[iScene % 16].GetCurSel(),tch);
 	if(wcscmp(tch,_T(" "))==0){return;}
 	if(_tcslen(tch)>=2)
 	{
@@ -1398,20 +1375,20 @@ void CSAutomationDlg::ResetHotkey(int iScene)
 	m_OpeInfo[iScene].bUseAlt=FALSE;
 	m_OpeInfo[iScene].bUseWin=FALSE;
 
-	if(m_comboUseCtrl[iScene].GetCurSel()<0){}
+	if(m_comboUseCtrl[iScene % 16].GetCurSel()<0){}
 	else
 	{
-		m_comboUseCtrl[iScene].GetLBText(m_comboUseCtrl[iScene].GetCurSel(),tch);
+		m_comboUseCtrl[iScene % 16].GetLBText(m_comboUseCtrl[iScene].GetCurSel(),tch);
 		if(wcscmp(tch,_T("Ctrl"))==0){m_OpeInfo[iScene].bUseCtrl=TRUE;}
 		if(wcscmp(tch,_T("Shift"))==0){m_OpeInfo[iScene].bUseShift=TRUE;}
 		if(wcscmp(tch,_T("Alt"))==0){m_OpeInfo[iScene].bUseAlt=TRUE;}
 		if(wcscmp(tch,_T("Win"))==0){m_OpeInfo[iScene].bUseWin=TRUE;}
 	}
 
-	if(m_comboUseShift[iScene].GetCurSel()<0){}
+	if(m_comboUseShift[iScene % 16].GetCurSel()<0){}
 	else
 	{
-		m_comboUseShift[iScene].GetLBText(m_comboUseShift[iScene].GetCurSel(),tch);
+		m_comboUseShift[iScene % 16].GetLBText(m_comboUseShift[iScene].GetCurSel(),tch);
 		if(wcscmp(tch,_T("Ctrl"))==0){m_OpeInfo[iScene].bUseCtrl=TRUE;}
 		if(wcscmp(tch,_T("Shift"))==0){m_OpeInfo[iScene].bUseShift=TRUE;}
 		if(wcscmp(tch,_T("Alt"))==0){m_OpeInfo[iScene].bUseAlt=TRUE;}
