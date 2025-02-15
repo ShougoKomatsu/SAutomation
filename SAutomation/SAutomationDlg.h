@@ -57,11 +57,11 @@ public:
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
 	
 	void SaveSettings();
-	void FileSelect(int iScene);
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);
 		CInputDialog cInput;
 	OperationInfo m_OpeInfo[MAX_THREAD];
+	CString m_sDir;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 	BOOL TrayNotifyIconMessage(DWORD dwMessage);
@@ -83,7 +83,6 @@ protected:
 	void RefreshTargetWindowPos();
 	DWORD m_dwHotKeyEnable;
 	
-	CString m_sDir;
 	void WindowNameRefresh();
 	void ReadSettings();
 	BOOL m_bRunningAny;

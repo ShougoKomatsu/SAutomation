@@ -9,6 +9,7 @@ class CTabItem : public CDialogEx
 	
 public:
 	void RefleshDialog(int iSlot);
+	void FileSelect(int iScene);
 
 	class CSAutomationDlg* pParent;
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター

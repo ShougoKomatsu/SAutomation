@@ -202,22 +202,22 @@ END_MESSAGE_MAP()
 
 // CTabItem メッセージ ハンドラー
 
-void CTabItem::OnBnClickedButton00(){pParent->FileSelect(0); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton01(){pParent->FileSelect(1); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton02(){pParent->FileSelect(2); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton03(){pParent->FileSelect(3); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton04(){pParent->FileSelect(4); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton05(){pParent->FileSelect(5); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton06(){pParent->FileSelect(6); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton07(){pParent->FileSelect(7); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton08(){pParent->FileSelect(8); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton09(){pParent->FileSelect(9); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton10(){pParent->FileSelect(10); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton11(){pParent->FileSelect(11); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton12(){pParent->FileSelect(12); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton13(){pParent->FileSelect(13); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton14(){pParent->FileSelect(14); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton15(){pParent->FileSelect(15); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton00(){FileSelect(0); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton01(){FileSelect(1); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton02(){FileSelect(2); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton03(){FileSelect(3); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton04(){FileSelect(4); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton05(){FileSelect(5); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton06(){FileSelect(6); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton07(){FileSelect(7); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton08(){FileSelect(8); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton09(){FileSelect(9); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton10(){FileSelect(10); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton11(){FileSelect(11); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton12(){FileSelect(12); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton13(){FileSelect(13); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton14(){FileSelect(14); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton15(){FileSelect(15); RefleshDialog(0); pParent->SaveSettings();}
 
 void CTabItem::OnSelchangeCombo00(){pParent->ResetHotkey(0);pParent->SaveSettings();}
 void CTabItem::OnSelchangeCombo01(){pParent->ResetHotkey(1);pParent->SaveSettings();}
@@ -295,4 +295,14 @@ void CTabItem::RefleshDialog(int iSlot)
 		m_sEditFileName[iScene].Format(_T("%s"),pParent->m_OpeInfo[iSlot*16 + iScene].sFileName);
 	}
 	UpdateData(FALSE);
+}
+void CTabItem::FileSelect(int iScene)
+{
+	CString sMacroFolderPath;
+	sMacroFolderPath.Format(_T("%s\\Macro"),pParent->m_sDir);
+
+	CFileDialog cf(TRUE);
+	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
+	if(cf.DoModal()!=IDOK){ return;}
+	pParent->m_OpeInfo[iScene].sFileName.Format(_T("%s"), cf.GetFileName());
 }

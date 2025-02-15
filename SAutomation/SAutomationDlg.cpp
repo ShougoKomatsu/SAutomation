@@ -1059,17 +1059,6 @@ void CSAutomationDlg::Operate(int iScene)
 
 
 
-void CSAutomationDlg::FileSelect(int iScene)
-{
-	CString sMacroFolderPath;
-	sMacroFolderPath.Format(_T("%s\\Macro"),m_sDir);
-
-	CFileDialog cf(TRUE);
-	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
-	if(cf.DoModal()!=IDOK){ return;}
-	m_OpeInfo[iScene].sFileName.Format(_T("%s"), cf.GetFileName());
-}
-
 
 BOOL CSAutomationDlg::DestroyWindow()
 {
