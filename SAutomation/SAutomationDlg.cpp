@@ -1219,17 +1219,24 @@ void CSAutomationDlg::Operate(int iScene)
 
 
 
-
-void CSAutomationDlg::FileSelect(CString *sFileName)
+void CSAutomationDlg::RefleshDialog(int iSlot)
 {
+	for(int iScene=0; iScene<16; iScene++)
+	{
+		m_sEditFileName[iScene].Format(_T("%s"),m_OpeInfo[iSlot*16 + iScene].sFileName);
+	}
+	UpdateData(TRUE);
+}
 
+void CSAutomationDlg::FileSelect(int iScene)
+{
 	CString sMacroFolderPath;
 	sMacroFolderPath.Format(_T("%s\\Macro"),m_sDir);
 
 	CFileDialog cf(TRUE);
 	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
-	if(cf.DoModal()!=IDOK){sFileName->Format(_T("")); return;}
-	sFileName->Format(_T("%s"), cf.GetFileName());
+	if(cf.DoModal()!=IDOK){ return;}
+	m_OpeInfo[iScene].sFileName.Format(_T("%s"), cf.GetFileName());
 }
 
 
@@ -1247,22 +1254,22 @@ BOOL CSAutomationDlg::DestroyWindow()
 
 
 
-void CSAutomationDlg::OnBnClickedButton00(){FileSelect(&m_sEditFileName[0]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton01(){FileSelect(&m_sEditFileName[1]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton02(){FileSelect(&m_sEditFileName[2]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton03(){FileSelect(&m_sEditFileName[3]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton04(){FileSelect(&m_sEditFileName[4]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton05(){FileSelect(&m_sEditFileName[5]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton06(){FileSelect(&m_sEditFileName[6]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton07(){FileSelect(&m_sEditFileName[7]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton08(){FileSelect(&m_sEditFileName[8]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton09(){FileSelect(&m_sEditFileName[9]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton10(){FileSelect(&m_sEditFileName[10]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton11(){FileSelect(&m_sEditFileName[11]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton12(){FileSelect(&m_sEditFileName[12]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton13(){FileSelect(&m_sEditFileName[13]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton14(){FileSelect(&m_sEditFileName[14]);UpdateData(FALSE);SaveSettings();}
-void CSAutomationDlg::OnBnClickedButton15(){FileSelect(&m_sEditFileName[15]);UpdateData(FALSE);SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton00(){FileSelect(0); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton01(){FileSelect(1); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton02(){FileSelect(2); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton03(){FileSelect(3); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton04(){FileSelect(4); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton05(){FileSelect(5); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton06(){FileSelect(6); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton07(){FileSelect(7); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton08(){FileSelect(8); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton09(){FileSelect(9); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton10(){FileSelect(10); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton11(){FileSelect(11); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton12(){FileSelect(12); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton13(){FileSelect(13); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton14(){FileSelect(14); RefleshDialog(0); SaveSettings();}
+void CSAutomationDlg::OnBnClickedButton15(){FileSelect(15); RefleshDialog(0); SaveSettings();}
 
 void CSAutomationDlg::OnSelchangeCombo00(){ResetHotkey(0);SaveSettings();}
 void CSAutomationDlg::OnSelchangeCombo01(){ResetHotkey(1);SaveSettings();}

@@ -82,7 +82,8 @@ protected:
 	DWORD m_dwHotKeyEnable;
 
 	CString m_sDir;
-	void FileSelect(CString *sFileName);
+	void RefleshDialog(int iSlot);
+	void FileSelect(int iScene);
 	void SaveSettings();
 	void WindowNameRefresh();
 	void ReadSettings();
