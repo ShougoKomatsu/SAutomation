@@ -49,8 +49,13 @@ ReturnValue MouseMUp(UINT nX, UINT nY){return MouseMUpAbs(nX + g_iOriginC, nY + 
 
 ReturnValue MoveMouse(int iScene, CStringArray* saData)
 {
-	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	if(saData->GetCount()==1)
 	{
+		if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))!=0)
+		{
+			return RETURN_FAILED;
+		}
+
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
 		Point* p(GetPointValuePointer(iScene,sArg));
@@ -59,6 +64,7 @@ ReturnValue MoveMouse(int iScene, CStringArray* saData)
 	}
 	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+
 	return MoveMouse(iSrc1, iSrc2);
 }
 

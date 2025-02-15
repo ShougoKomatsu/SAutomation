@@ -114,6 +114,8 @@ BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
 	}
 	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
 
 	return RETURN_FAILED;
 }
@@ -1481,12 +1483,32 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 
 
 			AreaCenter(objSrc, dA, dR, dC, iLength);
-			
+
 			pPoint->Set(dR[0], dC[0]);
 
 			delete [] dA;
 			delete [] dR;
 			delete [] dC;
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_POINT_FOREGROUND_WINDOW_LU:
+		{
+			int iLeft;
+			int iTop; 
+			int iWidth;
+			int iHeight;
+			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
+			pPoint->Set(iLeft,iTop);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_POINT_FOREGROUND_WINDOW_RD:
+		{
+			int iLeft;
+			int iTop; 
+			int iWidth;
+			int iHeight;
+			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
+			pPoint->Set(iLeft+iWidth-1,iTop+iHeight-1);
 			return RETURN_NORMAL;
 		}
 	}
