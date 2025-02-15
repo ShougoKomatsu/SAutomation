@@ -56,12 +56,12 @@ public:
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
 	
-	void RefleshDialog(int iSlot);
 	void SaveSettings();
 	void FileSelect(int iScene);
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);
 		CInputDialog cInput;
+	OperationInfo m_OpeInfo[MAX_THREAD];
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 	BOOL TrayNotifyIconMessage(DWORD dwMessage);
@@ -71,7 +71,6 @@ protected:
 
 	void ToggleEnable();
 
-	OperationInfo m_OpeInfo[MAX_THREAD];
 
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;

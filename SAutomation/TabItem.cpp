@@ -202,22 +202,22 @@ END_MESSAGE_MAP()
 
 // CTabItem メッセージ ハンドラー
 
-void CTabItem::OnBnClickedButton00(){pParent->FileSelect(0); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton01(){pParent->FileSelect(1); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton02(){pParent->FileSelect(2); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton03(){pParent->FileSelect(3); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton04(){pParent->FileSelect(4); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton05(){pParent->FileSelect(5); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton06(){pParent->FileSelect(6); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton07(){pParent->FileSelect(7); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton08(){pParent->FileSelect(8); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton09(){pParent->FileSelect(9); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton10(){pParent->FileSelect(10); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton11(){pParent->FileSelect(11); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton12(){pParent->FileSelect(12); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton13(){pParent->FileSelect(13); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton14(){pParent->FileSelect(14); pParent->RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton15(){pParent->FileSelect(15); pParent->RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton00(){pParent->FileSelect(0); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton01(){pParent->FileSelect(1); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton02(){pParent->FileSelect(2); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton03(){pParent->FileSelect(3); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton04(){pParent->FileSelect(4); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton05(){pParent->FileSelect(5); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton06(){pParent->FileSelect(6); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton07(){pParent->FileSelect(7); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton08(){pParent->FileSelect(8); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton09(){pParent->FileSelect(9); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton10(){pParent->FileSelect(10); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton11(){pParent->FileSelect(11); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton12(){pParent->FileSelect(12); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton13(){pParent->FileSelect(13); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton14(){pParent->FileSelect(14); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton15(){pParent->FileSelect(15); RefleshDialog(0); pParent->SaveSettings();}
 
 void CTabItem::OnSelchangeCombo00(){pParent->ResetHotkey(0);pParent->SaveSettings();}
 void CTabItem::OnSelchangeCombo01(){pParent->ResetHotkey(1);pParent->SaveSettings();}
@@ -287,3 +287,12 @@ void CTabItem::OnBnClickedButtonOperate13(){pParent->Operate(13);}
 void CTabItem::OnBnClickedButtonOperate14(){pParent->Operate(14);}
 void CTabItem::OnBnClickedButtonOperate15(){pParent->Operate(15);}
 
+
+void CTabItem::RefleshDialog(int iSlot)
+{
+	for(int iScene=0; iScene<16; iScene++)
+	{
+		m_sEditFileName[iScene].Format(_T("%s"),pParent->m_OpeInfo[iSlot*16 + iScene].sFileName);
+	}
+	UpdateData(FALSE);
+}

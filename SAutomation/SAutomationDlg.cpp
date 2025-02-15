@@ -641,7 +641,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	g_dlg=this;
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
 	
-		RefleshDialog(0);
+		m_tabItem.RefleshDialog(0);
 
 
 	for(int iScene= 0 ; iScene<16; iScene++)
@@ -1058,14 +1058,6 @@ void CSAutomationDlg::Operate(int iScene)
 
 
 
-void CSAutomationDlg::RefleshDialog(int iSlot)
-{
-	for(int iScene=0; iScene<16; iScene++)
-	{
-		m_tabItem.m_sEditFileName[iScene].Format(_T("%s"),m_OpeInfo[iSlot*16 + iScene].sFileName);
-	}
-	m_tabItem.UpdateData_My(FALSE);
-}
 
 void CSAutomationDlg::FileSelect(int iScene)
 {
