@@ -641,7 +641,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 	g_dlg=this;
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
 	
-		m_tabItem.RefleshDialog(0);
+	m_tabItem.m_iSlot=0;
+		m_tabItem.RefleshDialog();
 
 
 	for(int iScene= 0 ; iScene<16; iScene++)

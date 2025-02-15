@@ -202,22 +202,22 @@ END_MESSAGE_MAP()
 
 // CTabItem メッセージ ハンドラー
 
-void CTabItem::OnBnClickedButton00(){FileSelect(0); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton01(){FileSelect(1); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton02(){FileSelect(2); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton03(){FileSelect(3); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton04(){FileSelect(4); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton05(){FileSelect(5); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton06(){FileSelect(6); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton07(){FileSelect(7); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton08(){FileSelect(8); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton09(){FileSelect(9); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton10(){FileSelect(10); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton11(){FileSelect(11); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton12(){FileSelect(12); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton13(){FileSelect(13); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton14(){FileSelect(14); RefleshDialog(0); pParent->SaveSettings();}
-void CTabItem::OnBnClickedButton15(){FileSelect(15); RefleshDialog(0); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton00(){FileSelect(0); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton01(){FileSelect(1); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton02(){FileSelect(2); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton03(){FileSelect(3); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton04(){FileSelect(4); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton05(){FileSelect(5); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton06(){FileSelect(6); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton07(){FileSelect(7); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton08(){FileSelect(8); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton09(){FileSelect(9); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton10(){FileSelect(10); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton11(){FileSelect(11); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton12(){FileSelect(12); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton13(){FileSelect(13); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton14(){FileSelect(14); RefleshDialog(); pParent->SaveSettings();}
+void CTabItem::OnBnClickedButton15(){FileSelect(15); RefleshDialog(); pParent->SaveSettings();}
 
 void CTabItem::OnSelchangeCombo00(){UpdateHotkey(0); pParent->ResetHotkey(0);pParent->SaveSettings();}
 void CTabItem::OnSelchangeCombo01(){UpdateHotkey(1); pParent->ResetHotkey(1);pParent->SaveSettings();}
@@ -288,11 +288,11 @@ void CTabItem::OnBnClickedButtonOperate14(){pParent->Operate(14);}
 void CTabItem::OnBnClickedButtonOperate15(){pParent->Operate(15);}
 
 
-void CTabItem::RefleshDialog(int iSlot)
+void CTabItem::RefleshDialog()
 {
 	for(int iScene=0; iScene<16; iScene++)
 	{
-		m_sEditFileName[iScene].Format(_T("%s"),pParent->m_OpeInfo[iSlot*16 + iScene].sFileName);
+		m_sEditFileName[iScene].Format(_T("%s"),pParent->m_OpeInfo[m_iSlot*16 + iScene].sFileName);
 	}
 	UpdateData(FALSE);
 }
@@ -304,7 +304,7 @@ void CTabItem::FileSelect(int iScene)
 	CFileDialog cf(TRUE);
 	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
 	if(cf.DoModal()!=IDOK){ return;}
-	pParent->m_OpeInfo[iScene].sFileName.Format(_T("%s"), cf.GetFileName());
+	pParent->m_OpeInfo[m_iSlot*16 + iScene].sFileName.Format(_T("%s"), cf.GetFileName());
 }
 
 void CTabItem::UpdateHotkey(int iScene)
@@ -312,56 +312,60 @@ void CTabItem::UpdateHotkey(int iScene)
 	UpdateData(TRUE);
 
 	TCHAR tch[8];
-	if(m_combo[iScene % 16].GetCurSel()<0){return;}
-	m_combo[iScene % 16].GetLBText(m_combo[iScene % 16].GetCurSel(),tch);
+	if(m_combo[iScene].GetCurSel()<0){return;}
+	m_combo[iScene].GetLBText(m_combo[iScene].GetCurSel(),tch);
 	if(wcscmp(tch,_T(" "))==0){return;}
+		DWORD dwHotKey;
 	if(_tcslen(tch)>=2)
 	{
-		if(_tcsicmp(tch,_T("F1"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F1;}
-		if(_tcsicmp(tch,_T("F2"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F2;}
-		if(_tcsicmp(tch,_T("F3"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F3;}
-		if(_tcsicmp(tch,_T("F4"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F4;}
-		if(_tcsicmp(tch,_T("F5"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F5;}
-		if(_tcsicmp(tch,_T("F6"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F6;}
-		if(_tcsicmp(tch,_T("F7"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F7;}
-		if(_tcsicmp(tch,_T("F8"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F8;}
-		if(_tcsicmp(tch,_T("F9"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F9;}
-		if(_tcsicmp(tch,_T("F10"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F10;}
-		if(_tcsicmp(tch,_T("F11"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F11;}
-		if(_tcsicmp(tch,_T("F12"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_F12;}
-		if(_tcsicmp(tch,_T("Insert"))==0){pParent->m_OpeInfo[iScene].dwHotKey = VK_INSERT;}
+		if(_tcsicmp(tch,_T("F1"))==0){dwHotKey = VK_F1;}
+		if(_tcsicmp(tch,_T("F2"))==0){dwHotKey = VK_F2;}
+		if(_tcsicmp(tch,_T("F3"))==0){dwHotKey = VK_F3;}
+		if(_tcsicmp(tch,_T("F4"))==0){dwHotKey = VK_F4;}
+		if(_tcsicmp(tch,_T("F5"))==0){dwHotKey = VK_F5;}
+		if(_tcsicmp(tch,_T("F6"))==0){dwHotKey = VK_F6;}
+		if(_tcsicmp(tch,_T("F7"))==0){dwHotKey = VK_F7;}
+		if(_tcsicmp(tch,_T("F8"))==0){dwHotKey = VK_F8;}
+		if(_tcsicmp(tch,_T("F9"))==0){dwHotKey = VK_F9;}
+		if(_tcsicmp(tch,_T("F10"))==0){dwHotKey = VK_F10;}
+		if(_tcsicmp(tch,_T("F11"))==0){dwHotKey = VK_F11;}
+		if(_tcsicmp(tch,_T("F12"))==0){dwHotKey = VK_F12;}
+		if(_tcsicmp(tch,_T("Insert"))==0){dwHotKey = VK_INSERT;}
+
 
 	}
 	else
 	{
-		if((tch[0]>='a') && (tch[0]<='z')){pParent->m_OpeInfo[iScene].dwHotKey = char(tch[0])-'a'+0x41;}
-		if((tch[0]>='0') && (tch[0]<='9')){pParent->m_OpeInfo[iScene].dwHotKey = char(tch[0])-'0'+0x30;}
+		if((tch[0]>='a') && (tch[0]<='z')){dwHotKey = char(tch[0])-'a'+0x41;}
+		if((tch[0]>='0') && (tch[0]<='9')){dwHotKey = char(tch[0])-'0'+0x30;}
 	}
-	pParent->m_OpeInfo[iScene].sHotkey.Format(_T("%s"),tch);
+		pParent->m_OpeInfo[m_iSlot*16 + iScene].dwHotKey = dwHotKey;
 
-	pParent->m_OpeInfo[iScene].bUseShift=FALSE;
-	pParent->m_OpeInfo[iScene].bUseCtrl=FALSE;
-	pParent->m_OpeInfo[iScene].bUseAlt=FALSE;
-	pParent->m_OpeInfo[iScene].bUseWin=FALSE;
+	pParent->m_OpeInfo[m_iSlot*16 + iScene].sHotkey.Format(_T("%s"),tch);
 
-	if(m_comboUseCtrl[iScene % 16].GetCurSel()<0){}
+	pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseShift=FALSE;
+	pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseCtrl=FALSE;
+	pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseAlt=FALSE;
+	pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseWin=FALSE;
+
+	if(m_comboUseCtrl[iScene].GetCurSel()<0){}
 	else
 	{
-		m_comboUseCtrl[iScene % 16].GetLBText(m_comboUseCtrl[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){pParent->m_OpeInfo[iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){pParent->m_OpeInfo[iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){pParent->m_OpeInfo[iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){pParent->m_OpeInfo[iScene].bUseWin=TRUE;}
+		m_comboUseCtrl[iScene].GetLBText(m_comboUseCtrl[iScene].GetCurSel(),tch);
+		if(wcscmp(tch,_T("Ctrl"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseCtrl=TRUE;}
+		if(wcscmp(tch,_T("Shift"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseShift=TRUE;}
+		if(wcscmp(tch,_T("Alt"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseAlt=TRUE;}
+		if(wcscmp(tch,_T("Win"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseWin=TRUE;}
 	}
 
-	if(m_comboUseShift[iScene % 16].GetCurSel()<0){}
+	if(m_comboUseShift[iScene].GetCurSel()<0){}
 	else
 	{
-		m_comboUseShift[iScene % 16].GetLBText(m_comboUseShift[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){pParent->m_OpeInfo[iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){pParent->m_OpeInfo[iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){pParent->m_OpeInfo[iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){pParent->m_OpeInfo[iScene].bUseWin=TRUE;}
+		m_comboUseShift[iScene].GetLBText(m_comboUseShift[iScene].GetCurSel(),tch);
+		if(wcscmp(tch,_T("Ctrl"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseCtrl=TRUE;}
+		if(wcscmp(tch,_T("Shift"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseShift=TRUE;}
+		if(wcscmp(tch,_T("Alt"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseAlt=TRUE;}
+		if(wcscmp(tch,_T("Win"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseWin=TRUE;}
 	}
 	UpdateData(FALSE);
 }
