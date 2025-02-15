@@ -1103,58 +1103,6 @@ void CSAutomationDlg::ResetHotkey(int iScene)
 	m_tabItem.UpdateData_My(TRUE);
 	UnregisterHotKey(NULL, HOTKEY_SCENE_0+iScene);
 
-	TCHAR tch[8];
-	if(m_tabItem.m_combo[iScene % 16].GetCurSel()<0){return;}
-	m_tabItem.m_combo[iScene % 16].GetLBText(m_tabItem.m_combo[iScene % 16].GetCurSel(),tch);
-	if(wcscmp(tch,_T(" "))==0){return;}
-	if(_tcslen(tch)>=2)
-	{
-		if(_tcsicmp(tch,_T("F1"))==0){m_OpeInfo[iScene].dwHotKey = VK_F1;}
-		if(_tcsicmp(tch,_T("F2"))==0){m_OpeInfo[iScene].dwHotKey = VK_F2;}
-		if(_tcsicmp(tch,_T("F3"))==0){m_OpeInfo[iScene].dwHotKey = VK_F3;}
-		if(_tcsicmp(tch,_T("F4"))==0){m_OpeInfo[iScene].dwHotKey = VK_F4;}
-		if(_tcsicmp(tch,_T("F5"))==0){m_OpeInfo[iScene].dwHotKey = VK_F5;}
-		if(_tcsicmp(tch,_T("F6"))==0){m_OpeInfo[iScene].dwHotKey = VK_F6;}
-		if(_tcsicmp(tch,_T("F7"))==0){m_OpeInfo[iScene].dwHotKey = VK_F7;}
-		if(_tcsicmp(tch,_T("F8"))==0){m_OpeInfo[iScene].dwHotKey = VK_F8;}
-		if(_tcsicmp(tch,_T("F9"))==0){m_OpeInfo[iScene].dwHotKey = VK_F9;}
-		if(_tcsicmp(tch,_T("F10"))==0){m_OpeInfo[iScene].dwHotKey = VK_F10;}
-		if(_tcsicmp(tch,_T("F11"))==0){m_OpeInfo[iScene].dwHotKey = VK_F11;}
-		if(_tcsicmp(tch,_T("F12"))==0){m_OpeInfo[iScene].dwHotKey = VK_F12;}
-		if(_tcsicmp(tch,_T("Insert"))==0){m_OpeInfo[iScene].dwHotKey = VK_INSERT;}
-
-	}
-	else
-	{
-		if((tch[0]>='a') && (tch[0]<='z')){m_OpeInfo[iScene].dwHotKey = char(tch[0])-'a'+0x41;}
-		if((tch[0]>='0') && (tch[0]<='9')){m_OpeInfo[iScene].dwHotKey = char(tch[0])-'0'+0x30;}
-	}
-
-	m_OpeInfo[iScene].bUseShift=FALSE;
-	m_OpeInfo[iScene].bUseCtrl=FALSE;
-	m_OpeInfo[iScene].bUseAlt=FALSE;
-	m_OpeInfo[iScene].bUseWin=FALSE;
-
-	if(m_tabItem.m_comboUseCtrl[iScene % 16].GetCurSel()<0){}
-	else
-	{
-		m_tabItem.m_comboUseCtrl[iScene % 16].GetLBText(m_tabItem.m_comboUseCtrl[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){m_OpeInfo[iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){m_OpeInfo[iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){m_OpeInfo[iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){m_OpeInfo[iScene].bUseWin=TRUE;}
-	}
-
-	if(m_tabItem.m_comboUseShift[iScene % 16].GetCurSel()<0){}
-	else
-	{
-		m_tabItem.m_comboUseShift[iScene % 16].GetLBText(m_tabItem.m_comboUseShift[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){m_OpeInfo[iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){m_OpeInfo[iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){m_OpeInfo[iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){m_OpeInfo[iScene].bUseWin=TRUE;}
-	}
-
 
 	if(((CButton*)GetDlgItem(IDC_CHECK_ENABLE_HOTKEY))->GetCheck()==1)
 	{
