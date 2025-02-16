@@ -7,10 +7,9 @@
 #include "thread.h"
 #include "afxcmn.h"
 #include "InputDialog.h"
-
+#include "TabItem.h"
 extern CStdioFile g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
-
 
 #define HOTKEY_SCENE_0 (10)
 #define HOTKEY_SCENE_1 (11)
@@ -28,8 +27,57 @@ extern CString g_sLogFilePath[MAX_THREAD];
 #define HOTKEY_SCENE_13 (23)
 #define HOTKEY_SCENE_14 (24)
 #define HOTKEY_SCENE_15 (25)
+#define HOTKEY_SCENE_16 (26)
+#define HOTKEY_SCENE_17 (27)
+#define HOTKEY_SCENE_18 (28)
+#define HOTKEY_SCENE_19 (29)
+#define HOTKEY_SCENE_20 (30)
+#define HOTKEY_SCENE_21 (31)
+#define HOTKEY_SCENE_22 (32)
+#define HOTKEY_SCENE_23 (33)
+#define HOTKEY_SCENE_24 (34)
+#define HOTKEY_SCENE_25 (35)
+#define HOTKEY_SCENE_26 (36)
+#define HOTKEY_SCENE_27 (37)
+#define HOTKEY_SCENE_28 (38)
+#define HOTKEY_SCENE_29 (39)
+#define HOTKEY_SCENE_30 (40)
+#define HOTKEY_SCENE_31 (41)
+#define HOTKEY_SCENE_32 (42)
+#define HOTKEY_SCENE_33 (43)
+#define HOTKEY_SCENE_34 (44)
+#define HOTKEY_SCENE_35 (45)
+#define HOTKEY_SCENE_36 (46)
+#define HOTKEY_SCENE_37 (47)
+#define HOTKEY_SCENE_38 (48)
+#define HOTKEY_SCENE_39 (49)
+#define HOTKEY_SCENE_40 (50)
+#define HOTKEY_SCENE_41 (51)
+#define HOTKEY_SCENE_42 (52)
+#define HOTKEY_SCENE_43 (53)
+#define HOTKEY_SCENE_44 (54)
+#define HOTKEY_SCENE_45 (55)
+#define HOTKEY_SCENE_46 (56)
+#define HOTKEY_SCENE_47 (57)
+#define HOTKEY_SCENE_48 (58)
+#define HOTKEY_SCENE_49 (59)
+#define HOTKEY_SCENE_50 (60)
+#define HOTKEY_SCENE_51 (61)
+#define HOTKEY_SCENE_52 (62)
+#define HOTKEY_SCENE_53 (63)
+#define HOTKEY_SCENE_54 (64)
+#define HOTKEY_SCENE_55 (65)
+#define HOTKEY_SCENE_56 (66)
+#define HOTKEY_SCENE_57 (67)
+#define HOTKEY_SCENE_58 (68)
+#define HOTKEY_SCENE_59 (69)
+#define HOTKEY_SCENE_60 (70)
+#define HOTKEY_SCENE_61 (71)
+#define HOTKEY_SCENE_62 (72)
+#define HOTKEY_SCENE_63 (73)
 
-#define HOTKEY_ENABLE (30)
+
+#define HOTKEY_ENABLE (80)
 
 #define HOTKEY_ESCAPE (100)
 
@@ -56,19 +104,21 @@ public:
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
 	
+	void SaveSettings();
+	void ResetHotkey(int iScene);
+	void Operate(int iScene);
 		CInputDialog cInput;
+	OperationInfo m_OpeInfo[MAX_THREAD];
+	CString m_sDir;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 	BOOL TrayNotifyIconMessage(DWORD dwMessage);
 	BOOL ChangeIcon(int iIcon);
 
-	void Operate(int iScene);
 
-	void ResetHotkey(int iScene);
 
 	void ToggleEnable();
 
-	OperationInfo m_OpeInfo[MAX_THREAD];
 
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;
@@ -80,10 +130,7 @@ protected:
 	
 	void RefreshTargetWindowPos();
 	DWORD m_dwHotKeyEnable;
-
-	CString m_sDir;
-	void FileSelect(CString *sFileName);
-	void SaveSettings();
+	
 	void WindowNameRefresh();
 	void ReadSettings();
 	BOOL m_bRunningAny;
@@ -101,91 +148,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedButton00();
-	afx_msg void OnBnClickedButton01();
-	afx_msg void OnBnClickedButton02();
-	afx_msg void OnBnClickedButton03();
-	afx_msg void OnBnClickedButton04();
-	afx_msg void OnBnClickedButton05();
-	afx_msg void OnBnClickedButton06();
-	afx_msg void OnBnClickedButton07();
-	afx_msg void OnBnClickedButton08();
-	afx_msg void OnBnClickedButton09();
-	afx_msg void OnBnClickedButton10();
-	afx_msg void OnBnClickedButton11();
-	afx_msg void OnBnClickedButton12();
-	afx_msg void OnBnClickedButton13();
-	afx_msg void OnBnClickedButton14();
-	afx_msg void OnBnClickedButton15();
-	
-	afx_msg void OnSelchangeCombo00();
-	afx_msg void OnSelchangeCombo01();
-	afx_msg void OnSelchangeCombo02();
-	afx_msg void OnSelchangeCombo03();
-	afx_msg void OnSelchangeCombo04();
-	afx_msg void OnSelchangeCombo05();
-	afx_msg void OnSelchangeCombo06();
-	afx_msg void OnSelchangeCombo07();
-	afx_msg void OnSelchangeCombo08();
-	afx_msg void OnSelchangeCombo09();
-	afx_msg void OnSelchangeCombo10();
-	afx_msg void OnSelchangeCombo11();
-	afx_msg void OnSelchangeCombo12();
-	afx_msg void OnSelchangeCombo13();
-	afx_msg void OnSelchangeCombo14();
-	afx_msg void OnSelchangeCombo15();
 
-	afx_msg void OnSelchangeComboCtrl00();
-	afx_msg void OnSelchangeComboCtrl01();
-	afx_msg void OnSelchangeComboCtrl02();
-	afx_msg void OnSelchangeComboCtrl03();
-	afx_msg void OnSelchangeComboCtrl04();
-	afx_msg void OnSelchangeComboCtrl05();
-	afx_msg void OnSelchangeComboCtrl06();
-	afx_msg void OnSelchangeComboCtrl07();
-	afx_msg void OnSelchangeComboCtrl08();
-	afx_msg void OnSelchangeComboCtrl09();
-	afx_msg void OnSelchangeComboCtrl10();
-	afx_msg void OnSelchangeComboCtrl11();
-	afx_msg void OnSelchangeComboCtrl12();
-	afx_msg void OnSelchangeComboCtrl13();
-	afx_msg void OnSelchangeComboCtrl14();
-	afx_msg void OnSelchangeComboCtrl15();
-
-	afx_msg void OnSelchangeComboShift00();
-	afx_msg void OnSelchangeComboShift01();
-	afx_msg void OnSelchangeComboShift02();
-	afx_msg void OnSelchangeComboShift03();
-	afx_msg void OnSelchangeComboShift04();
-	afx_msg void OnSelchangeComboShift05();
-	afx_msg void OnSelchangeComboShift06();
-	afx_msg void OnSelchangeComboShift07();
-	afx_msg void OnSelchangeComboShift08();
-	afx_msg void OnSelchangeComboShift09();
-	afx_msg void OnSelchangeComboShift10();
-	afx_msg void OnSelchangeComboShift11();
-	afx_msg void OnSelchangeComboShift12();
-	afx_msg void OnSelchangeComboShift13();
-	afx_msg void OnSelchangeComboShift14();
-	afx_msg void OnSelchangeComboShift15();
-	
-	afx_msg void OnBnClickedButtonOperate00();
-	afx_msg void OnBnClickedButtonOperate01();
-	afx_msg void OnBnClickedButtonOperate02();
-	afx_msg void OnBnClickedButtonOperate03();
-	afx_msg void OnBnClickedButtonOperate04();
-	afx_msg void OnBnClickedButtonOperate05();
-	afx_msg void OnBnClickedButtonOperate06();
-	afx_msg void OnBnClickedButtonOperate07();
-	afx_msg void OnBnClickedButtonOperate08();
-	afx_msg void OnBnClickedButtonOperate09();
-	afx_msg void OnBnClickedButtonOperate10();
-	afx_msg void OnBnClickedButtonOperate11();
-	afx_msg void OnBnClickedButtonOperate12();
-	afx_msg void OnBnClickedButtonOperate13();
-	afx_msg void OnBnClickedButtonOperate14();
-	afx_msg void OnBnClickedButtonOperate15();
-
+	CTabItem m_tabItem;
 
 	afx_msg void OnEnChangeEdit1();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -195,11 +159,6 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	virtual BOOL DestroyWindow();
 
-	CString m_sEditFileName[MAX_THREAD];
-	CString m_sEditStatus[MAX_THREAD];
-	CComboBox m_combo[MAX_THREAD];
-	CComboBox m_comboUseCtrl[MAX_THREAD];
-	CComboBox m_comboUseShift[MAX_THREAD];
 	CComboBox m_comboEnable;
 	CComboBox m_comboLogLevel;
 
@@ -223,4 +182,12 @@ public:
 	afx_msg void OnBnClickedButton0Confing();
 	afx_msg void OnBnClickedCheckTasktray();
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
+	CTabCtrl m_tab;
+	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 };
+
+void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
+
+void SetComboItemShift(CComboBox* combo,OperationInfo* op);
+
+void SetComboItem(CComboBox* combo, CString m_sHotkey);
