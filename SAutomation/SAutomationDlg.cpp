@@ -326,7 +326,7 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	if(wParam<0){return 0;}
 	if(wParam>=MAX_THREAD){return 0;}
 	g_hThread[wParam]=NULL;
-	m_tabItem.m_sEditStatus[wParam].Format(_T("Stand by"));
+	//m_tabItem.m_sEditStatus[wParam].Format(_T("Stand by"));
 	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
 
@@ -1011,7 +1011,7 @@ void CSAutomationDlg::Operate(int iScene)
 		if(dwResult != STATUS_WAIT_0){return;}
 	}
 	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),m_sDir, m_tabItem.m_sEditFileName[iScene]);
-	int iParam;
+	int iParam[2];
 	int iChecked;
 	int iLogLevel;
 	iChecked = ((CButton*)GetDlgItem(IDC_CHECK_LOG))->GetCheck();
@@ -1031,12 +1031,12 @@ void CSAutomationDlg::Operate(int iScene)
 		if(wcscmp(tch,_T("All"))==0){iLogLevel=5;}
 	}
 
-	iParam = iLogLevel<<PARAM_LOGLEVEL_SHIFT;
-	iParam += iScene;
+	iParam[1] = iLogLevel<<PARAM_LOGLEVEL_SHIFT;
+	iParam[0] = iScene;
 	m_OpeInfo[iScene].m_bRunning=TRUE;
-	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(&iParam), 0, &dwThreadID);
+	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
 
-	while(iParam!=0){Sleep(10);}
+	while(iParam[0]!=0){Sleep(10);}
 
 	m_tabItem.m_sEditStatus[iScene].Format(_T("Running"));
 	UpdateData(FALSE);
