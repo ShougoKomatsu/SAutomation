@@ -1010,7 +1010,7 @@ void CSAutomationDlg::Operate(int iScene)
 		dwResult = WaitForSingleObject(g_hThread[iScene], 0);
 		if(dwResult != STATUS_WAIT_0){return;}
 	}
-	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),m_sDir, m_tabItem.m_sEditFileName[iScene]);
+	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),m_sDir, m_OpeInfo[iScene].sFileName);
 	int iParam[2];
 	int iChecked;
 	int iLogLevel;
@@ -1034,11 +1034,15 @@ void CSAutomationDlg::Operate(int iScene)
 	iParam[1] = iLogLevel<<PARAM_LOGLEVEL_SHIFT;
 	iParam[0] = iScene;
 	m_OpeInfo[iScene].m_bRunning=TRUE;
+
+	CString sss;
+	sss.Format(_T("%d %d"), 	iParam[0],iParam[1]);
+	AfxMessageBox(sss);
 	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
 
 	while(iParam[0]!=0){Sleep(10);}
 
-	m_tabItem.m_sEditStatus[iScene].Format(_T("Running"));
+	//m_tabItem.m_sEditStatus[iScene].Format(_T("Running"));
 	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
 	ChangeIcon(IDI_ICON_RUNNING);
