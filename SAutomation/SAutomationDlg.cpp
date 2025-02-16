@@ -424,7 +424,7 @@ void CSAutomationDlg::SaveSettings()
 		CString sSection;
 		sSection.Format(_T("Operation %d"), iScene+1);
 
-		WritePrivateProfileString(sSection,_T("FileName"),m_tabItem.m_sEditFileName[iScene],sFilePath);
+		WritePrivateProfileString(sSection,_T("FileName"),m_OpeInfo[iScene].sFileName,sFilePath);
 
 		WritePrivateProfileString(sSection,_T("Hotkey"),m_OpeInfo[iScene].sHotkey, sFilePath);
 
