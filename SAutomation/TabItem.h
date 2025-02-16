@@ -116,4 +116,5 @@ public:
 	CComboBox m_comboUseCtrl[MAX_THREAD];
 	CComboBox m_comboUseShift[MAX_THREAD];
 
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

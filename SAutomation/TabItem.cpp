@@ -375,3 +375,16 @@ void CTabItem::UpdateHotkey(int iScene)
 	UpdateData(FALSE);
 
 }
+
+
+BOOL CTabItem::PreTranslateMessage(MSG* pMsg)
+{
+	if(pMsg->message == WM_KEYDOWN)
+	{
+		if(pMsg->wParam == VK_RETURN){return TRUE;}
+		if(pMsg->wParam == VK_ESCAPE){return TRUE;}
+		if(pMsg->wParam == VK_SPACE){return TRUE;}
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
