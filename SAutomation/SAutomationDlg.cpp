@@ -1035,9 +1035,6 @@ void CSAutomationDlg::Operate(int iScene)
 	iParam[0] = iScene;
 	m_OpeInfo[iScene].m_bRunning=TRUE;
 
-	CString sss;
-	sss.Format(_T("%d %d"), 	iParam[0],iParam[1]);
-	AfxMessageBox(sss);
 	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
 
 	while(iParam[0]!=0){Sleep(10);}
