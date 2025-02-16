@@ -964,7 +964,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 	if(nIDEvent == TIMER_WAKE_UP)
 	{
-
+		KillTimer(TIMER_WAKE_UP);
 		if(m_bAutoMinimize==TRUE)
 		{
 			ShowWindow( SW_MINIMIZE );
