@@ -293,12 +293,16 @@ void CTabItem::RefleshDialog()
 	for(int iScene=0; iScene<16; iScene++)
 	{
 		m_sEditFileName[iScene].Format(_T("%s"),pParent->m_OpeInfo[m_iSlot*16 + iScene].sFileName);
-		
+
 		SetComboItem(&m_combo[iScene],pParent->m_OpeInfo[m_iSlot*16 + iScene].sHotkey);
 		SetComboItemShift(&m_comboUseCtrl[iScene], &(pParent->m_OpeInfo[m_iSlot*16 + iScene]));
 		SetComboItemCtrl(&m_comboUseShift[iScene], &(pParent->m_OpeInfo[m_iSlot*16 + iScene]));
 
+		CString sScene;
+		sScene.Format(_T("%d"),m_iSlot*16 + iScene);
+		((CButton*)GetDlgItem(IDC_STATIC_EX0+iScene))->SetWindowText(sScene);
 	}
+
 	UpdateData(FALSE);
 }
 void CTabItem::FileSelect(int iScene)

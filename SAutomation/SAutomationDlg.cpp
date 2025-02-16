@@ -114,6 +114,7 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK_TASKTRAY, &CSAutomationDlg::OnBnClickedCheckTasktray)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOW_NAME_REFRESH, &CSAutomationDlg::OnBnClickedButton0WindowNameRefresh)
 	ON_CBN_SELCHANGE(IDC_COMBO_WINDOW_NAME, &CSAutomationDlg::OnSelchangeWindowName)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_OPERATION, &CSAutomationDlg::OnTcnSelchangeTabOperation)
 END_MESSAGE_MAP()
 
 
@@ -1245,4 +1246,14 @@ BOOL CAboutDlg::PreTranslateMessage(MSG* pMsg)
 	// TODO: ここに特定なコードを追加するか、もしくは基本クラスを呼び出してください。
 
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	int itab = m_tab.GetCurSel();
+
+	m_tabItem.m_iSlot=itab;
+	m_tabItem.RefleshDialog();
+	*pResult = 0;
 }

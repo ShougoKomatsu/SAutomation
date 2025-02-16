@@ -135,6 +135,7 @@ public:
 	afx_msg void OnBnClickedCheckTasktray();
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
 	CTabCtrl m_tab;
+	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
