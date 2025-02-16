@@ -17,4 +17,4 @@ DWORD WINAPI CommandThread(LPVOID arg);
 #define PARAM_LOGLEVEL_MASK (0x07)
 
 #define PARAM_SCENE_SHIFT (0)
-#define PARAM_SCENE_MASK (0x2F)
+#define PARAM_SCENE_MASK (0xFF)

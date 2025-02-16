@@ -95,7 +95,6 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	int iScene;
 	iScene = (iData[0]>>PARAM_SCENE_SHIFT)&PARAM_SCENE_MASK;
 	BOOL bRet;
-
 	bRet = ReadTextFile(g_sFilePath[iScene],&saCommands);
 	if(bRet != TRUE)
 	{
