@@ -219,56 +219,56 @@ void CTabItem::OnBnClickedButton13(){FileSelect(13); RefleshDialog(); pParent->S
 void CTabItem::OnBnClickedButton14(){FileSelect(14); RefleshDialog(); pParent->SaveSettings();}
 void CTabItem::OnBnClickedButton15(){FileSelect(15); RefleshDialog(); pParent->SaveSettings();}
 
-void CTabItem::OnSelchangeCombo00(){UpdateHotkey(0); pParent->ResetHotkey(0);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo01(){UpdateHotkey(1); pParent->ResetHotkey(1);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo02(){UpdateHotkey(2); pParent->ResetHotkey(2);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo03(){UpdateHotkey(3); pParent->ResetHotkey(3);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo04(){UpdateHotkey(4); pParent->ResetHotkey(4);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo05(){UpdateHotkey(5); pParent->ResetHotkey(5);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo06(){UpdateHotkey(6); pParent->ResetHotkey(6);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo07(){UpdateHotkey(7); pParent->ResetHotkey(7);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo08(){UpdateHotkey(8); pParent->ResetHotkey(8);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo09(){UpdateHotkey(9); pParent->ResetHotkey(9);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo10(){UpdateHotkey(10); pParent->ResetHotkey(10);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo11(){UpdateHotkey(11); pParent->ResetHotkey(11);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo12(){UpdateHotkey(12); pParent->ResetHotkey(12);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo13(){UpdateHotkey(13); pParent->ResetHotkey(13);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo14(){UpdateHotkey(14); pParent->ResetHotkey(14);pParent->SaveSettings();}
-void CTabItem::OnSelchangeCombo15(){UpdateHotkey(15); pParent->ResetHotkey(15);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo00(){UpdateHotkey(0); pParent->ResetHotkey(m_iSlot*16 + 0);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo01(){UpdateHotkey(1); pParent->ResetHotkey(m_iSlot*16 + 1);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo02(){UpdateHotkey(2); pParent->ResetHotkey(m_iSlot*16 + 2);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo03(){UpdateHotkey(3); pParent->ResetHotkey(m_iSlot*16 + 3);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo04(){UpdateHotkey(4); pParent->ResetHotkey(m_iSlot*16 + 4);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo05(){UpdateHotkey(5); pParent->ResetHotkey(m_iSlot*16 + 5);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo06(){UpdateHotkey(6); pParent->ResetHotkey(m_iSlot*16 + 6);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo07(){UpdateHotkey(7); pParent->ResetHotkey(m_iSlot*16 + 7);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo08(){UpdateHotkey(8); pParent->ResetHotkey(m_iSlot*16 + 8);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo09(){UpdateHotkey(9); pParent->ResetHotkey(m_iSlot*16 + 9);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo10(){UpdateHotkey(10); pParent->ResetHotkey(m_iSlot*16 + 10);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo11(){UpdateHotkey(11); pParent->ResetHotkey(m_iSlot*16 + 11);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo12(){UpdateHotkey(12); pParent->ResetHotkey(m_iSlot*16 + 12);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo13(){UpdateHotkey(13); pParent->ResetHotkey(m_iSlot*16 + 13);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo14(){UpdateHotkey(14); pParent->ResetHotkey(m_iSlot*16 + 14);pParent->SaveSettings();}
+void CTabItem::OnSelchangeCombo15(){UpdateHotkey(15); pParent->ResetHotkey(m_iSlot*16 + 15);pParent->SaveSettings();}
 
-void CTabItem::OnSelchangeComboCtrl00(){UpdateHotkey(0); pParent->ResetHotkey(0);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl01(){UpdateHotkey(1); pParent->ResetHotkey(1);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl02(){UpdateHotkey(2); pParent->ResetHotkey(2);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl03(){UpdateHotkey(3); pParent->ResetHotkey(3);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl04(){UpdateHotkey(4); pParent->ResetHotkey(4);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl05(){UpdateHotkey(5); pParent->ResetHotkey(5);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl06(){UpdateHotkey(6); pParent->ResetHotkey(6);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl07(){UpdateHotkey(7); pParent->ResetHotkey(7);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl08(){UpdateHotkey(8); pParent->ResetHotkey(8);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl09(){UpdateHotkey(9); pParent->ResetHotkey(9);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl10(){UpdateHotkey(10); pParent->ResetHotkey(10);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl11(){UpdateHotkey(11); pParent->ResetHotkey(11);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl12(){UpdateHotkey(12); pParent->ResetHotkey(12);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl13(){UpdateHotkey(13); pParent->ResetHotkey(13);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl14(){UpdateHotkey(14); pParent->ResetHotkey(14);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboCtrl15(){UpdateHotkey(15); pParent->ResetHotkey(15);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl00(){UpdateHotkey(0); pParent->ResetHotkey(m_iSlot*16 + 0);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl01(){UpdateHotkey(1); pParent->ResetHotkey(m_iSlot*16 + 1);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl02(){UpdateHotkey(2); pParent->ResetHotkey(m_iSlot*16 + 2);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl03(){UpdateHotkey(3); pParent->ResetHotkey(m_iSlot*16 + 3);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl04(){UpdateHotkey(4); pParent->ResetHotkey(m_iSlot*16 + 4);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl05(){UpdateHotkey(5); pParent->ResetHotkey(m_iSlot*16 + 5);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl06(){UpdateHotkey(6); pParent->ResetHotkey(m_iSlot*16 + 6);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl07(){UpdateHotkey(7); pParent->ResetHotkey(m_iSlot*16 + 7);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl08(){UpdateHotkey(8); pParent->ResetHotkey(m_iSlot*16 + 8);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl09(){UpdateHotkey(9); pParent->ResetHotkey(m_iSlot*16 + 9);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl10(){UpdateHotkey(10); pParent->ResetHotkey(m_iSlot*16 + 10);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl11(){UpdateHotkey(11); pParent->ResetHotkey(m_iSlot*16 + 11);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl12(){UpdateHotkey(12); pParent->ResetHotkey(m_iSlot*16 + 12);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl13(){UpdateHotkey(13); pParent->ResetHotkey(m_iSlot*16 + 13);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl14(){UpdateHotkey(14); pParent->ResetHotkey(m_iSlot*16 + 14);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboCtrl15(){UpdateHotkey(15); pParent->ResetHotkey(m_iSlot*16 + 15);pParent->SaveSettings();}
 
-void CTabItem::OnSelchangeComboShift00(){UpdateHotkey(0); pParent->ResetHotkey(0);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift01(){UpdateHotkey(1); pParent->ResetHotkey(1);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift02(){UpdateHotkey(2); pParent->ResetHotkey(2);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift03(){UpdateHotkey(3); pParent->ResetHotkey(3);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift04(){UpdateHotkey(4); pParent->ResetHotkey(4);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift05(){UpdateHotkey(5); pParent->ResetHotkey(5);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift06(){UpdateHotkey(6); pParent->ResetHotkey(6);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift07(){UpdateHotkey(7); pParent->ResetHotkey(7);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift08(){UpdateHotkey(8); pParent->ResetHotkey(8);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift09(){UpdateHotkey(9); pParent->ResetHotkey(9);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift10(){UpdateHotkey(10); pParent->ResetHotkey(10);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift11(){UpdateHotkey(11); pParent->ResetHotkey(11);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift12(){UpdateHotkey(12); pParent->ResetHotkey(12);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift13(){UpdateHotkey(13); pParent->ResetHotkey(13);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift14(){UpdateHotkey(14); pParent->ResetHotkey(14);pParent->SaveSettings();}
-void CTabItem::OnSelchangeComboShift15(){UpdateHotkey(15); pParent->ResetHotkey(15);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift00(){UpdateHotkey(0); pParent->ResetHotkey(m_iSlot*16 + 0);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift01(){UpdateHotkey(1); pParent->ResetHotkey(m_iSlot*16 + 1);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift02(){UpdateHotkey(2); pParent->ResetHotkey(m_iSlot*16 + 2);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift03(){UpdateHotkey(3); pParent->ResetHotkey(m_iSlot*16 + 3);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift04(){UpdateHotkey(4); pParent->ResetHotkey(m_iSlot*16 + 4);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift05(){UpdateHotkey(5); pParent->ResetHotkey(m_iSlot*16 + 5);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift06(){UpdateHotkey(6); pParent->ResetHotkey(m_iSlot*16 + 6);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift07(){UpdateHotkey(7); pParent->ResetHotkey(m_iSlot*16 + 7);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift08(){UpdateHotkey(8); pParent->ResetHotkey(m_iSlot*16 + 8);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift09(){UpdateHotkey(9); pParent->ResetHotkey(m_iSlot*16 + 9);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift10(){UpdateHotkey(10); pParent->ResetHotkey(m_iSlot*16 + 10);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift11(){UpdateHotkey(11); pParent->ResetHotkey(m_iSlot*16 + 11);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift12(){UpdateHotkey(12); pParent->ResetHotkey(m_iSlot*16 + 12);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift13(){UpdateHotkey(13); pParent->ResetHotkey(m_iSlot*16 + 13);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift14(){UpdateHotkey(14); pParent->ResetHotkey(m_iSlot*16 + 14);pParent->SaveSettings();}
+void CTabItem::OnSelchangeComboShift15(){UpdateHotkey(15); pParent->ResetHotkey(m_iSlot*16 + 15);pParent->SaveSettings();}
 
 void CTabItem::OnBnClickedButtonOperate00(){pParent->Operate(m_iSlot*16 + 0);}
 void CTabItem::OnBnClickedButtonOperate01(){pParent->Operate(m_iSlot*16 + 1);}
