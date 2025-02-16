@@ -136,3 +136,9 @@ public:
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
 	CTabCtrl m_tab;
 };
+
+void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
+
+void SetComboItemShift(CComboBox* combo,OperationInfo* op);
+
+void SetComboItem(CComboBox* combo, CString m_sHotkey);

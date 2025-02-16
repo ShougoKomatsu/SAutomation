@@ -641,7 +641,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	g_dlg=this;
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
 	
-	m_tabItem.m_iSlot=0;
+	m_tabItem.m_iSlot=1;
 		m_tabItem.RefleshDialog();
 
 
@@ -672,13 +672,11 @@ BOOL CSAutomationDlg::OnInitDialog()
 		}
 		m_tabItem.m_sEditStatus[iScene].Format(_T("Stand by"));
 		m_tabItem.m_sEditFileName[iScene].Format(_T("%s"),m_OpeInfo[iScene].sFileName);
+
+	}
+		m_tabItem.RefleshDialog();
 		UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
-
-		SetComboItem(&m_tabItem.m_combo[iScene],m_OpeInfo[iScene].sHotkey);
-		SetComboItemCtrl(&m_tabItem.m_comboUseCtrl[iScene],&(m_OpeInfo[iScene]));
-		SetComboItemShift(&m_tabItem.m_comboUseShift[iScene],&(m_OpeInfo[iScene]));
-	}
 
 	g_bHalt = FALSE;
 

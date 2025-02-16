@@ -293,6 +293,11 @@ void CTabItem::RefleshDialog()
 	for(int iScene=0; iScene<16; iScene++)
 	{
 		m_sEditFileName[iScene].Format(_T("%s"),pParent->m_OpeInfo[m_iSlot*16 + iScene].sFileName);
+		
+		SetComboItem(&m_combo[iScene],pParent->m_OpeInfo[m_iSlot*16 + iScene].sHotkey);
+		SetComboItemShift(&m_comboUseCtrl[iScene], &(pParent->m_OpeInfo[m_iSlot*16 + iScene]));
+		SetComboItemCtrl(&m_comboUseShift[iScene], &(pParent->m_OpeInfo[m_iSlot*16 + iScene]));
+
 	}
 	UpdateData(FALSE);
 }
@@ -368,4 +373,5 @@ void CTabItem::UpdateHotkey(int iScene)
 		if(wcscmp(tch,_T("Win"))==0){pParent->m_OpeInfo[m_iSlot*16 + iScene].bUseWin=TRUE;}
 	}
 	UpdateData(FALSE);
+
 }
