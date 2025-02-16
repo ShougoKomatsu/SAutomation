@@ -270,22 +270,22 @@ void CTabItem::OnSelchangeComboShift13(){UpdateHotkey(13); pParent->ResetHotkey(
 void CTabItem::OnSelchangeComboShift14(){UpdateHotkey(14); pParent->ResetHotkey(14);pParent->SaveSettings();}
 void CTabItem::OnSelchangeComboShift15(){UpdateHotkey(15); pParent->ResetHotkey(15);pParent->SaveSettings();}
 
-void CTabItem::OnBnClickedButtonOperate00(){pParent->Operate(0);}
-void CTabItem::OnBnClickedButtonOperate01(){pParent->Operate(1);}
-void CTabItem::OnBnClickedButtonOperate02(){pParent->Operate(2);}
-void CTabItem::OnBnClickedButtonOperate03(){pParent->Operate(3);}
-void CTabItem::OnBnClickedButtonOperate04(){pParent->Operate(4);}
-void CTabItem::OnBnClickedButtonOperate05(){pParent->Operate(5);}
-void CTabItem::OnBnClickedButtonOperate06(){pParent->Operate(6);}
-void CTabItem::OnBnClickedButtonOperate07(){pParent->Operate(7);}
-void CTabItem::OnBnClickedButtonOperate08(){pParent->Operate(8);}
-void CTabItem::OnBnClickedButtonOperate09(){pParent->Operate(9);}
-void CTabItem::OnBnClickedButtonOperate10(){pParent->Operate(10);}
-void CTabItem::OnBnClickedButtonOperate11(){pParent->Operate(11);}
-void CTabItem::OnBnClickedButtonOperate12(){pParent->Operate(12);}
-void CTabItem::OnBnClickedButtonOperate13(){pParent->Operate(13);}
-void CTabItem::OnBnClickedButtonOperate14(){pParent->Operate(14);}
-void CTabItem::OnBnClickedButtonOperate15(){pParent->Operate(15);}
+void CTabItem::OnBnClickedButtonOperate00(){pParent->Operate(m_iSlot*16 + 0);}
+void CTabItem::OnBnClickedButtonOperate01(){pParent->Operate(m_iSlot*16 + 1);}
+void CTabItem::OnBnClickedButtonOperate02(){pParent->Operate(m_iSlot*16 + 2);}
+void CTabItem::OnBnClickedButtonOperate03(){pParent->Operate(m_iSlot*16 + 3);}
+void CTabItem::OnBnClickedButtonOperate04(){pParent->Operate(m_iSlot*16 + 4);}
+void CTabItem::OnBnClickedButtonOperate05(){pParent->Operate(m_iSlot*16 + 5);}
+void CTabItem::OnBnClickedButtonOperate06(){pParent->Operate(m_iSlot*16 + 6);}
+void CTabItem::OnBnClickedButtonOperate07(){pParent->Operate(m_iSlot*16 + 7);}
+void CTabItem::OnBnClickedButtonOperate08(){pParent->Operate(m_iSlot*16 + 8);}
+void CTabItem::OnBnClickedButtonOperate09(){pParent->Operate(m_iSlot*16 + 9);}
+void CTabItem::OnBnClickedButtonOperate10(){pParent->Operate(m_iSlot*16 + 10);}
+void CTabItem::OnBnClickedButtonOperate11(){pParent->Operate(m_iSlot*16 + 11);}
+void CTabItem::OnBnClickedButtonOperate12(){pParent->Operate(m_iSlot*16 + 12);}
+void CTabItem::OnBnClickedButtonOperate13(){pParent->Operate(m_iSlot*16 + 13);}
+void CTabItem::OnBnClickedButtonOperate14(){pParent->Operate(m_iSlot*16 + 14);}
+void CTabItem::OnBnClickedButtonOperate15(){pParent->Operate(m_iSlot*16 + 15);}
 
 
 void CTabItem::RefleshDialog()

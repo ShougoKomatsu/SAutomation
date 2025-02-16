@@ -641,11 +641,11 @@ BOOL CSAutomationDlg::OnInitDialog()
 	g_dlg=this;
 	SetComboItem(&m_comboEnable,m_sHotkeyEnable);
 	
-	m_tabItem.m_iSlot=1;
+	m_tabItem.m_iSlot=0;
 		m_tabItem.RefleshDialog();
 
 
-	for(int iScene= 0 ; iScene<16; iScene++)
+	for(int iScene= 0; iScene<MAX_THREAD; iScene++)
 	{
 		g_hThread[iScene] = NULL;
 		if(m_OpeInfo[iScene].sHotkey.GetLength()>=2)
@@ -903,22 +903,10 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 	{
 		int iKey;
 		iKey = (pMsg->lParam)>>16;
-		if(iKey == m_OpeInfo[0].dwHotKey){Operate(0);return TRUE;}
-		if(iKey == m_OpeInfo[1].dwHotKey){Operate(1);return TRUE;}
-		if(iKey == m_OpeInfo[2].dwHotKey){Operate(2);return TRUE;}
-		if(iKey == m_OpeInfo[3].dwHotKey){Operate(3);return TRUE;}
-		if(iKey == m_OpeInfo[4].dwHotKey){Operate(4);return TRUE;}
-		if(iKey == m_OpeInfo[5].dwHotKey){Operate(5);return TRUE;}
-		if(iKey == m_OpeInfo[6].dwHotKey){Operate(6);return TRUE;}
-		if(iKey == m_OpeInfo[7].dwHotKey){Operate(7);return TRUE;}
-		if(iKey == m_OpeInfo[8].dwHotKey){Operate(8);return TRUE;}
-		if(iKey == m_OpeInfo[9].dwHotKey){Operate(9);return TRUE;}
-		if(iKey == m_OpeInfo[10].dwHotKey){Operate(10);return TRUE;}
-		if(iKey == m_OpeInfo[11].dwHotKey){Operate(11);return TRUE;}
-		if(iKey == m_OpeInfo[12].dwHotKey){Operate(12);return TRUE;}
-		if(iKey == m_OpeInfo[13].dwHotKey){Operate(13);return TRUE;}
-		if(iKey == m_OpeInfo[14].dwHotKey){Operate(14);return TRUE;}
-		if(iKey == m_OpeInfo[15].dwHotKey){Operate(15);return TRUE;}
+		for(int iScene=0; iScene<MAX_THREAD; iScene++)
+		{
+			if(iKey == m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
+		}
 		if(iKey == m_dwHotKeyEnable){ToggleEnable();return TRUE;}
 		if(iKey == VK_ESCAPE){g_bHalt = TRUE;}
 	}
