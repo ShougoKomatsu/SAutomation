@@ -591,10 +591,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	g_iR=p.y-g_iOriginR;
 	g_iC=p.x-g_iOriginC;
 	g_hhook = NULL;
-	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
-	if(g_hhook == NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); OnOK();}
-
-
+	
 	SetTimer(TIMER_DISP_MOUSPOS,200, NULL);
 	SetTimer(TIMER_THREAD_WATCH,200, NULL);
 	SetTimer(TIMER_WAKE_UP, 100, NULL);
@@ -965,6 +962,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_WAKE_UP)
 	{
 		KillTimer(TIMER_WAKE_UP);
+		ReHookWindowsHook();
 		if(m_bAutoMinimize==TRUE)
 		{
 			ShowWindow( SW_MINIMIZE );
@@ -1257,4 +1255,13 @@ void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult
 	m_tabItem.m_iSlot=itab;
 	m_tabItem.RefleshDialog();
 	*pResult = 0;
+}
+
+BOOL CSAutomationDlg::ReHookWindowsHook()
+{
+	if(g_hhook != NULL){UnhookWindowsHookEx(g_hhook);}
+	Sleep(100);
+	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
+	if(g_hhook == NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); return FALSE;}
+	return TRUE;
 }
