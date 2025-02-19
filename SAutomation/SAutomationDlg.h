@@ -112,6 +112,7 @@ public:
 		CInputDialog cInput;
 	OperationInfo m_OpeInfo[MAX_THREAD];
 	CString m_sDir;
+	BOOL ReHookWindowsHook();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 	BOOL TrayNotifyIconMessage(DWORD dwMessage);

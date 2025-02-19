@@ -21,6 +21,7 @@
 #define TIMER_DISP_MOUSPOS (100)
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
+#define TIMER_REHOOK (103)
 
 CStdioFile g_cf[MAX_THREAD];
 CString g_sLogFilePath[MAX_THREAD];
@@ -594,13 +595,11 @@ BOOL CSAutomationDlg::OnInitDialog()
 	g_iR=p.y-g_iOriginR;
 	g_iC=p.x-g_iOriginC;
 	g_hhook = NULL;
-	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
-	if(g_hhook == NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); OnOK();}
-
-
+	
 	SetTimer(TIMER_DISP_MOUSPOS,200, NULL);
 	SetTimer(TIMER_THREAD_WATCH,200, NULL);
 	SetTimer(TIMER_WAKE_UP, 100, NULL);
+	SetTimer(TIMER_REHOOK, 10000, NULL);
 
 	TCHAR szData[MAX_PATH];
 	GetCurrentDirectory(sizeof(szData)/sizeof(TCHAR),szData);
@@ -617,25 +616,25 @@ BOOL CSAutomationDlg::OnInitDialog()
 	CString sModelFolderPath;
 	sModelFolderPath.Format(_T("%s\\Macro\\Model"),m_sDir);
 
-	
-		m_tab.SubclassDlgItem(IDC_TAB_OPERATION, this);
 
-		m_tab.InsertItem(0, _T("0 - 15"));
-		m_tab.InsertItem(1, _T("16 - 31"));
-		m_tab.InsertItem(3, _T("32 - 47"));
-		m_tab.InsertItem(3, _T("48 - 63"));
-		
-		 
-		m_tabItem.Create(IDD_DIALOG_TAB_ITEMS, &m_tab);
+	m_tab.SubclassDlgItem(IDC_TAB_OPERATION, this);
+
+	m_tab.InsertItem(0, _T("0 - 15"));
+	m_tab.InsertItem(1, _T("16 - 31"));
+	m_tab.InsertItem(3, _T("32 - 47"));
+	m_tab.InsertItem(3, _T("48 - 63"));
+
+
+	m_tabItem.Create(IDD_DIALOG_TAB_ITEMS, &m_tab);
 	m_tabItem.pParent=this;	
-		CRect rect;
-		m_tab.GetWindowRect(rect);
-		m_tab.AdjustRect(FALSE, rect);
-		m_tab.ScreenToClient(rect);
-	
-		m_tabItem.MoveWindow(rect);
+	CRect rect;
+	m_tab.GetWindowRect(rect);
+	m_tab.AdjustRect(FALSE, rect);
+	m_tab.ScreenToClient(rect);
 
-		m_tabItem.ShowWindow(SW_SHOW);
+	m_tabItem.MoveWindow(rect);
+
+	m_tabItem.ShowWindow(SW_SHOW);
 
 	CFileFind cf;
 	if(cf.FindFile(sMacroFolderPath) != TRUE){_tmkdir(sMacroFolderPath);}
@@ -941,7 +940,12 @@ void CSAutomationDlg::RefreshTargetWindowPos()
 
 void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 {
-
+	
+	if(nIDEvent == TIMER_REHOOK)
+	{
+		ReHookWindowsHook();
+		return;
+	}
 	if(nIDEvent == TIMER_DISP_MOUSPOS)
 	{
 		UpdateData(TRUE);
@@ -969,6 +973,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_WAKE_UP)
 	{
 		KillTimer(TIMER_WAKE_UP);
+		ReHookWindowsHook();
 		if(m_bAutoMinimize==TRUE)
 		{
 			ShowWindow( SW_MINIMIZE );
@@ -1274,4 +1279,12 @@ void CSAutomationDlg::OnBnClickedButtonOpenCompact()
 	m_cDlgCompact.pParent=this;
 	m_cDlgCompact.DoModal();
 	ShowWindow(SW_SHOW);
+}
+BOOL CSAutomationDlg::ReHookWindowsHook()
+{
+	if(g_hhook != NULL){UnhookWindowsHookEx(g_hhook);}
+	Sleep(100);
+	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
+	if(g_hhook == NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); return FALSE;}
+	return TRUE;
 }
