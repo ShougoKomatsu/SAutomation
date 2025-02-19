@@ -30,13 +30,13 @@ CDlgCompact::~CDlgCompact()
 void CDlgCompact::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT_COMPACT_MOUSE_R, m_sEditCompactMouseR);
-	DDX_Text(pDX, IDC_EDIT_COMPACT_MOUSE_C, m_sEditCompactMouseC);
+	DDX_Text(pDX, IDC_COMPACT_EDIT_MOUSE_R, m_sEditCompactMouseR);
+	DDX_Text(pDX, IDC_COMPACT_EDIT_MOUSE_C, m_sEditCompactMouseC);
 }
 
 
 BEGIN_MESSAGE_MAP(CDlgCompact, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON_COMPACT_EXIT, &CDlgCompact::OnBnClickedButtonCompactExit)
+	ON_BN_CLICKED(IDC_COMPACT_BUTTON_EXIT, &CDlgCompact::OnBnClickedButtonCompactExit)
 	ON_WM_TIMER()
 	ON_MESSAGE(WM_DISP_STANDBY, &CDlgCompact::OnDispStandby)
 END_MESSAGE_MAP()
