@@ -110,11 +110,11 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT_SPEED, &CSAutomationDlg::OnChangeEditSpeed)
 	ON_EN_KILLFOCUS(IDC_EDIT_SPEED, &CSAutomationDlg::OnKillfocusEditSpeed)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER_SPEED, &CSAutomationDlg::OnCustomdrawSliderSpeed)
-	ON_BN_CLICKED(IDC_BUTTON_CONFING, &CSAutomationDlg::OnBnClickedButton0Confing)
 	ON_BN_CLICKED(IDC_CHECK_TASKTRAY, &CSAutomationDlg::OnBnClickedCheckTasktray)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOW_NAME_REFRESH, &CSAutomationDlg::OnBnClickedButton0WindowNameRefresh)
 	ON_CBN_SELCHANGE(IDC_COMBO_WINDOW_NAME, &CSAutomationDlg::OnSelchangeWindowName)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_OPERATION, &CSAutomationDlg::OnTcnSelchangeTabOperation)
+	ON_BN_CLICKED(IDC_BUTTON_OPEN_COMPACT, &CSAutomationDlg::OnBnClickedButtonOpenCompact)
 END_MESSAGE_MAP()
 
 
@@ -335,9 +335,11 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	m_bRunningAny=FALSE;
 	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
-		if(m_OpeInfo[iScene].m_bRunning==TRUE){m_bRunningAny=TRUE;break;}
+		if(m_OpeInfo[iScene].m_bRunning==TRUE){m_bRunningAny=TRUE;if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);}break;}
 	}
-
+	
+	
+	if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,0,0);}
 	if(m_bRunningAny==FALSE){ChangeIcon(IDI_ICON_STANDBY);}
 
 	return 0;
@@ -560,6 +562,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 		}
 	}
 
+
 	DWORD dwCurrentProcessId = GetCurrentProcessId();
 	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwCurrentProcessId);
 	TCHAR szModuleName[MAX_PATH];
@@ -758,6 +761,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	SetIcon(m_hIconStandby, FALSE);		// 小さいアイコンの設定
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
+
 BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 {
 	switch(iIcon)
@@ -1038,6 +1042,9 @@ void CSAutomationDlg::Operate(int iScene)
 	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
 
 	while(iParam[0]!=0){Sleep(10);}
+	
+	if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);}
+	
 
 	//m_tabItem.m_sEditStatus[iScene].Format(_T("Running"));
 	UpdateData(FALSE);
@@ -1257,4 +1264,14 @@ void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult
 	m_tabItem.m_iSlot=itab;
 	m_tabItem.RefleshDialog();
 	*pResult = 0;
+}
+
+void CSAutomationDlg::OnBnClickedButtonOpenCompact()
+{
+	if(m_cDlgCompact.m_hWnd!=NULL){return;}
+	ShowWindow(SW_HIDE);
+
+	m_cDlgCompact.pParent=this;
+	m_cDlgCompact.DoModal();
+	ShowWindow(SW_SHOW);
 }

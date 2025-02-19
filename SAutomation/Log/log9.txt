@@ -1,3 +1,4 @@
 1 VarPoint1=ForegroundWindowLU 0
-2 MousePos(VarPoint1) <VarPoint = (181, 643)> <VarPoint = (181, 643)> 0
-3 exit 10
+2 MousePos(VarPoint1) <VarPoint = (254, 238)> <VarPoint = (254, 238)> 0
+3 1000 0
+4 exit 10
