@@ -54,3 +54,5 @@ enum ErrTreatValue
 	ERROR_TREAT_RESUME=(1),
 	ERROR_TREAT_GOTO=(2)
 };
+
+void SetComboItem(CComboBox* combo, CString sHotkey);
