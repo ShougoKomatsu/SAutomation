@@ -105,11 +105,11 @@ public:
 
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
-	
+
 	void SaveSettings();
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);
-		CInputDialog cInput;
+	CInputDialog cInput;
 	OperationInfo m_OpeInfo[MAX_THREAD];
 	CString m_sDir;
 	BOOL ReHookWindowsHook();
