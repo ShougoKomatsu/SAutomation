@@ -8,6 +8,8 @@
 #include "afxcmn.h"
 #include "InputDialog.h"
 #include "TabItem.h"
+#include "DlgCompact.h"
+
 extern CStdioFile g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
@@ -149,6 +151,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	
+	CDlgCompact m_cDlgCompact;
 
 	CTabItem m_tabItem;
 
@@ -185,6 +189,7 @@ public:
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
 	CTabCtrl m_tab;
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButtonOpenCompact();
 };
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);

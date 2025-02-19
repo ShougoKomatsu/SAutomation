@@ -1,6 +1,7 @@
 ﻿
 VarPoint1=ForegroundWindowLU
 MousePos(VarPoint1)
+1000
 exit
 ListDlgItems
 VarInt1=DlgItem(E X I T)
