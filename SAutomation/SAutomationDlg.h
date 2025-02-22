@@ -97,7 +97,6 @@ public:
 	void ChangeToCompact();
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);
-	CInputDialog cInput;
 	BOOL ReHookWindowsHook();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
@@ -147,7 +146,10 @@ public:
 	CComboBox m_comboWindowName;
 	afx_msg void OnSelchangeWindowName();
 	
-
+	
+	CString m_sEditSpeed;
+	CSliderCtrl m_sliderSpeed;
+	CTabCtrl m_tab;
 	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
 
 	afx_msg void OnSelchangeCombo0Enable();
@@ -155,14 +157,11 @@ public:
 	afx_msg void OnBnClickedCheckEnableHotkey();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnBnClickedButton0OpenFolder();
-	CString m_sEditSpeed;
 	afx_msg void OnChangeEditSpeed();
-	CSliderCtrl m_sliderSpeed;
 	afx_msg void OnKillfocusEditSpeed();
 	afx_msg void OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButton0Confing();
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
-	CTabCtrl m_tab;
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonOpenCompact();
 	afx_msg void OnBnClickedOk();

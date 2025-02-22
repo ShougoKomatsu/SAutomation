@@ -1,4 +1,5 @@
-﻿
+﻿varstr1=input
+msgbox(varstr1)
 VarPoint1=ForegroundWindowLU
 MousePos(VarPoint1)
 1000

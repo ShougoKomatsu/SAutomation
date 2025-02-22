@@ -335,10 +335,10 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData.Add(sArg);
 			saData.Add(_T("-1"));
-			g_dlg->cInput.m_bInputMulti=TRUE;
-			g_dlg->cInput.m_saParam.Copy(saData);
-			g_dlg->	cInput.DoModal();
-			return _ttoi(g_dlg->cInput.m_sReturnValue);
+			g_cInput.m_bInputMulti=TRUE;
+			g_cInput.m_saParam.Copy(saData);
+			g_cInput.DoModal();
+			return _ttoi(g_cInput.m_sReturnValue);
 		}
 	case VARIABLE_DLG_ITEM:
 		{
@@ -420,10 +420,10 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData.Add(sArg);
 			saData.Add(_T("-1"));
-			g_dlg->cInput.m_bInputMulti=TRUE;
-			g_dlg->cInput.m_saParam.Copy(saData);
-			g_dlg->	cInput.DoModal();
-			return g_dlg->cInput.m_sReturnValue;
+			g_cInput.m_bInputMulti=TRUE;
+			g_cInput.m_saParam.Copy(saData);
+			g_cInput.DoModal();
+			return g_cInput.m_sReturnValue;
 		}
 	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
@@ -1053,10 +1053,10 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData.Add(sArg);
 			saData.Add(_T("-1"));
-			g_dlg->cInput.m_bInputMulti=TRUE;
-			g_dlg->cInput.m_saParam.Copy(saData);
-			g_dlg->	cInput.DoModal();
-			sDstPointer->Format(_T("%s"), g_dlg->cInput.m_sReturnValue); 
+			g_cInput.m_bInputMulti=TRUE;
+			g_cInput.m_saParam.Copy(saData);
+			g_cInput.DoModal();
+			sDstPointer->Format(_T("%s"), g_cInput.m_sReturnValue); 
 			return RETURN_NORMAL;
 		}
 		

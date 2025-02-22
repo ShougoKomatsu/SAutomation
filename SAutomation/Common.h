@@ -82,8 +82,9 @@ public:
 	DWORD m_dwHotKeyEnable;
 	void ReadSettings();
 	void SaveSettings();
-		CString m_sDir;
+	CString m_sDir;
 	OperationInfo m_OpeInfo[MAX_THREAD];
 };
 
 extern AutomationInfo g_Automation;
+extern CInputDialog g_cInput;

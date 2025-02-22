@@ -3,6 +3,7 @@
 CString g_sDir;
 AutomationInfo g_Automation;
 
+	CInputDialog g_cInput;
 
 BOOL GetFileName(CString sFilePath, CString* sFileName)
 {
