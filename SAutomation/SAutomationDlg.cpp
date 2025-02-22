@@ -105,13 +105,11 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MAIN_CHECK_ENABLE_HOTKEY, &CSAutomationDlg::OnBnClickedCheckEnableHotkey)
 	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_ENABLE_HOTKEY, &CSAutomationDlg::OnSelchangeCombo0Enable)
 
-	ON_MESSAGE(WM_TRAYNOTIFY, OnTrayNotify)
 	ON_WM_SIZE()
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_OPEN_FOLDER, &CSAutomationDlg::OnBnClickedButton0OpenFolder)
 	ON_EN_CHANGE(IDC_MAIN_EDIT_SPEED, &CSAutomationDlg::OnChangeEditSpeed)
 	ON_EN_KILLFOCUS(IDC_MAIN_EDIT_SPEED, &CSAutomationDlg::OnKillfocusEditSpeed)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_MAIN_SLIDER_SPEED, &CSAutomationDlg::OnCustomdrawSliderSpeed)
-	ON_BN_CLICKED(IDC_MAIN_CHECK_TASKTRAY, &CSAutomationDlg::OnBnClickedCheckTasktray)
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_REFRESH_WINDOW_NAME, &CSAutomationDlg::OnBnClickedButton0WindowNameRefresh)
 	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_WINDOW_NAME, &CSAutomationDlg::OnSelchangeWindowName)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_COMPACT_TAB_OPERATION, &CSAutomationDlg::OnTcnSelchangeTabOperation)
@@ -146,35 +144,6 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(g_hhook, code, wParam, lParam);
 }
 
-LRESULT CSAutomationDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
-{
-	switch (lParam)
-	{
-	case WM_LBUTTONUP: 
-		{
-			if (wParam == IDI_ICON_STANDBY)
-			{
-				if(g_bCompactBiew==FALSE)
-				{
-				ShowWindow(SW_NORMAL);
-				SetForegroundWindow();
-				SetFocus();
-				}
-				else
-				{
-					m_cDlgCompact.ShowWindow(SW_NORMAL);
-				}
-			} 
-			break;
-		}
-	default:
-		{
-			break;
-		}
-	} 
-
-	return 0;
-}
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 {
@@ -338,10 +307,6 @@ void CSAutomationDlg::ReadSettings()
 	if(wcscmp(szData,_T("1"))==0){m_bAutoMinimize=TRUE;}
 	else{m_bAutoMinimize=FALSE;}
 
-	GetPrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	if(wcscmp(szData,_T("1"))==0){m_bMinimizeToTaskTray=TRUE;}
-	else{m_bMinimizeToTaskTray=FALSE;}
-
 	GetPrivateProfileString(_T("Common"),_T("Log"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	if(wcscmp(szData,_T("1"))==0){m_bLog=TRUE;}
 	else{m_bLog=FALSE;}
@@ -412,14 +377,6 @@ void CSAutomationDlg::SaveSettings()
 	else
 	{
 		WritePrivateProfileString(_T("Common"),_T("AutoMnimize"),_T("0"),sFilePath);
-	}
-	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->GetCheck()==1)
-	{
-		WritePrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("1"),sFilePath);
-	}
-	else
-	{
-		WritePrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),sFilePath);
 	}
 
 	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck()==1)
@@ -643,14 +600,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 		((CButton*)GetDlgItem(IDC_MIAIN_CHECK_AUTO_MINIMIZE))->SetCheck(0);
 	}
 
-	if(m_bMinimizeToTaskTray==TRUE)
-	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->SetCheck(1);
-	}
-	else
-	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->SetCheck(0);
-	}
 
 	if(m_bLog==TRUE)
 	{
@@ -691,12 +640,13 @@ BOOL CSAutomationDlg::OnInitDialog()
 	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
 
-	ImgRGB imgTest;
+
+/*	ImgRGB imgTest;
 	imgTest.Assign(_T("D:\\GitHub\\SAutomation\\SAutomation\\SAutomation\\Macro\\Model\\test.bmp"));
 	ImgRGBPyramid imgTestPyram;
 	imgTestPyram.SetPyramid(&imgTest);
 	WriteImage(&imgTestPyram.imgRGB, _T("D:\\GitHub\\SAutomation\\SAutomation\\SAutomation\\Macro\\Model\\test2.bmp"));
-	TrayNotifyIconMessage(NIM_ADD);
+	*/
 	// このダイアログのアイコンを設定します。アプリケーションのメイン ウィンドウがダイアログでない場合、
 	//  Framework は、この設定を自動的に行います。
 	SetIcon(m_hIconStandby, TRUE);			// 大きいアイコンの設定
@@ -723,38 +673,9 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 	}
 
 
-	CString sTip = _T("SAutomation.exe");
-	NOTIFYICONDATA nid;
-
-	nid.cbSize = sizeof(NOTIFYICONDATA);
-	nid.hWnd   = GetSafeHwnd();
-	nid.uID    = IDI_ICON_STANDBY;
-	nid.uFlags = NIF_MESSAGE | NIF_ICON;
-	nid.uCallbackMessage = WM_TRAYNOTIFY;
-	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(iIcon));
-	_tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
-
-
-	return Shell_NotifyIcon(NIM_MODIFY , &nid);
+return TRUE;
 }
 
-BOOL CSAutomationDlg::TrayNotifyIconMessage(DWORD dwMessage)
-{
-	CString sTip = _T("SAutomation.exe");
-	NOTIFYICONDATA nid;
-
-	nid.cbSize = sizeof(NOTIFYICONDATA);
-	nid.hWnd   = GetSafeHwnd();
-	nid.uID    = IDI_ICON_STANDBY;
-	nid.uFlags = NIF_MESSAGE | NIF_ICON;
-	nid.uCallbackMessage = WM_TRAYNOTIFY;
-	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON_STANDBY));
-	_tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
-
-	return Shell_NotifyIcon(dwMessage, &nid);
-}
 
 void CSAutomationDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
@@ -1012,7 +933,6 @@ BOOL CSAutomationDlg::DestroyWindow()
 	if(g_hhook != NULL){UnhookWindowsHookEx(g_hhook);}
 	SaveSettings();
 
-	TrayNotifyIconMessage(NIM_DELETE);
 	return CDialogEx::DestroyWindow();
 }
 
@@ -1089,14 +1009,7 @@ void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialogEx::OnSize(nType, cx, cy);
 
-	if (nType == SIZE_MINIMIZED)
-	{
-		if(m_bMinimizeToTaskTray==TRUE)
-		{
-			ShowWindow(SW_HIDE);
-			KillTimer(TIMER_WAKE_UP);
-		}
-	}
+
 }
 
 
@@ -1148,20 +1061,6 @@ void CSAutomationDlg::OnBnClickedButton0Confing()
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 }
 
-
-void CSAutomationDlg::OnBnClickedCheckTasktray()
-{
-
-	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->GetCheck()==1)
-	{
-		m_bMinimizeToTaskTray=TRUE;
-	}
-	else
-	{
-		m_bMinimizeToTaskTray=FALSE;
-	}
-
-}
 
 
 void CSAutomationDlg::WindowNameRefresh()

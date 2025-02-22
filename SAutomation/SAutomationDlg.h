@@ -116,7 +116,6 @@ public:
 	BOOL ReHookWindowsHook();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
-	BOOL TrayNotifyIconMessage(DWORD dwMessage);
 	BOOL ChangeIcon(int iIcon);
 
 
@@ -126,7 +125,6 @@ protected:
 
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;
-	BOOL m_bMinimizeToTaskTray;
 	CString m_sHotkeyEnable;
 	CString m_sTargetWindowName;
 	int m_iLogLevel;
@@ -171,7 +169,6 @@ public:
 	CComboBox m_comboWindowName;
 	afx_msg void OnSelchangeWindowName();
 	
-	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
 
 	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
 
@@ -186,7 +183,6 @@ public:
 	afx_msg void OnKillfocusEditSpeed();
 	afx_msg void OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButton0Confing();
-	afx_msg void OnBnClickedCheckTasktray();
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
 	CTabCtrl m_tab;
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
