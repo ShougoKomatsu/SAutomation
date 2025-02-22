@@ -1,3 +1,4 @@
+#pragma once
 #include "stdafx.h"
 
 extern BOOL g_bHalt;

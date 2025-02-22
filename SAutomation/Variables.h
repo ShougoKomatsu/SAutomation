@@ -1,10 +1,11 @@
+#pragma once
+
 #include "stdafx.h"
 #include "Thread.h"
 #include "ImgProc.h"
 #include "common.h"
 
 
-#pragma once
 struct Point
 {
 	int r;

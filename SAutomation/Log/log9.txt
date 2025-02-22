@@ -1,5 +1,5 @@
 1 varstr1=input 0
-2 msgbox(varstr1) <varstr1 = sss> 0
+2 msgbox(varstr1) <varstr1 = s> 0
 3 VarPoint1=ForegroundWindowLU 0
 4 MousePos(VarPoint1) <VarPoint = (927, 1782)> <VarPoint = (927, 1782)> 0
 5 1000 0

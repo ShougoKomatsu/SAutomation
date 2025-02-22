@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Common.h"
+#include "MouseAutomation.h"
 CString g_sDir;
 AutomationInfo g_Automation;
 
@@ -413,3 +414,27 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op)
 	return;
 }
 
+
+void AutomationInfo::Operate(int iScene)
+{
+	ChangeMouseOrigin(0, 0);
+
+	DWORD dwThreadID;
+	if(g_hThread[iScene] != NULL)
+	{
+		DWORD dwResult;
+		dwResult = WaitForSingleObject(g_hThread[iScene], 0);
+		if(dwResult != STATUS_WAIT_0){return;}
+	}
+	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
+	int iParam[2];
+
+	iParam[1] = m_iLogLevel<<PARAM_LOGLEVEL_SHIFT;
+	iParam[0] = iScene;
+	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
+
+	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
+
+	while(iParam[0]!=0){Sleep(10);}
+	
+}

@@ -594,37 +594,15 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 }
 
 
-void ResetVariable(int iScene)
-{
-	for(int i=0; i<MAX_VARIABLES; i++)
-	{
-		g_iVar[iScene][i]=0;
-		g_sVar[iScene][i].Format(_T(""));
-		g_imgRGB[iScene][i].Init();
-		g_point[iScene][i].Set(0,0);
-	}
-	return;
-}
-
 void CSAutomationDlg::Operate(int iScene)
 {
 	UpdateData(TRUE);
 	m_tabItem.UpdateData_My(TRUE);
-	ChangeMouseOrigin(0, 0);
+	
 	m_comboWindowName.SetCurSel(0);
 	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
-
-	DWORD dwThreadID;
-	if(g_hThread[iScene] != NULL)
-	{
-		DWORD dwResult;
-		dwResult = WaitForSingleObject(g_hThread[iScene], 0);
-		if(dwResult != STATUS_WAIT_0){return;}
-	}
-	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
-	int iParam[2];
-	int iChecked;
+		int iChecked;
 	int iLogLevel;
 	iChecked = ((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck();
 	iLogLevel=0;
@@ -643,13 +621,7 @@ void CSAutomationDlg::Operate(int iScene)
 		if(wcscmp(tch,_T("All"))==0){iLogLevel=5;}
 	}
 
-	iParam[1] = iLogLevel<<PARAM_LOGLEVEL_SHIFT;
-	iParam[0] = iScene;
-	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
-
-	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
-
-	while(iParam[0]!=0){Sleep(10);}
+	g_Automation.Operate(iScene);
 	
 	if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);}
 	

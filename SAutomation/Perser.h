@@ -1,3 +1,5 @@
+
+#pragma once
 #include "stdafx.h"
 #ifndef PERSER_DEFINE
 #define PERSER_DEFINE
