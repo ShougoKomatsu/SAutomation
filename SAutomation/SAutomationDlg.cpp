@@ -258,66 +258,6 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void AutomationInfo::ReadSettings()
-{
-
-	TCHAR szData[MAX_PATH];
-	CString sFilePath;
-
-	sFilePath.Format(_T("%s\\SAutomation.ini"), g_Automation.m_sDir); 
-
-	GetPrivateProfileString(_T("Mouse"),_T("ClickDulation"),_T("50"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	g_iClickDulation = _ttoi(szData);
-
-	for(int iScene=0; iScene<MAX_THREAD; iScene++)
-	{
-		CString sSection;
-		sSection.Format(_T("Operation %d"), iScene+1);
-		GetPrivateProfileString(sSection,_T("FileName"),_T(""),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		g_Automation.m_OpeInfo[iScene].sFileName.Format(_T("%s"),szData);
-
-		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		g_Automation.m_OpeInfo[iScene].sHotkey.Format(_T("%s"), szData);
-
-		GetPrivateProfileString(sSection,_T("UseCtrl"),_T("1"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		if(wcscmp(szData,_T("1"))==0){g_Automation.m_OpeInfo[iScene].bUseCtrl=TRUE;}
-		else{g_Automation.m_OpeInfo[iScene].bUseCtrl=FALSE;}
-
-		GetPrivateProfileString(sSection,_T("UseShift"),_T("1"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		if(wcscmp(szData,_T("1"))==0){g_Automation.m_OpeInfo[iScene].bUseShift=TRUE;}
-		else{g_Automation.m_OpeInfo[iScene].bUseShift=FALSE;}
-
-		GetPrivateProfileString(sSection,_T("UseAlt"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		if(wcscmp(szData,_T("1"))==0){g_Automation.m_OpeInfo[iScene].bUseAlt=TRUE;}
-		else{g_Automation.m_OpeInfo[iScene].bUseAlt=FALSE;}
-
-		GetPrivateProfileString(sSection,_T("UseWin"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-		if(wcscmp(szData,_T("1"))==0){g_Automation.m_OpeInfo[iScene].bUseWin=TRUE;}
-		else{g_Automation.m_OpeInfo[iScene].bUseWin=FALSE;}
-	}
-
-	GetPrivateProfileString(_T("Hotkey"),_T("EnableKey"),_T(" "),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	g_Automation.m_sHotkeyEnable.Format(_T("%s"), szData);
-
-	GetPrivateProfileString(_T("Hotkey"),_T("Enable"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	if(wcscmp(szData,_T("1"))==0){g_Automation.m_bEnableHotkey=TRUE;}
-	else{g_Automation.m_bEnableHotkey=FALSE;}
-
-	GetPrivateProfileString(_T("Common"),_T("AutoMnimize"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	if(wcscmp(szData,_T("1"))==0){g_Automation.m_bAutoMinimize=TRUE;}
-	else{g_Automation.m_bAutoMinimize=FALSE;}
-
-	GetPrivateProfileString(_T("Common"),_T("Log"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	if(wcscmp(szData,_T("1"))==0){g_Automation.m_bLog=TRUE;}
-	else{g_Automation.m_bLog=FALSE;}
-
-	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	g_Automation.m_iLogLevel=_ttoi(szData);
-	if(g_Automation.m_iLogLevel<1){g_Automation.m_iLogLevel=1;}
-	if(g_Automation.m_iLogLevel>5){g_Automation.m_iLogLevel=5;}
-
-}
-
 void AutomationInfo::SaveSettings()
 {
 	

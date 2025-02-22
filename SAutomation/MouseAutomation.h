@@ -58,7 +58,6 @@ ReturnValue MouseRClick(int iScene, CStringArray* saData);
 ReturnValue MouseMClick(UINT nX, UINT nY);
 ReturnValue MouseMClick(int iScene, CStringArray* saData);
 
-extern int g_iClickDulation;
 ReturnValue MoveMouseToItem(int iScene, CStringArray* saData);
 ReturnValue MoveMouseToImage(int iScene, CStringArray* saData);
 ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData);

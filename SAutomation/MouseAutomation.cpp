@@ -3,7 +3,6 @@
 #include "Window.h"
 #include "ImgProc.h"
 #include "Variables.h"
-int g_iClickDulation = 50;
 
 
 ReturnValue MouseVWheel(int iWheel)

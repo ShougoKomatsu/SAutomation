@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #pragma once
+extern int g_iClickDulation;
 extern CString g_sDir;
 #define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_cf[iScene].WriteString(sWrite);}}
 #define LOG_OUTPUT_STR(iScene, sArg, sData) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = %s> "),sArg, sData); g_cf[iScene].WriteString(sWrite);}}	
@@ -73,6 +74,7 @@ void SetComboItem(CComboBox* combo, CString sHotkey);
 class AutomationInfo
 {
 public:
+	AutomationInfo(){}
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;
 	CString m_sHotkeyEnable;
