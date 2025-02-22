@@ -27,6 +27,7 @@ CStdioFile g_cf[MAX_THREAD];
 CString g_sLogFilePath[MAX_THREAD];
 int g_iLogLevel[MAX_THREAD];
 BOOL g_bCompactBiew;
+int g_iWatching=0;
 
 HWND g_hWnd;
 double g_dSpeedMult=1.0;
@@ -528,7 +529,6 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
-int g_iWatching=0;
 void CSAutomationDlg::RefreshTargetWindowPos()
 {
 	if(g_Automation.m_sTargetWindowName.Compare(_T("Desktop"))==0)
