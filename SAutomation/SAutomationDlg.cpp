@@ -315,7 +315,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if(cf.FindFile(sLogFolderPath) != TRUE){_tmkdir(sLogFolderPath);}
 	if(cf.FindFile(sModelFolderPath) != TRUE){_tmkdir(sModelFolderPath);}
 	g_Automation.ReadSettings();
-	g_dlg=this;
 	SetComboItem(&m_comboEnable,g_Automation.m_sHotkeyEnable);
 
 	m_tabItem.m_iSlot=0;

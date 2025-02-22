@@ -62,6 +62,3 @@ extern int g_iOriginC;
 #endif
 #endif
 #include "SAutomationdlg.h"
-
-
-extern CSAutomationDlg* g_dlg;
