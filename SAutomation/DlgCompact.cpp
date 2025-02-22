@@ -54,16 +54,14 @@ BOOL CDlgCompact::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	SetTimer(TIMER_COMPACT_DISP_MOUSPOS,200, NULL);
-
 	CRect rectDisp;
 	SystemParametersInfo( SPI_GETWORKAREA, NULL, &rectDisp, NULL);
-	
 	CRect rectDlg;
 	GetWindowRect(&rectDlg);
-
+	SetWindowText(_T("SAutomation"));
 	MoveWindow(rectDisp.Width()-rectDlg.Width(), rectDisp.Height()-rectDlg.Height(),rectDlg.Width(),rectDlg.Height());
 
-		::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
+	::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
 		
 	SetIcon(m_hIconStandby, TRUE);
 	SetIcon(m_hIconStandby, FALSE);

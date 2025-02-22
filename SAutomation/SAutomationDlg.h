@@ -9,7 +9,8 @@
 #include "InputDialog.h"
 #include "TabItem.h"
 #include "DlgCompact.h"
-
+#include "Common.h"
+extern BOOL g_bCompactBiew;
 extern CStdioFile g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
@@ -83,18 +84,6 @@ extern CString g_sLogFilePath[MAX_THREAD];
 
 #define HOTKEY_ESCAPE (100)
 
-struct OperationInfo
-{	
-	CString sHotkey;
-	BOOL bUseCtrl;
-	BOOL bUseShift;
-	BOOL bUseAlt;
-	BOOL bUseWin;
-	DWORD dwHotKey;
-	BOOL m_bRunning;
-	CString sFileName;
-	OperationInfo(){m_bRunning=FALSE;}
-};
 
 // CSAutomationDlg ダイアログ
 class CSAutomationDlg : public CDialogEx
@@ -105,37 +94,25 @@ public:
 
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
-
-	void SaveSettings();
+	void ChangeToCompact();
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);
 	CInputDialog cInput;
-	OperationInfo m_OpeInfo[MAX_THREAD];
-	CString m_sDir;
 	BOOL ReHookWindowsHook();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
-	BOOL TrayNotifyIconMessage(DWORD dwMessage);
 	BOOL ChangeIcon(int iIcon);
 
 
+BOOL UpdateAutomationInfo(AutomationInfo* autoInfo);
 
 	void ToggleEnable();
 
 
-	BOOL m_bEnableHotkey;
-	BOOL m_bAutoMinimize;
-	BOOL m_bMinimizeToTaskTray;
-	CString m_sHotkeyEnable;
-	CString m_sTargetWindowName;
-	int m_iLogLevel;
-	BOOL m_bLog;
 	
 	void RefreshTargetWindowPos();
-	DWORD m_dwHotKeyEnable;
 	
 	void WindowNameRefresh();
-	void ReadSettings();
 	BOOL m_bRunningAny;
 	BOOL MouseMoveAndDisp(DWORD dwMoveDirection, int iDistance);
 	// 実装
@@ -170,7 +147,6 @@ public:
 	CComboBox m_comboWindowName;
 	afx_msg void OnSelchangeWindowName();
 	
-	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
 
 	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
 
@@ -185,11 +161,11 @@ public:
 	afx_msg void OnKillfocusEditSpeed();
 	afx_msg void OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButton0Confing();
-	afx_msg void OnBnClickedCheckTasktray();
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
 	CTabCtrl m_tab;
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonOpenCompact();
+	afx_msg void OnBnClickedOk();
 };
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
