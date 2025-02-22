@@ -840,7 +840,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 		ReHookWindowsHook();
 		if(m_bAutoMinimize==TRUE)
 		{
-			ShowWindow( SW_MINIMIZE );
+			ChangeToCompact();
 		}
 	}
 	CDialogEx::OnTimer(nIDEvent);
@@ -1113,7 +1113,7 @@ void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult
 	*pResult = 0;
 }
 
-void CSAutomationDlg::OnBnClickedButtonOpenCompact()
+void CSAutomationDlg::ChangeToCompact()
 {
 	if(m_cDlgCompact.m_hWnd!=NULL){return;}
 	ShowWindow(SW_HIDE);
@@ -1124,6 +1124,11 @@ void CSAutomationDlg::OnBnClickedButtonOpenCompact()
 	if(lRet == 2){OnBnClickedOk();}
 	g_bCompactBiew=FALSE;
 	ShowWindow(SW_SHOW);
+}
+
+void CSAutomationDlg::OnBnClickedButtonOpenCompact()
+{
+	ChangeToCompact();
 }
 BOOL CSAutomationDlg::ReHookWindowsHook()
 {

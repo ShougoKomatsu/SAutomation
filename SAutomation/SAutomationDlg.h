@@ -106,7 +106,7 @@ public:
 
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
-
+	void ChangeToCompact();
 	void SaveSettings();
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);
