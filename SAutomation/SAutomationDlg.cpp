@@ -26,7 +26,7 @@
 CStdioFile g_cf[MAX_THREAD];
 CString g_sLogFilePath[MAX_THREAD];
 int g_iLogLevel[MAX_THREAD];
-
+BOOL g_bCompactBiew;
 
 HWND g_hWnd;
 double g_dSpeedMult=1.0;
@@ -153,9 +153,16 @@ LRESULT CSAutomationDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 		{
 			if (wParam == IDI_ICON_STANDBY)
 			{
+				if(g_bCompactBiew==FALSE)
+				{
 				ShowWindow(SW_NORMAL);
 				SetForegroundWindow();
 				SetFocus();
+				}
+				else
+				{
+					m_cDlgCompact.ShowWindow(SW_NORMAL);
+				}
 			} 
 			break;
 		}
@@ -581,7 +588,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	
 	m_tabItem.m_iSlot=0;
 		m_tabItem.RefleshDialog();
-
+		g_bCompactBiew=FALSE;
 
 	for(int iScene= 0; iScene<MAX_THREAD; iScene++)
 	{
@@ -1212,7 +1219,9 @@ void CSAutomationDlg::OnBnClickedButtonOpenCompact()
 	ShowWindow(SW_HIDE);
 
 	m_cDlgCompact.pParent=this;
+	g_bCompactBiew=TRUE;
 	m_cDlgCompact.DoModal();
+	g_bCompactBiew=FALSE;
 	ShowWindow(SW_SHOW);
 }
 BOOL CSAutomationDlg::ReHookWindowsHook()

@@ -10,6 +10,7 @@
 #include "TabItem.h"
 #include "DlgCompact.h"
 
+extern BOOL g_bCompactBiew;
 extern CStdioFile g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
