@@ -60,7 +60,7 @@ BOOL CDlgCompact::OnInitDialog()
 	
 	CRect rectDlg;
 	GetWindowRect(&rectDlg);
-
+	SetWindowText(_T("SAutomation"));
 	MoveWindow(rectDisp.Width()-rectDlg.Width(), rectDisp.Height()-rectDlg.Height(),rectDlg.Width(),rectDlg.Height());
 
 		::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
