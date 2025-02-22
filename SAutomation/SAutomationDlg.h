@@ -106,7 +106,8 @@ protected:
 BOOL UpdateAutomationInfo(AutomationInfo* autoInfo);
 
 	void ToggleEnable();
-
+	
+void GetLogLavel(AutomationInfo* g_autoInfo);
 
 	
 	void RefreshTargetWindowPos();
