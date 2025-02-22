@@ -1,3 +1,2 @@
 1 varstr1=input 0
-2 msgbox(varstr1) <varstr1 = aaa> 0
-3 
+2 
