@@ -220,5 +220,38 @@ void AutomationInfo::ReadSettings()
 	g_Automation.m_iLogLevel=_ttoi(szData);
 	if(g_Automation.m_iLogLevel<1){g_Automation.m_iLogLevel=1;}
 	if(g_Automation.m_iLogLevel>5){g_Automation.m_iLogLevel=5;}
+	
+	for(int iScene= 0; iScene<MAX_THREAD; iScene++)
+	{
+		g_hThread[iScene] = NULL;
+		if(g_Automation.m_OpeInfo[iScene].sHotkey.GetLength()>=2)
+		{
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F1"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F1;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F2"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F2;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F3"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F3;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F4"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F4;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F5"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F5;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F6"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F6;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F7"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F7;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F8"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F8;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F9"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F9;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F10"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F10;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F11"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F11;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F12"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F12;}
+			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("Insert"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_INSERT;}
+
+		}
+		else
+		{
+			if((char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))>='a') && (char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))<='z')){g_Automation.m_OpeInfo[iScene].dwHotKey = char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))-'a'+0x41;}
+			if((char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))>='0') && (char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))<='9')){g_Automation.m_OpeInfo[iScene].dwHotKey = char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))-'0'+0x30;}
+		}
+
+	}
+	if(g_Automation.m_sHotkeyEnable.GetLength()==1)
+	{
+		if((char(g_Automation.m_sHotkeyEnable.GetAt(0))>='a') && (char(g_Automation.m_sHotkeyEnable.GetAt(0))<='z')){g_Automation.m_dwHotKeyEnable = char(g_Automation.m_sHotkeyEnable.GetAt(0))-'a'+0x41;}
+		if((char(g_Automation.m_sHotkeyEnable.GetAt(0))>='0') && (char(g_Automation.m_sHotkeyEnable.GetAt(0))<='9')){g_Automation.m_dwHotKeyEnable = char(g_Automation.m_sHotkeyEnable.GetAt(0))-'0'+0x30;}
+	}
 
 }

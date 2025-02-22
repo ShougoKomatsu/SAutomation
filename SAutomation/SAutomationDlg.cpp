@@ -470,50 +470,25 @@ BOOL CSAutomationDlg::OnInitDialog()
 	g_Automation.ReadSettings();
 	g_dlg=this;
 	SetComboItem(&m_comboEnable,g_Automation.m_sHotkeyEnable);
-	
+
 	m_tabItem.m_iSlot=0;
-		m_tabItem.RefleshDialog();
-		g_bCompactBiew=FALSE;
+	m_tabItem.RefleshDialog();
+	g_bCompactBiew=FALSE;
 
-	for(int iScene= 0; iScene<MAX_THREAD; iScene++)
+	for(int iScene= 0; iScene<16; iScene++)
 	{
-		g_hThread[iScene] = NULL;
-		if(g_Automation.m_OpeInfo[iScene].sHotkey.GetLength()>=2)
-		{
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F1"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F1;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F2"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F2;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F3"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F3;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F4"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F4;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F5"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F5;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F6"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F6;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F7"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F7;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F8"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F8;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F9"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F9;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F10"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F10;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F11"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F11;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F12"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_F12;}
-			if(g_Automation.m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("Insert"))==0){g_Automation.m_OpeInfo[iScene].dwHotKey = VK_INSERT;}
-
-		}
-		else
-		{
-			if((char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))>='a') && (char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))<='z')){g_Automation.m_OpeInfo[iScene].dwHotKey = char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))-'a'+0x41;}
-			if((char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))>='0') && (char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))<='9')){g_Automation.m_OpeInfo[iScene].dwHotKey = char(g_Automation.m_OpeInfo[iScene].sHotkey.GetAt(0))-'0'+0x30;}
-		}
 		m_tabItem.m_sEditStatus[iScene].Format(_T("Stand by"));
 		m_tabItem.m_sEditFileName[iScene].Format(_T("%s"),g_Automation.m_OpeInfo[iScene].sFileName);
 
 	}
-		m_tabItem.RefleshDialog();
-		UpdateData(FALSE);
+	m_tabItem.RefleshDialog();
+	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
 
 	g_bHalt = FALSE;
 
 	if(g_Automation.m_sHotkeyEnable.GetLength()==1)
 	{
-		if((char(g_Automation.m_sHotkeyEnable.GetAt(0))>='a') && (char(g_Automation.m_sHotkeyEnable.GetAt(0))<='z')){g_Automation.m_dwHotKeyEnable = char(g_Automation.m_sHotkeyEnable.GetAt(0))-'a'+0x41;}
-		if((char(g_Automation.m_sHotkeyEnable.GetAt(0))>='0') && (char(g_Automation.m_sHotkeyEnable.GetAt(0))<='9')){g_Automation.m_dwHotKeyEnable = char(g_Automation.m_sHotkeyEnable.GetAt(0))-'0'+0x30;}
 		RegisterHotKey(NULL, HOTKEY_ENABLE, MOD_SHIFT | MOD_CONTROL | MOD_NOREPEAT, g_Automation.m_dwHotKeyEnable);
 	}
 
