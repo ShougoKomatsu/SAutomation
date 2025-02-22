@@ -116,6 +116,7 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_WINDOW_NAME, &CSAutomationDlg::OnSelchangeWindowName)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_COMPACT_TAB_OPERATION, &CSAutomationDlg::OnTcnSelchangeTabOperation)
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_OPEN_COMPACT, &CSAutomationDlg::OnBnClickedButtonOpenCompact)
+	ON_BN_CLICKED(IDOK, &CSAutomationDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -1220,7 +1221,8 @@ void CSAutomationDlg::OnBnClickedButtonOpenCompact()
 
 	m_cDlgCompact.pParent=this;
 	g_bCompactBiew=TRUE;
-	m_cDlgCompact.DoModal();
+	long lRet=m_cDlgCompact.DoModal();
+	if(lRet == 2){OnBnClickedOk();}
 	g_bCompactBiew=FALSE;
 	ShowWindow(SW_SHOW);
 }
@@ -1231,4 +1233,10 @@ BOOL CSAutomationDlg::ReHookWindowsHook()
 	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
 	if(g_hhook == NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); return FALSE;}
 	return TRUE;
+}
+
+void CSAutomationDlg::OnBnClickedOk()
+{
+	// TODO: ここにコントロール通知ハンドラー コードを追加します。
+	CDialogEx::OnOK();
 }

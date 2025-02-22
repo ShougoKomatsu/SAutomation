@@ -191,6 +191,7 @@ public:
 	CTabCtrl m_tab;
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonOpenCompact();
+	afx_msg void OnBnClickedOk();
 };
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
