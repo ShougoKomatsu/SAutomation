@@ -253,5 +253,76 @@ void AutomationInfo::ReadSettings()
 		if((char(g_Automation.m_sHotkeyEnable.GetAt(0))>='a') && (char(g_Automation.m_sHotkeyEnable.GetAt(0))<='z')){g_Automation.m_dwHotKeyEnable = char(g_Automation.m_sHotkeyEnable.GetAt(0))-'a'+0x41;}
 		if((char(g_Automation.m_sHotkeyEnable.GetAt(0))>='0') && (char(g_Automation.m_sHotkeyEnable.GetAt(0))<='9')){g_Automation.m_dwHotKeyEnable = char(g_Automation.m_sHotkeyEnable.GetAt(0))-'0'+0x30;}
 	}
+	if(g_Automation.m_iLogLevel<1){g_Automation.m_iLogLevel=1;}
+	if(g_Automation.m_iLogLevel>5){g_Automation.m_iLogLevel=5;}
 
+}
+
+void AutomationInfo::SaveSettings()
+{
+	
+	CString sFilePath;
+	sFilePath.Format(_T("%s\\SAutomation.ini"), g_Automation.m_sDir); 
+
+	CString sUseCtrl;
+	CString sUseShift;
+	CString sUseAlt;
+	CString sUseWin;
+
+	for(int iScene = 0; iScene<MAX_THREAD; iScene++)
+	{
+		CString sSection;
+		sSection.Format(_T("Operation %d"), iScene+1);
+
+		WritePrivateProfileString(sSection,_T("FileName"),g_Automation.m_OpeInfo[iScene].sFileName,sFilePath);
+
+		WritePrivateProfileString(sSection,_T("Hotkey"),g_Automation.m_OpeInfo[iScene].sHotkey, sFilePath);
+
+		sUseCtrl.Format(_T("%d"), g_Automation.m_OpeInfo[iScene].bUseCtrl);
+		sUseShift.Format(_T("%d"), g_Automation.m_OpeInfo[iScene].bUseShift);
+		sUseAlt.Format(_T("%d"), g_Automation.m_OpeInfo[iScene].bUseAlt);
+		sUseWin.Format(_T("%d"), g_Automation.m_OpeInfo[iScene].bUseWin);
+
+		WritePrivateProfileString(sSection,_T("UseCtrl"),sUseCtrl,sFilePath);
+		WritePrivateProfileString(sSection,_T("UseShift"),sUseShift,sFilePath);
+		WritePrivateProfileString(sSection,_T("UseAlt"),sUseAlt,sFilePath);
+		WritePrivateProfileString(sSection,_T("UseWin"),sUseWin,sFilePath);
+
+	}
+
+
+	WritePrivateProfileString(_T("Hotkey"),_T("EnableKey"),g_Automation.m_sHotkeyEnable,sFilePath);
+
+	if(g_Automation.m_bEnableHotkey==TRUE)
+	{
+		WritePrivateProfileString(_T("Hotkey"),_T("Enable"),_T("1"),sFilePath);
+	}
+	else
+	{
+		WritePrivateProfileString(_T("Hotkey"),_T("Enable"),_T("0"),sFilePath);
+	}
+
+
+	if(g_Automation.m_bAutoMinimize==TRUE)
+	{
+		WritePrivateProfileString(_T("Common"),_T("AutoMnimize"),_T("1"),sFilePath);
+	}
+	else
+	{
+		WritePrivateProfileString(_T("Common"),_T("AutoMnimize"),_T("0"),sFilePath);
+	}
+
+	if(g_Automation.m_bLog==1)
+	{
+		WritePrivateProfileString(_T("Common"),_T("Log"),_T("1"),sFilePath);
+	}
+	else
+	{
+		WritePrivateProfileString(_T("Common"),_T("Log"),_T("0"),sFilePath);
+	}
+
+	CString sData;
+	sData.Format(_T("%d"),g_Automation.m_iLogLevel);
+	WritePrivateProfileString(_T("Common"),_T("LogLevel"),sData,sFilePath);
+	
 }
