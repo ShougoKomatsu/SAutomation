@@ -321,12 +321,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_tabItem.RefleshDialog();
 	g_bCompactBiew=FALSE;
 
-	for(int iScene= 0; iScene<16; iScene++)
-	{
-		m_tabItem.m_sEditStatus[iScene].Format(_T("Stand by"));
-		m_tabItem.m_sEditFileName[iScene].Format(_T("%s"),g_Automation.m_OpeInfo[iScene].sFileName);
-
-	}
 	m_tabItem.RefleshDialog();
 	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
