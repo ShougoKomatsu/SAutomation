@@ -55,4 +55,35 @@ enum ErrTreatValue
 	ERROR_TREAT_GOTO=(2)
 };
 
+struct OperationInfo
+{	
+	CString sHotkey;
+	BOOL bUseCtrl;
+	BOOL bUseShift;
+	BOOL bUseAlt;
+	BOOL bUseWin;
+	DWORD dwHotKey;
+	BOOL m_bRunning;
+	CString sFileName;
+	OperationInfo(){m_bRunning=FALSE;}
+};
+
 void SetComboItem(CComboBox* combo, CString sHotkey);
+
+class AutomationInfo
+{
+public:
+	BOOL m_bEnableHotkey;
+	BOOL m_bAutoMinimize;
+	CString m_sHotkeyEnable;
+	CString m_sTargetWindowName;
+	int m_iLogLevel;
+	BOOL m_bLog;
+	DWORD m_dwHotKeyEnable;
+	void ReadSettings();
+	void SaveSettings();
+		CString m_sDir;
+	OperationInfo m_OpeInfo[MAX_THREAD];
+};
+
+extern AutomationInfo g_Automation;

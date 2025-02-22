@@ -9,7 +9,7 @@
 #include "InputDialog.h"
 #include "TabItem.h"
 #include "DlgCompact.h"
-
+#include "Common.h"
 extern BOOL g_bCompactBiew;
 extern CStdioFile g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
@@ -84,18 +84,6 @@ extern CString g_sLogFilePath[MAX_THREAD];
 
 #define HOTKEY_ESCAPE (100)
 
-struct OperationInfo
-{	
-	CString sHotkey;
-	BOOL bUseCtrl;
-	BOOL bUseShift;
-	BOOL bUseAlt;
-	BOOL bUseWin;
-	DWORD dwHotKey;
-	BOOL m_bRunning;
-	CString sFileName;
-	OperationInfo(){m_bRunning=FALSE;}
-};
 
 // CSAutomationDlg ダイアログ
 class CSAutomationDlg : public CDialogEx
@@ -107,34 +95,24 @@ public:
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
 	void ChangeToCompact();
-	void SaveSettings();
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);
 	CInputDialog cInput;
-	OperationInfo m_OpeInfo[MAX_THREAD];
-	CString m_sDir;
 	BOOL ReHookWindowsHook();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 	BOOL ChangeIcon(int iIcon);
 
 
+BOOL UpdateAutomationInfo(AutomationInfo* autoInfo);
 
 	void ToggleEnable();
 
 
-	BOOL m_bEnableHotkey;
-	BOOL m_bAutoMinimize;
-	CString m_sHotkeyEnable;
-	CString m_sTargetWindowName;
-	int m_iLogLevel;
-	BOOL m_bLog;
 	
 	void RefreshTargetWindowPos();
-	DWORD m_dwHotKeyEnable;
 	
 	void WindowNameRefresh();
-	void ReadSettings();
 	BOOL m_bRunningAny;
 	BOOL MouseMoveAndDisp(DWORD dwMoveDirection, int iDistance);
 	// 実装

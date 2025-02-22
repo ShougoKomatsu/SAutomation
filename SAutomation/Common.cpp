@@ -1,6 +1,8 @@
 #include "stdafx.h"
-
+#include "Common.h"
 CString g_sDir;
+AutomationInfo g_Automation;
+
 
 BOOL GetFileName(CString sFilePath, CString* sFileName)
 {
