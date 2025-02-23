@@ -49,7 +49,6 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -108,7 +107,6 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 
 	ON_WM_SIZE()
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_OPEN_FOLDER, &CSAutomationDlg::OnBnClickedButton0OpenFolder)
-	ON_EN_CHANGE(IDC_MAIN_EDIT_SPEED, &CSAutomationDlg::OnChangeEditSpeed)
 	ON_EN_KILLFOCUS(IDC_MAIN_EDIT_SPEED, &CSAutomationDlg::OnKillfocusEditSpeed)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_MAIN_SLIDER_SPEED, &CSAutomationDlg::OnCustomdrawSliderSpeed)
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_REFRESH_WINDOW_NAME, &CSAutomationDlg::OnBnClickedButton0WindowNameRefresh)
@@ -735,11 +733,6 @@ void CSAutomationDlg::OnBnClickedButton0OpenFolder()
 }
 
 
-void CSAutomationDlg::OnChangeEditSpeed()
-{
-
-}
-
 
 
 void CSAutomationDlg::OnKillfocusEditSpeed()
@@ -768,13 +761,6 @@ void CSAutomationDlg::OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult)
 	UpdateData(FALSE);
 	*pResult = 0;
 }
-
-
-void CSAutomationDlg::OnBnClickedButton0Confing()
-{
-	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-}
-
 
 
 void CSAutomationDlg::WindowNameRefresh()
@@ -810,12 +796,6 @@ void CSAutomationDlg::OnSelchangeWindowName()
 	return;
 }
 
-BOOL CAboutDlg::PreTranslateMessage(MSG* pMsg)
-{
-	// TODO: ここに特定なコードを追加するか、もしくは基本クラスを呼び出してください。
-
-	return CDialogEx::PreTranslateMessage(pMsg);
-}
 
 
 void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
@@ -855,6 +835,5 @@ BOOL CSAutomationDlg::ReHookWindowsHook()
 
 void CSAutomationDlg::OnBnClickedOk()
 {
-	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 	CDialogEx::OnOK();
 }

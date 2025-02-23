@@ -157,10 +157,8 @@ public:
 	afx_msg void OnBnClickedCheckEnableHotkey();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnBnClickedButton0OpenFolder();
-	afx_msg void OnChangeEditSpeed();
 	afx_msg void OnKillfocusEditSpeed();
 	afx_msg void OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedButton0Confing();
 	afx_msg void OnBnClickedButton0WindowNameRefresh();
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonOpenCompact();
