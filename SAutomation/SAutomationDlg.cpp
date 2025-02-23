@@ -318,10 +318,9 @@ BOOL CSAutomationDlg::OnInitDialog()
 	SetComboItem(&m_comboEnable,g_Automation.m_sHotkeyEnable);
 
 	m_tabItem.m_iSlot=0;
-	m_tabItem.RefleshDialog();
+	m_tabItem.RefleshDialog(0);
 	g_bCompactBiew=FALSE;
 
-	m_tabItem.RefleshDialog();
 	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
 
@@ -665,23 +664,7 @@ BOOL CSAutomationDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 	{
 		autoInfo->m_bAutoMinimize=FALSE;
 	}
-
-	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck()==1)
-	{
-		autoInfo->m_bLog=TRUE;
-	}
-	else
-	{
-		autoInfo->m_bLog=FALSE;
-	}
-
-	m_comboLogLevel.GetLBText(m_comboLogLevel.GetCurSel(),tch); sData.Format(_T("%s"), tch);
-
-	if(wcscmp(tch,_T("OnlyCritical"))==0){g_Automation.m_iLogLevel=1;}
-	if(wcscmp(tch,_T("4"))==0){g_Automation.m_iLogLevel=2;}
-	if(wcscmp(tch,_T("3"))==0){g_Automation.m_iLogLevel=3;}
-	if(wcscmp(tch,_T("2"))==0){g_Automation.m_iLogLevel=4;}
-	if(wcscmp(tch,_T("All"))==0){g_Automation.m_iLogLevel=5;}
+	GetLogLavel(autoInfo);
 
 	return TRUE;
 }
@@ -874,7 +857,7 @@ void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult
 	int itab = m_tab.GetCurSel();
 
 	m_tabItem.m_iSlot=itab;
-	m_tabItem.RefleshDialog();
+	m_tabItem.RefleshDialog(itab);
 	*pResult = 0;
 }
 
