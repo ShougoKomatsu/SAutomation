@@ -114,7 +114,6 @@ void GetLogLavel(AutomationInfo* g_autoInfo);
 	
 	void WindowNameRefresh();
 	BOOL m_bRunningAny;
-	BOOL MouseMoveAndDisp(DWORD dwMoveDirection, int iDistance);
 	// ŽÀ‘•
 protected:
 	HICON m_hIconStandby;

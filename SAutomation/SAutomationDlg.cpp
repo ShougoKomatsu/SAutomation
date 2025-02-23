@@ -148,7 +148,15 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	m_bRunningAny=FALSE;
 	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
-		if(g_Automation.m_OpeInfo[iScene].m_bRunning==TRUE){m_bRunningAny=TRUE;if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);}break;}
+		if(g_Automation.m_OpeInfo[iScene].m_bRunning==TRUE)
+		{
+			m_bRunningAny=TRUE;
+			if(m_cDlgCompact.m_hWnd != NULL)
+			{
+				::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);
+			}
+			break;
+		}
 	}
 	
 	
@@ -450,33 +458,6 @@ HCURSOR CSAutomationDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIconStandby);
 }
 
-void CSAutomationDlg::OnEnChangeEdit1()
-{
-}
-
-BOOL CSAutomationDlg::MouseMoveAndDisp(DWORD dwMoveDirection, int iDistance)
-{
-	long lMouseX;
-	long lMouseY;
-	lMouseX = g_iC;
-	lMouseY = g_iR;
-	if(dwMoveDirection == VK_LEFT){lMouseX -= iDistance;}
-	if(dwMoveDirection == VK_RIGHT){lMouseX += iDistance;}
-	if(dwMoveDirection == VK_UP){lMouseY -= iDistance;}
-	if(dwMoveDirection == VK_DOWN){lMouseY += iDistance;}
-
-	if(lMouseX<0){lMouseX=0;}
-	if(lMouseY<0){lMouseY=0;}
-	if(lMouseX>=::GetSystemMetrics(SM_CXSCREEN)){lMouseX = ::GetSystemMetrics(SM_CXSCREEN)-1;}
-	if(lMouseY>=::GetSystemMetrics(SM_CXSCREEN)){lMouseY = ::GetSystemMetrics(SM_CYSCREEN)-1;}
-
-	DWORD dwX, dwY;
-	dwX = (lMouseX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (lMouseY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, dwX, dwY, NULL, NULL);
-
-	return TRUE;
-}
 
 BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 {
