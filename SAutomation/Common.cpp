@@ -4,6 +4,21 @@
 CString g_sDir;
 AutomationInfo g_Automation;
 HHOOK g_hhook=NULL;
+int g_iR=0;
+int g_iC=0;
+int g_iOriginR=0;
+int g_iOriginC=0;
+HWND g_hWnd;
+int g_iWatching=0;
+
+
+HANDLE g_hHotkey[MAX_THREAD];
+
+CStdioFile g_cf[MAX_THREAD];
+CString g_sLogFilePath[MAX_THREAD];
+int g_iLogLevel[MAX_THREAD];
+double g_dSpeedMult=1.0;
+
 
 int g_iClickDulation = 50;
 	CInputDialog g_cInput;

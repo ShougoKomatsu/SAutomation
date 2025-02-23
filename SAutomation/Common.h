@@ -5,6 +5,15 @@
 //#include "MouseAutomation.h"
 extern HHOOK g_hhook;
 
+extern int g_iR;
+extern int g_iC;
+extern int g_iOriginR;
+extern int g_iOriginC;
+extern HWND g_hWnd;
+extern double g_dSpeedMult;
+
+extern int g_iWatching;
+
 
 extern int g_iClickDulation;
 extern CString g_sDir;

@@ -23,14 +23,10 @@
 #define TIMER_WAKE_UP (102)
 #define TIMER_REHOOK (103)
 
-CStdioFile g_cf[MAX_THREAD];
-CString g_sLogFilePath[MAX_THREAD];
-int g_iLogLevel[MAX_THREAD];
-BOOL g_bCompactBiew;
-int g_iWatching=0;
 
-HWND g_hWnd;
-double g_dSpeedMult=1.0;
+
+BOOL g_bCompactBiew;
+
 
 // アプリケーションのバージョン情報に使われる CAboutDlg ダイアログ
 
@@ -118,13 +114,6 @@ END_MESSAGE_MAP()
 
 
 // CSAutomationDlg メッセージ ハンドラー
-int g_iR=0;
-int g_iC=0;
-int g_iOriginR=0;
-int g_iOriginC=0;
-
-
-HANDLE g_hHotkey[MAX_THREAD];
 BOOL g_iMninizedOnce=FALSE;
 
 
