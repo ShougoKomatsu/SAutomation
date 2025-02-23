@@ -1,7 +1,24 @@
 #include "stdafx.h"
 #include "Common.h"
+#include "MouseAutomation.h"
 CString g_sDir;
 AutomationInfo g_Automation;
+HHOOK g_hhook=NULL;
+int g_iR=0;
+int g_iC=0;
+int g_iOriginR=0;
+int g_iOriginC=0;
+HWND g_hWnd;
+int g_iWatching=0;
+
+
+HANDLE g_hHotkey[MAX_THREAD];
+
+CStdioFile g_cf[MAX_THREAD];
+CString g_sLogFilePath[MAX_THREAD];
+int g_iLogLevel[MAX_THREAD];
+double g_dSpeedMult=1.0;
+
 
 int g_iClickDulation = 50;
 	CInputDialog g_cInput;
@@ -325,4 +342,129 @@ void AutomationInfo::SaveSettings()
 	sData.Format(_T("%d"),m_iLogLevel);
 	WritePrivateProfileString(_T("Common"),_T("LogLevel"),sData,sFilePath);
 	
+}
+
+
+void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
+{
+	combo->ResetContent();
+	combo->AddString(_T(" "));
+	combo->AddString(_T("Ctrl"));
+	combo->AddString(_T("Shift"));
+	combo->AddString(_T("Alt"));
+	combo->AddString(_T("Win"));
+
+	const int NOTHING = 0;
+	const int CTRL = 1;
+	const int SHIFT = 2;
+	const int ALT = 4;
+	const int WIN = 8;
+
+	int iCombi = NOTHING;
+	int iKeyCount = 0;
+	if(op->bUseCtrl==TRUE){iKeyCount++; iCombi |= CTRL;}
+	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
+	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
+	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
+	
+	if(iKeyCount >= 3){combo->SetCurSel(0); return;}
+	
+	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
+	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
+	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
+
+	switch(iCombi)
+	{
+	case NOTHING:{combo->SetCurSel(0); return;}
+	case CTRL:{combo->SetCurSel(1); return;}
+	case SHIFT:{combo->SetCurSel(2); return;}
+	case ALT:{combo->SetCurSel(3); return;}
+	case WIN:{combo->SetCurSel(4); return;}
+
+	default:{combo->SetCurSel(0); return;}
+	}
+	combo->SetCurSel(0); 
+	return;
+
+}
+
+void SetComboItemShift(CComboBox* combo,OperationInfo* op)
+{
+	combo->ResetContent();
+	combo->AddString(_T(" "));
+	combo->AddString(_T("Shift"));
+	combo->AddString(_T("Alt"));
+	combo->AddString(_T("Win"));
+	
+	const int NOTHING = 0;
+	const int CTRL = 1;
+	const int SHIFT = 2;
+	const int ALT = 4;
+	const int WIN = 8;
+	
+	int iCombi = NOTHING;
+	int iKeyCount = 0;
+	if(op->bUseCtrl==TRUE){iKeyCount++;iCombi |= CTRL;}
+	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
+	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
+	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
+	
+	if(iKeyCount != 2){combo->SetCurSel(0); return;}
+	
+	if((iCombi&CTRL) == CTRL)	{iCombi -= CTRL;}
+	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
+	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
+	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
+	
+	switch(iCombi)
+	{
+	case NOTHING:{combo->SetCurSel(0); return;}
+	case CTRL:{combo->SetCurSel(0); return;}
+	case SHIFT:{combo->SetCurSel(1); return;}
+	case ALT:{combo->SetCurSel(2); return;}
+	case WIN:{combo->SetCurSel(3); return;}
+
+	default:{combo->SetCurSel(0); return;}
+	}
+	combo->SetCurSel(0); 
+	return;
+}
+
+
+void AutomationInfo::Operate(int iScene)
+{
+	ChangeMouseOrigin(0, 0);
+
+	DWORD dwThreadID;
+	if(g_hThread[iScene] != NULL)
+	{
+		DWORD dwResult;
+		dwResult = WaitForSingleObject(g_hThread[iScene], 0);
+		if(dwResult != STATUS_WAIT_0){return;}
+	}
+	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
+	int iParam[2];
+
+	iParam[1] = m_iLogLevel<<PARAM_LOGLEVEL_SHIFT;
+	iParam[0] = iScene;
+	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
+
+	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
+
+	while(iParam[0]!=0){Sleep(10);}
+	
+}
+LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
+{
+	switch(wParam)
+	{
+	case WM_MOUSEMOVE:
+		{
+			g_iR = ((LPMSLLHOOKSTRUCT)lParam)->pt.y-g_iOriginR;
+			g_iC = ((LPMSLLHOOKSTRUCT)lParam)->pt.x-g_iOriginC;
+			break;
+		}
+	default: break;
+	}
+	return CallNextHookEx(g_hhook, code, wParam, lParam);
 }

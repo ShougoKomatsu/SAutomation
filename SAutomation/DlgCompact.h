@@ -32,4 +32,5 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	CString m_sEditCompactMouseR;
 	CString m_sEditCompactMouseC;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

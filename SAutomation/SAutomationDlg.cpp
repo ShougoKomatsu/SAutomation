@@ -23,13 +23,10 @@
 #define TIMER_WAKE_UP (102)
 #define TIMER_REHOOK (103)
 
-CStdioFile g_cf[MAX_THREAD];
-CString g_sLogFilePath[MAX_THREAD];
-int g_iLogLevel[MAX_THREAD];
+
+
 BOOL g_bCompactBiew;
 
-HWND g_hWnd;
-double g_dSpeedMult=1.0;
 
 // アプリケーションのバージョン情報に使われる CAboutDlg ダイアログ
 
@@ -48,7 +45,6 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -107,7 +103,6 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 
 	ON_WM_SIZE()
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_OPEN_FOLDER, &CSAutomationDlg::OnBnClickedButton0OpenFolder)
-	ON_EN_CHANGE(IDC_MAIN_EDIT_SPEED, &CSAutomationDlg::OnChangeEditSpeed)
 	ON_EN_KILLFOCUS(IDC_MAIN_EDIT_SPEED, &CSAutomationDlg::OnKillfocusEditSpeed)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_MAIN_SLIDER_SPEED, &CSAutomationDlg::OnCustomdrawSliderSpeed)
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_REFRESH_WINDOW_NAME, &CSAutomationDlg::OnBnClickedButton0WindowNameRefresh)
@@ -119,116 +114,8 @@ END_MESSAGE_MAP()
 
 
 // CSAutomationDlg メッセージ ハンドラー
-HHOOK g_hhook=NULL;
-int g_iR=0;
-int g_iC=0;
-int g_iOriginR=0;
-int g_iOriginC=0;
-
-
-HANDLE g_hHotkey[MAX_THREAD];
 BOOL g_iMninizedOnce=FALSE;
 
-LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
-{
-	switch(wParam)
-	{
-	case WM_MOUSEMOVE:
-		{
-			g_iR = ((LPMSLLHOOKSTRUCT)lParam)->pt.y-g_iOriginR;
-			g_iC = ((LPMSLLHOOKSTRUCT)lParam)->pt.x-g_iOriginC;
-			break;
-		}
-	default: break;
-	}
-	return CallNextHookEx(g_hhook, code, wParam, lParam);
-}
-
-
-void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
-{
-	combo->ResetContent();
-	combo->AddString(_T(" "));
-	combo->AddString(_T("Ctrl"));
-	combo->AddString(_T("Shift"));
-	combo->AddString(_T("Alt"));
-	combo->AddString(_T("Win"));
-
-	const int NOTHING = 0;
-	const int CTRL = 1;
-	const int SHIFT = 2;
-	const int ALT = 4;
-	const int WIN = 8;
-
-	int iCombi = NOTHING;
-	int iKeyCount = 0;
-	if(op->bUseCtrl==TRUE){iKeyCount++; iCombi |= CTRL;}
-	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
-	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
-	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
-	
-	if(iKeyCount >= 3){combo->SetCurSel(0); return;}
-	
-	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
-	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
-	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
-
-	switch(iCombi)
-	{
-	case NOTHING:{combo->SetCurSel(0); return;}
-	case CTRL:{combo->SetCurSel(1); return;}
-	case SHIFT:{combo->SetCurSel(2); return;}
-	case ALT:{combo->SetCurSel(3); return;}
-	case WIN:{combo->SetCurSel(4); return;}
-
-	default:{combo->SetCurSel(0); return;}
-	}
-	combo->SetCurSel(0); 
-	return;
-
-}
-
-void SetComboItemShift(CComboBox* combo,OperationInfo* op)
-{
-	combo->ResetContent();
-	combo->AddString(_T(" "));
-	combo->AddString(_T("Shift"));
-	combo->AddString(_T("Alt"));
-	combo->AddString(_T("Win"));
-	
-	const int NOTHING = 0;
-	const int CTRL = 1;
-	const int SHIFT = 2;
-	const int ALT = 4;
-	const int WIN = 8;
-	
-	int iCombi = NOTHING;
-	int iKeyCount = 0;
-	if(op->bUseCtrl==TRUE){iKeyCount++;iCombi |= CTRL;}
-	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
-	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
-	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
-	
-	if(iKeyCount != 2){combo->SetCurSel(0); return;}
-	
-	if((iCombi&CTRL) == CTRL)	{iCombi -= CTRL;}
-	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
-	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
-	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
-	
-	switch(iCombi)
-	{
-	case NOTHING:{combo->SetCurSel(0); return;}
-	case CTRL:{combo->SetCurSel(0); return;}
-	case SHIFT:{combo->SetCurSel(1); return;}
-	case ALT:{combo->SetCurSel(2); return;}
-	case WIN:{combo->SetCurSel(3); return;}
-
-	default:{combo->SetCurSel(0); return;}
-	}
-	combo->SetCurSel(0); 
-	return;
-}
 
 
 
@@ -248,7 +135,15 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	m_bRunningAny=FALSE;
 	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
-		if(g_Automation.m_OpeInfo[iScene].m_bRunning==TRUE){m_bRunningAny=TRUE;if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);}break;}
+		if(g_Automation.m_OpeInfo[iScene].m_bRunning==TRUE)
+		{
+			m_bRunningAny=TRUE;
+			if(m_cDlgCompact.m_hWnd != NULL)
+			{
+				::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);
+			}
+			break;
+		}
 	}
 	
 	
@@ -400,20 +295,12 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if(cf.FindFile(sLogFolderPath) != TRUE){_tmkdir(sLogFolderPath);}
 	if(cf.FindFile(sModelFolderPath) != TRUE){_tmkdir(sModelFolderPath);}
 	g_Automation.ReadSettings();
-	g_dlg=this;
 	SetComboItem(&m_comboEnable,g_Automation.m_sHotkeyEnable);
 
 	m_tabItem.m_iSlot=0;
-	m_tabItem.RefleshDialog();
+	m_tabItem.RefleshDialog(0);
 	g_bCompactBiew=FALSE;
 
-	for(int iScene= 0; iScene<16; iScene++)
-	{
-		m_tabItem.m_sEditStatus[iScene].Format(_T("Stand by"));
-		m_tabItem.m_sEditFileName[iScene].Format(_T("%s"),g_Automation.m_OpeInfo[iScene].sFileName);
-
-	}
-	m_tabItem.RefleshDialog();
 	UpdateData(FALSE);
 	m_tabItem.UpdateData_My(FALSE);
 
@@ -558,33 +445,6 @@ HCURSOR CSAutomationDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIconStandby);
 }
 
-void CSAutomationDlg::OnEnChangeEdit1()
-{
-}
-
-BOOL CSAutomationDlg::MouseMoveAndDisp(DWORD dwMoveDirection, int iDistance)
-{
-	long lMouseX;
-	long lMouseY;
-	lMouseX = g_iC;
-	lMouseY = g_iR;
-	if(dwMoveDirection == VK_LEFT){lMouseX -= iDistance;}
-	if(dwMoveDirection == VK_RIGHT){lMouseX += iDistance;}
-	if(dwMoveDirection == VK_UP){lMouseY -= iDistance;}
-	if(dwMoveDirection == VK_DOWN){lMouseY += iDistance;}
-
-	if(lMouseX<0){lMouseX=0;}
-	if(lMouseY<0){lMouseY=0;}
-	if(lMouseX>=::GetSystemMetrics(SM_CXSCREEN)){lMouseX = ::GetSystemMetrics(SM_CXSCREEN)-1;}
-	if(lMouseY>=::GetSystemMetrics(SM_CXSCREEN)){lMouseY = ::GetSystemMetrics(SM_CYSCREEN)-1;}
-
-	DWORD dwX, dwY;
-	dwX = (lMouseX+1) * 65535/ ::GetSystemMetrics(SM_CXSCREEN);
-	dwY = (lMouseY+1) * 65535/ ::GetSystemMetrics(SM_CYSCREEN);
-	mouse_event(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, dwX, dwY, NULL, NULL);
-
-	return TRUE;
-}
 
 BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 {
@@ -614,7 +474,6 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
-int g_iWatching=0;
 void CSAutomationDlg::RefreshTargetWindowPos()
 {
 	if(g_Automation.m_sTargetWindowName.Compare(_T("Desktop"))==0)
@@ -686,66 +545,40 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 	CDialogEx::OnMouseMove(nFlags, point);
 }
 
-
-void ResetVariable(int iScene)
+void CSAutomationDlg::GetLogLavel(AutomationInfo* autoInfo)
 {
-	for(int i=0; i<MAX_VARIABLES; i++)
+	autoInfo->m_bLog = ((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck();
+	if(autoInfo->m_bLog==0)
 	{
-		g_iVar[iScene][i]=0;
-		g_sVar[iScene][i].Format(_T(""));
-		g_imgRGB[iScene][i].Init();
-		g_point[iScene][i].Set(0,0);
-	}
-	return;
-}
-
-void CSAutomationDlg::Operate(int iScene)
-{
-	UpdateData(TRUE);
-	m_tabItem.UpdateData_My(TRUE);
-	ChangeMouseOrigin(0, 0);
-	m_comboWindowName.SetCurSel(0);
-	UpdateData(FALSE);
-	m_tabItem.UpdateData_My(FALSE);
-
-	DWORD dwThreadID;
-	if(g_hThread[iScene] != NULL)
-	{
-		DWORD dwResult;
-		dwResult = WaitForSingleObject(g_hThread[iScene], 0);
-		if(dwResult != STATUS_WAIT_0){return;}
-	}
-	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
-	int iParam[2];
-	int iChecked;
-	int iLogLevel;
-	iChecked = ((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck();
-	iLogLevel=0;
-	if(iChecked==0)
-	{
-		iLogLevel=0;
+		autoInfo->m_iLogLevel=0;
 	}
 	else
 	{
 		TCHAR tch[32];
 		m_comboLogLevel.GetLBText(m_comboLogLevel.GetCurSel(),tch);
-		if(wcscmp(tch,_T("OnlyCritical"))==0){iLogLevel=1;}
-		if(wcscmp(tch,_T("4"))==0){iLogLevel=2;}
-		if(wcscmp(tch,_T("3"))==0){iLogLevel=3;}
-		if(wcscmp(tch,_T("2"))==0){iLogLevel=4;}
-		if(wcscmp(tch,_T("All"))==0){iLogLevel=5;}
+		if(wcscmp(tch,_T("OnlyCritical"))==0){autoInfo->m_iLogLevel=1;}
+		if(wcscmp(tch,_T("4"))==0){autoInfo->m_iLogLevel=2;}
+		if(wcscmp(tch,_T("3"))==0){autoInfo->m_iLogLevel=3;}
+		if(wcscmp(tch,_T("2"))==0){autoInfo->m_iLogLevel=4;}
+		if(wcscmp(tch,_T("All"))==0){autoInfo->m_iLogLevel=5;}
 	}
+	return;
+}
+void CSAutomationDlg::Operate(int iScene)
+{
+	UpdateData(TRUE);
+	m_tabItem.UpdateData_My(TRUE);
 
-	iParam[1] = iLogLevel<<PARAM_LOGLEVEL_SHIFT;
-	iParam[0] = iScene;
-	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
+	m_comboWindowName.SetCurSel(0);
+	UpdateData(FALSE);
+	m_tabItem.UpdateData_My(FALSE);
 
-	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
+	GetLogLavel(&g_Automation);
 
-	while(iParam[0]!=0){Sleep(10);}
-	
+	g_Automation.Operate(iScene);
+
 	if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,1,0);}
-	
+
 
 	//m_tabItem.m_sEditStatus[iScene].Format(_T("Running"));
 	UpdateData(FALSE);
@@ -784,23 +617,7 @@ BOOL CSAutomationDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 	{
 		autoInfo->m_bAutoMinimize=FALSE;
 	}
-
-	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck()==1)
-	{
-		autoInfo->m_bLog=TRUE;
-	}
-	else
-	{
-		autoInfo->m_bLog=FALSE;
-	}
-
-	m_comboLogLevel.GetLBText(m_comboLogLevel.GetCurSel(),tch); sData.Format(_T("%s"), tch);
-
-	if(wcscmp(tch,_T("OnlyCritical"))==0){g_Automation.m_iLogLevel=1;}
-	if(wcscmp(tch,_T("4"))==0){g_Automation.m_iLogLevel=2;}
-	if(wcscmp(tch,_T("3"))==0){g_Automation.m_iLogLevel=3;}
-	if(wcscmp(tch,_T("2"))==0){g_Automation.m_iLogLevel=4;}
-	if(wcscmp(tch,_T("All"))==0){g_Automation.m_iLogLevel=5;}
+	GetLogLavel(autoInfo);
 
 	return TRUE;
 }
@@ -905,11 +722,6 @@ void CSAutomationDlg::OnBnClickedButton0OpenFolder()
 }
 
 
-void CSAutomationDlg::OnChangeEditSpeed()
-{
-
-}
-
 
 
 void CSAutomationDlg::OnKillfocusEditSpeed()
@@ -938,13 +750,6 @@ void CSAutomationDlg::OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult)
 	UpdateData(FALSE);
 	*pResult = 0;
 }
-
-
-void CSAutomationDlg::OnBnClickedButton0Confing()
-{
-	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-}
-
 
 
 void CSAutomationDlg::WindowNameRefresh()
@@ -980,12 +785,6 @@ void CSAutomationDlg::OnSelchangeWindowName()
 	return;
 }
 
-BOOL CAboutDlg::PreTranslateMessage(MSG* pMsg)
-{
-	// TODO: ここに特定なコードを追加するか、もしくは基本クラスを呼び出してください。
-
-	return CDialogEx::PreTranslateMessage(pMsg);
-}
 
 
 void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
@@ -993,7 +792,7 @@ void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult
 	int itab = m_tab.GetCurSel();
 
 	m_tabItem.m_iSlot=itab;
-	m_tabItem.RefleshDialog();
+	m_tabItem.RefleshDialog(itab);
 	*pResult = 0;
 }
 
@@ -1025,6 +824,5 @@ BOOL CSAutomationDlg::ReHookWindowsHook()
 
 void CSAutomationDlg::OnBnClickedOk()
 {
-	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 	CDialogEx::OnOK();
 }

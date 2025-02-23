@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 
-#include "Automation.h"
+#include "common.h"
 
 #define COMMAND_MOUSE_MOVE (COMMAND_MOUSE+1)
 #define COMMAND_MOUSE_L_DOWN (COMMAND_MOUSE+2)

@@ -1,6 +1,20 @@
+#pragma once
 #include "stdafx.h"
 
-#pragma once
+
+//#include "MouseAutomation.h"
+extern HHOOK g_hhook;
+
+extern int g_iR;
+extern int g_iC;
+extern int g_iOriginR;
+extern int g_iOriginC;
+extern HWND g_hWnd;
+extern double g_dSpeedMult;
+
+extern int g_iWatching;
+
+
 extern int g_iClickDulation;
 extern CString g_sDir;
 #define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_cf[iScene].WriteString(sWrite);}}
@@ -8,6 +22,8 @@ extern CString g_sDir;
 #define LOG_OUTPUT_POINT(iScene, sArg, pPoint) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = (%d, %d)> "),sArg.Left(8), (pPoint==NULL ? 0 : pPoint->r), (pPoint == NULL ? 0 : pPoint->c)); g_cf[iScene].WriteString(sWrite);}}
 
 
+
+LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam);
 BOOL GetFileName(CString sFilePath, CString* sFileName);
 
 
@@ -74,6 +90,7 @@ void SetComboItem(CComboBox* combo, CString sHotkey);
 class AutomationInfo
 {
 public:
+	void Operate(int iScene);
 	AutomationInfo(){}
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;

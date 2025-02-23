@@ -8,9 +8,9 @@ class CTabItem : public CDialogEx
 	DECLARE_DYNAMIC(CTabItem)
 	
 public:
-	void RefleshDialog();
-	void FileSelect(int iScene);
-	void CTabItem::UpdateHotkey(int iScene);
+	void RefleshDialog(int iSlot);
+	void FileSelect(int iSlot, int iScene);
+	void CTabItem::UpdateHotkey(int iSlot, int iScene);
 	int m_iSlot;
 	class CSAutomationDlg* pParent;
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター

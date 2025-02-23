@@ -9,7 +9,6 @@
 #include "Variables.h"
 #include "InputDialog.h"
 
-CSAutomationDlg* g_dlg;
 
 
 

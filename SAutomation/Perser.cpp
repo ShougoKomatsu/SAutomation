@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Perser.h"
 
+#include "Automation.h"
 #include "stdafx.h"
 #include "MouseAutomation.h"
 
