@@ -3,6 +3,7 @@
 
 
 //#include "MouseAutomation.h"
+extern HHOOK g_hhook;
 
 
 extern int g_iClickDulation;
@@ -12,6 +13,8 @@ extern CString g_sDir;
 #define LOG_OUTPUT_POINT(iScene, sArg, pPoint) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = (%d, %d)> "),sArg.Left(8), (pPoint==NULL ? 0 : pPoint->r), (pPoint == NULL ? 0 : pPoint->c)); g_cf[iScene].WriteString(sWrite);}}
 
 
+
+LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam);
 BOOL GetFileName(CString sFilePath, CString* sFileName);
 
 

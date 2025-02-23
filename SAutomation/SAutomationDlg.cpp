@@ -120,7 +120,6 @@ END_MESSAGE_MAP()
 
 
 // CSAutomationDlg メッセージ ハンドラー
-HHOOK g_hhook=NULL;
 int g_iR=0;
 int g_iC=0;
 int g_iOriginR=0;
@@ -130,20 +129,6 @@ int g_iOriginC=0;
 HANDLE g_hHotkey[MAX_THREAD];
 BOOL g_iMninizedOnce=FALSE;
 
-LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
-{
-	switch(wParam)
-	{
-	case WM_MOUSEMOVE:
-		{
-			g_iR = ((LPMSLLHOOKSTRUCT)lParam)->pt.y-g_iOriginR;
-			g_iC = ((LPMSLLHOOKSTRUCT)lParam)->pt.x-g_iOriginC;
-			break;
-		}
-	default: break;
-	}
-	return CallNextHookEx(g_hhook, code, wParam, lParam);
-}
 
 
 
