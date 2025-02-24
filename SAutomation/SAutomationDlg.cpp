@@ -146,7 +146,6 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 		}
 	}
 	
-	
 	if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,0,0);}
 	if(m_bRunningAny==FALSE){ChangeIcon(IDI_ICON_STANDBY);}
 
