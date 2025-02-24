@@ -163,6 +163,7 @@ public:
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonOpenCompact();
 	afx_msg void OnBnClickedOk();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
