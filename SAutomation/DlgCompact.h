@@ -33,4 +33,5 @@ public:
 	CString m_sEditCompactMouseR;
 	CString m_sEditCompactMouseC;
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedCompactButtonMinimize();
 };
