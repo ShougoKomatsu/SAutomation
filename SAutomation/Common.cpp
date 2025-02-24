@@ -444,9 +444,8 @@ void AutomationInfo::Operate(int iScene)
 	}
 	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
 	int iParam[2];
-
 	iParam[1] = m_iLogLevel<<PARAM_LOGLEVEL_SHIFT;
-	iParam[0] = iScene;
+	iParam[0] = iScene+1;
 	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
 
 	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);

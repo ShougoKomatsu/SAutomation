@@ -146,7 +146,6 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 		}
 	}
 	
-	
 	if(m_cDlgCompact.m_hWnd != NULL){::PostMessage(m_cDlgCompact.m_hWnd,WM_DISP_STANDBY,0,0);}
 	if(m_bRunningAny==FALSE){ChangeIcon(IDI_ICON_STANDBY);}
 
@@ -708,8 +707,11 @@ void CSAutomationDlg::ToggleEnable()
 
 void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
 {
+	if(nType==0)
+	{
+		if(g_bCompactBiew==TRUE){ChangeToCompact();return;}
+	}
 	CDialogEx::OnSize(nType, cx, cy);
-
 
 }
 
@@ -798,7 +800,7 @@ void CSAutomationDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult
 
 void CSAutomationDlg::ChangeToCompact()
 {
-	if(m_cDlgCompact.m_hWnd!=NULL){return;}
+	if(m_cDlgCompact.m_hWnd!=NULL){ShowWindow(SW_HIDE);return;}
 	ShowWindow(SW_HIDE);
 
 	m_cDlgCompact.pParent=this;
@@ -818,7 +820,7 @@ BOOL CSAutomationDlg::ReHookWindowsHook()
 	if(g_hhook != NULL){UnhookWindowsHookEx(g_hhook);}
 	Sleep(100);
 	g_hhook=SetWindowsHookEx(WH_MOUSE_LL,(HOOKPROC)MouseHookProc,NULL ,0);
-	if(g_hhook == NULL){CString sss; sss.Format(_T("SetWindowsHookEx failed %d"), GetLastError()); AfxMessageBox(sss); return FALSE;}
+	if(g_hhook == NULL){return FALSE;}
 	return TRUE;
 }
 
