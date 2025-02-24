@@ -39,6 +39,8 @@ BEGIN_MESSAGE_MAP(CDlgCompact, CDialogEx)
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_EXIT, &CDlgCompact::OnBnClickedButtonCompactExit)
 	ON_WM_TIMER()
 	ON_MESSAGE(WM_DISP_STANDBY, &CDlgCompact::OnDispStandby)
+	ON_BN_CLICKED(IDC_COMPACT_BUTTON_MINIMIZE, &CDlgCompact::OnBnClickedCompactButtonMinimize)
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 
@@ -129,8 +131,23 @@ BOOL CDlgCompact::PreTranslateMessage(MSG* pMsg)
 	if(pMsg->message == WM_KEYDOWN)
 	{
 		if(pMsg->wParam == VK_RETURN){return TRUE;}
-		if(pMsg->wParam == VK_ESCAPE){pParent->ShowWindow(SW_MINIMIZE);return TRUE;}
+		if(pMsg->wParam == VK_ESCAPE){return TRUE;}
 		if(pMsg->wParam == VK_SPACE){return TRUE;}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CDlgCompact::OnBnClickedCompactButtonMinimize()
+{
+	pParent->ShowWindow(SW_MINIMIZE);
+}
+
+
+int CDlgCompact::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialogEx::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	return 0;
 }

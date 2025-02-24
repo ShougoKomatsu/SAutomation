@@ -110,6 +110,7 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_COMPACT_TAB_OPERATION, &CSAutomationDlg::OnTcnSelchangeTabOperation)
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_OPEN_COMPACT, &CSAutomationDlg::OnBnClickedButtonOpenCompact)
 	ON_BN_CLICKED(IDOK, &CSAutomationDlg::OnBnClickedOk)
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 
@@ -215,8 +216,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
-
-
 	DWORD dwCurrentProcessId = GetCurrentProcessId();
 	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwCurrentProcessId);
 	TCHAR szModuleName[MAX_PATH];
@@ -435,6 +434,7 @@ void CSAutomationDlg::OnPaint()
 	{
 		CDialogEx::OnPaint();
 	}
+
 }
 
 // ユーザーが最小化したウィンドウをドラッグしているときに表示するカーソルを取得するために、
@@ -827,4 +827,19 @@ BOOL CSAutomationDlg::ReHookWindowsHook()
 void CSAutomationDlg::OnBnClickedOk()
 {
 	CDialogEx::OnOK();
+}
+
+
+int CSAutomationDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialogEx::OnCreate(lpCreateStruct) == -1)
+		return -1;
+		   CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        pSysMenu->DeleteMenu(SC_CLOSE, MF_BYCOMMAND);
+    }
+
+
+	return 0;
 }
