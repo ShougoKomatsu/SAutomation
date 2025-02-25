@@ -20,11 +20,17 @@ CDlgCompact::CDlgCompact(CWnd* pParent /*=NULL*/)
 {
 	m_hIconStandby = AfxGetApp()->LoadIcon(IDI_ICON_STANDBY);
 	m_hIconRunning = AfxGetApp()->LoadIcon(IDI_ICON_RUNNING);
+	m_hIconMinimize = AfxGetApp()->LoadIcon(IDI_ICON_MINIMIZE);
+	m_hIconClose = AfxGetApp()->LoadIcon(IDI_ICON_CLOSE);
 
 }
 
 CDlgCompact::~CDlgCompact()
 {
+DestroyIcon(m_hIconStandby);
+DestroyIcon(m_hIconRunning);
+DestroyIcon(m_hIconMinimize);
+DestroyIcon(m_hIconClose);
 }
 
 void CDlgCompact::DoDataExchange(CDataExchange* pDX)
@@ -32,6 +38,8 @@ void CDlgCompact::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_COMPACT_EDIT_MOUSE_R, m_sEditCompactMouseR);
 	DDX_Text(pDX, IDC_COMPACT_EDIT_MOUSE_C, m_sEditCompactMouseC);
+	DDX_Control(pDX, IDC_COMPACT_BUTTON_MINIMIZE, m_ButtonMinimize);
+	DDX_Control(pDX, IDC_COMPACT_BUTTON_CLOSE, m_ButtonClose);
 }
 
 
@@ -41,6 +49,7 @@ BEGIN_MESSAGE_MAP(CDlgCompact, CDialogEx)
 	ON_MESSAGE(WM_DISP_STANDBY, &CDlgCompact::OnDispStandby)
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_MINIMIZE, &CDlgCompact::OnBnClickedCompactButtonMinimize)
 	ON_WM_CREATE()
+	ON_BN_CLICKED(IDC_COMPACT_BUTTON_CLOSE, &CDlgCompact::OnBnClickedCompactButtonClose)
 END_MESSAGE_MAP()
 
 
@@ -62,10 +71,10 @@ BOOL CDlgCompact::OnInitDialog()
 	GetWindowRect(&rectDlg);
 	SetWindowText(_T("SAutomation"));
 	MoveWindow(rectDisp.Width()-rectDlg.Width(), rectDisp.Height()-rectDlg.Height(),rectDlg.Width(),rectDlg.Height());
-
+	m_ButtonMinimize.SetIcon(m_hIconMinimize);
+	m_ButtonClose.SetIcon(m_hIconClose);
 	::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
-		
-	SetIcon(m_hIconStandby, TRUE);
+	SetIcon(m_hIconStandby, FALSE);
 	SetIcon(m_hIconStandby, FALSE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
@@ -150,4 +159,10 @@ int CDlgCompact::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	return 0;
+}
+
+
+void CDlgCompact::OnBnClickedCompactButtonClose()
+{
+	CDialog::EndDialog(2);
 }

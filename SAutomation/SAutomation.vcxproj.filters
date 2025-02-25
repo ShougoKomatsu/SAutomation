@@ -28,6 +28,12 @@
     <None Include="res\ico00001.ico">
       <Filter>ヘッダー ファイル\リソース ファイル</Filter>
     </None>
+    <None Include="res\ico00002.ico">
+      <Filter>ヘッダー ファイル\リソース ファイル</Filter>
+    </None>
+    <None Include="res\icon2.ico">
+      <Filter>ヘッダー ファイル\リソース ファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SAutomation.h">

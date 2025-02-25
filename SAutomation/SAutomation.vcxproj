@@ -99,7 +99,9 @@
   <ItemGroup>
     <None Include="ReadMe.txt" />
     <None Include="res\ico00001.ico" />
+    <None Include="res\ico00002.ico" />
     <None Include="res\icon1.ico" />
+    <None Include="res\icon2.ico" />
     <None Include="res\SAutomation.ico" />
     <None Include="res\SAutomation.rc2" />
   </ItemGroup>

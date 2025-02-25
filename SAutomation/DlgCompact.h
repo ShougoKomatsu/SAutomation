@@ -22,6 +22,8 @@ BOOL ChangeIcon(int iIcon);
 protected:
 	HICON m_hIconStandby;
 	HICON m_hIconRunning;
+	HICON m_hIconMinimize;
+	HICON m_hIconClose;
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV サポート
 
 	DECLARE_MESSAGE_MAP()
@@ -35,4 +37,7 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnBnClickedCompactButtonMinimize();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	CButton m_ButtonMinimize;
+	afx_msg void OnBnClickedCompactButtonClose();
+	CButton m_ButtonClose;
 };

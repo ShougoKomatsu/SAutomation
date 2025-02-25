@@ -832,14 +832,7 @@ void CSAutomationDlg::OnBnClickedOk()
 
 int CSAutomationDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CDialogEx::OnCreate(lpCreateStruct) == -1)
-		return -1;
-		   CMenu* pSysMenu = GetSystemMenu(FALSE);
-    if (pSysMenu != NULL)
-    {
-        pSysMenu->DeleteMenu(SC_CLOSE, MF_BYCOMMAND);
-    }
-
+	if (CDialogEx::OnCreate(lpCreateStruct) == -1){return -1;}
 
 	return 0;
 }
