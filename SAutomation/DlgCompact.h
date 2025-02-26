@@ -5,9 +5,17 @@
 
 // CDlgCompact ダイアログ
 
+
 class CDlgCompact : public CDialogEx
 {
 	DECLARE_DYNAMIC(CDlgCompact)
+
+	BOOL m_bMoving;
+	BOOL m_iX;
+	BOOL m_iY;
+
+	void WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo);
+
 
 public:
 	CDlgCompact(CWnd* pParent = NULL);   // 標準コンストラクター
@@ -40,4 +48,7 @@ public:
 	CButton m_ButtonMinimize;
 	afx_msg void OnBnClickedCompactButtonClose();
 	CButton m_ButtonClose;
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };

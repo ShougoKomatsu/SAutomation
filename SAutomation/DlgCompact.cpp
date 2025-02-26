@@ -50,6 +50,9 @@ BEGIN_MESSAGE_MAP(CDlgCompact, CDialogEx)
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_MINIMIZE, &CDlgCompact::OnBnClickedCompactButtonMinimize)
 	ON_WM_CREATE()
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_CLOSE, &CDlgCompact::OnBnClickedCompactButtonClose)
+	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -83,9 +86,18 @@ BOOL CDlgCompact::OnInitDialog()
 
 void CDlgCompact::OnTimer(UINT_PTR nIDEvent)
 {
-	
 	if(nIDEvent == TIMER_COMPACT_DISP_MOUSPOS)
 	{
+		if(m_bMoving==TRUE)
+		{
+			CPoint point;		
+			GetCursorPos(&point);
+
+			CRect rect;
+			GetWindowRect(&rect);
+
+			WinodowMove(m_iX, m_iY,point.x-rect.left, point.y-rect.top);
+		}
 		UpdateData(TRUE);
 		m_sEditCompactMouseR.Format(_T("%d"),g_iR);
 		m_sEditCompactMouseC.Format(_T("%d"),g_iC);
@@ -165,4 +177,38 @@ int CDlgCompact::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CDlgCompact::OnBnClickedCompactButtonClose()
 {
 	CDialog::EndDialog(2);
+}
+
+
+void CDlgCompact::OnLButtonDown(UINT nFlags, CPoint point)
+{
+
+	m_iX=point.x;
+	m_iY=point.y;
+	m_bMoving=TRUE;
+	CDialogEx::OnLButtonDown(nFlags, point);
+}
+
+
+void CDlgCompact::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	
+	m_bMoving=FALSE;
+	CDialogEx::OnLButtonUp(nFlags, point);
+}
+
+	void CDlgCompact::WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo)
+	{
+		CRect rect;
+		GetWindowRect(&rect);
+		MoveWindow(rect.left+ixTo-ixFrom, rect.top+iyTo-iyFrom,rect.Width(), rect.Height());
+	}
+
+void CDlgCompact::OnMouseMove(UINT nFlags, CPoint point)
+{
+	if(m_bMoving==TRUE)
+	{
+		WinodowMove(m_iX, m_iY, point.x,point.y);
+	}
+	CDialogEx::OnMouseMove(nFlags, point);
 }
