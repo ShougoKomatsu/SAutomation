@@ -106,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="Automation.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="DlgCompact.h" />
     <ClInclude Include="FlowManager.h" />
     <ClInclude Include="ImgProc.h" />
     <ClInclude Include="InputDialog.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="SAutomation.h" />
     <ClInclude Include="SAutomationDlg.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TabItem.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Variables.h" />
@@ -123,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="Automation.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="DlgCompact.cpp" />
     <ClCompile Include="FlowManager.cpp" />
     <ClCompile Include="ImgProc.cpp" />
     <ClCompile Include="InputDialog.cpp" />
@@ -134,6 +137,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TabItem.cpp" />
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="Variables.cpp" />
     <ClCompile Include="Window.cpp" />

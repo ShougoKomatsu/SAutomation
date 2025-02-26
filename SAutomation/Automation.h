@@ -1,3 +1,5 @@
+
+#pragma once
 #include "stdafx.h"	
 #include "Common.h"
 #include "Perser.h"
@@ -29,6 +31,8 @@
 #define COMMAND_INPUT (COMMAND_COMMON + 17)
 #define COMMAND_WAIT_KEY (COMMAND_COMMON + 18)
 #define COMMAND_MESSAGEBOX (COMMAND_COMMON + 19)
+#define COMMAND_LIST_DLG_ITEMS (COMMAND_COMMON + 20)
+#define COMMAND_GET_DLG_ITEM (COMMAND_COMMON + 21)
 
 #define COMMAND_EXIT (COMMAND_FLOW +1)
 #define COMMAND_LABEL (COMMAND_FLOW +2)

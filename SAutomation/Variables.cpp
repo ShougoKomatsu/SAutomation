@@ -35,6 +35,7 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 	if(sDataTrim.Left(20).CompareNoCase(_T("ForegroundWindowName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_NAME; return TRUE;}
+	if(sDataTrim.Left(25).CompareNoCase(_T("ForegroundWindowClassName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_CLASS_NAME; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
@@ -59,6 +60,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("SubInt"))==0){*iCommandType=VARIABLE_SUB_INT; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("MultInt"))==0){*iCommandType=VARIABLE_MULT_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_DLG_ITEM; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
@@ -112,6 +114,8 @@ BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
 	}
 	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
 
 	return RETURN_FAILED;
 }
@@ -331,10 +335,23 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData.Add(sArg);
 			saData.Add(_T("-1"));
-			g_dlg->cInput.m_bInputMulti=TRUE;
-			g_dlg->cInput.m_saParam.Copy(saData);
-			g_dlg->	cInput.DoModal();
-			return _ttoi(g_dlg->cInput.m_sReturnValue);
+			g_cInput.m_bInputMulti=TRUE;
+			g_cInput.m_saParam.Copy(saData);
+			g_cInput.DoModal();
+			return _ttoi(g_cInput.m_sReturnValue);
+		}
+	case VARIABLE_DLG_ITEM:
+		{
+			CString sText;
+			int iRank;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()<=0){iRank=0;}
+			else{iRank=GetIntValue(iScene,sArg);}
+			
+			return GetDlgItem_My(sText, iRank);
 		}
 	default:
 		{
@@ -403,14 +420,18 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData.Add(sArg);
 			saData.Add(_T("-1"));
-			g_dlg->cInput.m_bInputMulti=TRUE;
-			g_dlg->cInput.m_saParam.Copy(saData);
-			g_dlg->	cInput.DoModal();
-			return g_dlg->cInput.m_sReturnValue;
+			g_cInput.m_bInputMulti=TRUE;
+			g_cInput.m_saParam.Copy(saData);
+			g_cInput.DoModal();
+			return g_cInput.m_sReturnValue;
 		}
 	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			return GetForegroundWindowName();
+		}
+	case VARIABLE_FOREGROUND_WINDOW_CLASS_NAME:
+		{
+			return GetForegroundWindowClassName();
 		}
 	case VARIABLE_STR_LEFT:
 		{
@@ -1032,16 +1053,21 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData.Add(sArg);
 			saData.Add(_T("-1"));
-			g_dlg->cInput.m_bInputMulti=TRUE;
-			g_dlg->cInput.m_saParam.Copy(saData);
-			g_dlg->	cInput.DoModal();
-			sDstPointer->Format(_T("%s"), g_dlg->cInput.m_sReturnValue); 
+			g_cInput.m_bInputMulti=TRUE;
+			g_cInput.m_saParam.Copy(saData);
+			g_cInput.DoModal();
+			sDstPointer->Format(_T("%s"), g_cInput.m_sReturnValue); 
 			return RETURN_NORMAL;
 		}
 		
 	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			sDstPointer->Format(_T("%s"), GetForegroundWindowName()); 
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_FOREGROUND_WINDOW_CLASS_NAME:
+		{
+			sDstPointer->Format(_T("%s"), GetForegroundWindowClassName()); 
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_STR_LEFT:
@@ -1457,12 +1483,32 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 
 
 			AreaCenter(objSrc, dA, dR, dC, iLength);
-			
+
 			pPoint->Set(dR[0], dC[0]);
 
 			delete [] dA;
 			delete [] dR;
 			delete [] dC;
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_POINT_FOREGROUND_WINDOW_LU:
+		{
+			int iLeft;
+			int iTop; 
+			int iWidth;
+			int iHeight;
+			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
+			pPoint->Set(iLeft,iTop);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_POINT_FOREGROUND_WINDOW_RD:
+		{
+			int iLeft;
+			int iTop; 
+			int iWidth;
+			int iHeight;
+			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
+			pPoint->Set(iLeft+iWidth-1,iTop+iHeight-1);
 			return RETURN_NORMAL;
 		}
 	}
@@ -1526,7 +1572,7 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 	return RETURN_FAILED;
 }
 
-ReturnValue MessageBox(int iScene, CStringArray* saData)
+ReturnValue MessageBox_My(int iScene, CStringArray* saData)
 {
 
 	CString sMes;

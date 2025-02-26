@@ -9,7 +9,6 @@
 #include "Variables.h"
 #include "InputDialog.h"
 
-CSAutomationDlg* g_dlg;
 
 
 
@@ -170,10 +169,10 @@ ReturnValue KeyUp(BYTE bySendKey)
 
 ReturnValue GetInput(CStringArray* saData, CString* sReturnParam)
 {
-	g_dlg->cInput.m_saParam.Copy(*saData);
-	g_dlg->cInput.m_bInputMulti=TRUE;
-	g_dlg->	cInput.DoModal();
-	sReturnParam->Format(_T("%s"), g_dlg->cInput.m_sResultLabel);
+	g_cInput.m_saParam.Copy(*saData);
+	g_cInput.m_bInputMulti=TRUE;
+	g_cInput.DoModal();
+	sReturnParam->Format(_T("%s"), g_cInput.m_sResultLabel);
 	return RETURN_GOTO_BY_SWITCH;
 }
 
@@ -705,6 +704,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(*iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(*iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(*iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(*iSceneData, &saData);}
 
 	case COMMAND_WHEEL:{return MouseVWheel(*iSceneData, &saData);}
 
@@ -789,7 +789,11 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		}
 	case COMMAND_MESSAGEBOX:
 		{
-			return MessageBox(*iSceneData, &saData);
+			return MessageBox_My(*iSceneData, &saData);
+		}
+	case COMMAND_LIST_DLG_ITEMS:
+		{
+			return ListDlgItems();
 		}
 	default:{return RETURN_FAILED;}
 	}

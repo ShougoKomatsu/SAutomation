@@ -240,3 +240,128 @@ const CString GetForegroundWindowName()
 	sWindowName.Format(_T("%s"), wszWindowName);
 	return sWindowName;
 }
+
+const CString GetForegroundWindowClassName()
+{
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd==NULL){return _T("");}
+
+	WCHAR wszWindowName[MAX_PATH];
+	GetClassName(hwnd,wszWindowName,MAX_PATH);
+	
+	CString sWindowName;
+	sWindowName.Format(_T("%s"), wszWindowName);
+	return sWindowName;
+}
+
+BOOL GetWindowRect_My(UINT iID, CRect* rect)
+{
+	
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd == NULL){return FALSE;}
+	HWND hwnd_item;
+	hwnd_item=GetDlgItem(hwnd, iID);
+	if(hwnd_item == NULL){return FALSE;}
+	
+
+	return GetWindowRect(hwnd_item, rect);;
+}
+
+
+BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam);
+
+#define MAX_CTRL_NUM (1024)
+HWND g_hCtrlHandles[MAX_CTRL_NUM];
+
+BOOL CALLBACK EnumChildProc( HWND hWnd, LPARAM lParam )
+{
+	TCHAR   tch[ 1024 ];
+	int  iCount = *(int*)lParam;
+
+	if(iCount>=MAX_CTRL_NUM){return FALSE;}
+
+	GetWindowText( hWnd, tch, sizeof(tch) ); 
+	if(_tcslen(tch)<=0){return TRUE;}
+
+	g_hCtrlHandles[iCount]=hWnd;
+	*(int*)lParam = iCount+1;
+	return TRUE;
+}
+
+
+ReturnValue ListDlgItems()
+{
+	CString sMes;
+	BOOL bRet;
+	int iCommandType;
+	HWND hwnd;
+	TCHAR tch[MAX_PATH];
+	hwnd=GetForegroundWindow();
+	int iListLength;
+	iListLength=0;
+	sMes.Format(_T(""));
+
+	int iCount = 0;
+	EnumChildWindows( hwnd, EnumChildProc, (LPARAM)&iCount );
+
+	for(int i=0; i<iCount; i++)
+	{
+		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
+		int iID = GetDlgCtrlID(g_hCtrlHandles[i]);
+		if(uiRet<=0){continue;}
+		if(_tcslen(tch)<=0){continue;}
+
+		if(sMes.GetLength()>0)
+		{
+			sMes.Format(_T("%s\n%d: %s"),sMes, iID, tch);
+		}
+		else
+		{
+			sMes.Format(_T("%d: %s"), iID, tch);
+		}
+		iListLength++;
+		if(iListLength>=10)
+		{
+			AfxMessageBox(sMes);
+			iListLength=0;
+			sMes.Format(_T(""));
+		}
+	}
+	if(iListLength>0)
+	{
+		AfxMessageBox(sMes);
+	}
+
+	return RETURN_NORMAL;
+}
+int GetDlgItem_My(CString sText, int iRank)
+{
+	HWND hwnd = GetForegroundWindow();
+	if(hwnd==NULL){return 0;}
+	
+	TCHAR tch[MAX_PATH];
+	int iRankLocal=0;
+	int iRankNow=0;
+
+	if(iRank<=0){iRankLocal=0;}
+	else{iRankLocal=iRank;}
+	
+	int iCount = 0;
+	EnumChildWindows( hwnd, EnumChildProc, (LPARAM)&iCount );
+
+	for(UINT i=0; i<iCount; i++)
+	{
+		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
+		if(uiRet<=0){continue;}
+		if(_tcslen(tch)<=0){continue;}
+		CString sTemp;
+		sTemp.Format(_T("%s"), tch);
+
+		if(sTemp.Compare(sText)==0)
+		{
+			if(iRankNow==iRankLocal){return GetDlgCtrlID(g_hCtrlHandles[i]);}
+			iRankNow++;
+		}
+	}
+	return 0;
+}

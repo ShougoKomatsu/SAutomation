@@ -1,3 +1,4 @@
+#pragma once
 #include "stdafx.h"
 
 #include "ImgProc.h"
@@ -22,5 +23,10 @@ BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch = T
 
 
 const CString GetForegroundWindowName();
+const CString GetForegroundWindowClassName();
+
 
 BOOL GetForegroundWindowPos(int* iLeft, int* iTop, int* iWidth, int* iHeight);
+int GetDlgItem_My(CString sText, int iRank);
+BOOL GetWindowRect_My(UINT iID, CRect* rect);
+ReturnValue ListDlgItems();

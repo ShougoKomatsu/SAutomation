@@ -1,6 +1,7 @@
+#pragma once
 #include "stdafx.h"
 #include "thread.h"
-#pragma once
+
 
 #define MAX_LEVEL (1024)
 extern int g_iNowLevel[MAX_THREAD];

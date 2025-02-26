@@ -86,14 +86,15 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	CStringArray saCommands;
 	CString sErrorGotoLable;
 
-	int iData;
-	iData = *((int*)arg);
-	(*(int*)arg) = 0;  
+	int iData[2];
+	iData[0] = ((int*)arg)[0];
+	iData[1] = ((int*)arg)[1];
+	((int*)arg)[0] = 0;  
+	((int*)arg)[1] = 0;  
 
 	int iScene;
-	iScene = (iData>>PARAM_SCENE_SHIFT)&PARAM_SCENE_MASK;
+	iScene = ((iData[0]-1)>>PARAM_SCENE_SHIFT)&PARAM_SCENE_MASK;
 	BOOL bRet;
-
 	bRet = ReadTextFile(g_sFilePath[iScene],&saCommands);
 	if(bRet != TRUE)
 	{
@@ -115,7 +116,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		g_imgRGB[iScene][i].Init();
 	}
 
-	g_iLogLevel[iScene] = (iData>>PARAM_LOGLEVEL_SHIFT)&PARAM_LOGLEVEL_MASK;
+	g_iLogLevel[iScene] = (iData[1]>>PARAM_LOGLEVEL_SHIFT)&PARAM_LOGLEVEL_MASK;
 
 	ErrTreatValue iErrorTreat;
 	iErrorTreat = ERROR_TREAT_END;

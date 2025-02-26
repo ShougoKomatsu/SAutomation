@@ -3,7 +3,6 @@
 #include "Window.h"
 #include "ImgProc.h"
 #include "Variables.h"
-int g_iClickDulation = 50;
 
 
 ReturnValue MouseVWheel(int iWheel)
@@ -49,8 +48,13 @@ ReturnValue MouseMUp(UINT nX, UINT nY){return MouseMUpAbs(nX + g_iOriginC, nY + 
 
 ReturnValue MoveMouse(int iScene, CStringArray* saData)
 {
-	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	if(saData->GetCount()==1)
 	{
+		if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))!=0)
+		{
+			return RETURN_FAILED;
+		}
+
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
 		Point* p(GetPointValuePointer(iScene,sArg));
@@ -59,6 +63,7 @@ ReturnValue MoveMouse(int iScene, CStringArray* saData)
 	}
 	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+
 	return MoveMouse(iSrc1, iSrc2);
 }
 
@@ -332,6 +337,20 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 }
 
 
+ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()<=0){return RETURN_FAILED;}
+	
+	int iItem = GetIntValue(iScene, saData->GetAt(0));
+	CRect rect;
+	GetWindowRect_My(iItem,&rect);
+
+	
+	MoveMouseAbs((rect.left+rect.right)/2, (rect.top+rect.bottom)/2);
+
+	return RETURN_NORMAL;
+
+}
 
 ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 {
