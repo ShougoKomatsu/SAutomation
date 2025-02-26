@@ -22,7 +22,10 @@ CDlgCompact::CDlgCompact(CWnd* pParent /*=NULL*/)
 	m_hIconRunning = AfxGetApp()->LoadIcon(IDI_ICON_RUNNING);
 	m_hIconMinimize = AfxGetApp()->LoadIcon(IDI_ICON_MINIMIZE);
 	m_hIconClose = AfxGetApp()->LoadIcon(IDI_ICON_CLOSE);
-
+	
+	m_brRed.CreateSolidBrush(RGB(255,75,0));
+	m_brGreen.CreateSolidBrush(RGB(64, 255, 89));
+	m_brBlack.CreateSolidBrush(RGB(0,0,0));
 }
 
 CDlgCompact::~CDlgCompact()
@@ -53,6 +56,8 @@ BEGIN_MESSAGE_MAP(CDlgCompact, CDialogEx)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
+	ON_WM_PAINT()
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -113,6 +118,7 @@ BOOL CDlgCompact::ChangeIcon(int iIcon)
 	{
 	case IDI_ICON_STANDBY:
 		{
+
 			SetIcon(m_hIconStandby, TRUE);
 			SetIcon(m_hIconStandby, FALSE);	
 			break;
@@ -137,10 +143,14 @@ LRESULT CDlgCompact::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	if(wParam==0)
 	{
 		ChangeIcon(IDI_ICON_STANDBY);
+		m_bRunning=FALSE;
+	Invalidate();
 	}
 	else
 	{
 		ChangeIcon(IDI_ICON_RUNNING);
+		m_bRunning=TRUE;
+	Invalidate();
 	}
 
 	return 0;
@@ -182,7 +192,6 @@ void CDlgCompact::OnBnClickedCompactButtonClose()
 
 void CDlgCompact::OnLButtonDown(UINT nFlags, CPoint point)
 {
-
 	m_iX=point.x;
 	m_iY=point.y;
 	m_bMoving=TRUE;
@@ -211,4 +220,67 @@ void CDlgCompact::OnMouseMove(UINT nFlags, CPoint point)
 		WinodowMove(m_iX, m_iY, point.x,point.y);
 	}
 	CDialogEx::OnMouseMove(nFlags, point);
+}
+
+
+void CDlgCompact::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+
+	CBrush* pOldBrush;
+	if(m_bRunning==TRUE)
+	{
+		pOldBrush = dc.SelectObject(&m_brGreen);
+		dc.Rectangle(2,2,2+16,2+16);
+		dc.SelectObject(pOldBrush);
+
+		pOldBrush = dc.SelectObject(&m_brBlack);
+		dc.Rectangle(2+16,2,2+16+16,2+16);
+		dc.SelectObject(pOldBrush);
+	}
+	else
+	{
+		CBrush* pOldBrush = dc.SelectObject(&m_brBlack);
+		dc.Rectangle(2,2,2+16,2+16);
+		dc.SelectObject(pOldBrush);
+
+		pOldBrush = dc.SelectObject(&m_brRed);
+		dc.Rectangle(2+16,2,2+16+16,2+16);
+		dc.SelectObject(pOldBrush);
+	}
+
+}
+
+
+HBRUSH CDlgCompact::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+	int id = pWnd->GetDlgCtrlID();
+
+	/*
+	if (id == IDC_STATIC_RUN)
+	{
+		if(m_bRunning==TRUE)
+		{
+			pDC->SetBkColor(RGB(64, 255, 89));
+		}
+		else
+		{
+			pDC->SetBkColor(RGB(0, 0, 0));
+		}
+	}
+
+	if (id == IDC_STATIC_STOP)
+	{
+		if(m_bRunning==TRUE)
+		{
+			pDC->SetBkColor(RGB(0, 0, 0));
+		}
+		else
+		{
+			pDC->SetBkColor(RGB(255, 75, 0));
+		}
+	}
+	*/
+	return hbr;
 }

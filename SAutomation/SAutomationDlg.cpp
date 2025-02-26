@@ -805,6 +805,7 @@ void CSAutomationDlg::ChangeToCompact()
 
 	m_cDlgCompact.pParent=this;
 	g_bCompactBiew=TRUE;
+	m_cDlgCompact.m_bRunning=FALSE;
 	long lRet=m_cDlgCompact.DoModal();
 	if(lRet == 2){OnBnClickedOk();}
 	g_bCompactBiew=FALSE;

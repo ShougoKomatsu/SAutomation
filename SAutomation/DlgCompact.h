@@ -18,6 +18,10 @@ class CDlgCompact : public CDialogEx
 
 
 public:
+	BOOL m_bRunning;
+	CBrush m_brRed;
+	CBrush m_brGreen;
+	CBrush m_brBlack;
 	CDlgCompact(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CDlgCompact();
 
@@ -51,4 +55,6 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnPaint();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
