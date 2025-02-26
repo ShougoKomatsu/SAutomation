@@ -107,3 +107,4 @@ public:
 
 extern AutomationInfo g_Automation;
 extern CInputDialog g_cInput;
+

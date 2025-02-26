@@ -201,6 +201,10 @@ void CDlgCompact::OnBnClickedCompactButtonClose()
 
 void CDlgCompact::OnLButtonDown(UINT nFlags, CPoint point)
 {
+	CButton* pButton;
+	pButton = (CButton*)GetDlgItem(IDC_COMPACT_BUTTON_CLOSE);
+	int iCheck;
+
 	m_iX=point.x;
 	m_iY=point.y;
 	m_bMoving=TRUE;
