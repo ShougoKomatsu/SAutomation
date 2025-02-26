@@ -84,6 +84,15 @@ BOOL CDlgCompact::OnInitDialog()
 	::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
 	SetIcon(m_hIconStandby, FALSE);
 	SetIcon(m_hIconStandby, FALSE);
+	
+	CRect rect;
+	GetClientRect(&rect);
+
+	CWnd* cwnd;
+	cwnd=GetDlgItem(IDC_COMPACT_BUTTON_CLOSE);
+	cwnd->MoveWindow(rect.Width()-20,0,20,20);
+	cwnd=GetDlgItem(IDC_COMPACT_BUTTON_MINIMIZE);
+	cwnd->MoveWindow(rect.Width()-40,0,20,20);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
 }
@@ -228,24 +237,25 @@ void CDlgCompact::OnPaint()
 	CPaintDC dc(this); // device context for painting
 
 	CBrush* pOldBrush;
+	
 	if(m_bRunning==TRUE)
 	{
 		pOldBrush = dc.SelectObject(&m_brGreen);
-		dc.Rectangle(2,2,2+16,2+16);
+		dc.Rectangle(2,2,2+12,2+12);
 		dc.SelectObject(pOldBrush);
 
 		pOldBrush = dc.SelectObject(&m_brBlack);
-		dc.Rectangle(2+16,2,2+16+16,2+16);
+		dc.Rectangle(2+16,2,2+16+12,2+12);
 		dc.SelectObject(pOldBrush);
 	}
 	else
 	{
 		CBrush* pOldBrush = dc.SelectObject(&m_brBlack);
-		dc.Rectangle(2,2,2+16,2+16);
+		dc.Rectangle(2,2,2+12,2+12);
 		dc.SelectObject(pOldBrush);
 
 		pOldBrush = dc.SelectObject(&m_brRed);
-		dc.Rectangle(2+16,2,2+16+16,2+16);
+		dc.Rectangle(2+16,2,2+16+12,2+12);
 		dc.SelectObject(pOldBrush);
 	}
 
@@ -255,32 +265,5 @@ void CDlgCompact::OnPaint()
 HBRUSH CDlgCompact::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
-	int id = pWnd->GetDlgCtrlID();
-
-	/*
-	if (id == IDC_STATIC_RUN)
-	{
-		if(m_bRunning==TRUE)
-		{
-			pDC->SetBkColor(RGB(64, 255, 89));
-		}
-		else
-		{
-			pDC->SetBkColor(RGB(0, 0, 0));
-		}
-	}
-
-	if (id == IDC_STATIC_STOP)
-	{
-		if(m_bRunning==TRUE)
-		{
-			pDC->SetBkColor(RGB(0, 0, 0));
-		}
-		else
-		{
-			pDC->SetBkColor(RGB(255, 75, 0));
-		}
-	}
-	*/
 	return hbr;
 }
