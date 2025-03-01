@@ -314,6 +314,9 @@ void CTabItem::FileSelect(int iSlot, int iScene)
 	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
 	if(cf.DoModal()!=IDOK){ return;}
 	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName.Format(_T("%s"), cf.GetFileName());
+
+	*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
+	SetTitleNotChanged( *pbNotModified);
 }
 
 void CTabItem::UpdateHotkey(int iSlot, int iScene)
@@ -376,6 +379,20 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 		if(wcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
 		if(wcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
 	}
+	
+	*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
+	SetTitleNotChanged(*pbNotModified);
 	UpdateData(FALSE);
 
+}
+void CTabItem::SetTitleNotChanged(BOOL bTF)
+{
+	if(bTF==FALSE)
+	{
+		pParentWnd->SetWindowText(_T("SAutomation *"));
+	}
+	else
+	{
+		pParentWnd->SetWindowText(_T("SAutomation"));
+	}
 }

@@ -41,7 +41,6 @@ void CSettingDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CSettingDlg, CDialogEx)
-	ON_BN_CLICKED(IDOK, &CSettingDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_MAIN_CHECK_ENABLE_HOTKEY, &CSettingDlg::OnBnClickedCheckEnableHotkey)
 	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_ENABLE_HOTKEY, &CSettingDlg::OnSelchangeCombo0Enable)
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_OPEN_FOLDER, &CSettingDlg::OnBnClickedButton0OpenFolder)
@@ -50,7 +49,7 @@ BEGIN_MESSAGE_MAP(CSettingDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_REFRESH_WINDOW_NAME, &CSettingDlg::OnBnClickedButton0WindowNameRefresh)
 	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_WINDOW_NAME, &CSettingDlg::OnSelchangeWindowName)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_COMPACT_TAB_OPERATION, &CSettingDlg::OnTcnSelchangeTabOperation)
-	ON_BN_CLICKED(IDOK, &CSettingDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDOK, &CSettingDlg::OnBnClickedSave)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_CANCEL, &CSettingDlg::OnBnClickedMainButtonCancel)
 	ON_BN_CLICKED(IDC_MIAIN_CHECK_AUTO_MINIMIZE, &CSettingDlg::OnClickedMiainCheckAutoMinimize)
@@ -63,7 +62,8 @@ BOOL CSettingDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	m_Automation.Copy(&g_Automation);
-	m_bModified=FALSE;
+	m_bNotModified=TRUE;
+	SetTitleNotChanged( m_bNotModified );
 	
 	m_tab.SubclassDlgItem(IDC_COMPACT_TAB_OPERATION, this);
 
@@ -74,7 +74,8 @@ BOOL CSettingDlg::OnInitDialog()
 	
 	m_tabItem.Create(IDD_DIALOG_TAB_ITEMS, &m_tab);
 	m_tabItem.m_autoInfo=&m_Automation;
-//	m_tabItem.pParent=this;	
+	m_tabItem.pbNotModified=&m_bNotModified;
+	m_tabItem.pParentWnd=this;
 	CRect rect;
 	m_tab.GetWindowRect(rect);
 	m_tab.AdjustRect(FALSE, rect);
@@ -157,7 +158,7 @@ BOOL CSettingDlg::PreTranslateMessage(MSG* pMsg)
 
 void CSettingDlg::RefreshTargetWindowPos()
 {
-	if(m_Automation.m_sTargetWindowName.Compare(_T("Desktop"))==0)
+	if(m_sTargetWindowName.Compare(_T("Desktop"))==0)
 	{
 		ChangeMouseOrigin(0, 0);
 		return;
@@ -165,7 +166,7 @@ void CSettingDlg::RefreshTargetWindowPos()
 
 	RECT rect;
 	BOOL bRet;
-	bRet = GetWindowRectByName(m_Automation.m_sTargetWindowName,&rect);
+	bRet = GetWindowRectByName(m_sTargetWindowName,&rect);
 	if(bRet!=TRUE)
 	{
 		ChangeMouseOrigin(0, 0);
@@ -192,7 +193,7 @@ void CSettingDlg::GetLogLavel(AutomationInfo* autoInfo)
 	autoInfo->m_bLog = ((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck();
 	if(autoInfo->m_bLog==0)
 	{
-		autoInfo->m_iLogLevel=0;
+		autoInfo->m_iLogLevel=1;
 	}
 	else
 	{
@@ -261,11 +262,13 @@ void CSettingDlg::OnSelchangeCombo0Enable()
 	if((tch[0]>='0') && (tch[0]<='9')){m_Automation.m_dwHotKeyEnable = char(tch[0])-'0'+0x30;}
 //	RegisterHotKey(NULL, HOTKEY_ENABLE, MOD_SHIFT | MOD_CONTROL | MOD_NOREPEAT, m_Automation.m_dwHotKeyEnable);
 	
-	m_bModified = m_Automation.IsSameAs(&g_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
 }
 
 void CSettingDlg::OnBnClickedCheckEnableHotkey()
 {
+	UpdateData(TRUE);
 	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_ENABLE_HOTKEY))->GetCheck()==1)
 	{
 		m_Automation.m_bEnableHotkey=TRUE;
@@ -275,7 +278,8 @@ void CSettingDlg::OnBnClickedCheckEnableHotkey()
 		m_Automation.m_bEnableHotkey=FALSE;
 	}
 	
-	m_bModified = m_Automation.IsSameAs(&g_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
 
 	return;
 }
@@ -324,7 +328,7 @@ void CSettingDlg::WindowNameRefresh()
 		m_comboWindowName.AddString(caNames.GetAt(i));
 	}
 	m_comboWindowName.SetCurSel(0);
-	m_Automation.m_sTargetWindowName.Format(_T("Desktop"));
+	m_sTargetWindowName.Format(_T("Desktop"));
 	UpdateData(FALSE);
 }
 
@@ -340,7 +344,7 @@ void CSettingDlg::OnSelchangeWindowName()
 	TCHAR tch[256];
 	m_comboWindowName.GetLBText(m_comboWindowName.GetCurSel(),tch); 
 	CString sWindowName;
-	m_Automation.m_sTargetWindowName.Format(_T("%s"), tch);
+	m_sTargetWindowName.Format(_T("%s"), tch);
 	RefreshTargetWindowPos();
 	return;
 }
@@ -351,18 +355,20 @@ void CSettingDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
 
 	m_tabItem.m_iSlot=itab;
 	m_tabItem.RefleshDialog(itab);
-	m_bModified=m_Automation.IsSameAs(&g_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
 	*pResult = 0;
 }
 
 
-void CSettingDlg::OnBnClickedOk()
+void CSettingDlg::OnBnClickedSave()
 {
 	UpdateAutomationInfo(&m_Automation);
 	g_Automation.Copy(&m_Automation);	
 	g_Automation.SaveSettings();
 	
-	m_bModified=FALSE;
+	m_bNotModified=TRUE;
+	SetTitleNotChanged( m_bNotModified );
 }
 
 LRESULT CSettingDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
@@ -415,6 +421,11 @@ BOOL CSettingDlg::ChangeIcon(int iIcon)
 
 void CSettingDlg::OnBnClickedMainButtonCancel()
 {
+	if(m_bNotModified==FALSE)
+	{
+		int iRet=AfxMessageBox(_T("ïœçXÇ™ï€ë∂Ç≥ÇÍÇƒÇ¢Ç‹ÇπÇÒï€ë∂ÇπÇ∏Ç…èIóπÇµÇ‹Ç∑Ç©ÅH"),MB_YESNO);
+		if(iRet == IDNO){return;}
+	}
 	CDialogEx::OnOK();
 }
 
@@ -422,19 +433,34 @@ void CSettingDlg::OnBnClickedMainButtonCancel()
 void CSettingDlg::OnClickedMiainCheckAutoMinimize()
 {
 	UpdateAutomationInfo(&m_Automation);
-	m_bModified = m_Automation.IsSameAs(&g_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
 }
 
 
 void CSettingDlg::OnBnClickedMainCheckLog()
 {
 	UpdateAutomationInfo(&m_Automation);
-	m_bModified = m_Automation.IsSameAs(&g_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
 }
 
 
 void CSettingDlg::OnSelchangeMainComboLogLevel()
 {
 	UpdateAutomationInfo(&m_Automation);
-	m_bModified = m_Automation.IsSameAs(&g_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
+}
+
+void CSettingDlg::SetTitleNotChanged(BOOL bTF)
+{
+	if(bTF==FALSE)
+	{
+		SetWindowText(_T("SAutomation *"));
+	}
+	else
+	{
+		SetWindowText(_T("SAutomation"));
+	}
 }

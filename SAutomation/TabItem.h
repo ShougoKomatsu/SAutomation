@@ -10,6 +10,9 @@ public:
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CTabItem();
 	AutomationInfo* m_autoInfo;
+	void SetTitleNotChanged(BOOL bTF);
+	CWnd* pParentWnd;
+	BOOL* pbNotModified;
 	int m_iSlot;
 	void RefleshDialog(int iSlot);
 	void UpdateData_My(BOOL bTF){UpdateData(bTF);}

@@ -345,11 +345,9 @@ void AutomationInfo::SaveSettings()
 }
 BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 {
-
 	m_bEnableHotkey=autoInfoIn->m_bEnableHotkey;
 	m_bAutoMinimize=autoInfoIn->m_bAutoMinimize;
 	m_sHotkeyEnable.Format(_T("%s"),autoInfoIn->m_sHotkeyEnable);
-	m_sTargetWindowName.Format(_T("%s"),autoInfoIn->m_sTargetWindowName);
 	m_iLogLevel=autoInfoIn->m_iLogLevel;
 	m_bLog=autoInfoIn->m_bLog;
 	m_dwHotKeyEnable=autoInfoIn->m_dwHotKeyEnable;
@@ -359,25 +357,56 @@ BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 	{
 		m_OpeInfo[i].Copy(&(autoInfoIn->m_OpeInfo[i]));
 	}
-
+	
 
 	return TRUE;
 }
 
 BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 {
-	if(m_bEnableHotkey != autoInfoIn->m_bEnableHotkey){return FALSE;}
-	if(m_bAutoMinimize != autoInfoIn->m_bAutoMinimize){return FALSE;}
-	if(m_sHotkeyEnable.Compare(autoInfoIn->m_sHotkeyEnable) != 0){return FALSE;}
-	if(m_sTargetWindowName.Compare(autoInfoIn->m_sTargetWindowName) != 0){return FALSE;}
-	if(m_iLogLevel != autoInfoIn->m_iLogLevel){return FALSE;}
-	if(m_bLog != autoInfoIn->m_bLog){return FALSE;}
-	if(m_dwHotKeyEnable != autoInfoIn->m_dwHotKeyEnable){return FALSE;}
-	if(m_sDir.Compare(autoInfoIn->m_sDir) != 0){return FALSE;}
+	if(m_bEnableHotkey != autoInfoIn->m_bEnableHotkey)
+	{
+		return FALSE;
+	}
+	if(m_bAutoMinimize != autoInfoIn->m_bAutoMinimize)
+	{
+//		CString sss;
+//		sss.Format(_T("%d, %d"), m_bAutoMinimize,autoInfoIn->m_bAutoMinimize);
+//		AfxMessageBox(sss);
+		return FALSE;
+	}
+	if(m_sHotkeyEnable.Compare(autoInfoIn->m_sHotkeyEnable) != 0)
+	{
+//		AfxMessageBox(_T("3"));
+		return FALSE;
+	}
+	if(m_iLogLevel != autoInfoIn->m_iLogLevel)
+	{
+//		AfxMessageBox(_T("4"));
+		return FALSE;
+	}
+	if(m_bLog != autoInfoIn->m_bLog)
+	{
+//		AfxMessageBox(_T("5"));
+		return FALSE;
+	}
+	if(m_dwHotKeyEnable != autoInfoIn->m_dwHotKeyEnable)
+	{
+//		AfxMessageBox(_T("6"));
+		return FALSE;
+	}
+	if(m_sDir.Compare(autoInfoIn->m_sDir) != 0)
+	{
+//		AfxMessageBox(_T("7"));
+		return FALSE;
+	}
 
 	for(int i=0; i<MAX_THREAD; i++)
 	{
-		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE){return FALSE;}
+		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE)
+		{
+			return FALSE;
+		}
 	}
 
 
