@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5C724143-2ECE-427F-9984-A663517DD9DE}</ProjectGuid>
+    <ProjectGuid>{F09C64F9-FF39-4B3E-A361-83ED48768CD8}</ProjectGuid>
     <RootNamespace>SAutomation</RootNamespace>
     <Keyword>MFCProj</Keyword>
-    <ProjectName />
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -108,7 +107,6 @@
   <ItemGroup>
     <ClInclude Include="Automation.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="DlgCompact.h" />
     <ClInclude Include="FlowManager.h" />
     <ClInclude Include="ImgProc.h" />
     <ClInclude Include="InputDialog.h" />
@@ -117,6 +115,8 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SAutomation.h" />
     <ClInclude Include="SAutomationDlg.h" />
+    <ClInclude Include="SettingDlg.h" />
+    <ClInclude Include="SImgProc_ex.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TabItem.h" />
     <ClInclude Include="targetver.h" />
@@ -127,7 +127,6 @@
   <ItemGroup>
     <ClCompile Include="Automation.cpp" />
     <ClCompile Include="Common.cpp" />
-    <ClCompile Include="DlgCompact.cpp" />
     <ClCompile Include="FlowManager.cpp" />
     <ClCompile Include="ImgProc.cpp" />
     <ClCompile Include="InputDialog.cpp" />
@@ -135,6 +134,7 @@
     <ClCompile Include="Perser.cpp" />
     <ClCompile Include="SAutomation.cpp" />
     <ClCompile Include="SAutomationDlg.cpp" />
+    <ClCompile Include="SettingDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

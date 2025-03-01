@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "thread.h"
+#include "Common.h"
 
 
 #define MAX_LEVEL (1024)

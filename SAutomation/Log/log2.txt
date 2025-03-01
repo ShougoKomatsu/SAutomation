@@ -1,3 +1,0 @@
-1 Ctrl Down 0
-2 l 0
-3 Ctrl Up 0

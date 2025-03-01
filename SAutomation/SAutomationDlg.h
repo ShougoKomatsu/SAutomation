@@ -3,14 +3,10 @@
 //
 
 #pragma once
-#include "afxwin.h"
-#include "thread.h"
-#include "afxcmn.h"
-#include "InputDialog.h"
-#include "TabItem.h"
-#include "DlgCompact.h"
+#include "stdafx.h"
 #include "Common.h"
-extern BOOL g_bCompactBiew;
+#include "SettingDlg.h"
+
 extern CStdioFile g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
@@ -85,89 +81,66 @@ extern CString g_sLogFilePath[MAX_THREAD];
 #define HOTKEY_ESCAPE (100)
 
 
-// CSAutomationDlg ダイアログ
+// SettingDlg ダイアログ
 class CSAutomationDlg : public CDialogEx
 {
 	// コンストラクション
 public:
 	CSAutomationDlg(CWnd* pParent = NULL);	// 標準コンストラクター
-
-	// ダイアログ データ
-	enum { IDD = IDD_SAUTOMATION_DIALOG };
-	void ChangeToCompact();
-	void ResetHotkey(int iScene);
-	void Operate(int iScene);
-	BOOL ReHookWindowsHook();
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
-	BOOL ChangeIcon(int iIcon);
-
-
-BOOL UpdateAutomationInfo(AutomationInfo* autoInfo);
-
-	void ToggleEnable();
-	
-void GetLogLavel(AutomationInfo* g_autoInfo);
-
-	
-	void RefreshTargetWindowPos();
-	
-	void WindowNameRefresh();
+	~CSAutomationDlg();
 	BOOL m_bRunningAny;
-	// 実装
-protected:
+	BOOL m_bMoving;
+	BOOL m_iX;
+	BOOL m_iY;
+	BOOL m_bRunning;
+	CBrush m_brRed;
+	CBrush m_brGreen;
+	CBrush m_brBlack;
+	BOOL ChangeIcon(int iIcon);
 	HICON m_hIconStandby;
 	HICON m_hIconRunning;
+	HICON m_hIconMinimize;
+	HICON m_hIconClose;
+	CSettingDlg m_cDlgSetting;
+
+	void ToggleEnable();
+
+	void WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo);
+
+	BOOL ReHookWindowsHook();
+	void ResetHotkey(int iScene);
+	void Operate(int iScene);
+	// ダイアログ データ
+	enum { IDD = IDD_SAUTOMATION_DIALOG };
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
+
+
+	// 実装
+protected:
+	HICON m_hIcon;
 
 	// 生成された、メッセージ割り当て関数
 	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
-
 	DECLARE_MESSAGE_MAP()
 public:
-	
-	CDlgCompact m_cDlgCompact;
-
-	CTabItem m_tabItem;
-
-	afx_msg void OnEnChangeEdit1();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	CString m_sEditMousePosC;
-	CString m_sEditMousePosR;
-	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	virtual BOOL DestroyWindow();
-
-	CComboBox m_comboEnable;
-	CComboBox m_comboLogLevel;
-
-	CComboBox m_comboWindowName;
-	afx_msg void OnSelchangeWindowName();
-	
-	
-	CString m_sEditSpeed;
-	CSliderCtrl m_sliderSpeed;
-	CTabCtrl m_tab;
 	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
-
-	afx_msg void OnSelchangeCombo0Enable();
-
-	afx_msg void OnBnClickedCheckEnableHotkey();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnBnClickedButton0OpenFolder();
-	afx_msg void OnKillfocusEditSpeed();
-	afx_msg void OnCustomdrawSliderSpeed(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedButton0WindowNameRefresh();
-	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedButtonOpenCompact();
-	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedButtonCompactExit();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	CString m_sEditCompactMouseR;
+	CString m_sEditCompactMouseC;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedCompactButtonMinimize();
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	CButton m_ButtonMinimize;
+	afx_msg void OnBnClickedCompactButtonClose();
+	CButton m_ButtonClose;
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	virtual BOOL DestroyWindow();
 };
-
-void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
-
-void SetComboItemShift(CComboBox* combo,OperationInfo* op);
-
-void SetComboItem(CComboBox* combo, CString m_sHotkey);

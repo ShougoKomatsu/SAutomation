@@ -1,6 +1,7 @@
 ﻿
 wait ctrl off
 wait shift off
+//msgbox( )
 exit
 
 varstr1=input

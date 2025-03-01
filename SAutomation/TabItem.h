@@ -1,6 +1,5 @@
 #pragma once
-#include "SAutomationDlg.h"
-
+#include "Common.h"
 // CTabItem ダイアログ
 
 class CTabItem : public CDialogEx
@@ -8,14 +7,13 @@ class CTabItem : public CDialogEx
 	DECLARE_DYNAMIC(CTabItem)
 	
 public:
-	void RefleshDialog(int iSlot);
-	void FileSelect(int iSlot, int iScene);
-	void CTabItem::UpdateHotkey(int iSlot, int iScene);
-	int m_iSlot;
-	class CSAutomationDlg* pParent;
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CTabItem();
+	
+	int m_iSlot;
+	void RefleshDialog(int iSlot);
 	void UpdateData_My(BOOL bTF){UpdateData(bTF);}
+	void FileSelect(int iSlot, int iScene);
 	afx_msg void OnBnClickedButton00();
 	afx_msg void OnBnClickedButton01();
 	afx_msg void OnBnClickedButton02();
@@ -84,6 +82,11 @@ public:
 	afx_msg void OnSelchangeComboShift14();
 	afx_msg void OnSelchangeComboShift15();
 	
+	void CTabItem::UpdateHotkey(int iSlot, int iScene);
+
+	/*
+	class CSettingDlg* pParent;
+	
 	afx_msg void OnBnClickedButtonOperate00();
 	afx_msg void OnBnClickedButtonOperate01();
 	afx_msg void OnBnClickedButtonOperate02();
@@ -100,7 +103,7 @@ public:
 	afx_msg void OnBnClickedButtonOperate13();
 	afx_msg void OnBnClickedButtonOperate14();
 	afx_msg void OnBnClickedButtonOperate15();
-
+	*/
 
 // ダイアログ データ
 	enum { IDD = IDD_DIALOG_TAB_ITEMS };
@@ -111,7 +114,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CString m_sEditFileName[MAX_THREAD];
-	CString m_sEditStatus[MAX_THREAD];
 	CComboBox m_combo[MAX_THREAD];
 	CComboBox m_comboUseCtrl[MAX_THREAD];
 	CComboBox m_comboUseShift[MAX_THREAD];
