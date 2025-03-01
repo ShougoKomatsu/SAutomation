@@ -363,6 +363,26 @@ BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 
 	return TRUE;
 }
+
+BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
+{
+	if(m_bEnableHotkey != autoInfoIn->m_bEnableHotkey){return FALSE;}
+	if(m_bAutoMinimize != autoInfoIn->m_bAutoMinimize){return FALSE;}
+	if(m_sHotkeyEnable.Compare(autoInfoIn->m_sHotkeyEnable) != 0){return FALSE;}
+	if(m_sTargetWindowName.Compare(autoInfoIn->m_sTargetWindowName) != 0){return FALSE;}
+	if(m_iLogLevel != autoInfoIn->m_iLogLevel){return FALSE;}
+	if(m_bLog != autoInfoIn->m_bLog){return FALSE;}
+	if(m_dwHotKeyEnable != autoInfoIn->m_dwHotKeyEnable){return FALSE;}
+	if(m_sDir.Compare(autoInfoIn->m_sDir) != 0){return FALSE;}
+
+	for(int i=0; i<MAX_THREAD; i++)
+	{
+		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE){return FALSE;}
+	}
+
+
+	return TRUE;
+}
 void AutomationInfo::Operate(int iScene)
 {
 	ChangeMouseOrigin(0, 0);

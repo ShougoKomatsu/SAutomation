@@ -20,6 +20,7 @@ public:
 	CSliderCtrl m_sliderSpeed;
 	CTabCtrl m_tab;
 	
+	BOOL m_bModified;
 AutomationInfo m_Automation;
 
 BOOL UpdateAutomationInfo(AutomationInfo* autoInfo);
@@ -53,4 +54,7 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedMainButtonCancel();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnClickedMiainCheckAutoMinimize();
+	afx_msg void OnBnClickedMainCheckLog();
+	afx_msg void OnSelchangeMainComboLogLevel();
 };

@@ -9,7 +9,7 @@ class CTabItem : public CDialogEx
 public:
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CTabItem();
-	
+	AutomationInfo* m_autoInfo;
 	int m_iSlot;
 	void RefleshDialog(int iSlot);
 	void UpdateData_My(BOOL bTF){UpdateData(bTF);}

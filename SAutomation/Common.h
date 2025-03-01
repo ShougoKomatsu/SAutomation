@@ -63,6 +63,19 @@ struct OperationInfo
 		dwHotKey = opeInfoIn->dwHotKey;
 		m_bRunning = opeInfoIn->m_bRunning;
 	}
+
+	BOOL IsSameAs(OperationInfo* opeInfoIn)
+	{
+		if(sHotkey.Compare(opeInfoIn->sHotkey) != 0){return FALSE;}
+		if(sFileName.Compare(opeInfoIn->sFileName) != 0){return FALSE;}
+		if(bUseCtrl != opeInfoIn->bUseCtrl){return FALSE;}
+		if(bUseShift != opeInfoIn->bUseShift){return FALSE;}
+		if(bUseAlt != opeInfoIn->bUseAlt){return FALSE;}
+		if(bUseWin != opeInfoIn->bUseWin){return FALSE;}
+		if(dwHotKey != opeInfoIn->dwHotKey){return FALSE;}
+		if(m_bRunning != opeInfoIn->m_bRunning){return FALSE;}
+		return TRUE;
+	}
 };
 
 void SetComboItem(CComboBox* combo, CString sHotkey);
@@ -86,6 +99,7 @@ public:
 	void SaveSettings();
 	CString m_sDir;
 	OperationInfo m_OpeInfo[MAX_THREAD];
+	BOOL IsSameAs(AutomationInfo* autoInfoIn);
 };
 
 

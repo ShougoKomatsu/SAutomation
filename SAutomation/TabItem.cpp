@@ -292,11 +292,11 @@ void CTabItem::RefleshDialog(int iSlot)
 {
 	for(int iScene=0; iScene<16; iScene++)
 	{
-		m_sEditFileName[iScene].Format(_T("%s"),g_Automation.m_OpeInfo[iSlot*16 + iScene].sFileName);
+		m_sEditFileName[iScene].Format(_T("%s"),m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName);
 
-		SetComboItem(&m_combo[iScene],g_Automation.m_OpeInfo[iSlot*16 + iScene].sHotkey);
-		SetComboItemShift(&m_comboUseCtrl[iScene], &(g_Automation.m_OpeInfo[iSlot*16 + iScene]));
-		SetComboItemCtrl(&m_comboUseShift[iScene], &(g_Automation.m_OpeInfo[iSlot*16 + iScene]));
+		SetComboItem(&m_combo[iScene],m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sHotkey);
+		SetComboItemShift(&m_comboUseCtrl[iScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iScene]));
+		SetComboItemCtrl(&m_comboUseShift[iScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iScene]));
 
 		CString sScene;
 		sScene.Format(_T("%d"),iSlot*16 + iScene);
@@ -308,12 +308,12 @@ void CTabItem::RefleshDialog(int iSlot)
 void CTabItem::FileSelect(int iSlot, int iScene)
 {
 	CString sMacroFolderPath;
-	sMacroFolderPath.Format(_T("%s\\Macro"),g_Automation.m_sDir);
+	sMacroFolderPath.Format(_T("%s\\Macro"),m_autoInfo->m_sDir);
 
 	CFileDialog cf(TRUE);
 	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
 	if(cf.DoModal()!=IDOK){ return;}
-	g_Automation.m_OpeInfo[iSlot*16 + iScene].sFileName.Format(_T("%s"), cf.GetFileName());
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName.Format(_T("%s"), cf.GetFileName());
 }
 
 void CTabItem::UpdateHotkey(int iSlot, int iScene)
@@ -348,33 +348,33 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 		if((tch[0]>='a') && (tch[0]<='z')){dwHotKey = char(tch[0])-'a'+0x41;}
 		if((tch[0]>='0') && (tch[0]<='9')){dwHotKey = char(tch[0])-'0'+0x30;}
 	}
-		g_Automation.m_OpeInfo[iSlot*16 + iScene].dwHotKey = dwHotKey;
+		m_autoInfo->m_OpeInfo[iSlot*16 + iScene].dwHotKey = dwHotKey;
 
-	g_Automation.m_OpeInfo[iSlot*16 + iScene].sHotkey.Format(_T("%s"),tch);
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sHotkey.Format(_T("%s"),tch);
 
-	g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseShift=FALSE;
-	g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseCtrl=FALSE;
-	g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseAlt=FALSE;
-	g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseWin=FALSE;
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseShift=FALSE;
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseCtrl=FALSE;
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=FALSE;
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=FALSE;
 
 	if(m_comboUseCtrl[iScene].GetCurSel()<0){}
 	else
 	{
 		m_comboUseCtrl[iScene].GetLBText(m_comboUseCtrl[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
+		if(wcscmp(tch,_T("Ctrl"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
+		if(wcscmp(tch,_T("Shift"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
+		if(wcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
+		if(wcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
 	}
 
 	if(m_comboUseShift[iScene].GetCurSel()<0){}
 	else
 	{
 		m_comboUseShift[iScene].GetLBText(m_comboUseShift[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){g_Automation.m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
+		if(wcscmp(tch,_T("Ctrl"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
+		if(wcscmp(tch,_T("Shift"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
+		if(wcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
+		if(wcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
 	}
 	UpdateData(FALSE);
 

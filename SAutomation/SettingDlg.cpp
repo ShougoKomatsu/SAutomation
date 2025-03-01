@@ -53,6 +53,9 @@ BEGIN_MESSAGE_MAP(CSettingDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CSettingDlg::OnBnClickedOk)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_MAIN_BUTTON_CANCEL, &CSettingDlg::OnBnClickedMainButtonCancel)
+	ON_BN_CLICKED(IDC_MIAIN_CHECK_AUTO_MINIMIZE, &CSettingDlg::OnClickedMiainCheckAutoMinimize)
+	ON_BN_CLICKED(IDC_MAIN_CHECK_LOG, &CSettingDlg::OnBnClickedMainCheckLog)
+	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_LOG_LEVEL, &CSettingDlg::OnSelchangeMainComboLogLevel)
 END_MESSAGE_MAP()
 
 
@@ -60,6 +63,7 @@ BOOL CSettingDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	m_Automation.Copy(&g_Automation);
+	m_bModified=FALSE;
 	
 	m_tab.SubclassDlgItem(IDC_COMPACT_TAB_OPERATION, this);
 
@@ -69,11 +73,13 @@ BOOL CSettingDlg::OnInitDialog()
 	m_tab.InsertItem(3, _T("48 - 63"));
 	
 	m_tabItem.Create(IDD_DIALOG_TAB_ITEMS, &m_tab);
+	m_tabItem.m_autoInfo=&m_Automation;
 //	m_tabItem.pParent=this;	
 	CRect rect;
 	m_tab.GetWindowRect(rect);
 	m_tab.AdjustRect(FALSE, rect);
 	m_tab.ScreenToClient(rect);
+
 
 	m_tabItem.MoveWindow(rect);
 
@@ -138,7 +144,8 @@ BOOL CSettingDlg::OnInitDialog()
 }
 
 BOOL CSettingDlg::PreTranslateMessage(MSG* pMsg)
-{	if(pMsg->message == WM_KEYDOWN)
+{
+	if(pMsg->message == WM_KEYDOWN)
 	{
 		if(pMsg->wParam == VK_RETURN){return TRUE;}
 		if(pMsg->wParam == VK_ESCAPE){return TRUE;}
@@ -253,6 +260,8 @@ void CSettingDlg::OnSelchangeCombo0Enable()
 	if((tch[0]>='a') && (tch[0]<='z')){m_Automation.m_dwHotKeyEnable = char(tch[0])-'a'+0x41;}
 	if((tch[0]>='0') && (tch[0]<='9')){m_Automation.m_dwHotKeyEnable = char(tch[0])-'0'+0x30;}
 //	RegisterHotKey(NULL, HOTKEY_ENABLE, MOD_SHIFT | MOD_CONTROL | MOD_NOREPEAT, m_Automation.m_dwHotKeyEnable);
+	
+	m_bModified = m_Automation.IsSameAs(&g_Automation);
 }
 
 void CSettingDlg::OnBnClickedCheckEnableHotkey()
@@ -265,6 +274,9 @@ void CSettingDlg::OnBnClickedCheckEnableHotkey()
 	{
 		m_Automation.m_bEnableHotkey=FALSE;
 	}
+	
+	m_bModified = m_Automation.IsSameAs(&g_Automation);
+
 	return;
 }
 
@@ -339,6 +351,7 @@ void CSettingDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
 
 	m_tabItem.m_iSlot=itab;
 	m_tabItem.RefleshDialog(itab);
+	m_bModified=m_Automation.IsSameAs(&g_Automation);
 	*pResult = 0;
 }
 
@@ -348,6 +361,8 @@ void CSettingDlg::OnBnClickedOk()
 	UpdateAutomationInfo(&m_Automation);
 	g_Automation.Copy(&m_Automation);	
 	g_Automation.SaveSettings();
+	
+	m_bModified=FALSE;
 }
 
 LRESULT CSettingDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
@@ -401,4 +416,25 @@ BOOL CSettingDlg::ChangeIcon(int iIcon)
 void CSettingDlg::OnBnClickedMainButtonCancel()
 {
 	CDialogEx::OnOK();
+}
+
+
+void CSettingDlg::OnClickedMiainCheckAutoMinimize()
+{
+	UpdateAutomationInfo(&m_Automation);
+	m_bModified = m_Automation.IsSameAs(&g_Automation);
+}
+
+
+void CSettingDlg::OnBnClickedMainCheckLog()
+{
+	UpdateAutomationInfo(&m_Automation);
+	m_bModified = m_Automation.IsSameAs(&g_Automation);
+}
+
+
+void CSettingDlg::OnSelchangeMainComboLogLevel()
+{
+	UpdateAutomationInfo(&m_Automation);
+	m_bModified = m_Automation.IsSameAs(&g_Automation);
 }
