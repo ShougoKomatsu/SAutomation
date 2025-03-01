@@ -245,7 +245,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_ButtonClose.SetIcon(m_hIconClose);
 	::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
 	SetIcon(m_hIconStandby, FALSE);
-	SetIcon(m_hIconStandby, FALSE);
 	
 	CRect rect;
 	GetClientRect(&rect);
@@ -266,8 +265,7 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 	{
 	case IDI_ICON_STANDBY:
 		{
-			SetIcon(m_hIconStandby, TRUE);
-			SetIcon(m_hIconStandby, FALSE);	
+			SetIcon(m_hIconStandby, FALSE);
 			m_bRunning=FALSE;
 			Invalidate();
 			//		::PostMessage(m_cDlgSetting.m_hWnd,WM_DISP_STANDBY,0,0);
@@ -275,8 +273,7 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 		}
 	case IDI_ICON_RUNNING:
 		{
-			SetIcon(m_hIconRunning, TRUE);
-			SetIcon(m_hIconRunning, FALSE);	
+			SetIcon(m_hIconRunning, FALSE);
 			m_bRunning=TRUE;
 			Invalidate();
 			//		::PostMessage(m_cDlgSetting.m_hWnd,WM_DISP_STANDBY,1,0);
