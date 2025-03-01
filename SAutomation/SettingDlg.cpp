@@ -411,14 +411,6 @@ BOOL CSettingDlg::ChangeIcon(int iIcon)
 
 
 
-
-
-
-
-
-
-
-
 void CSettingDlg::OnBnClickedMainButtonCancel()
 {
 	if(m_bNotModified==FALSE)

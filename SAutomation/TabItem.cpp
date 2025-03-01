@@ -324,10 +324,24 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 	UpdateData(TRUE);
 
 	TCHAR tch[8];
-	if(m_combo[iScene].GetCurSel()<0){return;}
+	if(m_combo[iScene].GetCurSel()<0)
+	{
+		*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
+		SetTitleNotChanged(*pbNotModified);
+		UpdateData(FALSE);
+		return;
+	}
 	m_combo[iScene].GetLBText(m_combo[iScene].GetCurSel(),tch);
-	if(wcscmp(tch,_T(" "))==0){return;}
-		DWORD dwHotKey;
+
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sHotkey.Format(_T("%s"),tch);
+	if(wcscmp(tch,_T(" "))==0)
+	{
+		*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
+		SetTitleNotChanged(*pbNotModified);
+		UpdateData(FALSE);return;
+	}
+
+	DWORD dwHotKey;
 	if(_tcslen(tch)>=2)
 	{
 		if(_tcsicmp(tch,_T("F1"))==0){dwHotKey = VK_F1;}
@@ -351,7 +365,7 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 		if((tch[0]>='a') && (tch[0]<='z')){dwHotKey = char(tch[0])-'a'+0x41;}
 		if((tch[0]>='0') && (tch[0]<='9')){dwHotKey = char(tch[0])-'0'+0x30;}
 	}
-		m_autoInfo->m_OpeInfo[iSlot*16 + iScene].dwHotKey = dwHotKey;
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].dwHotKey = dwHotKey;
 
 	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sHotkey.Format(_T("%s"),tch);
 
