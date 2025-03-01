@@ -298,19 +298,11 @@ void CSAutomationDlg::OnPaint()
 		pOldBrush = dc.SelectObject(&m_brGreen);
 		dc.Rectangle(2,2,2+12,2+12);
 		dc.SelectObject(pOldBrush);
-
-		pOldBrush = dc.SelectObject(&m_brBlack);
-		dc.Rectangle(2+16,2,2+16+12,2+12);
-		dc.SelectObject(pOldBrush);
 	}
 	else
 	{
 		CBrush* pOldBrush = dc.SelectObject(&m_brBlack);
 		dc.Rectangle(2,2,2+12,2+12);
-		dc.SelectObject(pOldBrush);
-
-		pOldBrush = dc.SelectObject(&m_brRed);
-		dc.Rectangle(2+16,2,2+16+12,2+12);
 		dc.SelectObject(pOldBrush);
 	}
 
