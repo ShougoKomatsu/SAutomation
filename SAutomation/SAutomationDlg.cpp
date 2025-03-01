@@ -22,6 +22,35 @@
 
 
 
+class CAboutDlg : public CDialogEx
+{
+public:
+	CAboutDlg();
+
+	// ダイアログ データ
+	enum { IDD = IDD_ABOUTBOX };
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV サポート
+
+	// 実装
+protected:
+	DECLARE_MESSAGE_MAP()
+public:
+};
+
+CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
+{
+}
+
+void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+}
+
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+END_MESSAGE_MAP()
+
 
 CSAutomationDlg::CSAutomationDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CSAutomationDlg::IDD, pParent)
