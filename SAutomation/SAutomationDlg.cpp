@@ -341,7 +341,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 		ReHookWindowsHook();
 		if(g_Automation.m_bAutoMinimize==TRUE)
 		{
-//			ChangeToCompact();
+			ShowWindow(SW_MINIMIZE);
 		}
 	}
 	if(nIDEvent == TIMER_COMPACT_DISP_MOUSPOS)

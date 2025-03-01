@@ -345,6 +345,8 @@ void CSettingDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CSettingDlg::OnBnClickedOk()
 {
+
+	UpdateAutomationInfo(&m_Automation);
 	g_Automation.Copy(&m_Automation);	
 	g_Automation.SaveSettings();
 	CDialogEx::OnOK();
