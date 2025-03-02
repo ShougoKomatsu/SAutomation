@@ -88,7 +88,6 @@ class CSAutomationDlg : public CDialogEx
 public:
 	CSAutomationDlg(CWnd* pParent = NULL);	// 標準コンストラクター
 	~CSAutomationDlg();
-	BOOL m_bRunningAny;
 	BOOL m_bMoving;
 	BOOL m_iX;
 	BOOL m_iY;
@@ -102,7 +101,8 @@ public:
 	HICON m_hIconMinimize;
 	HICON m_hIconClose;
 	CSettingDlg m_cDlgSetting;
-
+	BOOL TrayNotifyIconMessage(DWORD dwMessage, int iIconID);
+	
 	void ToggleEnable();
 
 	void WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo);
@@ -112,7 +112,8 @@ public:
 	void Operate(int iScene);
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
-
+	
+    NOTIFYICONDATA m_nIcon;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 
@@ -143,4 +144,7 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	virtual BOOL DestroyWindow();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+
+	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
 };

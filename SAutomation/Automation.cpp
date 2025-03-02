@@ -14,25 +14,22 @@
 
 ReturnValue K_SleepWithoutHalt(LPVOID Suspend, DWORD SleepMilliSec)
 {
-		ULONGLONG ullStartMilliSec;
-		ULONGLONG ullSuspendStartMilliSec;
-		ULONGLONG ullSuspendedMilliSec;
-		ullStartMilliSec = GetTickCount64();
-		ullSuspendedMilliSec=0;
-		while(GetTickCount64()<ullStartMilliSec+SleepMilliSec/g_dSpeedMult+ullSuspendedMilliSec)
-		{
-			if((*(int*)Suspend) == 0){Sleep(1);	continue;}
+	ULONGLONG ullStartMilliSec;
+	ULONGLONG ullSuspendStartMilliSec;
+	ULONGLONG ullSuspendedMilliSec;
+	ullStartMilliSec = GetTickCount64();
+	ullSuspendedMilliSec=0;
+	while(GetTickCount64() < ullStartMilliSec+SleepMilliSec/g_dSpeedMult+ullSuspendedMilliSec)
+	{
+		if((*(int*)Suspend) == 0){Sleep(1);	continue;}
+		ullSuspendStartMilliSec = GetTickCount64();
 
-			ullSuspendStartMilliSec = GetTickCount64();
-			while((*(int*)Suspend) == 1)
-			{
-				Sleep(1);
-			}
-			ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
+		while((*(int*)Suspend) == 1){Sleep(1);}
 
-			Sleep(1);
-		}
-		return RETURN_NORMAL;
+		ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
+		Sleep(1);
+	}
+	return RETURN_NORMAL;
 }
 
 ReturnValue K_SleepWithoutSuspend(LPVOID Halt, DWORD SleepMilliSec)

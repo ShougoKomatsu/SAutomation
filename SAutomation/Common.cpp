@@ -272,7 +272,10 @@ void AutomationInfo::ReadSettings()
 	}
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
-
+	
+	GetPrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+	if(wcscmp(szData,_T("1"))==0){m_bMinimizeToTaskTray=TRUE;}
+	else{m_bMinimizeToTaskTray=FALSE;}
 }
 
 void AutomationInfo::SaveSettings()
@@ -337,6 +340,14 @@ void AutomationInfo::SaveSettings()
 	{
 		WritePrivateProfileString(_T("Common"),_T("Log"),_T("0"),sFilePath);
 	}
+	if(m_bMinimizeToTaskTray==1)
+	{
+		WritePrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("1"),sFilePath);
+	}
+	else
+	{
+		WritePrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),sFilePath);
+	}
 
 	CString sData;
 	sData.Format(_T("%d"),m_iLogLevel);
@@ -345,19 +356,65 @@ void AutomationInfo::SaveSettings()
 }
 BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 {
-
 	m_bEnableHotkey=autoInfoIn->m_bEnableHotkey;
 	m_bAutoMinimize=autoInfoIn->m_bAutoMinimize;
 	m_sHotkeyEnable.Format(_T("%s"),autoInfoIn->m_sHotkeyEnable);
-	m_sTargetWindowName.Format(_T("%s"),autoInfoIn->m_sTargetWindowName);
 	m_iLogLevel=autoInfoIn->m_iLogLevel;
 	m_bLog=autoInfoIn->m_bLog;
 	m_dwHotKeyEnable=autoInfoIn->m_dwHotKeyEnable;
+	m_bMinimizeToTaskTray=autoInfoIn->m_bMinimizeToTaskTray;
 	m_sDir.Format(_T("%s"),autoInfoIn->m_sDir);
 
 	for(int i=0; i<MAX_THREAD; i++)
 	{
 		m_OpeInfo[i].Copy(&(autoInfoIn->m_OpeInfo[i]));
+	}
+	
+
+	return TRUE;
+}
+
+BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
+{
+	if(m_bEnableHotkey != autoInfoIn->m_bEnableHotkey)
+	{
+		return FALSE;
+	}
+	if(m_bAutoMinimize != autoInfoIn->m_bAutoMinimize)
+	{
+		return FALSE;
+	}
+	if(m_sHotkeyEnable.Compare(autoInfoIn->m_sHotkeyEnable) != 0)
+	{
+		return FALSE;
+	}
+	if(m_iLogLevel != autoInfoIn->m_iLogLevel)
+	{
+		return FALSE;
+	}
+	if(m_bLog != autoInfoIn->m_bLog)
+	{
+		return FALSE;
+	}
+	if(m_dwHotKeyEnable != autoInfoIn->m_dwHotKeyEnable)
+	{
+		return FALSE;
+	}
+	if(m_sDir.Compare(autoInfoIn->m_sDir) != 0)
+	{
+		return FALSE;
+	}
+	
+	if(m_bMinimizeToTaskTray != autoInfoIn->m_bMinimizeToTaskTray)
+	{
+		return FALSE;
+	}
+	for(int i=0; i<MAX_THREAD; i++)
+	{
+		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE)
+		{
+			return FALSE;
+		}
 	}
 
 

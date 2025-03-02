@@ -16,11 +16,40 @@
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
 #define TIMER_REHOOK (103)
-
+#define ID_TRAY (1101)
 
 // CSAutomationDlg ダイアログ
 
 
+
+class CAboutDlg : public CDialogEx
+{
+public:
+	CAboutDlg();
+
+	// ダイアログ データ
+	enum { IDD = IDD_ABOUTBOX };
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV サポート
+
+	// 実装
+protected:
+	DECLARE_MESSAGE_MAP()
+public:
+};
+
+CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
+{
+}
+
+void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+}
+
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+END_MESSAGE_MAP()
 
 
 CSAutomationDlg::CSAutomationDlg(CWnd* pParent /*=NULL*/)
@@ -66,6 +95,8 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_WM_MOUSEMOVE()
 	ON_WM_PAINT()
 	ON_WM_CTLCOLOR()
+	ON_WM_SIZE()
+	ON_MESSAGE(WM_TRAYNOTIFY, OnTrayNotify)
 END_MESSAGE_MAP()
 
 
@@ -73,19 +104,21 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 {
 
 	UpdateData(TRUE);
+	if(wParam<0){return 0;}
+	if(wParam>=MAX_THREAD){return 0;}
+	g_hThread[wParam]=NULL;
+
 	g_Automation.m_OpeInfo[wParam].m_bRunning=FALSE;
 	
-	m_bRunningAny=FALSE;
+	BOOL bRunningAny=FALSE;
 	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
-		if(g_Automation.m_OpeInfo[iScene].m_bRunning==TRUE)
-		{
-			m_bRunningAny=TRUE;
-			break;
-		}
+		if(g_Automation.m_OpeInfo[iScene].m_bRunning != TRUE){continue;}
+		bRunningAny=TRUE;
+		break;
 	}
 
-	if(m_bRunningAny==FALSE)
+	if(bRunningAny == FALSE)
 	{
 		ChangeIcon(IDI_ICON_STANDBY);
 	}
@@ -216,7 +249,6 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_ButtonClose.SetIcon(m_hIconClose);
 	::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
 	SetIcon(m_hIconStandby, FALSE);
-	SetIcon(m_hIconStandby, FALSE);
 	
 	CRect rect;
 	GetClientRect(&rect);
@@ -237,8 +269,7 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 	{
 	case IDI_ICON_STANDBY:
 		{
-			SetIcon(m_hIconStandby, TRUE);
-			SetIcon(m_hIconStandby, FALSE);	
+			SetIcon(m_hIconStandby, FALSE);
 			m_bRunning=FALSE;
 			Invalidate();
 			//		::PostMessage(m_cDlgSetting.m_hWnd,WM_DISP_STANDBY,0,0);
@@ -246,14 +277,15 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 		}
 	case IDI_ICON_RUNNING:
 		{
-			SetIcon(m_hIconRunning, TRUE);
-			SetIcon(m_hIconRunning, FALSE);	
+			SetIcon(m_hIconRunning, FALSE);
 			m_bRunning=TRUE;
 			Invalidate();
 			//		::PostMessage(m_cDlgSetting.m_hWnd,WM_DISP_STANDBY,1,0);
 			break;
 		}
 	}
+	
+	TrayNotifyIconMessage(NIM_MODIFY, iIcon);
 
 	return TRUE;
 }
@@ -269,19 +301,11 @@ void CSAutomationDlg::OnPaint()
 		pOldBrush = dc.SelectObject(&m_brGreen);
 		dc.Rectangle(2,2,2+12,2+12);
 		dc.SelectObject(pOldBrush);
-
-		pOldBrush = dc.SelectObject(&m_brBlack);
-		dc.Rectangle(2+16,2,2+16+12,2+12);
-		dc.SelectObject(pOldBrush);
 	}
 	else
 	{
 		CBrush* pOldBrush = dc.SelectObject(&m_brBlack);
 		dc.Rectangle(2,2,2+12,2+12);
-		dc.SelectObject(pOldBrush);
-
-		pOldBrush = dc.SelectObject(&m_brRed);
-		dc.Rectangle(2+16,2,2+16+12,2+12);
 		dc.SelectObject(pOldBrush);
 	}
 
@@ -289,23 +313,27 @@ void CSAutomationDlg::OnPaint()
 
 BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 {
-	if(pMsg->message == WM_KEYDOWN)
+	switch(pMsg->message)
 	{
-		if(pMsg->wParam == VK_RETURN){return TRUE;}
-		if(pMsg->wParam == VK_ESCAPE){return TRUE;}
-		if(pMsg->wParam == VK_SPACE){return TRUE;}
-	}
-
-	if(pMsg->message == WM_HOTKEY)
-	{
-		int iKey;
-		iKey = (pMsg->lParam)>>16;
-		for(int iScene=0; iScene<MAX_THREAD; iScene++)
+	case WM_KEYDOWN:
 		{
-			if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
+			if(pMsg->wParam == VK_RETURN){return TRUE;}
+			if(pMsg->wParam == VK_ESCAPE){return TRUE;}
+			if(pMsg->wParam == VK_SPACE){return TRUE;}
+			break;
 		}
-		if(iKey == g_Automation.m_dwHotKeyEnable){ToggleEnable();return TRUE;}
-		if(iKey == VK_ESCAPE){g_bHalt = TRUE;}
+	case WM_HOTKEY:
+		{
+			int iKey;
+			iKey = (pMsg->lParam)>>16;
+			for(int iScene=0; iScene<MAX_THREAD; iScene++)
+			{
+				if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
+			}
+			if(iKey == g_Automation.m_dwHotKeyEnable){ToggleEnable();return TRUE;}
+			if(iKey == VK_ESCAPE){g_bHalt = TRUE;}
+			break;
+		}
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);
@@ -320,18 +348,15 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)
 	{
-		BOOL bAnyArrive = FALSE;
 		for(int iScene = 0; iScene< MAX_THREAD; iScene++)
 		{
-			if(g_hThread[iScene] != NULL)
+			if(g_hThread[iScene] == NULL){continue;}
+			if(g_iWatching == 0)
 			{
-				if(g_iWatching==0)
-				{
-					RegisterHotKey(NULL, HOTKEY_ESCAPE, MOD_NOREPEAT, VK_ESCAPE);
-					g_iWatching=1;
-				}
-				return;
+				RegisterHotKey(NULL, HOTKEY_ESCAPE, MOD_NOREPEAT, VK_ESCAPE);
+				g_iWatching=1;
 			}
+			return;
 		}
 		if(g_iWatching==1){UnregisterHotKey(NULL, HOTKEY_ESCAPE); g_iWatching=0;}
 	}
@@ -341,7 +366,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 		ReHookWindowsHook();
 		if(g_Automation.m_bAutoMinimize==TRUE)
 		{
-//			ChangeToCompact();
+			ShowWindow(SW_MINIMIZE);
 		}
 	}
 	if(nIDEvent == TIMER_COMPACT_DISP_MOUSPOS)
@@ -498,3 +523,60 @@ HBRUSH CSAutomationDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
+
+
+void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+	
+	if (nType == SIZE_MINIMIZED)
+	{
+		if(g_Automation.m_bMinimizeToTaskTray==TRUE)
+		{
+			TrayNotifyIconMessage(NIM_ADD, IDI_ICON_STANDBY);
+			ShowWindow(SW_HIDE);
+			KillTimer(TIMER_WAKE_UP);
+		}
+	}
+}
+
+LRESULT CSAutomationDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
+{
+	switch (lParam)
+	{
+	case WM_LBUTTONUP: 
+		{
+			if (wParam == ID_TRAY)
+			{
+				ShowWindow(SW_NORMAL);
+				SetForegroundWindow();
+				SetFocus();
+				TrayNotifyIconMessage(NIM_DELETE, IDI_ICON_STANDBY);
+			} 
+			break;
+		}
+	default:
+		{
+			break;
+		}
+	} 
+
+	return 0;
+}
+
+BOOL CSAutomationDlg::TrayNotifyIconMessage(DWORD dwMessage, int iIconID)
+{
+	CString sTip = _T("SAutomation.exe");
+	NOTIFYICONDATA nid;
+
+	nid.cbSize = sizeof(NOTIFYICONDATA);
+	nid.hWnd   = GetSafeHwnd();
+	nid.uID    = ID_TRAY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON;
+	nid.uCallbackMessage = WM_TRAYNOTIFY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(iIconID));
+	_tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
+
+	return Shell_NotifyIcon(dwMessage, &nid);
+}
