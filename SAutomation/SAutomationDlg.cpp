@@ -313,23 +313,27 @@ void CSAutomationDlg::OnPaint()
 
 BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 {
-	if(pMsg->message == WM_KEYDOWN)
+	switch(pMsg->message)
 	{
-		if(pMsg->wParam == VK_RETURN){return TRUE;}
-		if(pMsg->wParam == VK_ESCAPE){return TRUE;}
-		if(pMsg->wParam == VK_SPACE){return TRUE;}
-	}
-
-	if(pMsg->message == WM_HOTKEY)
-	{
-		int iKey;
-		iKey = (pMsg->lParam)>>16;
-		for(int iScene=0; iScene<MAX_THREAD; iScene++)
+	case WM_KEYDOWN:
 		{
-			if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
+			if(pMsg->wParam == VK_RETURN){return TRUE;}
+			if(pMsg->wParam == VK_ESCAPE){return TRUE;}
+			if(pMsg->wParam == VK_SPACE){return TRUE;}
+			break;
 		}
-		if(iKey == g_Automation.m_dwHotKeyEnable){ToggleEnable();return TRUE;}
-		if(iKey == VK_ESCAPE){g_bHalt = TRUE;}
+	case WM_HOTKEY:
+		{
+			int iKey;
+			iKey = (pMsg->lParam)>>16;
+			for(int iScene=0; iScene<MAX_THREAD; iScene++)
+			{
+				if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
+			}
+			if(iKey == g_Automation.m_dwHotKeyEnable){ToggleEnable();return TRUE;}
+			if(iKey == VK_ESCAPE){g_bHalt = TRUE;}
+			break;
+		}
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);

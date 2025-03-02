@@ -452,7 +452,6 @@ void CSettingDlg::OnClickedCheckAutoMinimize()
 	SetTitleNotChanged( m_bNotModified );
 }
 
-
 void CSettingDlg::OnBnClickedCheckLog()
 {
 	UpdateAutomationInfo(&m_Automation);
@@ -460,13 +459,20 @@ void CSettingDlg::OnBnClickedCheckLog()
 	SetTitleNotChanged( m_bNotModified );
 }
 
-
 void CSettingDlg::OnSelchangeComboLogLevel()
 {
 	UpdateAutomationInfo(&m_Automation);
 	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
 	SetTitleNotChanged( m_bNotModified );
 }
+
+void CSettingDlg::OnBnClickedCheckTasktray()
+{	
+	UpdateAutomationInfo(&m_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
+}
+
 
 void CSettingDlg::SetTitleNotChanged(BOOL bTF)
 {
@@ -480,9 +486,3 @@ void CSettingDlg::SetTitleNotChanged(BOOL bTF)
 	}
 }
 
-void CSettingDlg::OnBnClickedCheckTasktray()
-{	
-	UpdateAutomationInfo(&m_Automation);
-	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
-	SetTitleNotChanged( m_bNotModified );
-}
