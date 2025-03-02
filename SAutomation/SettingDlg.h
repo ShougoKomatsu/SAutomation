@@ -9,7 +9,7 @@ public:
 	CSettingDlg(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CSettingDlg();
 	CTabItem m_tabItem;
-	BOOL ChangeIcon(int iIcon);
+//	BOOL ChangeIcon(int iIcon);
 	HICON m_hIconStandby;
 	HICON m_hIconRunning;
 	CString m_sTargetWindowName;
@@ -50,7 +50,7 @@ public:
 	afx_msg void OnBnClickedSave();
 	afx_msg void OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonOpenCompact();
-	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
+//	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnBnClickedButtonCancel();

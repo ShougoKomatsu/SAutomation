@@ -392,6 +392,7 @@ void CSettingDlg::OnBnClickedSave()
 	SetTitleNotChanged( m_bNotModified );
 }
 
+/*
 LRESULT CSettingDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 {
 	UpdateData(TRUE);
@@ -414,7 +415,6 @@ BOOL CSettingDlg::ChangeIcon(int iIcon)
 	{
 	case IDI_ICON_STANDBY:
 		{
-
 			SetIcon(m_hIconStandby, TRUE);
 			SetIcon(m_hIconStandby, FALSE);	
 			break;
@@ -429,7 +429,7 @@ BOOL CSettingDlg::ChangeIcon(int iIcon)
 
 	return TRUE;
 }
-
+*/
 
 
 void CSettingDlg::OnBnClickedButtonCancel()
