@@ -108,17 +108,15 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 
 	g_Automation.m_OpeInfo[wParam].m_bRunning=FALSE;
 	
-	m_bRunningAny=FALSE;
+	BOOL bRunningAny=FALSE;
 	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
-		if(g_Automation.m_OpeInfo[iScene].m_bRunning==TRUE)
-		{
-			m_bRunningAny=TRUE;
-			break;
-		}
+		if(g_Automation.m_OpeInfo[iScene].m_bRunning != TRUE){continue;}
+		bRunningAny=TRUE;
+		break;
 	}
 
-	if(m_bRunningAny==FALSE)
+	if(bRunningAny == FALSE)
 	{
 		ChangeIcon(IDI_ICON_STANDBY);
 	}
