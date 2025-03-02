@@ -101,7 +101,7 @@ public:
 	HICON m_hIconMinimize;
 	HICON m_hIconClose;
 	CSettingDlg m_cDlgSetting;
-	BOOL TrayNotifyIconMessage(DWORD dwMessage);
+	BOOL TrayNotifyIconMessage(DWORD dwMessage, int iIconID);
 	
 	void ToggleEnable();
 
@@ -112,7 +112,8 @@ public:
 	void Operate(int iScene);
 	// ダイアログ データ
 	enum { IDD = IDD_SAUTOMATION_DIALOG };
-
+	
+    NOTIFYICONDATA m_nIcon;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
 

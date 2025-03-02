@@ -16,7 +16,7 @@
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
 #define TIMER_REHOOK (103)
-
+#define ID_TRAY (1101)
 
 // CSAutomationDlg ダイアログ
 
@@ -284,6 +284,8 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 			break;
 		}
 	}
+	
+	TrayNotifyIconMessage(NIM_MODIFY, iIcon);
 
 	return TRUE;
 }
@@ -527,7 +529,7 @@ void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
 	{
 		if(g_Automation.m_bMinimizeToTaskTray==TRUE)
 		{
-			TrayNotifyIconMessage(NIM_ADD);
+			TrayNotifyIconMessage(NIM_ADD, IDI_ICON_STANDBY);
 			ShowWindow(SW_HIDE);
 			KillTimer(TIMER_WAKE_UP);
 		}
@@ -540,12 +542,12 @@ LRESULT CSAutomationDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 	{
 	case WM_LBUTTONUP: 
 		{
-			if (wParam == IDI_ICON_STANDBY)
+			if (wParam == ID_TRAY)
 			{
 				ShowWindow(SW_NORMAL);
 				SetForegroundWindow();
 				SetFocus();
-				TrayNotifyIconMessage(NIM_DELETE);
+				TrayNotifyIconMessage(NIM_DELETE, IDI_ICON_STANDBY);
 			} 
 			break;
 		}
@@ -558,18 +560,18 @@ LRESULT CSAutomationDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-BOOL CSAutomationDlg::TrayNotifyIconMessage(DWORD dwMessage)
+BOOL CSAutomationDlg::TrayNotifyIconMessage(DWORD dwMessage, int iIconID)
 {
 	CString sTip = _T("SAutomation.exe");
 	NOTIFYICONDATA nid;
 
 	nid.cbSize = sizeof(NOTIFYICONDATA);
 	nid.hWnd   = GetSafeHwnd();
-	nid.uID    = IDI_ICON_STANDBY;
+	nid.uID    = ID_TRAY;
 	nid.uFlags = NIF_MESSAGE | NIF_ICON;
 	nid.uCallbackMessage = WM_TRAYNOTIFY;
 	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON_STANDBY));
+	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(iIconID));
 	_tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
 
 	return Shell_NotifyIcon(dwMessage, &nid);
