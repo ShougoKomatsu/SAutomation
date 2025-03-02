@@ -53,10 +53,10 @@ public:
 	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	afx_msg void OnBnClickedMainButtonCancel();
+	afx_msg void OnBnClickedButtonCancel();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnClickedMiainCheckAutoMinimize();
-	afx_msg void OnBnClickedMainCheckLog();
-	afx_msg void OnSelchangeMainComboLogLevel();
-	afx_msg void OnBnClickedMainCheckTasktray();
+	afx_msg void OnClickedCheckAutoMinimize();
+	afx_msg void OnBnClickedCheckLog();
+	afx_msg void OnSelchangeComboLogLevel();
+	afx_msg void OnBnClickedCheckTasktray();
 };

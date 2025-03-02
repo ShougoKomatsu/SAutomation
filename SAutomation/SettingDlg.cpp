@@ -27,35 +27,35 @@ CSettingDlg::~CSettingDlg()
 void CSettingDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_MAIN_EDIT_MOUSEPOS_C, m_sEditMousePosC);
-	DDX_Text(pDX, IDC_MAIN_EDIT_MOUSEPOS_R, m_sEditMousePosR);
-	DDX_Control(pDX, IDC_MAIN_COMBO_ENABLE_HOTKEY, m_comboEnable);
+	DDX_Text(pDX, IDC_SETTING_EDIT_MOUSEPOS_C, m_sEditMousePosC);
+	DDX_Text(pDX, IDC_SETTING_EDIT_MOUSEPOS_R, m_sEditMousePosR);
+	DDX_Control(pDX, IDC_SETTING_COMBO_ENABLE_HOTKEY, m_comboEnable);
 
-	DDX_Control(pDX, IDC_MAIN_COMBO_WINDOW_NAME, m_comboWindowName);
+	DDX_Control(pDX, IDC_SETTING_COMBO_WINDOW_NAME, m_comboWindowName);
 
-	DDX_Control(pDX, IDC_MAIN_COMBO_LOG_LEVEL, m_comboLogLevel);
-	DDX_Text(pDX, IDC_MAIN_EDIT_SPEED, m_sEditSpeed);
-	DDX_Control(pDX, IDC_MAIN_SLIDER_SPEED, m_sliderSpeed);
+	DDX_Control(pDX, IDC_SETTING_COMBO_LOG_LEVEL, m_comboLogLevel);
+	DDX_Text(pDX, IDC_SETTING_EDIT_SPEED, m_sEditSpeed);
+	DDX_Control(pDX, IDC_SETTING_SLIDER_SPEED, m_sliderSpeed);
 	DDX_Control(pDX, IDC_COMPACT_TAB_OPERATION, m_tab);
 }
 
 
 BEGIN_MESSAGE_MAP(CSettingDlg, CDialogEx)
-	ON_BN_CLICKED(IDC_MAIN_CHECK_ENABLE_HOTKEY, &CSettingDlg::OnBnClickedCheckEnableHotkey)
-	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_ENABLE_HOTKEY, &CSettingDlg::OnSelchangeCombo0Enable)
-	ON_BN_CLICKED(IDC_MAIN_BUTTON_OPEN_FOLDER, &CSettingDlg::OnBnClickedButton0OpenFolder)
-	ON_EN_KILLFOCUS(IDC_MAIN_EDIT_SPEED, &CSettingDlg::OnKillfocusEditSpeed)
-	ON_NOTIFY(NM_CUSTOMDRAW, IDC_MAIN_SLIDER_SPEED, &CSettingDlg::OnCustomdrawSliderSpeed)
-	ON_BN_CLICKED(IDC_MAIN_BUTTON_REFRESH_WINDOW_NAME, &CSettingDlg::OnBnClickedButton0WindowNameRefresh)
-	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_WINDOW_NAME, &CSettingDlg::OnSelchangeWindowName)
+	ON_BN_CLICKED(IDC_SETTING_CHECK_ENABLE_HOTKEY, &CSettingDlg::OnBnClickedCheckEnableHotkey)
+	ON_CBN_SELCHANGE(IDC_SETTING_COMBO_ENABLE_HOTKEY, &CSettingDlg::OnSelchangeCombo0Enable)
+	ON_BN_CLICKED(IDC_SETTING_BUTTON_OPEN_FOLDER, &CSettingDlg::OnBnClickedButton0OpenFolder)
+	ON_EN_KILLFOCUS(IDC_SETTING_EDIT_SPEED, &CSettingDlg::OnKillfocusEditSpeed)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SETTING_SLIDER_SPEED, &CSettingDlg::OnCustomdrawSliderSpeed)
+	ON_BN_CLICKED(IDC_SETTING_BUTTON_REFRESH_WINDOW_NAME, &CSettingDlg::OnBnClickedButton0WindowNameRefresh)
+	ON_CBN_SELCHANGE(IDC_SETTING_COMBO_WINDOW_NAME, &CSettingDlg::OnSelchangeWindowName)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_COMPACT_TAB_OPERATION, &CSettingDlg::OnTcnSelchangeTabOperation)
 	ON_BN_CLICKED(IDOK, &CSettingDlg::OnBnClickedSave)
 	ON_WM_TIMER()
-	ON_BN_CLICKED(IDC_MAIN_BUTTON_CANCEL, &CSettingDlg::OnBnClickedMainButtonCancel)
-	ON_BN_CLICKED(IDC_MIAIN_CHECK_AUTO_MINIMIZE, &CSettingDlg::OnClickedMiainCheckAutoMinimize)
-	ON_BN_CLICKED(IDC_MAIN_CHECK_LOG, &CSettingDlg::OnBnClickedMainCheckLog)
-	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_LOG_LEVEL, &CSettingDlg::OnSelchangeMainComboLogLevel)
-	ON_BN_CLICKED(IDC_MAIN_CHECK_TASKTRAY, &CSettingDlg::OnBnClickedMainCheckTasktray)
+	ON_BN_CLICKED(IDC_SETTING_BUTTON_CANCEL, &CSettingDlg::OnBnClickedButtonCancel)
+	ON_BN_CLICKED(IDC_SETTING_CHECK_AUTO_MINIMIZE, &CSettingDlg::OnClickedCheckAutoMinimize)
+	ON_BN_CLICKED(IDC_SETTING_CHECK_LOG, &CSettingDlg::OnBnClickedCheckLog)
+	ON_CBN_SELCHANGE(IDC_SETTING_COMBO_LOG_LEVEL, &CSettingDlg::OnSelchangeComboLogLevel)
+	ON_BN_CLICKED(IDC_SETTING_CHECK_TASKTRAY, &CSettingDlg::OnBnClickedCheckTasktray)
 END_MESSAGE_MAP()
 
 
@@ -95,21 +95,21 @@ BOOL CSettingDlg::OnInitDialog()
 	
 	if(m_Automation.m_bAutoMinimize==TRUE)
 	{
-		((CButton*)GetDlgItem(IDC_MIAIN_CHECK_AUTO_MINIMIZE))->SetCheck(1);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_AUTO_MINIMIZE))->SetCheck(1);
 	}
 	else
 	{
-		((CButton*)GetDlgItem(IDC_MIAIN_CHECK_AUTO_MINIMIZE))->SetCheck(0);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_AUTO_MINIMIZE))->SetCheck(0);
 	}
 
 
 	if(m_Automation.m_bLog==TRUE)
 	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->SetCheck(1);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_LOG))->SetCheck(1);
 	}
 	else
 	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->SetCheck(0);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_LOG))->SetCheck(0);
 	}
 
 	m_comboLogLevel.ResetContent();
@@ -123,20 +123,20 @@ BOOL CSettingDlg::OnInitDialog()
 
 	if(m_Automation.m_bEnableHotkey==TRUE)
 	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_ENABLE_HOTKEY))->SetCheck(1);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_ENABLE_HOTKEY))->SetCheck(1);
 	}
 	else
 	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_ENABLE_HOTKEY))->SetCheck(0);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_ENABLE_HOTKEY))->SetCheck(0);
 	}
 	
 	if(m_Automation.m_bMinimizeToTaskTray==TRUE)
 	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->SetCheck(1);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_TASKTRAY))->SetCheck(1);
 	}
 	else
 	{
-		((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->SetCheck(0);
+		((CButton*)GetDlgItem(IDC_SETTING_CHECK_TASKTRAY))->SetCheck(0);
 	}
 
 	m_sEditSpeed.Format(_T("1.00"));
@@ -200,7 +200,7 @@ void CSettingDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CSettingDlg::GetLogLavel(AutomationInfo* autoInfo)
 {
-	autoInfo->m_bLog = ((CButton*)GetDlgItem(IDC_MAIN_CHECK_LOG))->GetCheck();
+	autoInfo->m_bLog = ((CButton*)GetDlgItem(IDC_SETTING_CHECK_LOG))->GetCheck();
 	if(autoInfo->m_bLog==0)
 	{
 		autoInfo->m_iLogLevel=1;
@@ -230,7 +230,7 @@ BOOL CSettingDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 	if(m_comboEnable.GetCurSel()<0){autoInfo->m_sHotkeyEnable.Format(_T("b"));}
 	else{m_comboEnable.GetLBText(m_comboEnable.GetCurSel(),tch); autoInfo->m_sHotkeyEnable.Format(_T("%s"), tch);}
 
-	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_ENABLE_HOTKEY))->GetCheck()==1)
+	if(((CButton*)GetDlgItem(IDC_SETTING_CHECK_ENABLE_HOTKEY))->GetCheck()==1)
 	{
 		autoInfo->m_bEnableHotkey=TRUE;
 	}
@@ -240,7 +240,7 @@ BOOL CSettingDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 	}
 
 
-	if(((CButton*)GetDlgItem(IDC_MIAIN_CHECK_AUTO_MINIMIZE))->GetCheck()==1)
+	if(((CButton*)GetDlgItem(IDC_SETTING_CHECK_AUTO_MINIMIZE))->GetCheck()==1)
 	{
 		autoInfo->m_bAutoMinimize=TRUE;
 	}
@@ -251,7 +251,7 @@ BOOL CSettingDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 	GetLogLavel(autoInfo);
 
 	
-	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->GetCheck()==1)
+	if(((CButton*)GetDlgItem(IDC_SETTING_CHECK_TASKTRAY))->GetCheck()==1)
 	{
 		autoInfo->m_bMinimizeToTaskTray=TRUE;
 	}
@@ -290,7 +290,7 @@ void CSettingDlg::OnSelchangeCombo0Enable()
 void CSettingDlg::OnBnClickedCheckEnableHotkey()
 {
 	UpdateData(TRUE);
-	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_ENABLE_HOTKEY))->GetCheck()==1)
+	if(((CButton*)GetDlgItem(IDC_SETTING_CHECK_ENABLE_HOTKEY))->GetCheck()==1)
 	{
 		m_Automation.m_bEnableHotkey=TRUE;
 	}
@@ -432,7 +432,7 @@ BOOL CSettingDlg::ChangeIcon(int iIcon)
 
 
 
-void CSettingDlg::OnBnClickedMainButtonCancel()
+void CSettingDlg::OnBnClickedButtonCancel()
 {
 	if(m_bNotModified==FALSE)
 	{
@@ -443,7 +443,7 @@ void CSettingDlg::OnBnClickedMainButtonCancel()
 }
 
 
-void CSettingDlg::OnClickedMiainCheckAutoMinimize()
+void CSettingDlg::OnClickedCheckAutoMinimize()
 {
 	UpdateAutomationInfo(&m_Automation);
 	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
@@ -451,7 +451,7 @@ void CSettingDlg::OnClickedMiainCheckAutoMinimize()
 }
 
 
-void CSettingDlg::OnBnClickedMainCheckLog()
+void CSettingDlg::OnBnClickedCheckLog()
 {
 	UpdateAutomationInfo(&m_Automation);
 	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
@@ -459,7 +459,7 @@ void CSettingDlg::OnBnClickedMainCheckLog()
 }
 
 
-void CSettingDlg::OnSelchangeMainComboLogLevel()
+void CSettingDlg::OnSelchangeComboLogLevel()
 {
 	UpdateAutomationInfo(&m_Automation);
 	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
@@ -478,7 +478,7 @@ void CSettingDlg::SetTitleNotChanged(BOOL bTF)
 	}
 }
 
-void CSettingDlg::OnBnClickedMainCheckTasktray()
+void CSettingDlg::OnBnClickedCheckTasktray()
 {	
 	UpdateAutomationInfo(&m_Automation);
 	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
