@@ -101,7 +101,8 @@ public:
 	HICON m_hIconMinimize;
 	HICON m_hIconClose;
 	CSettingDlg m_cDlgSetting;
-
+	BOOL TrayNotifyIconMessage(DWORD dwMessage);
+	
 	void ToggleEnable();
 
 	void WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo);
@@ -142,4 +143,7 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	virtual BOOL DestroyWindow();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+
+	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
 };

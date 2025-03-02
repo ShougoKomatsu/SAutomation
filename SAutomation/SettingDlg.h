@@ -58,4 +58,5 @@ public:
 	afx_msg void OnClickedMiainCheckAutoMinimize();
 	afx_msg void OnBnClickedMainCheckLog();
 	afx_msg void OnSelchangeMainComboLogLevel();
+	afx_msg void OnBnClickedMainCheckTasktray();
 };

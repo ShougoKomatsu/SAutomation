@@ -272,7 +272,10 @@ void AutomationInfo::ReadSettings()
 	}
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
-
+	
+	GetPrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+	if(wcscmp(szData,_T("1"))==0){m_bMinimizeToTaskTray=TRUE;}
+	else{m_bMinimizeToTaskTray=FALSE;}
 }
 
 void AutomationInfo::SaveSettings()
@@ -337,6 +340,14 @@ void AutomationInfo::SaveSettings()
 	{
 		WritePrivateProfileString(_T("Common"),_T("Log"),_T("0"),sFilePath);
 	}
+	if(m_bMinimizeToTaskTray==1)
+	{
+		WritePrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("1"),sFilePath);
+	}
+	else
+	{
+		WritePrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),sFilePath);
+	}
 
 	CString sData;
 	sData.Format(_T("%d"),m_iLogLevel);
@@ -351,6 +362,7 @@ BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 	m_iLogLevel=autoInfoIn->m_iLogLevel;
 	m_bLog=autoInfoIn->m_bLog;
 	m_dwHotKeyEnable=autoInfoIn->m_dwHotKeyEnable;
+	m_bMinimizeToTaskTray=autoInfoIn->m_bMinimizeToTaskTray;
 	m_sDir.Format(_T("%s"),autoInfoIn->m_sDir);
 
 	for(int i=0; i<MAX_THREAD; i++)
@@ -400,7 +412,11 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 //		AfxMessageBox(_T("7"));
 		return FALSE;
 	}
-
+	
+	if(m_bMinimizeToTaskTray != autoInfoIn->m_bMinimizeToTaskTray)
+	{
+		return FALSE;
+	}
 	for(int i=0; i<MAX_THREAD; i++)
 	{
 		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE)

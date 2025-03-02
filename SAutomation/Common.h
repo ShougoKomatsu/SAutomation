@@ -90,6 +90,7 @@ public:
 
 	BOOL m_bEnableHotkey;
 	BOOL m_bAutoMinimize;
+	BOOL m_bMinimizeToTaskTray;
 	CString m_sHotkeyEnable;
 	CString m_sTargetWindowName;
 	int m_iLogLevel;

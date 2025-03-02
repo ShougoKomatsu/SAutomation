@@ -95,6 +95,8 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_WM_MOUSEMOVE()
 	ON_WM_PAINT()
 	ON_WM_CTLCOLOR()
+	ON_WM_SIZE()
+	ON_MESSAGE(WM_TRAYNOTIFY, OnTrayNotify)
 END_MESSAGE_MAP()
 
 
@@ -515,3 +517,60 @@ HBRUSH CSAutomationDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
+
+
+void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+	
+	if (nType == SIZE_MINIMIZED)
+	{
+		if(g_Automation.m_bMinimizeToTaskTray==TRUE)
+		{
+			TrayNotifyIconMessage(NIM_ADD);
+			ShowWindow(SW_HIDE);
+			KillTimer(TIMER_WAKE_UP);
+		}
+	}
+}
+
+LRESULT CSAutomationDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
+{
+	switch (lParam)
+	{
+	case WM_LBUTTONUP: 
+		{
+			if (wParam == IDI_ICON_STANDBY)
+			{
+				ShowWindow(SW_NORMAL);
+				SetForegroundWindow();
+				SetFocus();
+				TrayNotifyIconMessage(NIM_DELETE);
+			} 
+			break;
+		}
+	default:
+		{
+			break;
+		}
+	} 
+
+	return 0;
+}
+
+BOOL CSAutomationDlg::TrayNotifyIconMessage(DWORD dwMessage)
+{
+	CString sTip = _T("SAutomation.exe");
+	NOTIFYICONDATA nid;
+
+	nid.cbSize = sizeof(NOTIFYICONDATA);
+	nid.hWnd   = GetSafeHwnd();
+	nid.uID    = IDI_ICON_STANDBY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON;
+	nid.uCallbackMessage = WM_TRAYNOTIFY;
+	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+	nid.hIcon  = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON_STANDBY));
+	_tcscpy_s(nid.szTip, _countof(nid.szTip), (LPCTSTR)sTip);
+
+	return Shell_NotifyIcon(dwMessage, &nid);
+}

@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CSettingDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MIAIN_CHECK_AUTO_MINIMIZE, &CSettingDlg::OnClickedMiainCheckAutoMinimize)
 	ON_BN_CLICKED(IDC_MAIN_CHECK_LOG, &CSettingDlg::OnBnClickedMainCheckLog)
 	ON_CBN_SELCHANGE(IDC_MAIN_COMBO_LOG_LEVEL, &CSettingDlg::OnSelchangeMainComboLogLevel)
+	ON_BN_CLICKED(IDC_MAIN_CHECK_TASKTRAY, &CSettingDlg::OnBnClickedMainCheckTasktray)
 END_MESSAGE_MAP()
 
 
@@ -127,6 +128,15 @@ BOOL CSettingDlg::OnInitDialog()
 	else
 	{
 		((CButton*)GetDlgItem(IDC_MAIN_CHECK_ENABLE_HOTKEY))->SetCheck(0);
+	}
+	
+	if(m_Automation.m_bMinimizeToTaskTray==TRUE)
+	{
+		((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->SetCheck(1);
+	}
+	else
+	{
+		((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->SetCheck(0);
 	}
 
 	m_sEditSpeed.Format(_T("1.00"));
@@ -239,6 +249,17 @@ BOOL CSettingDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 		autoInfo->m_bAutoMinimize=FALSE;
 	}
 	GetLogLavel(autoInfo);
+
+	
+	if(((CButton*)GetDlgItem(IDC_MAIN_CHECK_TASKTRAY))->GetCheck()==1)
+	{
+		autoInfo->m_bMinimizeToTaskTray=TRUE;
+	}
+	else
+	{
+		autoInfo->m_bMinimizeToTaskTray=FALSE;
+	}
+
 
 	return TRUE;
 }
@@ -455,4 +476,11 @@ void CSettingDlg::SetTitleNotChanged(BOOL bTF)
 	{
 		SetWindowText(_T("SAutomation"));
 	}
+}
+
+void CSettingDlg::OnBnClickedMainCheckTasktray()
+{	
+	UpdateAutomationInfo(&m_Automation);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
 }
