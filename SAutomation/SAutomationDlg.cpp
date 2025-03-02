@@ -102,6 +102,10 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 {
 
 	UpdateData(TRUE);
+	if(wParam<0){return 0;}
+	if(wParam>=MAX_THREAD){return 0;}
+	g_hThread[wParam]=NULL;
+
 	g_Automation.m_OpeInfo[wParam].m_bRunning=FALSE;
 	
 	m_bRunningAny=FALSE;
@@ -338,18 +342,15 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)
 	{
-		BOOL bAnyArrive = FALSE;
 		for(int iScene = 0; iScene< MAX_THREAD; iScene++)
 		{
-			if(g_hThread[iScene] != NULL)
+			if(g_hThread[iScene] == NULL){continue;}
+			if(g_iWatching == 0)
 			{
-				if(g_iWatching==0)
-				{
-					RegisterHotKey(NULL, HOTKEY_ESCAPE, MOD_NOREPEAT, VK_ESCAPE);
-					g_iWatching=1;
-				}
-				return;
+				RegisterHotKey(NULL, HOTKEY_ESCAPE, MOD_NOREPEAT, VK_ESCAPE);
+				g_iWatching=1;
 			}
+			return;
 		}
 		if(g_iWatching==1){UnregisterHotKey(NULL, HOTKEY_ESCAPE); g_iWatching=0;}
 	}
