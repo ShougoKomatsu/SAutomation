@@ -382,34 +382,26 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 	}
 	if(m_bAutoMinimize != autoInfoIn->m_bAutoMinimize)
 	{
-//		CString sss;
-//		sss.Format(_T("%d, %d"), m_bAutoMinimize,autoInfoIn->m_bAutoMinimize);
-//		AfxMessageBox(sss);
 		return FALSE;
 	}
 	if(m_sHotkeyEnable.Compare(autoInfoIn->m_sHotkeyEnable) != 0)
 	{
-//		AfxMessageBox(_T("3"));
 		return FALSE;
 	}
 	if(m_iLogLevel != autoInfoIn->m_iLogLevel)
 	{
-//		AfxMessageBox(_T("4"));
 		return FALSE;
 	}
 	if(m_bLog != autoInfoIn->m_bLog)
 	{
-//		AfxMessageBox(_T("5"));
 		return FALSE;
 	}
 	if(m_dwHotKeyEnable != autoInfoIn->m_dwHotKeyEnable)
 	{
-//		AfxMessageBox(_T("6"));
 		return FALSE;
 	}
 	if(m_sDir.Compare(autoInfoIn->m_sDir) != 0)
 	{
-//		AfxMessageBox(_T("7"));
 		return FALSE;
 	}
 	

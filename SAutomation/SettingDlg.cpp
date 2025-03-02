@@ -138,6 +138,8 @@ BOOL CSettingDlg::OnInitDialog()
 	{
 		((CButton*)GetDlgItem(IDC_SETTING_CHECK_TASKTRAY))->SetCheck(0);
 	}
+	
+	SetComboItem(&m_comboEnable,m_Automation.m_sHotkeyEnable);
 
 	m_sEditSpeed.Format(_T("1.00"));
 	m_sliderSpeed.SetRangeMin(0);	
