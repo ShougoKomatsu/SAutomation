@@ -62,6 +62,14 @@ END_MESSAGE_MAP()
 BOOL CSettingDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	
+	LONG lExStyle = GetWindowLong(this->m_hWnd,GWL_EXSTYLE);
+    lExStyle %= ~WS_EX_APPWINDOW;
+    lExStyle |= WS_EX_TOOLWINDOW;
+    SetWindowLong(this->m_hWnd, GWL_EXSTYLE,lExStyle);
+
+
 	m_Automation.Copy(&g_Automation);
 	m_bNotModified=TRUE;
 	SetTitleNotChanged( m_bNotModified );

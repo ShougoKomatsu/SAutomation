@@ -249,6 +249,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	m_ButtonClose.SetIcon(m_hIconClose);
 	::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
 	SetIcon(m_hIconStandby, FALSE);
+	SetIcon(m_hIconStandby, TRUE);
 	
 	CRect rect;
 	GetClientRect(&rect);
@@ -464,6 +465,11 @@ void CSAutomationDlg::OnBnClickedButtonCompactExit()
 {
 	CSettingDlg settingDlg;
 	settingDlg.DoModal();
+	
+	if(g_Automation.m_bEnableHotkey==TRUE)
+	{
+		for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+	}
 }
 
 
