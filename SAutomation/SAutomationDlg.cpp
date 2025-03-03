@@ -465,6 +465,11 @@ void CSAutomationDlg::OnBnClickedButtonCompactExit()
 {
 	CSettingDlg settingDlg;
 	settingDlg.DoModal();
+	
+	if(g_Automation.m_bEnableHotkey==TRUE)
+	{
+		for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+	}
 }
 
 
