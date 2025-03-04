@@ -1,4 +1,6 @@
 1 wait ctrl off 0
 2 wait shift off 0
-3 //msgbox( ) 0
-4 exit 10
+3 waiteitherkey(-1,a,aaa,b,bbb) 103
+7 bbb: 101
+8 msgbox(bbb) 0
+9 exit 10

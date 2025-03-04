@@ -1,6 +1,15 @@
 ﻿
 wait ctrl off
 wait shift off
+waiteitherkey(-1,a,aaa,b,bbb)
+
+aaa:
+msgbox(aaa)
+exit
+
+bbb:
+msgbox(bbb)
+exit
 //msgbox( )
 exit
 

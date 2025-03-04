@@ -712,6 +712,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 
 	case COMMAND_WAIT:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_KEY:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_EITHER_KEY:{return WaitForEitherKeyOn(*iSceneData, Halt, Suspend, &saData, sReturnParam);}
 	case COMMAND_WAIT_IMG:{return WaitForImage(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_COLOR:{return WaitForColor(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(*iSceneData, Halt, Suspend, &saData);}
@@ -852,4 +853,88 @@ ReturnValue Input(CString sInputWithDblQuart)
 	}
 
 	return RETURN_NORMAL;
+}
+
+ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam)
+{
+
+	int iWaitOn;
+
+	BOOL bUnicode;
+	TCHAR tch;
+	ReturnValue iRet;
+	int iTimeOutMillisec;
+	BYTE* byKeys;
+	CString* sLabels;
+	
+	int iLength=saData->GetCount();
+	if((iLength%2) != 1){return RETURN_FAILED;}
+	if(iLength<3){return RETURN_FAILED;}
+
+	int iKeynum=(iLength-1)/2;
+	byKeys=new BYTE[iKeynum];
+	sLabels=new CString[iKeynum];
+
+	iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(0));
+	for(int i=0; i<iKeynum; i++)
+	{
+		iRet = GetKeyCode(saData->GetAt(2*i+1), &bUnicode, &tch, &(byKeys[i]));
+		sLabels[i].Format(_T("%s"),saData->GetAt(2*i+2));
+		if(iRet < 0)
+		{ 
+			delete [] byKeys;
+			delete [] sLabels;
+			return iRet;
+		}
+		if(bUnicode == TRUE)
+		{
+			if(('0'<=tch) && (tch<='9')){byKeys[i] = tch;}
+			if(('a'<=tch) && (tch<='z')){byKeys[i] = tch;}
+			if(('A'<=tch) && (tch<='Z')){byKeys[i] = tch-'A'+'a';}
+		}
+	}
+
+
+
+
+	short shKey;
+
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
+	while(1)
+	{
+		for(int i=0; i<iKeynum; i++)
+		{
+			shKey = GetAsyncKeyState (byKeys[i]);
+			if(shKey<0) 
+			{
+				sReturnParam->Format(_T("%s"), sLabels[i]);
+
+				delete [] byKeys;
+				delete [] sLabels;
+				return RETURN_GOTO_BY_SWITCH;
+			}
+		}
+		iRet = K_Sleep(Halt, Suspend, 1);
+		if(iRet <0)
+		{
+			delete [] byKeys;
+			delete [] sLabels;
+			return iRet;
+		}
+
+		if(iTimeOutMillisec>=0)
+		{
+			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMillisec/g_dSpeedMult))
+			{
+				delete [] byKeys;
+				delete [] sLabels;
+				return RETURN_FAILED;
+			}
+		}
+	}
+	delete [] byKeys;
+	delete [] sLabels;
+	return RETURN_FAILED;
 }

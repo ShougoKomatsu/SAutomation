@@ -33,6 +33,7 @@
 #define COMMAND_MESSAGEBOX (COMMAND_COMMON + 19)
 #define COMMAND_LIST_DLG_ITEMS (COMMAND_COMMON + 20)
 #define COMMAND_GET_DLG_ITEM (COMMAND_COMMON + 21)
+#define COMMAND_WAIT_EITHER_KEY (COMMAND_COMMON + 22)
 
 #define COMMAND_EXIT (COMMAND_FLOW +1)
 #define COMMAND_LABEL (COMMAND_FLOW +2)
@@ -69,4 +70,5 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData);
 ReturnValue Input(CString sInputWithDblQuart);
 
+ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam);
 #endif

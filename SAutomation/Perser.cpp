@@ -95,6 +95,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if((sDataTrim.Left(4).CompareNoCase(_T("dim "))==0)){*iCommandType=COMMAND_DECRARE; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("WaitKey"))==0){*iCommandType=COMMAND_WAIT_KEY; return TRUE;}
+	if(sDataTrim.Left(13).CompareNoCase(_T("WaitEitherKey"))==0){*iCommandType=COMMAND_WAIT_EITHER_KEY; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("wait"))==0){*iCommandType=COMMAND_WAIT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("windowsize"))==0){*iCommandType=COMMAND_WINDOW_SIZE; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("windowpos"))==0){*iCommandType=COMMAND_WINDOW_POS; return TRUE;}
@@ -762,6 +763,22 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 				saData->Add(sArg);
 			}
 
+			return TRUE;
+		}
+	case COMMAND_WAIT_EITHER_KEY:
+		{
+			*iCommandType=iType;
+
+			int iCount;
+			CountTokenInBracket(sDataLocal,&iCount);
+			if( (iCount%2) != 1){return FALSE;}
+			if( iCount < 3){return FALSE;}
+
+			for(int i=0; i<iCount; i++)
+			{
+				ExtractTokenInBracket(sDataLocal,i,&sArg);
+				saData->Add(sArg);
+			}
 			return TRUE;
 		}
 	case COMMAND_MAXIMIZE:{*iCommandType=iType; return TRUE;}
