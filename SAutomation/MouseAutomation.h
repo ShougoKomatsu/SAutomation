@@ -26,6 +26,7 @@
 #define COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW (COMMAND_MOUSE+100+6)
 #define COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE (COMMAND_MOUSE+100+7)
 #define COMMAND_MOUSE_MOVE_TO_ITEM (COMMAND_MOUSE+100+8)
+#define COMMAND_MOUSE_L_CLICK_IMG (COMMAND_MOUSE+100+9)
 
 ReturnValue MouseLDownAbs(UINT nX, UINT nY);
 ReturnValue MouseLDown(int iScene, CStringArray* saData);
@@ -61,5 +62,7 @@ ReturnValue MoveMouseToItem(int iScene, CStringArray* saData);
 ReturnValue MoveMouseToImage(int iScene, CStringArray* saData);
 ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData);
 ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData);
+
+ReturnValue MouseLClickImage(int iScene, CStringArray* saData);
 
 void ChangeMouseOrigin(UINT uiX, UINT uiY);

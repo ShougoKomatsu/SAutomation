@@ -412,6 +412,66 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
+ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
+{
+
+	if(saData->GetCount()<5){return RETURN_FAILED;}
+	
+	BOOL bRet;
+	CString sModelFilePath;
+	int iR0, iC0, iR1, iC1;
+	
+	CString sArg;
+	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sModelFilePath.Format(_T("%s"), sArg);
+
+	iC0=GetIntValue(iScene, saData->GetAt(1));
+	iR0=GetIntValue(iScene, saData->GetAt(2));
+	iC1=GetIntValue(iScene, saData->GetAt(3));
+	iR1=GetIntValue(iScene, saData->GetAt(4));
+
+	ImgRGB imgModel;
+	ImgRGB imgTarget;
+	ImgRGB imgMask;
+	imgModel.Assign(sModelFilePath);
+	
+	CString sMaskFilePath;
+	sMaskFilePath.Format(_T("%s"), sModelFilePath);
+	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
+	BOOL bUseMask;
+
+	bRet = imgMask.Assign(sMaskFilePath);
+	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
+
+
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
+	int iFoundR, iFoundC;
+
+	Screenshot(&imgTarget);
+	if(bUseMask==TRUE)
+	{
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+	}
+	else
+	{
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+	}
+//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
+
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	MoveMouseAbs(iFoundC, iFoundR);
+	MouseLDownAbs(iFoundC, iFoundR);
+	Sleep(g_iClickDulation);
+	return MouseLUpAbs(iFoundC, iFoundR);
+
+	return RETURN_NORMAL;
+}
+
 
 void ChangeMouseOrigin(UINT uiX, UINT uiY)
 {

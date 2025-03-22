@@ -1470,7 +1470,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			CString sArg1;
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			ExtractTokenInBracket(sDataLocal,0,&sArg2);
+			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
 			Object* objSrc;
 			objSrc=GetObjValuePointer(iScene, sArg1);
