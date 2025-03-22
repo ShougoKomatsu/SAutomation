@@ -114,6 +114,7 @@ BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
 	}
 	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("SearchResult"))==0){*iCommandType=VARIABLE_POINT_SEARCH_RESULT; return TRUE;}
 	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
 	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
 
@@ -1509,6 +1510,66 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			int iHeight;
 			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
 			pPoint->Set(iLeft+iWidth-1,iTop+iHeight-1);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_POINT_SEARCH_RESULT:
+		{
+
+			BOOL bRet;
+			CString sModelFilePath;
+			int iR0, iC0, iR1, iC1;
+
+			CString sArg;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
+			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+			sModelFilePath.Format(_T("%s"), sArg);
+			
+			CString sC0, sR0, sC1, sR1;
+			ExtractTokenInBracket(sDataLocal,1,&sC0);
+			ExtractTokenInBracket(sDataLocal,2,&sR0);
+			ExtractTokenInBracket(sDataLocal,3,&sC1);
+			ExtractTokenInBracket(sDataLocal,4,&sR1);
+
+			iC0=GetIntValue(iScene, sC0);
+			iR0=GetIntValue(iScene, sR0);
+			iC1=GetIntValue(iScene, sC1);
+			iR1=GetIntValue(iScene, sR1);
+
+			ImgRGB imgModel;
+			ImgRGB imgTarget;
+			ImgRGB imgMask;
+			imgModel.Assign(sModelFilePath);
+
+			CString sMaskFilePath;
+			sMaskFilePath.Format(_T("%s"), sModelFilePath);
+			sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
+			BOOL bUseMask;
+
+			bRet = imgMask.Assign(sMaskFilePath);
+			if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
+
+
+			ULONGLONG ullStartMilliSec;
+			ullStartMilliSec = GetTickCount64();
+
+			int iFoundR, iFoundC;
+
+			Screenshot(&imgTarget);
+			if(bUseMask==TRUE)
+			{
+				bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+			}
+			else
+			{
+				bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+			}
+			//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
+
+			if(bRet != TRUE){return RETURN_FAILED;}
+			pPoint->Set(iFoundC, iFoundR);
+
+
 			return RETURN_NORMAL;
 		}
 	}

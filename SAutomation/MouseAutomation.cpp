@@ -352,6 +352,9 @@ ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
 
 }
 
+
+
+
 ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 {
 
