@@ -136,6 +136,7 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 		if(sDataTrim.Right(1).Compare(_T("/"))==0){*iSelfSrc=VARIABLE_SELF_SRC_DIV;}
 		return TRUE;
 	}
+	if(sDataTrim.Left(9).CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
@@ -176,6 +177,45 @@ int GetIntValuePointer(int iScene, CString sArg)
 }
 */
 
+int CopyToClipBoardStr(int iScene, CString sDataLocal)
+{
+	CString sValue;
+	sValue.Format(_T("%s"), GetStrValue(iScene, sDataLocal));
+
+	TCHAR* pMem =NULL;
+	pMem = (TCHAR*)GlobalAlloc(GMEM_FIXED|GMEM_ZEROINIT, (sValue.GetLength()+1)*sizeof(TCHAR) );
+	if(pMem==NULL)
+	{
+		return RETURN_FAILED;
+	}
+	_stprintf(pMem, _T("%s"), sValue);
+
+	BOOL bRet;
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE)
+	{
+		GlobalFree(pMem);
+		return RETURN_FAILED;
+	}
+
+	bRet = EmptyClipboard();
+	if(bRet == FALSE)
+	{
+		GlobalFree(pMem);
+		return RETURN_FAILED;
+	}
+
+	SetClipboardData(CF_UNICODETEXT, pMem);
+		GlobalFree(pMem);
+
+	bRet == CloseClipboard();
+	if(bRet == FALSE)
+	{
+		return RETURN_FAILED;
+	}
+
+	return RETURN_NORMAL;
+}
 
 int GetIntValue(int iScene, CString sDataLocal)
 {
@@ -1627,6 +1667,21 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
 			return SetPointValue(pPointDst, iScene, saData->GetAt(1));
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			int iCmmandType;
+			bRet = GetOperandIntSrc(saData->GetAt(1),&iCmmandType);
+			if(bRet == TRUE){ return RETURN_NORMAL;}
+			
+			bRet = GetOperandStrSrc(saData->GetAt(1),&iCmmandType);
+			if(bRet == TRUE){ CopyToClipBoardStr(iScene, saData->GetAt(1)); return RETURN_NORMAL;}
+			
+			bRet = GetOperandImgSrc(saData->GetAt(1),&iCmmandType);
+			if(bRet == TRUE){ return RETURN_NORMAL;}
+			
+
+			return RETURN_FAILED;
 		}
 	default:{return RETURN_FAILED;}
 	}
