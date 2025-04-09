@@ -11,7 +11,7 @@
 
 #define CHANNEL_UNDEFINED (0)
 #define CHANNEL_1_8 (1)
-#define CHANNEL_3_8 (3)
+#define CHANNEL_3_8RGB (3)
 #define CHANNEL_1_24BGR (24)
 #define CHANNEL_3_FLOAT (103)
 
@@ -172,3 +172,17 @@ BOOL DLL_IE Union1(Object* objIn, Object* objOut);
 BOOL DLL_IE ReduceDomain(ImgRGB* imgRGBIn, Object* objIn, ImgRGB* imgRGBOut);
 
 BOOL DLL_IE GenRectangle1(Object* objOut, int iR0, int iC0, int iR1, int iC1);
+BOOL DLL_IE MeanImage(ImgRGB* imgIn, ImgRGB* imgResult, int iFilterWidth, int iFilterHeight);
+BOOL DLL_IE MaxImage(ImgRGB* imgIn, ImgRGB* imgResult, int iFilterWidth, int iFilterHeight);
+BOOL DLL_IE MinImage(ImgRGB* imgIn, ImgRGB* imgResult, int iFilterWidth, int iFilterHeight);
+BOOL DLL_IE SubImage(ImgRGB* img1, ImgRGB* img2, ImgRGB* imgResult, double dMult, double dAdd);
+
+
+struct DLL_IE Camera
+{
+	Camera(){}
+	~Camera(){}
+	int OpenCamera(CString sPipeName);
+	int CloseCamera();
+	int GrabImage(ImgRGB* imgOut);
+};

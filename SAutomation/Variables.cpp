@@ -10,6 +10,7 @@ CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 Point g_point[MAX_THREAD][MAX_VARIABLES];
 Object g_object[MAX_THREAD][MAX_VARIABLES];
+Camera g_camera;
 
 BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 {
@@ -25,6 +26,20 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(13).CompareNoCase(_T("GenRectangle1"))==0){*iCommandType=VARIABLE_OBJECT_GEN_RECTANGLE1; return TRUE;}
 
 	*iCommandType=VARIABLE_OBJECT;
+	return TRUE;
+}
+
+BOOL GetOperandCameraSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+	
+	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA; return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("Open"))==0){*iCommandType=VARIABLE_CAMERA_OPEN; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("Close"))==0){*iCommandType=VARIABLE_CAMERA_CLOSE; return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("Grab"))==0){*iCommandType=VARIABLE_CAMERA_GRAB; return TRUE;}
+
+	*iCommandType=VARIABLE_CAMERA;
 	return TRUE;
 }
 
@@ -97,7 +112,8 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("Decompose3"))==0){*iCommandType=VARIABLE_IMG_DECOMPOSE; return TRUE;}
 	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
-
+	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA_GRAB; return TRUE;}
+	
 	return TRUE;
 }
 BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
@@ -136,6 +152,7 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 		if(sDataTrim.Right(1).Compare(_T("/"))==0){*iSelfSrc=VARIABLE_SELF_SRC_DIV;}
 		return TRUE;
 	}
+	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
@@ -1137,7 +1154,11 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 	return RETURN_FAILED;
 }
 
-
+ReturnValue SetCameraValue(Camera* cameraDst, int iScene, CString sData)
+{
+	cameraDst=&g_camera;
+	return RETURN_NORMAL;
+}
 ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 {
 	CString sArg;
@@ -1421,6 +1442,15 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			bRet = ReduceDomain(pImgRGBIn, objRegion, pImgRGB);
 			if(bRet != TRUE){return RETURN_FAILED;}
 			return RETURN_NORMAL;
+		}
+	case VARIABLE_CAMERA_GRAB:
+		{
+			g_camera.OpenCamera(_T("Camera0327"));
+			Sleep(1000);
+			g_camera.GrabImage(pImgRGB);
+			g_camera.CloseCamera();
+			return RETURN_NORMAL;
+
 		}
 	}
 
