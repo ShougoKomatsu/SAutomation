@@ -1,6 +1,5 @@
 1 wait ctrl off 0
 2 wait shift off 0
-3 waiteitherkey(-1,a,aaa,b,bbb) 103
-7 bbb: 101
-8 msgbox(bbb) 0
-9 exit 10
+3 VarStr1=abcdefg 0
+4 ClipBoard=VarStr1 0
+5 exit 10
