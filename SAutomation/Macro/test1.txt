@@ -1,27 +1,22 @@
 ﻿
 wait ctrl off
 wait shift off
-VarStr1=abcdefg
-ClipBoard=VarStr1
-exit
-waiteitherkey(-1,a,aaa,b,bbb)
-aaa:
-msgbox(aaa)
-exit
+VarStr1=ClipBoardFilePath
 
-bbb:
-msgbox(bbb)
-exit
-//msgbox( )
-exit
+MsgBox(VarStr1)
 
-varstr1=input
-msgbox(varstr1)
-VarPoint1=ForegroundWindowLU
-MousePos(VarPoint1)
-1000
-exit
-ListDlgItems
-VarInt1=DlgItem(E X I T)
 
-mousepostoitem(VarInt1)
+
+49373
+49782
+
+49783
+
+49374
+49382
+49398
+
+/49330
+
+//49377
+48171
