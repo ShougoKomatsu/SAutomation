@@ -5,7 +5,7 @@
 BOOL DispAvailableClipboardFormat()
 {
 	int iFormat;
-	iFormat = EnumClipboardFormats(0);
+	iFormat = 0;
 	while(1)
 	{
 		CString sFormat;
