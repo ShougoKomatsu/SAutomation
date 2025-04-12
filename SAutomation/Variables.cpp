@@ -181,12 +181,9 @@ return 0;
 }
 */
 
-int CopyToClipBoardStr(int iScene, CString sDataLocal)
+int CopyToClipBoardStr(CString sValue)
 {
-	CString sValue;
-	sValue.Format(_T("%s"), GetStrValue(iScene, sDataLocal));
 	BOOL bRet;
-
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return RETURN_FAILED;}
 
@@ -217,7 +214,7 @@ int CopyToClipBoardStr(int iScene, CString sDataLocal)
 	return RETURN_NORMAL;
 }
 
-int CopyToClipBoardImg(int iScene, ImgRGB* imgRGB)
+int CopyToClipBoardImg(ImgRGB* imgRGB)
 {
 	int iFillerSize;
 
@@ -1873,20 +1870,25 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 	case VARIABLE_CLIPBOARD:
 		{
 			int iCmmandType;
-		//	bRet = GetOperandIntSrc(saData->GetAt(1),&iCmmandType);
-		//	if(bRet == TRUE){ return RETURN_NORMAL;}
-			
 			bRet = GetOperandStrSrc(saData->GetAt(1),&iCmmandType);
-			if(bRet == TRUE){ CopyToClipBoardStr(iScene, saData->GetAt(1)); return RETURN_NORMAL;}
+			if(bRet == TRUE)
+			{
+				CString sValue;
+				sValue.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(1)));
+
+				bRet = CopyToClipBoardStr(sValue);
+				if(bRet != TRUE){return RETURN_FAILED;}
+				return RETURN_NORMAL;
+			}
 
 			bRet = GetOperandImgSrc(saData->GetAt(1),&iCmmandType);
 			if(bRet == TRUE)
 			{
-				
-			ImgRGB* pImgRGBSrc = GetImgValuePointer(iScene, saData->GetAt(1));
-			if(pImgRGBSrc == NULL){return RETURN_FAILED;}
+				ImgRGB* pImgRGBSrc = GetImgValuePointer(iScene, saData->GetAt(1));
+				if(pImgRGBSrc == NULL){return RETURN_FAILED;}
 
-				CopyToClipBoardImg(iScene, pImgRGBSrc); 
+				bRet = CopyToClipBoardImg(pImgRGBSrc);
+				if(bRet != TRUE){return RETURN_FAILED;}
 				return RETURN_NORMAL;
 			}
 

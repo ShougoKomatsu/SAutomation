@@ -1,14 +1,8 @@
 ﻿
 wait ctrl off
 wait shift off
-VarImg1=ClipBoard
-WriteImage(VarImg1,r:\test.bmp)
-
-VarImg1=ScreenShot
-VarImg2=Decompose3(VarImg1,R)
-ClipBoard=VarImg2
-
-msgbox(VarStr1)
+VarStr1=abcdefg
+ClipBoard=VarStr1
 exit
 waiteitherkey(-1,a,aaa,b,bbb)
 aaa:
