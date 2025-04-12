@@ -94,7 +94,8 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-
+	
+	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ReduceDomain"))==0){*iCommandType=VARIABLE_IMG_REDUCE_DOMAIN; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
@@ -336,6 +337,72 @@ const CString CopyFromClipBoardStr()
 
 	return sResult;
 }
+
+BOOL CopyFromClipBoardImg(ImgRGB* imgRGB)
+{
+	BOOL bRet;
+	BITMAPINFOHEADER bmih;
+
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE){return FALSE;}
+
+	HANDLE hResult;
+	hResult = GetClipboardData(CF_DIB);
+	if(hResult == NULL){return FALSE;}
+
+	LPVOID byData = GlobalLock(hResult);
+	if(byData==NULL){return FALSE;}
+	
+	for(int i=0; i<sizeof(bmih); i++)
+	{
+		((BYTE*)&bmih)[i] = ((BYTE*)byData)[i];
+	}
+	int iWidthLocal;
+	int iHeightLocal;
+
+	iWidthLocal = bmih.biWidth;
+	if(bmih.biHeight<0){iHeightLocal=-1*(bmih.biHeight);}
+	else{iHeightLocal=(bmih.biHeight);}
+
+	if(bmih.biClrUsed>0)
+	{
+		return FALSE;
+	}
+
+	BYTE* byImgData;
+	byImgData = &(((BYTE*)(byData))[sizeof(BITMAPINFOHEADER)]);
+		
+	
+	int iFiller;
+
+	imgRGB->Set(iWidthLocal, iHeightLocal, CHANNEL_3_8);
+	
+	iFiller = iWidthLocal%4;
+
+	for(int r=0; r<iHeightLocal; r++)
+	{
+		for(int c=0; c< iWidthLocal; c++)
+		{
+			(imgRGB->byImgB)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+0];
+			(imgRGB->byImgG)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+1];
+			(imgRGB->byImgR)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+2];
+		}
+	}
+
+
+
+
+
+
+	GlobalUnlock(hResult);
+
+	bRet = CloseClipboard();
+	if(bRet == FALSE){return FALSE;}
+
+	return TRUE;
+}
+
+
 int GetIntValue(int iScene, CString sDataLocal)
 {
 	int iOperandSrc;
@@ -1587,6 +1654,13 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(objRegion == NULL){return RETURN_FAILED;}
 
 			bRet = ReduceDomain(pImgRGBIn, objRegion, pImgRGB);
+			if(bRet != TRUE){return RETURN_FAILED;}
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+			bRet = CopyFromClipBoardImg(pImgRGB);
 			if(bRet != TRUE){return RETURN_FAILED;}
 			return RETURN_NORMAL;
 		}
