@@ -1,5 +1,6 @@
 1 wait ctrl off 0
 2 wait shift off 0
-3 VarStr1=abcdefg 0
-4 ClipBoard=VarStr1 -1
+3 VarStr1=ClipBoardFilePath 0
+4 MsgBox(VarStr1) 0
+5 ClipBoard=VarStr1 -1
 iErrorTreat = 0 

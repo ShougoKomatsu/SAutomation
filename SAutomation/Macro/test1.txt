@@ -1,9 +1,11 @@
 ﻿
 wait ctrl off
 wait shift off
-VarStr1=ClipBoardFileLastWriteTime(YYYYMMDD_hhmm)
+VarStr1=ClipBoardFilePath
+MsgBox(VarStr1)
+
 ClipBoard=VarStr1
 
-MsgBox(VarStr1)
+
 
 

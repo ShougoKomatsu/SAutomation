@@ -13,6 +13,9 @@ ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 Point g_point[MAX_THREAD][MAX_VARIABLES];
 Object g_object[MAX_THREAD][MAX_VARIABLES];
 
+
+
+
 BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
@@ -30,6 +33,34 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 	return TRUE;
 }
 
+#define VARIABLE_NAME_NUM_STR_SRC (16)
+
+VariableName VarNameStrSrc[VARIABLE_NAME_NUM_STR_SRC]=
+{
+	VariableName( MATCH_FULL,_T("ClipBoard"), VARIABLE_CLIPBOARD),
+	VariableName( MATCH_FULL,_T("ClipBoardFilePath"), VARIABLE_CLIPBOARD_FILE_PATH),
+	VariableName( MATCH_FULL,_T("ClipBoardFileName"), VARIABLE_CLIPBOARD_FILE_NAME),
+	
+	VariableName( MATCH_LEFT,_T("Input"), VARIABLE_INPUT),
+	VariableName( MATCH_LEFT,_T("ForegroundWindowName"), VARIABLE_FOREGROUND_WINDOW_NAME),
+	VariableName( MATCH_LEFT,_T("ForegroundWindowClassName"), VARIABLE_FOREGROUND_WINDOW_CLASS_NAME),
+	
+	VariableName( MATCH_LEFT,_T("ClipBoardFileCreationTime"), VARIABLE_CLIPBOARD_FILE_CREATIONTIME),
+	VariableName( MATCH_LEFT,_T("ClipBoardFileLastWriteTime"), VARIABLE_CLIPBOARD_FILE_LASTWRITETIME),
+	VariableName( MATCH_LEFT,_T("ClipBoardFileLastAccessTime"), VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME),
+	
+	VariableName( MATCH_LEFT,_T("VarStr"), VARIABLE_STR),
+	VariableName( MATCH_LEFT,_T("StrCombine"), VARIABLE_COMBINE_STR),
+	VariableName( MATCH_LEFT,_T("Int2Str"), VARIABLE_INT2STR),
+	VariableName( MATCH_LEFT,_T("NowDateTime"), VARIABLE_NOW_DATE_TIME),
+	VariableName( MATCH_LEFT,_T("Left"), VARIABLE_STR_LEFT),
+	VariableName( MATCH_LEFT,_T("Right"), VARIABLE_STR_RIGHT),
+	VariableName( MATCH_LEFT,_T("Mid"), VARIABLE_STR_MID),
+};
+
+
+
+
 BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
@@ -37,25 +68,18 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType = VARIABLE_IMG; return FALSE;}
 
-	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
-	if(sDataTrim.Left(20).CompareNoCase(_T("ForegroundWindowName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_NAME; return TRUE;}
-	if(sDataTrim.Left(25).CompareNoCase(_T("ForegroundWindowClassName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_CLASS_NAME; return TRUE;}
-	
-	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("ClipBoardFilePath"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_PATH; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("ClipBoardFileName"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_NAME; return TRUE;}
+	for(int i=0; i<VARIABLE_NAME_NUM_STR_SRC; i++)
+	{
+		if(VarNameStrSrc[i].iMatch==MATCH_FULL)
+		{
+			if(sDataTrim.CompareNoCase(VarNameStrSrc[i].sName)==0){*iCommandType = VarNameStrSrc[i].iCommandType; return TRUE;}		
+		}
+		if(VarNameStrSrc[i].iMatch==MATCH_LEFT)
+		{
+			if(sDataTrim.Left(VarNameStrSrc[i].sName.GetLength()).CompareNoCase(VarNameStrSrc[i].sName)==0){*iCommandType = VarNameStrSrc[i].iCommandType; return TRUE;}		
+		}
+	}
 
-	if(sDataTrim.Left(25).CompareNoCase(_T("ClipBoardFileCreationTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_CREATIONTIME; return TRUE;}
-	if(sDataTrim.Left(26).CompareNoCase(_T("ClipBoardFileLastWriteTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_LASTWRITETIME; return TRUE;}
-	if(sDataTrim.Left(27).CompareNoCase(_T("ClipBoardFileLastAccessTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME; return TRUE;}
-
-	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
-	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
-	if(sDataTrim.Left(11).CompareNoCase(_T("NowDateTime"))==0){*iCommandType=VARIABLE_NOW_DATE_TIME; return TRUE;}
-	if(sDataTrim.Left(4).CompareNoCase(_T("Left"))==0){*iCommandType=VARIABLE_STR_LEFT; return TRUE;}
-	if(sDataTrim.Left(5).CompareNoCase(_T("Right"))==0){*iCommandType=VARIABLE_STR_RIGHT; return TRUE;}
-	if(sDataTrim.Left(3).CompareNoCase(_T("Mid"))==0){*iCommandType=VARIABLE_STR_MID; return TRUE;}
 	*iCommandType=VARIABLE_STR;
 	return TRUE;
 }
