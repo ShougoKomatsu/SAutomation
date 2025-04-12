@@ -1,6 +1,5 @@
 1 wait ctrl off 0
 2 wait shift off 0
-3 Varstr1=clipboard 0
-4 msgbox(VarStr1) 0
-5 clipboard=varstr1 -1
+3 VarStr1=abcdefg 0
+4 ClipBoard=VarStr1 -1
 iErrorTreat = 0 
