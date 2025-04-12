@@ -1,5 +1,7 @@
 1 wait ctrl off 0
 2 wait shift off 0
-3 VarStr1=ClipBoard 0
-4 msgbox(VarStr1) 0
-5 exit 10
+3 VarImg1=ScreenShot 0
+4 VarImg2=Decompose3(VarImg1,R) 0
+5 ClipBoard=VarImg2 0
+6 msgbox(VarStr1) 0
+7 exit 10

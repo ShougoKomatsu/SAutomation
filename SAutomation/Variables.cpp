@@ -32,6 +32,8 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+	
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType = VARIABLE_IMG; return FALSE;}
 
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 	if(sDataTrim.Left(20).CompareNoCase(_T("ForegroundWindowName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_NAME; return TRUE;}
@@ -199,6 +201,102 @@ int CopyToClipBoardStr(int iScene, CString sDataLocal)
 	
 	HANDLE hResult;
 	hResult = SetClipboardData(CF_UNICODETEXT, hGL);
+	if(hResult == NULL)
+	{
+		GlobalFree(hGL);
+		return RETURN_FAILED;
+	}
+
+	bRet = CloseClipboard();
+	if(bRet == FALSE)
+	{
+		GlobalFree(hGL);
+		return RETURN_FAILED;
+	}
+	return RETURN_NORMAL;
+}
+
+int CopyToClipBoardImg(int iScene, ImgRGB* imgRGB)
+{
+	int iFillerSize;
+
+	if(((imgRGB->iWidth*3)%4)==0)
+	{
+		iFillerSize = 0;
+	}
+	else
+	{
+		iFillerSize = (4-((imgRGB->iWidth*3)%4));
+	}
+
+
+	int iBitSize;
+
+	iBitSize = ((imgRGB->iWidth*3)+iFillerSize)*(imgRGB->iHeight);
+
+	
+	BOOL bRet;
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE){return RETURN_FAILED;}
+	
+	
+
+	HGLOBAL hGL= GlobalAlloc(GPTR, sizeof(BITMAPINFOHEADER)+iBitSize);
+	
+	BITMAPINFOHEADER* bmih=(BITMAPINFOHEADER*)hGL;
+	BYTE* byOutBuf=(BYTE*)(bmih + 1);
+	
+	bmih->biSize=0x00000028;
+	bmih->biWidth=imgRGB->iWidth;
+	bmih->biHeight=imgRGB->iHeight;
+	bmih->biPlanes=1;
+	bmih->biBitCount=24;
+	bmih->biCompression=0;
+	bmih->biSizeImage=iBitSize;
+	bmih->biXPelsPerMeter=0;
+	bmih->biYPelsPerMeter=0;
+	bmih->biClrUsed=0;
+	bmih->biClrImportant=0;
+
+	if(imgRGB->iChannel==CHANNEL_3_8)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgB[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgG[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+			}
+		}
+	}
+	if(imgRGB->iChannel==CHANNEL_1_24BGR)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
+			}
+		}
+	}
+	if(imgRGB->iChannel==CHANNEL_1_8)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImg[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImg[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImg[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+			}
+		}
+	}
+
+	HANDLE hResult;
+	hResult = SetClipboardData(CF_DIB, hGL);
 	if(hResult == NULL)
 	{
 		GlobalFree(hGL);
@@ -1701,14 +1799,22 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 	case VARIABLE_CLIPBOARD:
 		{
 			int iCmmandType;
-			bRet = GetOperandIntSrc(saData->GetAt(1),&iCmmandType);
-			if(bRet == TRUE){ return RETURN_NORMAL;}
-
+		//	bRet = GetOperandIntSrc(saData->GetAt(1),&iCmmandType);
+		//	if(bRet == TRUE){ return RETURN_NORMAL;}
+			
 			bRet = GetOperandStrSrc(saData->GetAt(1),&iCmmandType);
 			if(bRet == TRUE){ CopyToClipBoardStr(iScene, saData->GetAt(1)); return RETURN_NORMAL;}
 
 			bRet = GetOperandImgSrc(saData->GetAt(1),&iCmmandType);
-			if(bRet == TRUE){ return RETURN_NORMAL;}
+			if(bRet == TRUE)
+			{
+				
+			ImgRGB* pImgRGBSrc = GetImgValuePointer(iScene, saData->GetAt(1));
+			if(pImgRGBSrc == NULL){return RETURN_FAILED;}
+
+				CopyToClipBoardImg(iScene, pImgRGBSrc); 
+				return RETURN_NORMAL;
+			}
 
 
 			return RETURN_FAILED;

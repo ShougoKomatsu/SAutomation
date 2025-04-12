@@ -1,9 +1,10 @@
 ﻿
 wait ctrl off
 wait shift off
+VarImg1=ScreenShot
+VarImg2=Decompose3(VarImg1,R)
+ClipBoard=VarImg2
 
-
-VarStr1=ClipBoard
 msgbox(VarStr1)
 exit
 waiteitherkey(-1,a,aaa,b,bbb)
