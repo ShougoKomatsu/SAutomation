@@ -157,21 +157,3 @@ const CString GetFileName(CString sFilePath);
 BOOL GetFileDate(const CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime);
 const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
 
-
-#define MATCH_FULL (0)
-#define MATCH_LEFT (1)
-#define MATCH_RIGHT (2)
-
-struct VariableName
-{
-	CString sName;
-	int iMatch;
-	int iCommandType;
-	VariableName(const int iMatchIn, const CString sNameIn, const int iCommandTypeIn)
-	{
-		this->sName=sNameIn;
-		this->iMatch=iMatchIn;
-		this->iCommandType = iCommandTypeIn;
-	}
-
-};

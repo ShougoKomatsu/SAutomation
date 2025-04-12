@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "MouseAutomation.h"
 
+
+
+
 BOOL GetCommand(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
