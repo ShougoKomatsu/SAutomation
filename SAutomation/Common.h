@@ -150,3 +150,6 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
 void SetComboItemShift(CComboBox* combo,OperationInfo* op);
 
 void SetComboItem(CComboBox* combo, CString m_sHotkey);
+
+
+const CString GetFileName(CString sFilePath);

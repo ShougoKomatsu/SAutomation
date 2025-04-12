@@ -542,3 +542,18 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 	}
 	return CallNextHookEx(g_hhook, code, wParam, lParam);
 }
+
+const CString GetFileName(CString sFilePath)
+{
+	int iYenPos;
+	for(int i= 0; i<sFilePath.GetLength()-1; i++)
+	{
+		if(sFilePath.Mid(sFilePath.GetLength()-1-i, 1).Compare(_T("\\"))==0)
+		{
+			CString sResult=sFilePath.Right(i);
+			return sResult;
+		}
+	}
+	CString sResult=sFilePath;
+	return sResult;
+}

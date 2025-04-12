@@ -1,22 +1,8 @@
 ﻿
 wait ctrl off
 wait shift off
-VarStr1=ClipBoardFilePath
+VarStr1=ClipBoardFileName
 
 MsgBox(VarStr1)
 
 
-
-49373
-49782
-
-49783
-
-49374
-49382
-49398
-
-/49330
-
-//49377
-48171

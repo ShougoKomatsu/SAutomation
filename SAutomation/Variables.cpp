@@ -42,7 +42,8 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(25).CompareNoCase(_T("ForegroundWindowClassName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_CLASS_NAME; return TRUE;}
 	
 	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("ClipBoardFilePath"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILENAME; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("ClipBoardFilePath"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILEPATH; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("ClipBoardFileName"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILENAME; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
@@ -482,9 +483,16 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		{
 			return CopyFromClipBoardStr();
 		}
-	case VARIABLE_CLIPBOARD_FILENAME:
+	case VARIABLE_CLIPBOARD_FILEPATH:
 		{
 			return CopyFromClipBoardFilePath();
+		}
+	case VARIABLE_CLIPBOARD_FILENAME:
+		{
+			CString sArg=CopyFromClipBoardFilePath();
+			if(sArg.GetLength()<=0){return _T("");}
+
+			return GetFileName(sArg);
 		}
 	default :
 		{
@@ -1134,9 +1142,17 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			sDstPointer->Format(_T("%s"), CopyFromClipBoardStr());
 			return RETURN_NORMAL;
 		}
-	case VARIABLE_CLIPBOARD_FILENAME:
+	case VARIABLE_CLIPBOARD_FILEPATH:
 		{
 			sDstPointer->Format(_T("%s"), CopyFromClipBoardFilePath());
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILENAME:
+		{
+			CString sArg=CopyFromClipBoardFilePath();
+			if(sArg.GetLength()<=0){return RETURN_FAILED;}
+
+			sDstPointer->Format(_T("%s"),GetFileName(sArg));
 			return RETURN_NORMAL;
 		}
 	}
