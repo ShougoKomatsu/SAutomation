@@ -5,3 +5,4 @@ int CopyToClipBoardStr(CString sValue);
 int CopyToClipBoardImg(ImgRGB* imgRGB);
 const CString CopyFromClipBoardStr();
 BOOL CopyFromClipBoardImg(ImgRGB* imgRGB);
+const CString CopyFromClipBoardFilePath();

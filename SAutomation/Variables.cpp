@@ -42,6 +42,13 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(25).CompareNoCase(_T("ForegroundWindowClassName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_CLASS_NAME; return TRUE;}
 	
 	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("ClipBoardFilePath"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_PATH; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("ClipBoardFileName"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_NAME; return TRUE;}
+
+	if(sDataTrim.Left(25).CompareNoCase(_T("ClipBoardFileCreationTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_CREATIONTIME; return TRUE;}
+	if(sDataTrim.Left(26).CompareNoCase(_T("ClipBoardFileLastWriteTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_LASTWRITETIME; return TRUE;}
+	if(sDataTrim.Left(27).CompareNoCase(_T("ClipBoardFileLastAccessTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME; return TRUE;}
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
@@ -479,6 +486,62 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 	case VARIABLE_CLIPBOARD:
 		{
 			return CopyFromClipBoardStr();
+		}
+	case VARIABLE_CLIPBOARD_FILE_PATH:
+		{
+			return CopyFromClipBoardFilePath();
+		}
+	case VARIABLE_CLIPBOARD_FILE_NAME:
+		{
+			CString sArg=CopyFromClipBoardFilePath();
+			if(sArg.GetLength()<=0){return _T("");}
+
+			return GetFileName(sArg);
+		}
+	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return _T("");}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			return  ConvertTimeToString(sysTime, sArg);
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return _T("");}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			return  ConvertTimeToString(sysTime, sArg);
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTWRITETIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return _T("");}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			return  ConvertTimeToString(sysTime, sArg);
 		}
 	default :
 		{
@@ -978,52 +1041,8 @@ const CString NowDateTime(CString sArg)
 
 	SYSTEMTIME st;
 	GetLocalTime(&st);
-
-	int iPlace=0;
-	sOut.Format(_T(""));
-	while(iPlace<=sArg.GetLength())
-	{
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("Y"))==0)
-		{
-			if(sArg.Mid(iPlace,4).CompareNoCase(_T("YYYY"))==0){CString sTemp; sTemp.Format(_T("%d"),st.wYear); sOut+=sTemp; iPlace+=4;}
-			else if(sArg.Mid(iPlace,2).CompareNoCase(_T("YY"))==0){CString sTemp; sTemp.Format(_T("%d"),(st.wYear%100)); sOut+=sTemp;iPlace+=2;}
-			else{return _T("");}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).Compare(_T("M"))==0)
-		{
-			if(sArg.Mid(iPlace,2).Compare(_T("MM"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMonth); sOut+=sTemp; iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wMonth); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("D"))==0)
-		{
-			if(sArg.Mid(iPlace,2).CompareNoCase(_T("dd"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wDay); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wDay); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("h"))==0)
-		{
-			if(sArg.Mid(iPlace,2).CompareNoCase(_T("hh"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wHour); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wHour); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).Compare(_T("m"))==0)
-		{
-			if(sArg.Mid(iPlace,2).Compare(_T("mm"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMinute); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wMinute); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("s"))==0)
-		{
-			if(sArg.Mid(iPlace,2).CompareNoCase(_T("ss"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wSecond); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wSecond); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		sOut+=sArg.Mid(iPlace,1);
-		iPlace++;
-	}
-	return sOut;
+	
+	return ConvertTimeToString(st, sArg);
 }
 ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 {
@@ -1126,6 +1145,70 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	case VARIABLE_CLIPBOARD:
 		{
 			sDstPointer->Format(_T("%s"), CopyFromClipBoardStr());
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_PATH:
+		{
+			sDstPointer->Format(_T("%s"), CopyFromClipBoardFilePath());
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_NAME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			sDstPointer->Format(_T("%s"),GetFileName(sFilePath));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
+
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
+
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTWRITETIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
+
 			return RETURN_NORMAL;
 		}
 	}
