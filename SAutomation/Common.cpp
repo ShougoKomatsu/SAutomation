@@ -543,7 +543,7 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(g_hhook, code, wParam, lParam);
 }
 
-const CString GetFileName(CString sFilePath)
+const CString GetFileName(const CString sFilePath)
 {
 	int iYenPos;
 	for(int i= 0; i<sFilePath.GetLength()-1; i++)
@@ -589,7 +589,7 @@ BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTi
 }
 
 
-const CString ConvertTimeToString(SYSTEMTIME st, CString sArg)
+const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg)
 {
 	CString sOut;
 	
