@@ -56,7 +56,7 @@ int CopyToClipBoardStr(CString sValue)
 	BOOL bRet;
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return RETURN_FAILED;}
-	DispAvailableClipboardFormat();
+//	DispAvailableClipboardFormat();
 	bRet = EmptyClipboard();
 	if(bRet == FALSE){return RETURN_FAILED;}
 

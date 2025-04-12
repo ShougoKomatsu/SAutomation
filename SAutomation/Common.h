@@ -153,3 +153,6 @@ void SetComboItem(CComboBox* combo, CString m_sHotkey);
 
 
 const CString GetFileName(CString sFilePath);
+
+BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime);
+const CString ConvertTimeToString(SYSTEMTIME st, CString sArg);

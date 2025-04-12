@@ -1,7 +1,8 @@
 ﻿
 wait ctrl off
 wait shift off
-VarStr1=ClipBoardFileName
+VarStr1=ClipBoardFileLastWriteTime(YYYYMMDD_hhmm)
+ClipBoard=VarStr1
 
 MsgBox(VarStr1)
 
