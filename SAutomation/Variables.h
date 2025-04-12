@@ -107,6 +107,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_POINT_SEARCH_RESULT (310)
 
 #define VARIABLE_INPUT (400)
+#define VARIABLE_CLIPBOARD (401)
 
 #define VARIABLE_OBJECT (500)
 #define VARIABLE_OBJECT_THRESHLD (501)

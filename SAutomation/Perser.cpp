@@ -108,7 +108,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(3).CompareNoCase(_T("key"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("MsgBox"))==0){*iCommandType=COMMAND_MESSAGEBOX; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ListDlgItems"))==0){*iCommandType=COMMAND_LIST_DLG_ITEMS; return TRUE;}
-
+	
 	//-------------------------------------------------------
 	if(sDataTrim.CompareNoCase(_T("enter"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("return"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -120,6 +120,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.CompareNoCase(_T("maximize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("minimize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
 	
+	if(sDataTrim.Left(9).CompareNoCase(_T("ClipBoard"))==0){*iCommandType=COMMAND_VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=COMMAND_VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=COMMAND_VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=COMMAND_VARIABLE_IMG; return TRUE;}
@@ -1004,6 +1005,17 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_VARIABLE_POINT:
+		{
+			if(sDataLocal.Find(_T("="))<0){return FALSE;}
+			
+			ExtractData(sDataLocal, _T("="), &sArg, &sDataLocal);
+			saData->Add(sArg);
+			saData->Add(sDataLocal);
+
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_VARIABLE_CLIPBOARD:
 		{
 			if(sDataLocal.Find(_T("="))<0){return FALSE;}
 			

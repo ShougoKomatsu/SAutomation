@@ -15,7 +15,7 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-	
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("Threshold"))==0){*iCommandType=VARIABLE_OBJECT_THRESHLD; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("Connection"))==0){*iCommandType=VARIABLE_OBJECT_CONNECTION; return TRUE;}
@@ -33,10 +33,13 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType = VARIABLE_IMG; return FALSE;}
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 	if(sDataTrim.Left(20).CompareNoCase(_T("ForegroundWindowName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_NAME; return TRUE;}
 	if(sDataTrim.Left(25).CompareNoCase(_T("ForegroundWindowClassName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_CLASS_NAME; return TRUE;}
-
+	
+	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
@@ -52,7 +55,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-	
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
@@ -92,6 +95,7 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ReduceDomain"))==0){*iCommandType=VARIABLE_IMG_REDUCE_DOMAIN; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
@@ -136,6 +140,7 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 		if(sDataTrim.Right(1).Compare(_T("/"))==0){*iSelfSrc=VARIABLE_SELF_SRC_DIV;}
 		return TRUE;
 	}
+	if(sDataTrim.Left(9).CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
@@ -163,18 +168,239 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 /*
 int GetIntValuePointer(int iScene, CString sArg)
 {
-	if(sArg.Left(6).CompareNoCase(_T("VarInt"))!=0){return _ttoi(sArg);}
+if(sArg.Left(6).CompareNoCase(_T("VarInt"))!=0){return _ttoi(sArg);}
 
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarInt%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return g_iVar[iScene][iVarNameB1-1];}
-	}
+for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+{
+CString sVarName;
+sVarName.Format(_T("VarInt%d"), iVarNameB1);
+if(sArg.CompareNoCase(sVarName)==0){return g_iVar[iScene][iVarNameB1-1];}
+}
 
-	return 0;
+return 0;
 }
 */
+
+int CopyToClipBoardStr(int iScene, CString sDataLocal)
+{
+	CString sValue;
+	sValue.Format(_T("%s"), GetStrValue(iScene, sDataLocal));
+	BOOL bRet;
+
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE){return RETURN_FAILED;}
+
+	bRet = EmptyClipboard();
+	if(bRet == FALSE){return RETURN_FAILED;}
+
+	
+	HGLOBAL hGL;
+	hGL = GlobalAlloc(GPTR, (sValue.GetLength()+1)*sizeof(TCHAR) );
+	if(hGL==NULL){return RETURN_FAILED;}
+
+	_stprintf((TCHAR*)hGL, _T("%s"), sValue);
+	
+	HANDLE hResult;
+	hResult = SetClipboardData(CF_UNICODETEXT, hGL);
+	if(hResult == NULL)
+	{
+		GlobalFree(hGL);
+		return RETURN_FAILED;
+	}
+
+	bRet = CloseClipboard();
+	if(bRet == FALSE)
+	{
+		GlobalFree(hGL);
+		return RETURN_FAILED;
+	}
+	return RETURN_NORMAL;
+}
+
+int CopyToClipBoardImg(int iScene, ImgRGB* imgRGB)
+{
+	int iFillerSize;
+
+	if(((imgRGB->iWidth*3)%4)==0)
+	{
+		iFillerSize = 0;
+	}
+	else
+	{
+		iFillerSize = (4-((imgRGB->iWidth*3)%4));
+	}
+
+
+	int iBitSize;
+
+	iBitSize = ((imgRGB->iWidth*3)+iFillerSize)*(imgRGB->iHeight);
+
+	
+	BOOL bRet;
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE){return RETURN_FAILED;}
+	
+	
+
+	HGLOBAL hGL= GlobalAlloc(GPTR, sizeof(BITMAPINFOHEADER)+iBitSize);
+	
+	BITMAPINFOHEADER* bmih=(BITMAPINFOHEADER*)hGL;
+	BYTE* byOutBuf=(BYTE*)(bmih + 1);
+	
+	bmih->biSize=0x00000028;
+	bmih->biWidth=imgRGB->iWidth;
+	bmih->biHeight=imgRGB->iHeight;
+	bmih->biPlanes=1;
+	bmih->biBitCount=24;
+	bmih->biCompression=0;
+	bmih->biSizeImage=iBitSize;
+	bmih->biXPelsPerMeter=0;
+	bmih->biYPelsPerMeter=0;
+	bmih->biClrUsed=0;
+	bmih->biClrImportant=0;
+
+	if(imgRGB->iChannel==CHANNEL_3_8)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImgB[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImgG[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImgR[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+			}
+		}
+	}
+	if(imgRGB->iChannel==CHANNEL_1_24BGR)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+0];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+1];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImg[3*((imgRGB->iHeight-r-1)*imgRGB->iWidth+c)+2];
+			}
+		}
+	}
+	if(imgRGB->iChannel==CHANNEL_1_8)
+	{
+		for(int r=0; r<imgRGB->iHeight; r++)
+		{
+			for(int c=0; c<imgRGB->iWidth; c++)
+			{
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+0] = imgRGB->byImg[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+1] = imgRGB->byImg[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+				byOutBuf[3*(r*imgRGB->iWidth+c)+r*iFillerSize+2] = imgRGB->byImg[(imgRGB->iHeight-r-1)*imgRGB->iWidth+c];
+			}
+		}
+	}
+
+	HANDLE hResult;
+	hResult = SetClipboardData(CF_DIB, hGL);
+	if(hResult == NULL)
+	{
+		GlobalFree(hGL);
+		return RETURN_FAILED;
+	}
+
+	bRet = CloseClipboard();
+	if(bRet == FALSE)
+	{
+		GlobalFree(hGL);
+		return RETURN_FAILED;
+	}
+	return RETURN_NORMAL;
+}
+
+const CString CopyFromClipBoardStr()
+{
+	BOOL bRet;
+
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE){return _T("");}
+
+	HANDLE hResult;
+	hResult = GetClipboardData(CF_UNICODETEXT);
+	if(hResult == NULL){return _T("");}
+
+	LPVOID pStr = GlobalLock(hResult);
+	if(pStr==NULL){return _T("");}
+
+	CString sResult;
+	sResult.Format(_T("%s"), pStr);
+
+	GlobalUnlock(hResult);
+
+	bRet = CloseClipboard();
+	if(bRet == FALSE){return _T("");}
+
+	return sResult;
+}
+
+BOOL CopyFromClipBoardImg(ImgRGB* imgRGB)
+{
+	BOOL bRet;
+	BITMAPINFOHEADER bmih;
+
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE){return FALSE;}
+
+	HANDLE hResult;
+	hResult = GetClipboardData(CF_DIB);
+	if(hResult == NULL){return FALSE;}
+
+	LPVOID byData = GlobalLock(hResult);
+	if(byData==NULL){return FALSE;}
+	
+	for(int i=0; i<sizeof(bmih); i++)
+	{
+		((BYTE*)&bmih)[i] = ((BYTE*)byData)[i];
+	}
+	int iWidthLocal;
+	int iHeightLocal;
+
+	iWidthLocal = bmih.biWidth;
+	if(bmih.biHeight<0){iHeightLocal=-1*(bmih.biHeight);}
+	else{iHeightLocal=(bmih.biHeight);}
+
+	if(bmih.biClrUsed>0)
+	{
+		return FALSE;
+	}
+
+	BYTE* byImgData;
+	byImgData = &(((BYTE*)(byData))[sizeof(BITMAPINFOHEADER)]);
+		
+	
+	int iFiller;
+
+	imgRGB->Set(iWidthLocal, iHeightLocal, CHANNEL_3_8);
+	
+	iFiller = iWidthLocal%4;
+
+	for(int r=0; r<iHeightLocal; r++)
+	{
+		for(int c=0; c< iWidthLocal; c++)
+		{
+			(imgRGB->byImgB)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+0];
+			(imgRGB->byImgG)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+1];
+			(imgRGB->byImgR)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+2];
+		}
+	}
+
+
+
+
+
+
+	GlobalUnlock(hResult);
+
+	bRet = CloseClipboard();
+	if(bRet == FALSE){return FALSE;}
+
+	return TRUE;
+}
 
 
 int GetIntValue(int iScene, CString sDataLocal)
@@ -184,7 +410,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CString sArg;
-	
+
 	switch(iOperandSrc)
 	{
 	case VARIABLE_ADD_INT:
@@ -211,7 +437,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			
+
 			return IntMult(iScene, sArg1, sArg2);
 		}
 	case VARIABLE_DIV_INT:
@@ -220,7 +446,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			
+
 			return IntDiv(iScene, sArg1, sArg2);
 		}
 	case VARIABLE_INT:
@@ -255,18 +481,18 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);			
 			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iWidth;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
-			
+
 			return iSrc;
 		}
 	case VARIABLE_IMG_HEIGHT:
 		{
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
-			
+
 			int iSrc;
 			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
 			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iHeight;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
-			
+
 			return iSrc;
 		}
 	case VARIABLE_IMG_VALUE:
@@ -352,7 +578,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()<=0){iRank=0;}
 			else{iRank=GetIntValue(iScene,sArg);}
-			
+
 			return GetDlgItem_My(sText, iRank);
 		}
 	default:
@@ -469,6 +695,10 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			iArg3 = GetIntValue(iScene, sArg3);
 			return sArg1.Mid(iArg2, iArg3);
 		}
+	case VARIABLE_CLIPBOARD:
+		{
+			return CopyFromClipBoardStr();
+		}
 	default :
 		{
 			sOut.Format(_T("%s"),sDataLocal); 
@@ -503,16 +733,16 @@ int* GetIntValuePointer(int iScene, CString sArg)
 
 const CString GetStrValue(int iScene, CString sArg)
 {
-	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return sArg;}
+if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return sArg;}
 
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarStr%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return g_sVar[iScene][iVarNameB1-1];}
-	}
+for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+{
+CString sVarName;
+sVarName.Format(_T("VarStr%d"), iVarNameB1);
+if(sArg.CompareNoCase(sVarName)==0){return g_sVar[iScene][iVarNameB1-1];}
+}
 
-	return sArg;
+return sArg;
 }
 */
 Object* GetObjValuePointer(int iScene, CString sArg)
@@ -589,23 +819,23 @@ Point* GetPointValuePointer(int iScene, CString sArg)
 /*
 Point GetPointValue(int iScene, CString sArg)
 {
-	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
+if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
 
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return (g_point[iScene][iVarNameB1-1]);}
-	}
+for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+{
+CString sVarName;
+sVarName.Format(_T("VarPoint%d"), iVarNameB1);
+if(sArg.CompareNoCase(sVarName)==0){return (g_point[iScene][iVarNameB1-1]);}
+}
 
-	return NULL;
+return NULL;
 }
 */
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
 	int iSrc1=GetIntValue(iScene, sArg1);
 	int iSrc2=GetIntValue(iScene, sArg2);
-	
+
 	return iSrc1+iSrc2;
 }
 
@@ -613,7 +843,7 @@ int IntSub(int iScene, CString sArg1, CString sArg2)
 {
 	int iSrc1=GetIntValue(iScene, sArg1);
 	int iSrc2=GetIntValue(iScene, sArg2);
-	
+
 	return iSrc1-iSrc2;
 }
 int IntMult(int iScene, CString sArg1, CString sArg2)
@@ -637,7 +867,7 @@ BOOL IsStrEqual(int iScene, CString sArg1, CString sArg2)
 {
 	CString sSrc1;
 	CString sSrc2;
-	
+
 	sSrc1.Format(_T("%s"), GetStrValue(iScene, sArg1));
 	sSrc2.Format(_T("%s"), GetStrValue(iScene, sArg2));
 
@@ -696,7 +926,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T(">"))==0)
 	{
 		if (iSrc1>iSrc2)
@@ -706,7 +936,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T(">="))==0)
 	{
 		if (iSrc1>=iSrc2)
@@ -716,7 +946,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T("<="))==0)
 	{
 		if (iSrc1<=iSrc2)
@@ -726,7 +956,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T("<="))==0)
 	{
 		if (iSrc1<=iSrc2)
@@ -736,7 +966,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if((saData->GetAt(1).Compare(_T("<>"))==0) || (saData->GetAt(1).Compare(_T("!="))==0))
 	{
 		if (iSrc1!=iSrc2)
@@ -955,7 +1185,7 @@ const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
 
 	int iSrc1=GetIntValue(iScene, sArg2);
 	int iSrc2=GetIntValue(iScene, sArg3);
-	
+
 	CString sTemp;
 	sTemp.Format(_T("%"),sSrc.Mid(iSrc1, iSrc2));
 	return sTemp;
@@ -1025,7 +1255,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	{
 	case VARIABLE_COMBINE_STR:
 		{
-		sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
+			sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
 
 
 	case VARIABLE_STR:
@@ -1061,7 +1291,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			sDstPointer->Format(_T("%s"), g_cInput.m_sReturnValue); 
 			return RETURN_NORMAL;
 		}
-		
+
 	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			sDstPointer->Format(_T("%s"), GetForegroundWindowName()); 
@@ -1110,6 +1340,11 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			int iArg3;
 			iArg3 = GetIntValue(iScene, sArg3);
 			sDstPointer->Format(_T("%s"), sArg1.Mid(iArg2, iArg3));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			sDstPointer->Format(_T("%s"), CopyFromClipBoardStr());
 			return RETURN_NORMAL;
 		}
 	}
@@ -1266,7 +1501,7 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,1,&sArg1);
 			bRet = ExtractTokenInBracket(sData,2,&sArg2);
 			bRet = ExtractTokenInBracket(sData,3,&sArg3);
-			
+
 			int iR0, iR1, iC0, iC1;
 			iC0=GetIntValue(iScene, sArg0);
 			iR0=GetIntValue(iScene, sArg1);
@@ -1345,7 +1580,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			
+
 			CString sArg0;
 			CString sArg1;
 			CString sArg2;
@@ -1378,7 +1613,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			
+
 			CString sArg0;
 			CString sArg1;
 			bRet = ExtractTokenInBracket(sData,0,&sArg0);
@@ -1403,7 +1638,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			
+
 			CString sArg0;
 			CString sArg1;
 			bRet = ExtractTokenInBracket(sData,0,&sArg0);
@@ -1419,6 +1654,13 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(objRegion == NULL){return RETURN_FAILED;}
 
 			bRet = ReduceDomain(pImgRGBIn, objRegion, pImgRGB);
+			if(bRet != TRUE){return RETURN_FAILED;}
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+			bRet = CopyFromClipBoardImg(pImgRGB);
 			if(bRet != TRUE){return RETURN_FAILED;}
 			return RETURN_NORMAL;
 		}
@@ -1466,7 +1708,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 		}
 	case VARIABLE_POINT_OBJECT_CENTER:
 		{
-			
+
 			CString sArg1;
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
@@ -1525,7 +1767,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
 			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
 			sModelFilePath.Format(_T("%s"), sArg);
-			
+
 			CString sC0, sR0, sC1, sR1;
 			ExtractTokenInBracket(sDataLocal,1,&sC0);
 			ExtractTokenInBracket(sDataLocal,2,&sR0);
@@ -1627,6 +1869,29 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
 			return SetPointValue(pPointDst, iScene, saData->GetAt(1));
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			int iCmmandType;
+		//	bRet = GetOperandIntSrc(saData->GetAt(1),&iCmmandType);
+		//	if(bRet == TRUE){ return RETURN_NORMAL;}
+			
+			bRet = GetOperandStrSrc(saData->GetAt(1),&iCmmandType);
+			if(bRet == TRUE){ CopyToClipBoardStr(iScene, saData->GetAt(1)); return RETURN_NORMAL;}
+
+			bRet = GetOperandImgSrc(saData->GetAt(1),&iCmmandType);
+			if(bRet == TRUE)
+			{
+				
+			ImgRGB* pImgRGBSrc = GetImgValuePointer(iScene, saData->GetAt(1));
+			if(pImgRGBSrc == NULL){return RETURN_FAILED;}
+
+				CopyToClipBoardImg(iScene, pImgRGBSrc); 
+				return RETURN_NORMAL;
+			}
+
+
+			return RETURN_FAILED;
 		}
 	default:{return RETURN_FAILED;}
 	}
