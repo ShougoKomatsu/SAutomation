@@ -1,8 +1,10 @@
 ﻿
 wait ctrl off
 wait shift off
-VarStr1=abcdefg
-ClipBoard=VarStr1
+
+
+VarStr1=ClipBoard
+msgbox(VarStr1)
 exit
 waiteitherkey(-1,a,aaa,b,bbb)
 aaa:

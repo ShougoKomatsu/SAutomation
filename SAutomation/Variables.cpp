@@ -36,7 +36,8 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 	if(sDataTrim.Left(20).CompareNoCase(_T("ForegroundWindowName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_NAME; return TRUE;}
 	if(sDataTrim.Left(25).CompareNoCase(_T("ForegroundWindowClassName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_CLASS_NAME; return TRUE;}
-
+	
+	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("Int2Str"))==0){*iCommandType=VARIABLE_INT2STR; return TRUE;}
@@ -177,8 +178,6 @@ return 0;
 }
 */
 
-static int iInc=0;
-
 int CopyToClipBoardStr(int iScene, CString sDataLocal)
 {
 	CString sValue;
@@ -206,7 +205,7 @@ int CopyToClipBoardStr(int iScene, CString sDataLocal)
 		return RETURN_FAILED;
 	}
 
-	bRet == CloseClipboard();
+	bRet = CloseClipboard();
 	if(bRet == FALSE)
 	{
 		GlobalFree(hGL);
@@ -215,6 +214,30 @@ int CopyToClipBoardStr(int iScene, CString sDataLocal)
 	return RETURN_NORMAL;
 }
 
+const CString CopyFromClipBoardStr()
+{
+	BOOL bRet;
+
+	bRet = OpenClipboard(g_hWnd);
+	if(bRet == FALSE){return _T("");}
+
+	HANDLE hResult;
+	hResult = GetClipboardData(CF_UNICODETEXT);
+	if(hResult == NULL){return _T("");}
+
+	LPVOID pStr = GlobalLock(hResult);
+	if(pStr==NULL){return _T("");}
+
+	CString sResult;
+	sResult.Format(_T("%s"), pStr);
+
+	GlobalUnlock(hResult);
+
+	bRet = CloseClipboard();
+	if(bRet == FALSE){return _T("");}
+
+	return sResult;
+}
 int GetIntValue(int iScene, CString sDataLocal)
 {
 	int iOperandSrc;
@@ -506,6 +529,10 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			int iArg3;
 			iArg3 = GetIntValue(iScene, sArg3);
 			return sArg1.Mid(iArg2, iArg3);
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			return CopyFromClipBoardStr();
 		}
 	default :
 		{
@@ -1148,6 +1175,11 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			int iArg3;
 			iArg3 = GetIntValue(iScene, sArg3);
 			sDstPointer->Format(_T("%s"), sArg1.Mid(iArg2, iArg3));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			sDstPointer->Format(_T("%s"), CopyFromClipBoardStr());
 			return RETURN_NORMAL;
 		}
 	}
