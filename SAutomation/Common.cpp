@@ -560,7 +560,7 @@ const CString GetFileName(const CString sFilePath)
 
 
 
-BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime)
+BOOL GetFileProperty(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime)
 {
 	WIN32_FIND_DATAW FileData;
 
@@ -570,17 +570,17 @@ BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTi
 	
 	if(ctCreationTime != NULL)
 	{
-		*ctCreationTime=FileData.ftCreationTime;
+		*ctCreationTime = FileData.ftCreationTime;
 	}
 
 	if(ctLastAccessTime != NULL)
 	{
-		*ctLastAccessTime=FileData.ftLastAccessTime;
+		*ctLastAccessTime = FileData.ftLastAccessTime;
 	}
 
 	if(ctLastWriteTime != NULL)
 	{
-		*ctLastWriteTime=FileData.ftLastWriteTime;
+		*ctLastWriteTime = FileData.ftLastWriteTime;
 	}
 	
     FindClose(hFile);

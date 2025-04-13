@@ -504,7 +504,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return _T("");}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
+			bRet = GetFileProperty(sFilePath, &ctTime,NULL, NULL);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -519,7 +519,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return _T("");}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
+			bRet = GetFileProperty(sFilePath, NULL, &ctTime, NULL);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -534,7 +534,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return _T("");}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
+			bRet = GetFileProperty(sFilePath, NULL, NULL, &ctTime);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -1166,7 +1166,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
+			bRet = GetFileProperty(sFilePath, &ctTime,NULL, NULL);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -1183,7 +1183,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
+			bRet = GetFileProperty(sFilePath, NULL, &ctTime, NULL);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -1200,7 +1200,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
+			bRet = GetFileProperty(sFilePath, NULL, NULL, &ctTime);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);

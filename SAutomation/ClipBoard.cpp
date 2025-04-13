@@ -63,10 +63,9 @@ int CopyToClipBoardStr(const CString sValue)
 	BOOL bRet;
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return RETURN_FAILED;}
-//	DispAvailableClipboardFormat();
+
 	bRet = EmptyClipboard();
 	if(bRet == FALSE){return RETURN_FAILED;}
-
 	
 	HGLOBAL hGL;
 	hGL = GlobalAlloc(GPTR, (sValue.GetLength()+1)*sizeof(TCHAR) );
@@ -218,7 +217,6 @@ const CString CopyFromClipBoardFilePath()
 
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return _T("");}
-//	DispAvailableClipboardFormat();
 	bRet = IsClipboardFormatAvailable(49159);
 	if(bRet != TRUE)
 	{
