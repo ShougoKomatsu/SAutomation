@@ -2,7 +2,8 @@
 wait ctrl off
 wait shift off
 VarInt1=10
-VarStr1=Int2Str(VarInt1,%d)
+VarStr1=ClipBoardFileName
+
 MsgBox(VarStr1)
 
 VarStr1=ClipBoardFilePath

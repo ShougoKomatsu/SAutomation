@@ -1,9 +1,0 @@
-1 wait ctrl off 0
-2 wait shift off 0
-3 VarInt1=10 0
-4 VarStr1=Int2Str(VarInt1,%d) 0
-5 MsgBox(VarStr1) 0
-6 VarStr1=ClipBoardFilePath 0
-7 MsgBox(VarStr1) 0
-8 ClipBoard=VarStr1 -1
-iErrorTreat = 0 

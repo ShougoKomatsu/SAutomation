@@ -217,6 +217,7 @@ const CString CopyFromClipBoardFilePath()
 
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return _T("");}
+//	DispAvailableClipboardFormat();
 	bRet = IsClipboardFormatAvailable(49159);
 	if(bRet != TRUE)
 	{
