@@ -1,6 +1,10 @@
 ﻿
 wait ctrl off
 wait shift off
+VarInt1=10
+VarStr1=Int2Str(VarInt1,%d)
+MsgBox(VarStr1)
+
 VarStr1=ClipBoardFilePath
 MsgBox(VarStr1)
 

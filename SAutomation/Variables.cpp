@@ -891,11 +891,11 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 		iNextChar++;
 	}
 
-	if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(1,1))==0)
+	if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 	{
 		int iDigit=1;
 		iNextChar++;
-		while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(1,1))==0)
+		while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 		{
 			iDigit++;
 			iNextChar++;
@@ -913,11 +913,11 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 
 	if(bAccuracy==TRUE)
 	{
-		if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(1,1))==0)
+		if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 		{
 			int iDigit=1;
 			iNextChar++;
-			while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(1,1))==0)
+			while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 			{
 				iDigit++;
 				iNextChar++;
@@ -1055,25 +1055,9 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 
 	switch(iOperandSrc)
 	{
-	case VARIABLE_COMBINE_STR:
-		{
-			sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
-
-
-	case VARIABLE_STR:
-		{
-			sDstPointer->Format(_T("%s"),GetStrValue(iScene, sDataLocal));
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_INT2STR:
-		{
-			CString sArg1;
-			CString sArg2;
-			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			bRet = ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			sDstPointer->Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
-			return RETURN_NORMAL;
-		}
+	case VARIABLE_COMBINE_STR:{sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
+	case VARIABLE_STR:{sDstPointer->Format(_T("%s"),GetStrValue(iScene, sDataLocal)); return RETURN_NORMAL;}
+	case VARIABLE_INT2STR:{sDstPointer->Format(_T("%s"), GetStrValue(iScene, sDataLocal)); return RETURN_NORMAL;}
 	case VARIABLE_NOW_DATE_TIME:
 		{
 			CString sArg;
