@@ -20,108 +20,107 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.CompareNoCase(_T("Å©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("<-"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("left"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Left"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("Å™"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("up"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Up"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("Å®"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("->"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("right"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Right"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("Å´"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Down"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 
-	if(sDataTrim.CompareNoCase(_T("pageup"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("pagedown"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("home"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("end"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("printscreen"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("PageUp"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("PageDown"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Home"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("End"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("PrintScreen"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	//-------------------------------------------------------
 	if(sDataTrim.Left(7).CompareNoCase(_T("Compare"))==0){*iCommandType=COMMAND_COMPARE; return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("AreEqualInt"))==0){*iCommandType=COMMAND_AREEQUAL_INT; return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("AreEqualStr"))==0){*iCommandType=COMMAND_AREEQUAL_STR; return TRUE;}
 	if(sDataTrim.Left(13).CompareNoCase(_T("SwitchByInput"))==0){*iCommandType=COMMAND_SWITCH_BY_INPUT; return TRUE;}
-	if(sDataTrim.Left(4).CompareNoCase(_T("goto"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
-	if(sDataTrim.Left(4).CompareNoCase(_T("exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
-	if(sDataTrim.Left(7).CompareNoCase(_T("onerror"))==0){*iCommandType=COMMAND_ERROR_TREAT;return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("GoTo"))==0){*iCommandType=COMMAND_GOTO;return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("Exit"))==0){*iCommandType=COMMAND_EXIT;return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("OnError"))==0){*iCommandType=COMMAND_ERROR_TREAT;return TRUE;}
 
-	if(sDataTrim.Left(12).CompareNoCase(_T("lmouse click"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
-	if(sDataTrim.Left(11).CompareNoCase(_T("lmouse down"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
-	if(sDataTrim.Left(9).CompareNoCase(_T("lmouse up"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("LMouse Click"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("LMouse Down"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("LMouse Up"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
 
-	if(sDataTrim.Left(12).CompareNoCase(_T("rmouse click"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK;  return TRUE;}
-	if(sDataTrim.Left(11).CompareNoCase(_T("rmouse down"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
-	if(sDataTrim.Left(9).CompareNoCase(_T("rmouse up"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("RMouse Click"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK;  return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("RMouse Down"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("RMouse Up"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
 
-	if(sDataTrim.Left(12).CompareNoCase(_T("mmouse click"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK;  return TRUE;}
-	if(sDataTrim.Left(11).CompareNoCase(_T("mmouse down"))==0){*iCommandType=COMMAND_MOUSE_M_DOWN; return TRUE;}
-	if(sDataTrim.Left(9).CompareNoCase(_T("mmouse up"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("MMouse Click"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK;  return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("MMouse Down"))==0){*iCommandType=COMMAND_MOUSE_M_DOWN; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("MMouse Up"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
 
 	
-	if(sDataTrim.Left(16).CompareNoCase(_T("MouseLClickimage"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK_IMG; return TRUE;}
-	if(sDataTrim.Left(11).CompareNoCase(_T("mouselclick"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("mouseldown"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
-	if(sDataTrim.Left(8).CompareNoCase(_T("mouselup"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
+	if(sDataTrim.Left(16).CompareNoCase(_T("MouseLClickImage"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK_IMG; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("MouseLClick"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("MouseLDown"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
+	if(sDataTrim.Left(8).CompareNoCase(_T("MouseLUp"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
 
-	if(sDataTrim.Left(11).CompareNoCase(_T("mouserclick"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK;  return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("mouserdown"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
-	if(sDataTrim.Left(8).CompareNoCase(_T("mouserup"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("MouseRClick"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK;  return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("MouseRDown"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
+	if(sDataTrim.Left(8).CompareNoCase(_T("MouseRUp"))==0){*iCommandType=COMMAND_MOUSE_R_UP; return TRUE;}
 
-	if(sDataTrim.Left(11).CompareNoCase(_T("mousemclick"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK;  return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("mousemdown"))==0){*iCommandType=COMMAND_MOUSE_M_DOWN; return TRUE;}
-	if(sDataTrim.Left(8).CompareNoCase(_T("mousemup"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
-	if(sDataTrim.Left(17).CompareNoCase(_T("setorigintowindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
-	if(sDataTrim.Left(16).CompareNoCase(_T("setorigintoimage"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("MouseMClick"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK;  return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("MouseMDown"))==0){*iCommandType=COMMAND_MOUSE_M_DOWN; return TRUE;}
+	if(sDataTrim.Left(8).CompareNoCase(_T("MouseMUp"))==0){*iCommandType=COMMAND_MOUSE_M_UP; return TRUE;}
+	if(sDataTrim.Left(17).CompareNoCase(_T("SetOriginToWindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
+	if(sDataTrim.Left(16).CompareNoCase(_T("SetOriginToImage"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE; return TRUE;}
 	
-	if(sDataTrim.Left(26).CompareNoCase(_T("screenshotForeGroundWindow"))==0){*iCommandType=COMMAND_SCREENSHOT_FOREGROUND_WINDOW; return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("screenshot"))==0){*iCommandType=COMMAND_SCREENSHOT; return TRUE;}
+	if(sDataTrim.Left(26).CompareNoCase(_T("ScreenShotForeGroundWindow"))==0){*iCommandType=COMMAND_SCREENSHOT_FOREGROUND_WINDOW; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=COMMAND_SCREENSHOT; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("WriteImage"))==0){*iCommandType=COMMAND_WRITE_IMAGE; return TRUE;}
 
 
-	if(sDataTrim.Left(9).CompareNoCase(_T("waitimage"))==0){*iCommandType=COMMAND_WAIT_IMG; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("WaitImage"))==0){*iCommandType=COMMAND_WAIT_IMG; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("WaitColor"))==0){*iCommandType=COMMAND_WAIT_COLOR; return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("waitupdate"))==0){*iCommandType=COMMAND_WAIT_UPDATE; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("WaitUpdate"))==0){*iCommandType=COMMAND_WAIT_UPDATE; return TRUE;}
 
-	if(sDataTrim.Left(12).CompareNoCase(_T("mouseposincl"))==0){*iCommandType=COMMAND_MOUSE_MOVE_INCL; return TRUE;}
-	if(sDataTrim.Left(15).CompareNoCase(_T("mousepostoimage"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_IMG; return TRUE;}
-	if(sDataTrim.Left(14).CompareNoCase(_T("mousepostoitem"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_ITEM; return TRUE;}
-	if((sDataTrim.Left(8).CompareNoCase(_T("mousepos"))==0) && (sDataTrim.Left(11).CompareNoCase(_T("mouseposrel"))!=0)){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
-	if(sDataTrim.Left(5).CompareNoCase(_T("wheel"))==0){*iCommandType=COMMAND_WHEEL; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("MousePosIncl"))==0){*iCommandType=COMMAND_MOUSE_MOVE_INCL; return TRUE;}
+	if(sDataTrim.Left(15).CompareNoCase(_T("MousePosToimage"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_IMG; return TRUE;}
+	if(sDataTrim.Left(14).CompareNoCase(_T("MousePosToItem"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_ITEM; return TRUE;}
+	if((sDataTrim.Left(8).CompareNoCase(_T("MousePos"))==0) && (sDataTrim.Left(11).CompareNoCase(_T("MousePosRel"))!=0)){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("Wheel"))==0){*iCommandType=COMMAND_WHEEL; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
 
-	if(sDataTrim.Right(4).CompareNoCase(_T("down"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
-	if(sDataTrim.Right(2).CompareNoCase(_T("up"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
-	if((sDataTrim.Left(3).CompareNoCase(_T("run"))==0)){*iCommandType=COMMAND_RUN; return TRUE;}
-	if((sDataTrim.Left(5).CompareNoCase(_T("input"))==0)){*iCommandType=COMMAND_INPUT; return TRUE;}
+	if(sDataTrim.Right(4).CompareNoCase(_T("Down"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
+	if(sDataTrim.Right(2).CompareNoCase(_T("Up"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
+	if((sDataTrim.Left(3).CompareNoCase(_T("Run"))==0)){*iCommandType=COMMAND_RUN; return TRUE;}
+	if((sDataTrim.Left(5).CompareNoCase(_T("Input"))==0)){*iCommandType=COMMAND_INPUT; return TRUE;}
 
-	if((sDataTrim.Left(4).CompareNoCase(_T("dim "))==0)){*iCommandType=COMMAND_DECRARE; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("WaitKey"))==0){*iCommandType=COMMAND_WAIT_KEY; return TRUE;}
 	if(sDataTrim.Left(13).CompareNoCase(_T("WaitEitherKey"))==0){*iCommandType=COMMAND_WAIT_EITHER_KEY; return TRUE;}
-	if(sDataTrim.Left(4).CompareNoCase(_T("wait"))==0){*iCommandType=COMMAND_WAIT; return TRUE;}
-	if(sDataTrim.Left(10).CompareNoCase(_T("windowsize"))==0){*iCommandType=COMMAND_WINDOW_SIZE; return TRUE;}
-	if(sDataTrim.Left(9).CompareNoCase(_T("windowpos"))==0){*iCommandType=COMMAND_WINDOW_POS; return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("Wait"))==0){*iCommandType=COMMAND_WAIT; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("WindowSize"))==0){*iCommandType=COMMAND_WINDOW_SIZE; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("WindowPos"))==0){*iCommandType=COMMAND_WINDOW_POS; return TRUE;}
 
-	if(sDataTrim.Left(13).CompareNoCase(_T("windowforward"))==0){*iCommandType=COMMAND_WINDOW_FORWARD; return TRUE;}
+	if(sDataTrim.Left(13).CompareNoCase(_T("WindowForward"))==0){*iCommandType=COMMAND_WINDOW_FORWARD; return TRUE;}
 	
-	if(sDataTrim.Left(7).CompareNoCase(_T("keydown"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
-	if(sDataTrim.Left(5).CompareNoCase(_T("keyup"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
-	if(sDataTrim.Left(3).CompareNoCase(_T("key"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("KeyDown"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("KeyUp"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("Key"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("MsgBox"))==0){*iCommandType=COMMAND_MESSAGEBOX; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ListDlgItems"))==0){*iCommandType=COMMAND_LIST_DLG_ITEMS; return TRUE;}
 	
 	//-------------------------------------------------------
-	if(sDataTrim.CompareNoCase(_T("enter"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("return"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("space"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("backspace"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("jp"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("tab"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Enter"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Return"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Space"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("BackSpace"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Jp"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Tab"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
-	if(sDataTrim.CompareNoCase(_T("maximize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("minimize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("MaxImize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("MinImize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
 	
 	if(sDataTrim.Left(9).CompareNoCase(_T("ClipBoard"))==0){*iCommandType=COMMAND_VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=COMMAND_VARIABLE_INT; return TRUE;}
@@ -162,9 +161,9 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 		if(sDataTrim.CompareNoCase(_T("f24"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	}
 	
-	if(sDataTrim.Left(3).CompareNoCase(_T("sub"))==0){*iCommandType=COMMAND_SUB; return TRUE;}
-	if(sDataTrim.Left(4).CompareNoCase(_T("call"))==0){*iCommandType=COMMAND_CALL_SUB; return TRUE;}
-	if(sDataTrim.Left(3).CompareNoCase(_T("end sub"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("Sub"))==0){*iCommandType=COMMAND_SUB; return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("Call"))==0){*iCommandType=COMMAND_CALL_SUB; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("End Sub"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
 
 	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
 
