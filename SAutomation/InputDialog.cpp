@@ -22,8 +22,8 @@ CInputDialog::CInputDialog(CWnd* pParent /*=NULL*/)
 
 CInputDialog::~CInputDialog()
 {
-	if(m_byKey != NULL){delete [] m_byKey;}
-	if(m_sLabel != NULL){delete [] m_sLabel;}
+	if(m_byKey != NULL){SAFE_DELETE(m_byKey);}
+	if(m_sLabel != NULL){SAFE_DELETE(m_sLabel);}
 	m_iKeyNum = 0;
 }
 

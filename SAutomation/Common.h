@@ -1,4 +1,7 @@
 #pragma once
+
+#define SAFE_DELETE(v) if(v != NULL){delete [] v; v=NULL;}
+
 enum ReturnValue
 {
 	RETURN_NORMAL=0,

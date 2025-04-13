@@ -1465,9 +1465,9 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 
 			pPoint->Set(dR[0], dC[0]);
 
-			delete [] dA;
-			delete [] dR;
-			delete [] dC;
+			SAFE_DELETE(dA);
+			SAFE_DELETE(dR);
+			SAFE_DELETE(dC);
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_POINT_FOREGROUND_WINDOW_LU:
