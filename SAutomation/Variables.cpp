@@ -496,7 +496,9 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			CString sArg=CopyFromClipBoardFilePath();
 			if(sArg.GetLength()<=0){return _T("");}
 
-			return GetFileName(sArg);
+			CString sFileName;
+			GetFileName(sArg, &sFileName);
+			return sFileName;
 		}
 	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
 		{
@@ -1157,7 +1159,9 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			CString sFilePath=CopyFromClipBoardFilePath();
 			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
 
-			sDstPointer->Format(_T("%s"),GetFileName(sFilePath));
+			CString sFileName;
+			GetFileName(sFilePath, &sFileName);
+			sDstPointer->Format(_T("%s"), sFileName);
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
