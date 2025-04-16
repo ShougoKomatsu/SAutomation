@@ -4,6 +4,8 @@
 #include "Common.h"
 #include "MouseAutomation.h"
 #include "InputDialog.h"
+#include "ClipBoard.h"
+
 #include "Window.h"
 int g_iVar[MAX_THREAD][MAX_VARIABLES];
 CString g_sVar[MAX_THREAD][MAX_VARIABLES];
@@ -16,7 +18,7 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-	
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("Threshold"))==0){*iCommandType=VARIABLE_OBJECT_THRESHLD; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("Connection"))==0){*iCommandType=VARIABLE_OBJECT_CONNECTION; return TRUE;}
@@ -48,9 +50,19 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType = VARIABLE_IMG; return FALSE;}
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 	if(sDataTrim.Left(20).CompareNoCase(_T("ForegroundWindowName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_NAME; return TRUE;}
 	if(sDataTrim.Left(25).CompareNoCase(_T("ForegroundWindowClassName"))==0){*iCommandType=VARIABLE_FOREGROUND_WINDOW_CLASS_NAME; return TRUE;}
+	
+	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("ClipBoardFilePath"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_PATH; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("ClipBoardFileName"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_NAME; return TRUE;}
+
+	if(sDataTrim.Left(25).CompareNoCase(_T("ClipBoardFileCreationTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_CREATIONTIME; return TRUE;}
+	if(sDataTrim.Left(26).CompareNoCase(_T("ClipBoardFileLastWriteTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_LASTWRITETIME; return TRUE;}
+	if(sDataTrim.Left(27).CompareNoCase(_T("ClipBoardFileLastAccessTime"))==0){*iCommandType=VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("StrCombine"))==0){*iCommandType=VARIABLE_COMBINE_STR; return TRUE;}
@@ -67,7 +79,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-	
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
 
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=VARIABLE_INT; return TRUE;}
@@ -107,6 +119,7 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
+	if(sDataTrim.CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("CropImage"))==0){*iCommandType=VARIABLE_CROP_IMAGE; return TRUE;}
 	if(sDataTrim.Left(12).CompareNoCase(_T("ReduceDomain"))==0){*iCommandType=VARIABLE_IMG_REDUCE_DOMAIN; return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("ScreenShot"))==0){*iCommandType=VARIABLE_SCREENSHOT; return TRUE;}
@@ -153,6 +166,7 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 		return TRUE;
 	}
 	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("ClipBoard"))==0){*iCommandType=VARIABLE_CLIPBOARD; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
@@ -180,16 +194,16 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 /*
 int GetIntValuePointer(int iScene, CString sArg)
 {
-	if(sArg.Left(6).CompareNoCase(_T("VarInt"))!=0){return _ttoi(sArg);}
+if(sArg.Left(6).CompareNoCase(_T("VarInt"))!=0){return _ttoi(sArg);}
 
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarInt%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return g_iVar[iScene][iVarNameB1-1];}
-	}
+for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+{
+CString sVarName;
+sVarName.Format(_T("VarInt%d"), iVarNameB1);
+if(sArg.CompareNoCase(sVarName)==0){return g_iVar[iScene][iVarNameB1-1];}
+}
 
-	return 0;
+return 0;
 }
 */
 
@@ -201,7 +215,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CString sArg;
-	
+
 	switch(iOperandSrc)
 	{
 	case VARIABLE_ADD_INT:
@@ -228,7 +242,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			
+
 			return IntMult(iScene, sArg1, sArg2);
 		}
 	case VARIABLE_DIV_INT:
@@ -237,7 +251,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			
+
 			return IntDiv(iScene, sArg1, sArg2);
 		}
 	case VARIABLE_INT:
@@ -272,18 +286,18 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);			
 			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iWidth;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
-			
+
 			return iSrc;
 		}
 	case VARIABLE_IMG_HEIGHT:
 		{
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
-			
+
 			int iSrc;
 			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
 			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iHeight;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
-			
+
 			return iSrc;
 		}
 	case VARIABLE_IMG_VALUE:
@@ -369,7 +383,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()<=0){iRank=0;}
 			else{iRank=GetIntValue(iScene,sArg);}
-			
+
 			return GetDlgItem_My(sText, iRank);
 		}
 	default:
@@ -486,6 +500,66 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			iArg3 = GetIntValue(iScene, sArg3);
 			return sArg1.Mid(iArg2, iArg3);
 		}
+	case VARIABLE_CLIPBOARD:
+		{
+			return CopyFromClipBoardStr();
+		}
+	case VARIABLE_CLIPBOARD_FILE_PATH:
+		{
+			return CopyFromClipBoardFilePath();
+		}
+	case VARIABLE_CLIPBOARD_FILE_NAME:
+		{
+			CString sArg=CopyFromClipBoardFilePath();
+			if(sArg.GetLength()<=0){return _T("");}
+
+			return GetFileName(sArg);
+		}
+	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return _T("");}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			return  ConvertTimeToString(sysTime, sArg);
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return _T("");}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			return  ConvertTimeToString(sysTime, sArg);
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTWRITETIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return _T("");}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			return  ConvertTimeToString(sysTime, sArg);
+		}
 	default :
 		{
 			sOut.Format(_T("%s"),sDataLocal); 
@@ -520,16 +594,16 @@ int* GetIntValuePointer(int iScene, CString sArg)
 
 const CString GetStrValue(int iScene, CString sArg)
 {
-	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return sArg;}
+if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return sArg;}
 
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarStr%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return g_sVar[iScene][iVarNameB1-1];}
-	}
+for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+{
+CString sVarName;
+sVarName.Format(_T("VarStr%d"), iVarNameB1);
+if(sArg.CompareNoCase(sVarName)==0){return g_sVar[iScene][iVarNameB1-1];}
+}
 
-	return sArg;
+return sArg;
 }
 */
 Object* GetObjValuePointer(int iScene, CString sArg)
@@ -609,23 +683,23 @@ Camera* GetCameraPointer(int iScene, CString sArg)
 /*
 Point GetPointValue(int iScene, CString sArg)
 {
-	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
+if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
 
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
-		if(sArg.CompareNoCase(sVarName)==0){return (g_point[iScene][iVarNameB1-1]);}
-	}
+for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+{
+CString sVarName;
+sVarName.Format(_T("VarPoint%d"), iVarNameB1);
+if(sArg.CompareNoCase(sVarName)==0){return (g_point[iScene][iVarNameB1-1]);}
+}
 
-	return NULL;
+return NULL;
 }
 */
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
 	int iSrc1=GetIntValue(iScene, sArg1);
 	int iSrc2=GetIntValue(iScene, sArg2);
-	
+
 	return iSrc1+iSrc2;
 }
 
@@ -633,7 +707,7 @@ int IntSub(int iScene, CString sArg1, CString sArg2)
 {
 	int iSrc1=GetIntValue(iScene, sArg1);
 	int iSrc2=GetIntValue(iScene, sArg2);
-	
+
 	return iSrc1-iSrc2;
 }
 int IntMult(int iScene, CString sArg1, CString sArg2)
@@ -657,7 +731,7 @@ BOOL IsStrEqual(int iScene, CString sArg1, CString sArg2)
 {
 	CString sSrc1;
 	CString sSrc2;
-	
+
 	sSrc1.Format(_T("%s"), GetStrValue(iScene, sArg1));
 	sSrc2.Format(_T("%s"), GetStrValue(iScene, sArg2));
 
@@ -716,7 +790,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T(">"))==0)
 	{
 		if (iSrc1>iSrc2)
@@ -726,7 +800,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T(">="))==0)
 	{
 		if (iSrc1>=iSrc2)
@@ -736,7 +810,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T("<="))==0)
 	{
 		if (iSrc1<=iSrc2)
@@ -746,7 +820,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if(saData->GetAt(1).Compare(_T("<="))==0)
 	{
 		if (iSrc1<=iSrc2)
@@ -756,7 +830,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		}
 		return RETURN_NORMAL;
 	}
-	
+
 	if((saData->GetAt(1).Compare(_T("<>"))==0) || (saData->GetAt(1).Compare(_T("!="))==0))
 	{
 		if (iSrc1!=iSrc2)
@@ -975,7 +1049,7 @@ const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
 
 	int iSrc1=GetIntValue(iScene, sArg2);
 	int iSrc2=GetIntValue(iScene, sArg3);
-	
+
 	CString sTemp;
 	sTemp.Format(_T("%"),sSrc.Mid(iSrc1, iSrc2));
 	return sTemp;
@@ -987,52 +1061,8 @@ const CString NowDateTime(CString sArg)
 
 	SYSTEMTIME st;
 	GetLocalTime(&st);
-
-	int iPlace=0;
-	sOut.Format(_T(""));
-	while(iPlace<=sArg.GetLength())
-	{
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("Y"))==0)
-		{
-			if(sArg.Mid(iPlace,4).CompareNoCase(_T("YYYY"))==0){CString sTemp; sTemp.Format(_T("%d"),st.wYear); sOut+=sTemp; iPlace+=4;}
-			else if(sArg.Mid(iPlace,2).CompareNoCase(_T("YY"))==0){CString sTemp; sTemp.Format(_T("%d"),(st.wYear%100)); sOut+=sTemp;iPlace+=2;}
-			else{return _T("");}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).Compare(_T("M"))==0)
-		{
-			if(sArg.Mid(iPlace,2).Compare(_T("MM"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMonth); sOut+=sTemp; iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wMonth); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("D"))==0)
-		{
-			if(sArg.Mid(iPlace,2).CompareNoCase(_T("dd"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wDay); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wDay); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("h"))==0)
-		{
-			if(sArg.Mid(iPlace,2).CompareNoCase(_T("hh"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wHour); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wHour); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).Compare(_T("m"))==0)
-		{
-			if(sArg.Mid(iPlace,2).Compare(_T("mm"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMinute); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wMinute); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		if(sArg.Mid(iPlace,1).CompareNoCase(_T("s"))==0)
-		{
-			if(sArg.Mid(iPlace,2).CompareNoCase(_T("ss"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wSecond); sOut+=sTemp;iPlace+=2;}
-			else{CString sTemp; sTemp.Format(_T("%d"),st.wSecond); sOut+=sTemp;iPlace+=1;}
-			continue;
-		}
-		sOut+=sArg.Mid(iPlace,1);
-		iPlace++;
-	}
-	return sOut;
+	
+	return ConvertTimeToString(st, sArg);
 }
 ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 {
@@ -1045,7 +1075,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	{
 	case VARIABLE_COMBINE_STR:
 		{
-		sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
+			sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
 
 
 	case VARIABLE_STR:
@@ -1081,7 +1111,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			sDstPointer->Format(_T("%s"), g_cInput.m_sReturnValue); 
 			return RETURN_NORMAL;
 		}
-		
+
 	case VARIABLE_FOREGROUND_WINDOW_NAME:
 		{
 			sDstPointer->Format(_T("%s"), GetForegroundWindowName()); 
@@ -1130,6 +1160,75 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 			int iArg3;
 			iArg3 = GetIntValue(iScene, sArg3);
 			sDstPointer->Format(_T("%s"), sArg1.Mid(iArg2, iArg3));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			sDstPointer->Format(_T("%s"), CopyFromClipBoardStr());
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_PATH:
+		{
+			sDstPointer->Format(_T("%s"), CopyFromClipBoardFilePath());
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_NAME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			sDstPointer->Format(_T("%s"),GetFileName(sFilePath));
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
+
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
+
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_CLIPBOARD_FILE_LASTWRITETIME:
+		{
+			CString sFilePath=CopyFromClipBoardFilePath();
+			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
+
+			CTime ctTime;
+			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
+			SYSTEMTIME sysTime;
+
+			ctTime.GetAsSystemTime(sysTime);
+			CString sArg;
+			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
+
 			return RETURN_NORMAL;
 		}
 	}
@@ -1312,7 +1411,7 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,1,&sArg1);
 			bRet = ExtractTokenInBracket(sData,2,&sArg2);
 			bRet = ExtractTokenInBracket(sData,3,&sArg3);
-			
+
 			int iR0, iR1, iC0, iC1;
 			iC0=GetIntValue(iScene, sArg0);
 			iR0=GetIntValue(iScene, sArg1);
@@ -1391,7 +1490,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			
+
 			CString sArg0;
 			CString sArg1;
 			CString sArg2;
@@ -1424,7 +1523,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			
+
 			CString sArg0;
 			CString sArg1;
 			bRet = ExtractTokenInBracket(sData,0,&sArg0);
@@ -1449,7 +1548,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 			if(pImgRGB == NULL){return RETURN_FAILED;}
 
-			
+
 			CString sArg0;
 			CString sArg1;
 			bRet = ExtractTokenInBracket(sData,0,&sArg0);
@@ -1475,7 +1574,13 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			pCamera=GetCameraPointer(iScene,_T(""));
 			g_camera.GrabImage(pImgRGB);
 			return RETURN_NORMAL;
-
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			if(pImgRGB == NULL){return RETURN_FAILED;}
+			bRet = CopyFromClipBoardImg(pImgRGB);
+			if(bRet != TRUE){return RETURN_FAILED;}
+			return RETURN_NORMAL;
 		}
 	}
 
@@ -1521,7 +1626,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 		}
 	case VARIABLE_POINT_OBJECT_CENTER:
 		{
-			
+
 			CString sArg1;
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
@@ -1580,7 +1685,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
 			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
 			sModelFilePath.Format(_T("%s"), sArg);
-			
+
 			CString sC0, sR0, sC1, sR1;
 			ExtractTokenInBracket(sDataLocal,1,&sC0);
 			ExtractTokenInBracket(sDataLocal,2,&sR0);
@@ -1688,6 +1793,34 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 			Camera* pCamera = GetCameraPointer(iScene, saData->GetAt(0));
 			if(pCamera == NULL){return RETURN_FAILED;}
 			return SetCameraValue(pCamera, iScene, saData->GetAt(1));
+		}
+	case VARIABLE_CLIPBOARD:
+		{
+			int iCmmandType;
+			bRet = GetOperandStrSrc(saData->GetAt(1),&iCmmandType);
+			if(bRet == TRUE)
+			{
+				CString sValue;
+				sValue.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(1)));
+
+				bRet = CopyToClipBoardStr(sValue);
+				if(bRet != TRUE){return RETURN_FAILED;}
+				return RETURN_NORMAL;
+			}
+
+			bRet = GetOperandImgSrc(saData->GetAt(1),&iCmmandType);
+			if(bRet == TRUE)
+			{
+				ImgRGB* pImgRGBSrc = GetImgValuePointer(iScene, saData->GetAt(1));
+				if(pImgRGBSrc == NULL){return RETURN_FAILED;}
+
+				bRet = CopyToClipBoardImg(pImgRGBSrc);
+				if(bRet != TRUE){return RETURN_FAILED;}
+				return RETURN_NORMAL;
+			}
+
+
+			return RETURN_FAILED;
 		}
 	default:{return RETURN_FAILED;}
 	}

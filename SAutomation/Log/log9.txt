@@ -1,7 +1,4 @@
 1 wait ctrl off 0
 2 wait shift off 0
-3 VarCamera1=OpenCamera(Camera0327) 0
-4 VarImg1=VarCamera 0
-5 VarCamera1=CloseCamera 0
-6 WriteImage(VarImg1,d:\test.bmp) 0
-7 exit 10
+3 VarCamera1=OpenCamera(Camera0327) -1
+iErrorTreat = 0 

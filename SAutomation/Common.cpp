@@ -542,3 +542,100 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 	}
 	return CallNextHookEx(g_hhook, code, wParam, lParam);
 }
+
+const CString GetFileName(CString sFilePath)
+{
+	int iYenPos;
+	for(int i= 0; i<sFilePath.GetLength()-1; i++)
+	{
+		if(sFilePath.Mid(sFilePath.GetLength()-1-i, 1).Compare(_T("\\"))==0)
+		{
+			CString sResult=sFilePath.Right(i);
+			return sResult;
+		}
+	}
+	CString sResult=sFilePath;
+	return sResult;
+}
+
+
+
+BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime)
+{
+	WIN32_FIND_DATAW FileData;
+
+	HANDLE hFile=FindFirstFile(sFilePath, &FileData);
+	if(hFile == INVALID_HANDLE_VALUE){return FALSE;}
+
+	
+	if(ctCreationTime != NULL)
+	{
+		*ctCreationTime=FileData.ftCreationTime;
+	}
+
+	if(ctLastAccessTime != NULL)
+	{
+		*ctLastAccessTime=FileData.ftLastAccessTime;
+	}
+
+	if(ctLastWriteTime != NULL)
+	{
+		*ctLastWriteTime=FileData.ftLastWriteTime;
+	}
+	
+    FindClose(hFile);
+
+	return TRUE;
+}
+
+
+const CString ConvertTimeToString(SYSTEMTIME st, CString sArg)
+{
+	CString sOut;
+	
+	int iPlace=0;
+	sOut.Format(_T(""));
+	while(iPlace<=sArg.GetLength())
+	{
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("Y"))==0)
+		{
+			if(sArg.Mid(iPlace,4).CompareNoCase(_T("YYYY"))==0){CString sTemp; sTemp.Format(_T("%d"),st.wYear); sOut+=sTemp; iPlace+=4;}
+			else if(sArg.Mid(iPlace,2).CompareNoCase(_T("YY"))==0){CString sTemp; sTemp.Format(_T("%d"),(st.wYear%100)); sOut+=sTemp;iPlace+=2;}
+			else{return _T("");}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).Compare(_T("M"))==0)
+		{
+			if(sArg.Mid(iPlace,2).Compare(_T("MM"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMonth); sOut+=sTemp; iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wMonth); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("D"))==0)
+		{
+			if(sArg.Mid(iPlace,2).CompareNoCase(_T("dd"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wDay); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wDay); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("h"))==0)
+		{
+			if(sArg.Mid(iPlace,2).CompareNoCase(_T("hh"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wHour); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wHour); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).Compare(_T("m"))==0)
+		{
+			if(sArg.Mid(iPlace,2).Compare(_T("mm"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wMinute); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wMinute); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		if(sArg.Mid(iPlace,1).CompareNoCase(_T("s"))==0)
+		{
+			if(sArg.Mid(iPlace,2).CompareNoCase(_T("ss"))==0){CString sTemp; sTemp.Format(_T("%02d"),st.wSecond); sOut+=sTemp;iPlace+=2;}
+			else{CString sTemp; sTemp.Format(_T("%d"),st.wSecond); sOut+=sTemp;iPlace+=1;}
+			continue;
+		}
+		sOut+=sArg.Mid(iPlace,1);
+		iPlace++;
+	}
+	return sOut;
+}
