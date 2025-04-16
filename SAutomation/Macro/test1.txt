@@ -1,8 +1,9 @@
 ﻿
 wait ctrl off
 wait shift off
-
+VarCamera1=OpenCamera(Camera0327)
 VarImg1=VarCamera
+VarCamera1=CloseCamera
 WriteImage(VarImg1,d:\test.bmp)
 exit
 

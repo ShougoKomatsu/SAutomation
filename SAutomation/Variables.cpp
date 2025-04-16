@@ -35,8 +35,8 @@ BOOL GetOperandCameraSrc(CString sDataLine, int* iCommandType)
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
 	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA; return TRUE;}
-	if(sDataTrim.Left(4).CompareNoCase(_T("Open"))==0){*iCommandType=VARIABLE_CAMERA_OPEN; return TRUE;}
-	if(sDataTrim.Left(5).CompareNoCase(_T("Close"))==0){*iCommandType=VARIABLE_CAMERA_CLOSE; return TRUE;}
+	if(sDataTrim.Left(4).CompareNoCase(_T("OpenCamera"))==0){*iCommandType=VARIABLE_CAMERA_OPEN; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("CloseCamera"))==0){*iCommandType=VARIABLE_CAMERA_CLOSE; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("Grab"))==0){*iCommandType=VARIABLE_CAMERA_GRAB; return TRUE;}
 
 	*iCommandType=VARIABLE_CAMERA;
@@ -602,7 +602,10 @@ Point* GetPointValuePointer(int iScene, CString sArg)
 
 	return NULL;
 }
-
+Camera* GetCameraPointer(int iScene, CString sArg)
+{
+	return &g_camera;
+}
 /*
 Point GetPointValue(int iScene, CString sArg)
 {
@@ -1156,8 +1159,30 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 
 ReturnValue SetCameraValue(Camera* cameraDst, int iScene, CString sData)
 {
-	cameraDst=&g_camera;
-	return RETURN_NORMAL;
+	CString sArg;
+	CString sDummy;
+	ExtractData(sData, _T("("), &sArg, &sDummy);
+
+	int iOperandSrc;
+	BOOL bRet = GetOperandCameraSrc(sData, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	switch(iOperandSrc)
+	{
+	case VARIABLE_CAMERA_OPEN:
+		{
+			bRet = ExtractTokenInBracket(sData,0,&sArg);
+			cameraDst->OpenCamera(sArg);
+			return RETURN_NORMAL;
+		}
+		
+	case VARIABLE_CAMERA_CLOSE:
+		{
+			cameraDst->CloseCamera();
+			return RETURN_NORMAL;
+		}
+	}
+	return RETURN_FAILED;
 }
 ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 {
@@ -1445,10 +1470,10 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		}
 	case VARIABLE_CAMERA_GRAB:
 		{
-			g_camera.OpenCamera(_T("Camera0327"));
-			Sleep(1000);
+
+			Camera* pCamera;
+			pCamera=GetCameraPointer(iScene,_T(""));
 			g_camera.GrabImage(pImgRGB);
-			g_camera.CloseCamera();
 			return RETURN_NORMAL;
 
 		}
@@ -1657,6 +1682,12 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
 			return SetPointValue(pPointDst, iScene, saData->GetAt(1));
+		}
+	case VARIABLE_CAMERA:
+		{
+			Camera* pCamera = GetCameraPointer(iScene, saData->GetAt(0));
+			if(pCamera == NULL){return RETURN_FAILED;}
+			return SetCameraValue(pCamera, iScene, saData->GetAt(1));
 		}
 	default:{return RETURN_FAILED;}
 	}
