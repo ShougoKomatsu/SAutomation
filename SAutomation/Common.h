@@ -1,4 +1,7 @@
 #pragma once
+
+#define SAFE_DELETE(v) if(v != NULL){delete [] v; v=NULL;}
+
 enum ReturnValue
 {
 	RETURN_NORMAL=0,
@@ -151,8 +154,6 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op);
 
 void SetComboItem(CComboBox* combo, CString m_sHotkey);
 
+BOOL GetFileProperty(const CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime);
+const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
 
-const CString GetFileName(CString sFilePath);
-
-BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime);
-const CString ConvertTimeToString(SYSTEMTIME st, CString sArg);

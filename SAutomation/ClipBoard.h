@@ -1,8 +1,8 @@
 #pragma once
 #include "Variables.h"
 
-int CopyToClipBoardStr(CString sValue);
-int CopyToClipBoardImg(ImgRGB* imgRGB);
+int CopyToClipBoardStr(const CString sValue);
+int CopyToClipBoardImg(const ImgRGB* imgRGB);
 const CString CopyFromClipBoardStr();
 BOOL CopyFromClipBoardImg(ImgRGB* imgRGB);
 const CString CopyFromClipBoardFilePath();

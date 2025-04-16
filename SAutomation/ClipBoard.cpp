@@ -5,7 +5,7 @@
 BOOL DispAvailableClipboardFormat()
 {
 	int iFormat;
-	iFormat = EnumClipboardFormats(0);
+	iFormat = 0;
 	while(1)
 	{
 		CString sFormat;
@@ -35,15 +35,22 @@ BOOL DispAvailableClipboardFormat()
 		default:
 			{
 				TCHAR tchData[256];
-				GetClipboardFormatName(iFormat,tchData,255);
-				sFormat.Format(_T("%s"),tchData);
+				int iRet = GetClipboardFormatName(iFormat, tchData, 255);
+				if(iRet>0)
+				{
+					sFormat.Format(_T("%s"),tchData);
+				}
+				else
+				{
+					sFormat.Format(_T(""));
+				}
 			}
 		}
 
 
 
 		CString sss;
-		sss.Format(_T("%d %s"),iFormat,sFormat);
+		sss.Format(_T("%d %s"),iFormat, sFormat);
 		AfxMessageBox(sss);
 		if(iFormat == 0){break;}
 	}
@@ -51,15 +58,14 @@ BOOL DispAvailableClipboardFormat()
 }
 
 
-int CopyToClipBoardStr(CString sValue)
+int CopyToClipBoardStr(const CString sValue)
 {
 	BOOL bRet;
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return RETURN_FAILED;}
-//	DispAvailableClipboardFormat();
+
 	bRet = EmptyClipboard();
 	if(bRet == FALSE){return RETURN_FAILED;}
-
 	
 	HGLOBAL hGL;
 	hGL = GlobalAlloc(GPTR, (sValue.GetLength()+1)*sizeof(TCHAR) );
@@ -84,7 +90,7 @@ int CopyToClipBoardStr(CString sValue)
 	return RETURN_NORMAL;
 }
 
-int CopyToClipBoardImg(ImgRGB* imgRGB)
+int CopyToClipBoardImg(const ImgRGB* imgRGB)
 {
 	int iFillerSize;
 

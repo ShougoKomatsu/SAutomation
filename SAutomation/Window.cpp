@@ -55,7 +55,7 @@ ReturnValue RunExe(CString sExePath)
 	wcscpy_s(szTmp, wcslen(sExePath) + 1, sExePath);
 
 	CreateProcess(NULL,  szTmp, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
-	delete [] szTmp;
+	SAFE_DELETE(szTmp);
 	return RETURN_NORMAL;
 }
 

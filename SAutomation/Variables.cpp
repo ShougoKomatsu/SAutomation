@@ -470,6 +470,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			int iArg2;
@@ -480,6 +481,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			int iArg2;
@@ -490,6 +492,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			CString sArg3;
@@ -513,7 +516,9 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			CString sArg=CopyFromClipBoardFilePath();
 			if(sArg.GetLength()<=0){return _T("");}
 
-			return GetFileName(sArg);
+			CString sFileName;
+			GetFileName(sArg, &sFileName);
+			return sFileName;
 		}
 	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
 		{
@@ -521,7 +526,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return _T("");}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
+			bRet = GetFileProperty(sFilePath, &ctTime,NULL, NULL);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -536,7 +541,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return _T("");}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
+			bRet = GetFileProperty(sFilePath, NULL, &ctTime, NULL);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -551,7 +556,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			if(sFilePath.GetLength()<=0){return _T("");}
 
 			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
+			bRet = GetFileProperty(sFilePath, NULL, NULL, &ctTime);
 			SYSTEMTIME sysTime;
 
 			ctTime.GetAsSystemTime(sysTime);
@@ -923,11 +928,11 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 		iNextChar++;
 	}
 
-	if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(1,1))==0)
+	if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 	{
 		int iDigit=1;
 		iNextChar++;
-		while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(1,1))==0)
+		while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 		{
 			iDigit++;
 			iNextChar++;
@@ -945,11 +950,11 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 
 	if(bAccuracy==TRUE)
 	{
-		if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(1,1))==0)
+		if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 		{
 			int iDigit=1;
 			iNextChar++;
-			while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(1,1))==0)
+			while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 			{
 				iDigit++;
 				iNextChar++;
@@ -1085,168 +1090,34 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	BOOL bRet = GetOperandStrSrc(sDataLocal, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
+	CString sStrVal;
+	sStrVal.Format(_T("%s"),GetStrValue(iScene,sDataLocal));
+
 	switch(iOperandSrc)
 	{
-	case VARIABLE_COMBINE_STR:
+	case VARIABLE_COMBINE_STR:{break;}
+	case VARIABLE_STR:{break;}
+	case VARIABLE_INT2STR:{break;}
+	case VARIABLE_NOW_DATE_TIME:{break;}
+	case VARIABLE_INPUT:{break;}
+	case VARIABLE_FOREGROUND_WINDOW_NAME:{break;}
+	case VARIABLE_FOREGROUND_WINDOW_CLASS_NAME:{break;}
+	case VARIABLE_STR_LEFT:{break;}
+	case VARIABLE_STR_RIGHT:{break;}
+	case VARIABLE_STR_MID:{break;}
+	case VARIABLE_CLIPBOARD:{break;}
+	case VARIABLE_CLIPBOARD_FILE_PATH:{if(sStrVal.GetLength()<=0){return RETURN_FAILED;} break;}
+	case VARIABLE_CLIPBOARD_FILE_NAME:{if(sStrVal.GetLength()<=0){return RETURN_FAILED;} break;}
+	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:{if(sStrVal.GetLength()<=0){return RETURN_FAILED;} break;}
+	case VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME:{if(sStrVal.GetLength()<=0){return RETURN_FAILED;} break;}
+	case VARIABLE_CLIPBOARD_FILE_LASTWRITETIME:{if(sStrVal.GetLength()<=0){return RETURN_FAILED;} break;}
+	default:
 		{
-			sDstPointer->Format(_T("%s"),GetStrValue(iScene,sDataLocal)); return RETURN_NORMAL;}
-
-
-	case VARIABLE_STR:
-		{
-			sDstPointer->Format(_T("%s"),GetStrValue(iScene, sDataLocal));
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_INT2STR:
-		{
-			CString sArg1;
-			CString sArg2;
-			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			bRet = ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			sDstPointer->Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_NOW_DATE_TIME:
-		{
-			CString sArg;
-			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
-			sDstPointer->Format(_T("%s"), NowDateTime(sArg)); 
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_INPUT:
-		{
-			CStringArray saData;
-			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			saData.Add(sArg);
-			saData.Add(_T("-1"));
-			g_cInput.m_bInputMulti=TRUE;
-			g_cInput.m_saParam.Copy(saData);
-			g_cInput.DoModal();
-			sDstPointer->Format(_T("%s"), g_cInput.m_sReturnValue); 
-			return RETURN_NORMAL;
-		}
-
-	case VARIABLE_FOREGROUND_WINDOW_NAME:
-		{
-			sDstPointer->Format(_T("%s"), GetForegroundWindowName()); 
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_FOREGROUND_WINDOW_CLASS_NAME:
-		{
-			sDstPointer->Format(_T("%s"), GetForegroundWindowClassName()); 
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_STR_LEFT:
-		{
-			CString sArg1;
-			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
-			CString sArg2;
-			ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			int iArg2;
-			iArg2 = GetIntValue(iScene, sArg2);
-			sDstPointer->Format(_T("%s"), sArg1.Left(iArg2));
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_STR_RIGHT:
-		{
-			CString sArg1;
-			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
-			CString sArg2;
-			ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			int iArg2;
-			iArg2 = GetIntValue(iScene, sArg2);
-			sDstPointer->Format(_T("%s"), sArg1.Right(iArg2));
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_STR_MID:
-		{
-			CString sArg1;
-			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
-			CString sArg2;
-			ExtractTokenInBracket(sDataLocal,1,&sArg2);
-			CString sArg3;
-			ExtractTokenInBracket(sDataLocal,2,&sArg3);
-			int iArg2;
-			iArg2 = GetIntValue(iScene, sArg2);
-			int iArg3;
-			iArg3 = GetIntValue(iScene, sArg3);
-			sDstPointer->Format(_T("%s"), sArg1.Mid(iArg2, iArg3));
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_CLIPBOARD:
-		{
-			sDstPointer->Format(_T("%s"), CopyFromClipBoardStr());
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_CLIPBOARD_FILE_PATH:
-		{
-			sDstPointer->Format(_T("%s"), CopyFromClipBoardFilePath());
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_CLIPBOARD_FILE_NAME:
-		{
-			CString sFilePath=CopyFromClipBoardFilePath();
-			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
-
-			sDstPointer->Format(_T("%s"),GetFileName(sFilePath));
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_CLIPBOARD_FILE_CREATIONTIME:
-		{
-			CString sFilePath=CopyFromClipBoardFilePath();
-			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
-
-			CTime ctTime;
-			bRet = GetFileDate(sFilePath, &ctTime,NULL, NULL);
-			SYSTEMTIME sysTime;
-
-			ctTime.GetAsSystemTime(sysTime);
-			CString sArg;
-			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
-
-			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
-
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_CLIPBOARD_FILE_LASTACCESSTIME:
-		{
-			CString sFilePath=CopyFromClipBoardFilePath();
-			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
-
-			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, &ctTime, NULL);
-			SYSTEMTIME sysTime;
-
-			ctTime.GetAsSystemTime(sysTime);
-			CString sArg;
-			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
-
-			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
-
-			return RETURN_NORMAL;
-		}
-	case VARIABLE_CLIPBOARD_FILE_LASTWRITETIME:
-		{
-			CString sFilePath=CopyFromClipBoardFilePath();
-			if(sFilePath.GetLength()<=0){return RETURN_FAILED;}
-
-			CTime ctTime;
-			bRet = GetFileDate(sFilePath, NULL, NULL, &ctTime);
-			SYSTEMTIME sysTime;
-
-			ctTime.GetAsSystemTime(sysTime);
-			CString sArg;
-			bRet = ExtractTokenInBracket(sDataLocal,0,&sArg);
-
-			sDstPointer->Format(_T("%s"), ConvertTimeToString(sysTime, sArg));
-
-			return RETURN_NORMAL;
+			return RETURN_FAILED;
 		}
 	}
-	return RETURN_FAILED;
+	sDstPointer->Format(_T("%s"), sStrVal); 
+	return RETURN_NORMAL;
 }
 
 ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iSelfSrc)
@@ -1662,9 +1533,9 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 
 			pPoint->Set(dR[0], dC[0]);
 
-			delete [] dA;
-			delete [] dR;
-			delete [] dC;
+			SAFE_DELETE(dA);
+			SAFE_DELETE(dR);
+			SAFE_DELETE(dC);
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_POINT_FOREGROUND_WINDOW_LU:

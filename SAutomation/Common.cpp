@@ -543,44 +543,27 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 	return CallNextHookEx(g_hhook, code, wParam, lParam);
 }
 
-const CString GetFileName(CString sFilePath)
-{
-	int iYenPos;
-	for(int i= 0; i<sFilePath.GetLength()-1; i++)
-	{
-		if(sFilePath.Mid(sFilePath.GetLength()-1-i, 1).Compare(_T("\\"))==0)
-		{
-			CString sResult=sFilePath.Right(i);
-			return sResult;
-		}
-	}
-	CString sResult=sFilePath;
-	return sResult;
-}
 
-
-
-BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime)
+BOOL GetFileProperty(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime)
 {
 	WIN32_FIND_DATAW FileData;
 
 	HANDLE hFile=FindFirstFile(sFilePath, &FileData);
 	if(hFile == INVALID_HANDLE_VALUE){return FALSE;}
 
-	
 	if(ctCreationTime != NULL)
 	{
-		*ctCreationTime=FileData.ftCreationTime;
+		*ctCreationTime = FileData.ftCreationTime;
 	}
 
 	if(ctLastAccessTime != NULL)
 	{
-		*ctLastAccessTime=FileData.ftLastAccessTime;
+		*ctLastAccessTime = FileData.ftLastAccessTime;
 	}
 
 	if(ctLastWriteTime != NULL)
 	{
-		*ctLastWriteTime=FileData.ftLastWriteTime;
+		*ctLastWriteTime = FileData.ftLastWriteTime;
 	}
 	
     FindClose(hFile);
@@ -589,7 +572,7 @@ BOOL GetFileDate(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTi
 }
 
 
-const CString ConvertTimeToString(SYSTEMTIME st, CString sArg)
+const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg)
 {
 	CString sOut;
 	
