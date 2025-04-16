@@ -132,7 +132,7 @@ int CopyToClipBoardImg(const ImgRGB* imgRGB)
 	bmih->biClrUsed=0;
 	bmih->biClrImportant=0;
 
-	if(imgRGB->iChannel==CHANNEL_3_8)
+	if(imgRGB->iChannel==CHANNEL_3_8RGB)
 	{
 		for(int r=0; r<imgRGB->iHeight; r++)
 		{
@@ -280,7 +280,7 @@ BOOL CopyFromClipBoardImg(ImgRGB* imgRGB)
 	
 	int iFiller;
 
-	imgRGB->Set(iWidthLocal, iHeightLocal, CHANNEL_3_8);
+	imgRGB->Set(iWidthLocal, iHeightLocal, CHANNEL_3_8RGB);
 	
 	iFiller = iWidthLocal%4;
 

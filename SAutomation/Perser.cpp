@@ -146,7 +146,9 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	
 	//-------------------------------------------------------
 	
+	if(sDataTrim.Left(11).CompareNoCase(_T("CloseCamera"))==0){*iCommandType=COMMAND_VARIABLE_CAMERA_CLOSE; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("ClipBoard"))==0){*iCommandType=COMMAND_VARIABLE_CLIPBOARD; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=COMMAND_VARIABLE_CAMERA; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarInt"))==0){*iCommandType=COMMAND_VARIABLE_INT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=COMMAND_VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=COMMAND_VARIABLE_IMG; return TRUE;}
@@ -1142,6 +1144,20 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			saData->Add(sArg);
 
 			if((saData->GetCount())!=2){return FALSE;}
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_VARIABLE_CAMERA:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData->Add(sArg);
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_VARIABLE_CAMERA_CLOSE:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData->Add(sArg);
 			*iCommandType = iType;
 			return TRUE;
 		}

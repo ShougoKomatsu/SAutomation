@@ -24,6 +24,9 @@ extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 extern Object g_object[MAX_THREAD][MAX_VARIABLES];
 
+extern Camera g_camera;
+
+
 int GetIntValue(int iScene, CString sArg);
 int* GetIntValuePointer(int iScene, CString sArg);
 
@@ -50,6 +53,8 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData);
 ReturnValue Flow_AreStrEqual(int iScene, CStringArray* saData, CString* sReturnParam);
 ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
 ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_OpenCamera(int iScene, CStringArray* saData);
+ReturnValue Flow_CloseCamera(int iScene, CStringArray* saData);
 
 void AssignInt(int iScene, CString sArg, int iInput);
 void AssignString(int iScene, CString sArg, CString sInput);
@@ -121,6 +126,11 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_OBJECT_SELECT_SHAPE (504)
 #define VARIABLE_OBJECT_SORT_REGION (505)
 #define VARIABLE_OBJECT_GEN_RECTANGLE1 (506)
+
+#define VARIABLE_CAMERA (600)
+#define VARIABLE_CAMERA_OPEN (601)
+#define VARIABLE_CAMERA_CLOSE (602)
+#define VARIABLE_CAMERA_GRAB (603)
 
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)

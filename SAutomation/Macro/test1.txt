@@ -1,16 +1,31 @@
 ﻿
 wait ctrl off
 wait shift off
-VarInt1=10
-VarStr1=ClipBoardFileName
+VarCamera1=OpenCamera(Camera0327)
+VarImg1=VarCamera
+CloseCamera(VarCamera1)
+ClipBoard=VarImg1
+exit
 
-MsgBox(VarStr1)
+waiteitherkey(-1,a,aaa,b,bbb)
 
-VarStr1=ClipBoardFilePath
-MsgBox(VarStr1)
+aaa:
+msgbox(aaa)
+exit
 
-ClipBoard=VarStr1
+bbb:
+msgbox(bbb)
+exit
+//msgbox( )
+exit
 
+varstr1=input
+msgbox(varstr1)
+VarPoint1=ForegroundWindowLU
+MousePos(VarPoint1)
+1000
+exit
+ListDlgItems
+VarInt1=DlgItem(E X I T)
 
-
-
+mousepostoitem(VarInt1)
