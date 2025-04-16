@@ -751,6 +751,20 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 }
 
 
+ReturnValue Flow_OpenCamera(int iScene, CStringArray* saData)
+{
+	int iRet= g_camera.OpenCamera(saData->GetAt(0));
+	if(iRet != 0){return RETURN_FAILED;}
+	return RETURN_NORMAL;
+}
+
+ReturnValue Flow_CloseCamera(int iScene, CStringArray* saData)
+{
+	int iRet= g_camera.CloseCamera();
+	if(iRet != 0){return RETURN_FAILED;}
+	return RETURN_NORMAL;
+}
+
 
 ReturnValue Flow_AreStrEqual(int iScene, CStringArray* saData, CString* sReturnParam)
 {

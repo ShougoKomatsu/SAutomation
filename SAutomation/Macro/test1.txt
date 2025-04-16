@@ -3,8 +3,8 @@ wait ctrl off
 wait shift off
 VarCamera1=OpenCamera(Camera0327)
 VarImg1=VarCamera
-VarCamera1=CloseCamera
-WriteImage(VarImg1,d:\test.bmp)
+CloseCamera(VarCamera1)
+ClipBoard=VarImg1
 exit
 
 waiteitherkey(-1,a,aaa,b,bbb)
