@@ -1,5 +1,4 @@
 1 wait ctrl off 0
 2 wait shift off 0
-3 VarStr1=abcdefg 0
-4 ClipBoard=VarStr1 -1
+3 VarCamera1=OpenCamera(Camera0327) -1
 iErrorTreat = 0 
