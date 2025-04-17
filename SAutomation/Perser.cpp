@@ -1149,7 +1149,15 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_VARIABLE_CAMERA:
 		{
-			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			CString sDataLocalTemp;
+			sDataLocalTemp.Format(_T("%s"),sDataLocal);
+			ExtractData(sDataLocal, _T("="), &sArg, &sDataLocal);
+			saData->Add(sArg);
+			CString sArg1;
+			ExtractData(sDataLocal, _T("("), &sArg1, &sDataLocal);
+			CString sArg2;
+			ExtractTokenInBracket(sDataLocalTemp,0,&sArg2);
+			sArg.Format(_T("(%s,%s)"),sArg1,sArg2);
 			saData->Add(sArg);
 			*iCommandType = iType;
 			return TRUE;
@@ -1157,6 +1165,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 	case COMMAND_VARIABLE_CAMERA_CLOSE:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData->Add(sArg);
+			sArg.Format(_T("(CloseCamera)"));
 			saData->Add(sArg);
 			*iCommandType = iType;
 			return TRUE;

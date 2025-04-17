@@ -37,8 +37,8 @@ BOOL GetOperandCameraSrc(CString sDataLine, int* iCommandType)
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
 	
 	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA; return TRUE;}
-	if(sDataTrim.Left(4).CompareNoCase(_T("OpenCamera"))==0){*iCommandType=VARIABLE_CAMERA_OPEN; return TRUE;}
-	if(sDataTrim.Left(5).CompareNoCase(_T("CloseCamera"))==0){*iCommandType=VARIABLE_CAMERA_CLOSE; return TRUE;}
+	if(sDataTrim.Left(10).CompareNoCase(_T("OpenCamera"))==0){*iCommandType=VARIABLE_CAMERA_OPEN; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("CloseCamera"))==0){*iCommandType=VARIABLE_CAMERA_CLOSE; return TRUE;}
 	if(sDataTrim.Left(4).CompareNoCase(_T("Grab"))==0){*iCommandType=VARIABLE_CAMERA_GRAB; return TRUE;}
 
 	*iCommandType=VARIABLE_CAMERA;
@@ -1145,17 +1145,17 @@ ReturnValue SetCameraValue(Camera* cameraDst, int iScene, CString sData)
 {
 	CString sArg;
 	CString sDummy;
-	ExtractData(sData, _T("("), &sArg, &sDummy);
+	ExtractTokenInBracket(sData,0, &sArg);
 
 	int iOperandSrc;
-	BOOL bRet = GetOperandCameraSrc(sData, &iOperandSrc);
+	BOOL bRet = GetOperandCameraSrc(sArg, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	switch(iOperandSrc)
 	{
 	case VARIABLE_CAMERA_OPEN:
 		{
-			bRet = ExtractTokenInBracket(sData,0,&sArg);
+			bRet = ExtractTokenInBracket(sData,1,&sArg);
 			cameraDst->OpenCamera(sArg);
 			return RETURN_NORMAL;
 		}
@@ -1163,7 +1163,7 @@ ReturnValue SetCameraValue(Camera* cameraDst, int iScene, CString sData)
 	case VARIABLE_CAMERA_CLOSE:
 		{
 			cameraDst->CloseCamera();
-			return RETURN_NORMAL;
+			return RETURN_NORMAL;	
 		}
 	}
 	return RETURN_FAILED;
@@ -1457,6 +1457,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 
 			Camera* pCamera;
 			pCamera=GetCameraPointer(iScene,_T(""));
+			g_camera.GrabImage(pImgRGB);
 			g_camera.GrabImage(pImgRGB);
 			return RETURN_NORMAL;
 		}

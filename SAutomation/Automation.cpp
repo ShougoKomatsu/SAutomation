@@ -761,11 +761,13 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		}
 	case COMMAND_VARIABLE_CAMERA:
 		{
-			return Flow_OpenCamera(*iSceneData, &saData);
+			return Flow_Assign(*iSceneData, &saData);
+//			return Flow_OpenCamera(*iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_CAMERA_CLOSE:
 		{
-			return Flow_CloseCamera(*iSceneData, &saData);
+			return Flow_Assign(*iSceneData, &saData);
+//			return Flow_CloseCamera(*iSceneData, &saData);
 		}
 	case COMMAND_AREEQUAL_INT:
 		{
