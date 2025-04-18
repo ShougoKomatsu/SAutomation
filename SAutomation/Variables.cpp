@@ -1157,6 +1157,9 @@ ReturnValue SetCameraValue(Camera* cameraDst, int iScene, CString sData)
 		{
 			bRet = ExtractTokenInBracket(sData,1,&sArg);
 			cameraDst->OpenCamera(sArg);
+			ImgRGB imgDummy;
+			Sleep(1000);
+//			cameraDst->GrabImage(&imgDummy);
 			return RETURN_NORMAL;
 		}
 		
@@ -1457,7 +1460,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 
 			Camera* pCamera;
 			pCamera=GetCameraPointer(iScene,_T(""));
-			g_camera.GrabImage(pImgRGB);
+
 			g_camera.GrabImage(pImgRGB);
 			return RETURN_NORMAL;
 		}
