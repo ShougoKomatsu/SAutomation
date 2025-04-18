@@ -113,6 +113,9 @@ int CopyToClipBoardImg(const ImgRGB* imgRGB)
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return RETURN_FAILED;}
 	
+	bRet = EmptyClipboard();
+	if(bRet == FALSE){return RETURN_FAILED;}
+	
 	
 
 	HGLOBAL hGL= GlobalAlloc(GPTR, sizeof(BITMAPINFOHEADER)+iBitSize);
