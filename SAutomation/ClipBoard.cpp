@@ -58,18 +58,18 @@ BOOL DispAvailableClipboardFormat()
 }
 
 
-int CopyToClipBoardStr(const CString sValue)
+BOOL CopyToClipBoardStr(const CString sValue)
 {
 	BOOL bRet;
 	bRet = OpenClipboard(g_hWnd);
-	if(bRet == FALSE){return RETURN_FAILED;}
+	if(bRet == FALSE){return FALSE;}
 
 	bRet = EmptyClipboard();
-	if(bRet == FALSE){return RETURN_FAILED;}
+	if(bRet == FALSE){return FALSE;}
 	
 	HGLOBAL hGL;
 	hGL = GlobalAlloc(GPTR, (sValue.GetLength()+1)*sizeof(TCHAR) );
-	if(hGL==NULL){return RETURN_FAILED;}
+	if(hGL==NULL){return FALSE;}
 
 	_stprintf((TCHAR*)hGL, _T("%s"), sValue);
 	
@@ -78,19 +78,19 @@ int CopyToClipBoardStr(const CString sValue)
 	if(hResult == NULL)
 	{
 		GlobalFree(hGL);
-		return RETURN_FAILED;
+		return FALSE;
 	}
 
 	bRet = CloseClipboard();
 	if(bRet == FALSE)
 	{
 		GlobalFree(hGL);
-		return RETURN_FAILED;
+		return FALSE;
 	}
-	return RETURN_NORMAL;
+	return TRUE;
 }
 
-int CopyToClipBoardImg(const ImgRGB* imgRGB)
+BOOL CopyToClipBoardImg(const ImgRGB* imgRGB)
 {
 	int iFillerSize;
 
@@ -111,10 +111,10 @@ int CopyToClipBoardImg(const ImgRGB* imgRGB)
 	
 	BOOL bRet;
 	bRet = OpenClipboard(g_hWnd);
-	if(bRet == FALSE){return RETURN_FAILED;}
+	if(bRet == FALSE){return FALSE;}
 	
 	bRet = EmptyClipboard();
-	if(bRet == FALSE){return RETURN_FAILED;}
+	if(bRet == FALSE){return FALSE;}
 	
 	
 
@@ -177,16 +177,16 @@ int CopyToClipBoardImg(const ImgRGB* imgRGB)
 	if(hResult == NULL)
 	{
 		GlobalFree(hGL);
-		return RETURN_FAILED;
+		return FALSE;
 	}
 
 	bRet = CloseClipboard();
 	if(bRet == FALSE)
 	{
 		GlobalFree(hGL);
-		return RETURN_FAILED;
+		return FALSE;
 	}
-	return RETURN_NORMAL;
+	return TRUE;
 }
 
 const CString CopyFromClipBoardStr()
