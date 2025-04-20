@@ -74,6 +74,15 @@ BOOL CSettingDlg::OnInitDialog()
 	m_bNotModified=TRUE;
 	SetTitleNotChanged( m_bNotModified );
 	
+	CRect rectDlg;
+	CRect rectParent;
+	GetWindowRect(&rectDlg);
+	::GetWindowRect(g_hWnd,&rectParent);
+	CRect rectDisp;
+	SystemParametersInfo( SPI_GETWORKAREA, NULL, &rectDisp, NULL);
+
+	MoveWindow(rectDisp.Width()-rectDlg.Width(), rectDisp.Height()-rectDlg.Height()-rectParent.Height(),rectDlg.Width(),rectDlg.Height());
+
 	m_tab.SubclassDlgItem(IDC_COMPACT_TAB_OPERATION, this);
 
 	m_tab.InsertItem(0, _T("0 - 15"));
