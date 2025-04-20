@@ -1391,7 +1391,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			int iSrc3=GetIntValue(iScene, sArg3);
 			int iSrc4=GetIntValue(iScene, sArg4);
 
-			CropImage(pImgRGBIn, pImgRGB, iSrc1, iSrc2, iSrc3, iSrc4 );
+			CropImage(pImgRGBIn, pImgRGB, iSrc2, iSrc1, iSrc4,  iSrc3);
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_IMG_DECOMPOSE:
