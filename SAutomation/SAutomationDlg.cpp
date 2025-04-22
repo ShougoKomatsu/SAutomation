@@ -408,6 +408,12 @@ void CSAutomationDlg::Operate(int iScene)
 }
 
 
+void CSAutomationDlg::SelectAndOperate(int iExScene)
+{
+	CString sFilePath;
+	SetSelection(iExScene, sFilePath);
+	Operate(MAX_NORMAL_THREAD+iExScene);
+}
 void CSAutomationDlg::SetSelection(int iExScene, CString sFilePath)
 {
 	g_sFilePath[MAX_NORMAL_THREAD+iExScene].Format(_T("%s"), sFilePath);

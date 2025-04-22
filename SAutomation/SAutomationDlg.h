@@ -103,11 +103,12 @@ public:
 	CSettingDlg m_cDlgSetting;
 	BOOL TrayNotifyIconMessage(DWORD dwMessage, int iIconID);
 	
+	void SelectAndOperate(int iExScene);
 	void ToggleEnable();
 
 	void WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo);
 
-	void SetSelection(int iExScne, CString sFilePath);
+	void SetSelection(int iExScene, CString sFilePath);
 
 	BOOL ReHookWindowsHook();
 	void ResetHotkey(int iScene);
