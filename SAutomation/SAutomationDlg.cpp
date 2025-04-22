@@ -105,13 +105,13 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 
 	UpdateData(TRUE);
 	if(wParam<0){return 0;}
-	if(wParam>=MAX_THREAD){return 0;}
+	if(wParam>=MAX_NORMAL_THREAD){return 0;}
 	g_hThread[wParam]=NULL;
 
 	g_Automation.m_OpeInfo[wParam].m_bRunning=FALSE;
 	
 	BOOL bRunningAny=FALSE;
-	for(int iScene=0; iScene<MAX_THREAD; iScene++)
+	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		if(g_Automation.m_OpeInfo[iScene].m_bRunning != TRUE){continue;}
 		bRunningAny=TRUE;
@@ -235,7 +235,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
-		for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
 	}
 
 	SetTimer(TIMER_COMPACT_DISP_MOUSPOS,200, NULL);
@@ -327,7 +327,7 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 		{
 			int iKey;
 			iKey = (pMsg->lParam)>>16;
-			for(int iScene=0; iScene<MAX_THREAD; iScene++)
+			for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 			{
 				if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
 			}
@@ -349,7 +349,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)
 	{
-		for(int iScene = 0; iScene< MAX_THREAD; iScene++)
+		for(int iScene = 0; iScene< MAX_NORMAL_THREAD; iScene++)
 		{
 			if(g_hThread[iScene] == NULL){continue;}
 			if(g_iWatching == 0)
@@ -447,7 +447,7 @@ void CSAutomationDlg::ToggleEnable()
 	{
 		g_Automation.m_bEnableHotkey=TRUE;
 	}
-	for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
 }
 
 BOOL CSAutomationDlg::ReHookWindowsHook()
@@ -468,7 +468,7 @@ void CSAutomationDlg::OnBnClickedButtonCompactExit()
 	
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
-		for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
 	}
 }
 

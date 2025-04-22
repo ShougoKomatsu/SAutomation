@@ -7,8 +7,8 @@
 #include "Common.h"
 #include "SettingDlg.h"
 
-extern CStdioFile g_cf[MAX_THREAD];
-extern CString g_sLogFilePath[MAX_THREAD];
+extern CStdioFile g_cf[MAX_NORMAL_THREAD];
+extern CString g_sLogFilePath[MAX_NORMAL_THREAD];
 
 #define HOTKEY_SCENE_0 (10)
 #define HOTKEY_SCENE_1 (11)

@@ -12,11 +12,11 @@ HWND g_hWnd;
 int g_iWatching=0;
 
 
-HANDLE g_hHotkey[MAX_THREAD];
+HANDLE g_hHotkey[MAX_NORMAL_THREAD];
 
-CStdioFile g_cf[MAX_THREAD];
-CString g_sLogFilePath[MAX_THREAD];
-int g_iLogLevel[MAX_THREAD];
+CStdioFile g_cf[MAX_NORMAL_THREAD];
+CString g_sLogFilePath[MAX_NORMAL_THREAD];
+int g_iLogLevel[MAX_NORMAL_THREAD];
 double g_dSpeedMult=1.0;
 
 
@@ -191,7 +191,7 @@ void AutomationInfo::ReadSettings()
 	GetPrivateProfileString(_T("Mouse"),_T("ClickDulation"),_T("50"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	g_iClickDulation = _ttoi(szData);
 
-	for(int iScene=0; iScene<MAX_THREAD; iScene++)
+	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		CString sSection;
 		sSection.Format(_T("Operation %d"), iScene+1);
@@ -238,7 +238,7 @@ void AutomationInfo::ReadSettings()
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
 	
-	for(int iScene= 0; iScene<MAX_THREAD; iScene++)
+	for(int iScene= 0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		g_hThread[iScene] = NULL;
 		if(m_OpeInfo[iScene].sHotkey.GetLength()>=2)
@@ -289,7 +289,7 @@ void AutomationInfo::SaveSettings()
 	CString sUseAlt;
 	CString sUseWin;
 
-	for(int iScene = 0; iScene<MAX_THREAD; iScene++)
+	for(int iScene = 0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		CString sSection;
 		sSection.Format(_T("Operation %d"), iScene+1);
@@ -365,7 +365,7 @@ BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 	m_bMinimizeToTaskTray=autoInfoIn->m_bMinimizeToTaskTray;
 	m_sDir.Format(_T("%s"),autoInfoIn->m_sDir);
 
-	for(int i=0; i<MAX_THREAD; i++)
+	for(int i=0; i<MAX_NORMAL_THREAD; i++)
 	{
 		m_OpeInfo[i].Copy(&(autoInfoIn->m_OpeInfo[i]));
 	}
@@ -409,7 +409,7 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 	{
 		return FALSE;
 	}
-	for(int i=0; i<MAX_THREAD; i++)
+	for(int i=0; i<MAX_NORMAL_THREAD; i++)
 	{
 		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE)
 		{

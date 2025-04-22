@@ -12,12 +12,12 @@
 	TerminateThread(hGetKey, 0);\
 	TerminateThread(hGetStepKey, 0);\
 
-HANDLE g_hThread[MAX_THREAD];
+HANDLE g_hThread[MAX_NORMAL_THREAD];
 
-int g_iSceneData[MAX_THREAD];
+int g_iSceneData[MAX_NORMAL_THREAD];
 
 
-CString g_sFilePath[MAX_THREAD];
+CString g_sFilePath[MAX_NORMAL_THREAD];
 
 BOOL g_bHalt;
 BOOL g_bSuspend = FALSE;

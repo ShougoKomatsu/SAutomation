@@ -116,10 +116,10 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString m_sEditFileName[MAX_THREAD];
-	CComboBox m_combo[MAX_THREAD];
-	CComboBox m_comboUseCtrl[MAX_THREAD];
-	CComboBox m_comboUseShift[MAX_THREAD];
+	CString m_sEditFileName[MAX_NORMAL_THREAD];
+	CComboBox m_combo[MAX_NORMAL_THREAD];
+	CComboBox m_comboUseCtrl[MAX_NORMAL_THREAD];
+	CComboBox m_comboUseShift[MAX_NORMAL_THREAD];
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

@@ -102,7 +102,7 @@ public:
 	void ReadSettings();
 	void SaveSettings();
 	CString m_sDir;
-	OperationInfo m_OpeInfo[MAX_THREAD];
+	OperationInfo m_OpeInfo[MAX_NORMAL_THREAD];
 	BOOL IsSameAs(AutomationInfo* autoInfoIn);
 };
 
@@ -126,8 +126,8 @@ extern double g_dSpeedMult;
 
 extern int g_iWatching;
 
-extern CStdioFile g_cf[MAX_THREAD];
-extern CString g_sLogFilePath[MAX_THREAD];
+extern CStdioFile g_cf[MAX_NORMAL_THREAD];
+extern CString g_sLogFilePath[MAX_NORMAL_THREAD];
 
 extern int g_iClickDulation;
 extern CString g_sDir;
