@@ -107,6 +107,8 @@ public:
 
 	void WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo);
 
+	void SetSelection(int iExScne, CString sFilePath);
+
 	BOOL ReHookWindowsHook();
 	void ResetHotkey(int iScene);
 	void Operate(int iScene);

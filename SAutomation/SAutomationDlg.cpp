@@ -407,6 +407,12 @@ void CSAutomationDlg::Operate(int iScene)
 	g_Automation.Operate(iScene);
 }
 
+
+void CSAutomationDlg::SetSelection(int iExScene, CString sFilePath)
+{
+	g_sFilePath[MAX_NORMAL_THREAD+iExScene].Format(_T("%s"), sFilePath);
+}
+
 BOOL CSAutomationDlg::DestroyWindow()
 {
 	g_bHalt = TRUE;
