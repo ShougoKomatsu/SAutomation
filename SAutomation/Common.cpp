@@ -12,11 +12,11 @@ HWND g_hWnd;
 int g_iWatching=0;
 
 
-HANDLE g_hHotkey[MAX_NORMAL_THREAD];
+HANDLE g_hHotkey[MAX_THREAD];
 
-CStdioFile g_cf[MAX_NORMAL_THREAD];
-CString g_sLogFilePath[MAX_NORMAL_THREAD];
-int g_iLogLevel[MAX_NORMAL_THREAD];
+CStdioFile g_cf[MAX_THREAD];
+CString g_sLogFilePath[MAX_THREAD];
+int g_iLogLevel[MAX_THREAD];
 double g_dSpeedMult=1.0;
 
 
