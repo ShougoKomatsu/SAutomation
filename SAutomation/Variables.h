@@ -18,11 +18,11 @@ struct Point
 };
 
 #define MAX_VARIABLES (8)
-extern int g_iVar[MAX_NORMAL_THREAD][MAX_VARIABLES];
-extern CString g_sVar[MAX_NORMAL_THREAD][MAX_VARIABLES];
-extern ImgRGB g_imgRGB[MAX_NORMAL_THREAD][MAX_VARIABLES];
-extern Point g_point[MAX_NORMAL_THREAD][MAX_VARIABLES];
-extern Object g_object[MAX_NORMAL_THREAD][MAX_VARIABLES];
+extern int g_iVar[MAX_THREAD][MAX_VARIABLES];
+extern CString g_sVar[MAX_THREAD][MAX_VARIABLES];
+extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
+extern Point g_point[MAX_THREAD][MAX_VARIABLES];
+extern Object g_object[MAX_THREAD][MAX_VARIABLES];
 
 extern Camera g_camera;
 

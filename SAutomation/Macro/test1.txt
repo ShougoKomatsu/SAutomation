@@ -1,4 +1,6 @@
 ﻿
+MsgBox(aaaa);
+exit
 wait ctrl off
 wait shift off
 VarCamera1=OpenCamera(Camera0327)

@@ -102,9 +102,11 @@ public:
 	void ReadSettings();
 	void SaveSettings();
 	CString m_sDir;
-	OperationInfo m_OpeInfo[MAX_NORMAL_THREAD];
+	OperationInfo m_OpeInfo[MAX_THREAD];
 	BOOL IsSameAs(AutomationInfo* autoInfoIn);
-};
+};	
+
+
 
 
 #include "stdafx.h"

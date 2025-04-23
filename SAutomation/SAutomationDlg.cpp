@@ -105,13 +105,13 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 
 	UpdateData(TRUE);
 	if(wParam<0){return 0;}
-	if(wParam>=MAX_NORMAL_THREAD){return 0;}
+	if(wParam>=MAX_THREAD){return 0;}
 	g_hThread[wParam]=NULL;
 
 	g_Automation.m_OpeInfo[wParam].m_bRunning=FALSE;
 	
 	BOOL bRunningAny=FALSE;
-	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
+	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
 		if(g_Automation.m_OpeInfo[iScene].m_bRunning != TRUE){continue;}
 		bRunningAny=TRUE;
@@ -126,7 +126,7 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	{
 		ChangeIcon(IDI_ICON_RUNNING);
 	}
-
+	
 	return 0;
 }
 
@@ -410,13 +410,23 @@ void CSAutomationDlg::Operate(int iScene)
 
 void CSAutomationDlg::SelectAndOperate(int iExScene)
 {
-	CString sFilePath;
-	SetSelection(iExScene, sFilePath);
+	CString sFileName;
+	CString sss;
+	sss.Format(_T("%d"), iExScene);
+	AfxMessageBox(sss);
+	sFileName.Format(_T("test1.txt"));
+	AfxMessageBox(sFileName);
+	sss.Format(_T("MAX_NORMAL_THREAD+ iExScene = %d"), MAX_NORMAL_THREAD+ iExScene);
+	AfxMessageBox(sss);
+	
+	OperationInfo* aaa= &(g_Automation.m_OpeInfo[MAX_NORMAL_THREAD+ iExScene]);
+	aaa->sFileName.Format(_T("%s"), sFileName);
+	SetSelection(iExScene, sFileName);
 	Operate(MAX_NORMAL_THREAD+iExScene);
 }
 void CSAutomationDlg::SetSelection(int iExScene, CString sFilePath)
 {
-	g_sFilePath[MAX_NORMAL_THREAD+iExScene].Format(_T("%s"), sFilePath);
+	g_Automation.m_OpeInfo[MAX_NORMAL_THREAD+ iExScene].sFileName.Format(_T("%s"), sFilePath);
 }
 
 BOOL CSAutomationDlg::DestroyWindow()

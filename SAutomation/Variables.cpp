@@ -7,11 +7,11 @@
 #include "ClipBoard.h"
 
 #include "Window.h"
-int g_iVar[MAX_NORMAL_THREAD][MAX_VARIABLES];
-CString g_sVar[MAX_NORMAL_THREAD][MAX_VARIABLES];
-ImgRGB g_imgRGB[MAX_NORMAL_THREAD][MAX_VARIABLES];
-Point g_point[MAX_NORMAL_THREAD][MAX_VARIABLES];
-Object g_object[MAX_NORMAL_THREAD][MAX_VARIABLES];
+int g_iVar[MAX_THREAD][MAX_VARIABLES];
+CString g_sVar[MAX_THREAD][MAX_VARIABLES];
+ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
+Point g_point[MAX_THREAD][MAX_VARIABLES];
+Object g_object[MAX_THREAD][MAX_VARIABLES];
 Camera g_camera;
 
 BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
