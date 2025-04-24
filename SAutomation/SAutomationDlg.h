@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include "Common.h"
 #include "SettingDlg.h"
-
+#include "SelectDlg.h"
 extern CStdioFile g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
@@ -74,6 +74,7 @@ extern CString g_sLogFilePath[MAX_THREAD];
 #define HOTKEY_SCENE_61 (71)
 #define HOTKEY_SCENE_62 (72)
 #define HOTKEY_SCENE_63 (73)
+#define HOTKEY_SCENE_64 (74)
 
 
 #define HOTKEY_ENABLE (80)
@@ -100,6 +101,7 @@ public:
 	HICON m_hIconRunning;
 	HICON m_hIconMinimize;
 	HICON m_hIconClose;
+	CSelectDlg m_cDlgSelect;
 	CSettingDlg m_cDlgSetting;
 	BOOL TrayNotifyIconMessage(DWORD dwMessage, int iIconID);
 	

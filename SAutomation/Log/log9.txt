@@ -1,7 +1,2 @@
-1 wait ctrl off 0
-2 wait shift off 0
-3 VarCamera1=OpenCamera(Camera0327) 0
-4 VarImg1=VarCamera 0
-5 CloseCamera(VarCamera1) 0
-6 ClipBoard=VarImg1 0
-7 exit 10
+1 MsgBox(aaaa); 0
+2 exit 10

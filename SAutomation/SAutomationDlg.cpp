@@ -236,6 +236,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
 		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
 	}
 
 	SetTimer(TIMER_COMPACT_DISP_MOUSPOS,200, NULL);
@@ -331,6 +332,11 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 			{
 				if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
 			}
+			for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
+			{
+				if(iKey == g_Automation.m_OpeInfo[MAX_NORMAL_THREAD+iExScene].dwHotKey){SelectAndOperate(iExScene);return TRUE;}
+
+			}
 			if(iKey == g_Automation.m_dwHotKeyEnable){ToggleEnable();return TRUE;}
 			if(iKey == VK_ESCAPE){g_bHalt = TRUE;}
 			break;
@@ -410,6 +416,7 @@ void CSAutomationDlg::Operate(int iScene)
 
 void CSAutomationDlg::SelectAndOperate(int iExScene)
 {
+	m_cDlgSelect.DoModal();
 	CString sFileName;
 	CString sss;
 	sss.Format(_T("%d"), iExScene);
@@ -470,6 +477,7 @@ void CSAutomationDlg::ToggleEnable()
 		g_Automation.m_bEnableHotkey=TRUE;
 	}
 	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
+	for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
 }
 
 BOOL CSAutomationDlg::ReHookWindowsHook()
@@ -491,6 +499,7 @@ void CSAutomationDlg::OnBnClickedButtonCompactExit()
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
 		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
 	}
 }
 

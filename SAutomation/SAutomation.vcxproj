@@ -116,6 +116,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SAutomation.h" />
     <ClInclude Include="SAutomationDlg.h" />
+    <ClInclude Include="SelectDlg.h" />
     <ClInclude Include="SettingDlg.h" />
     <ClInclude Include="SImgProc_ex.h" />
     <ClInclude Include="stdafx.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="Perser.cpp" />
     <ClCompile Include="SAutomation.cpp" />
     <ClCompile Include="SAutomationDlg.cpp" />
+    <ClCompile Include="SelectDlg.cpp" />
     <ClCompile Include="SettingDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
