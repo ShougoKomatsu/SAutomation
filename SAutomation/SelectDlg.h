@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Common.h"
 
 // CSelectDlg ダイアログ
 
@@ -9,8 +9,9 @@ class CSelectDlg : public CDialogEx
 
 public:
 	CString m_sResultFileName;
-	CString m_sSelectKeys[8];
-	CString m_sSelectFiless[8];
+	DWORD m_dwHotKeys[MAX_SELECTION];
+	CString m_sSelectKeys[MAX_SELECTION];
+	CString m_sSelectFiles[MAX_SELECTION];
 	CSelectDlg(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CSelectDlg();
 
@@ -21,4 +22,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV サポート
 
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual BOOL OnInitDialog();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
