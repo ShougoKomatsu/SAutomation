@@ -3,6 +3,7 @@ MsgBox(aaaa);
 exit
 wait ctrl off
 wait shift off
+VarStr1=aaa
 VarCamera1=OpenCamera(Camera0327)
 VarImg1=VarCamera
 CloseCamera(VarCamera1)

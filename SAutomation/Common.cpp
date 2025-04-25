@@ -245,6 +245,24 @@ void AutomationInfo::ReadSettings()
 		GetPrivateProfileString(sSection,_T("UseWin"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 		if(wcscmp(szData,_T("1"))==0){m_OpeInfo[iScene].bUseWin=TRUE;}
 		else{m_OpeInfo[iScene].bUseWin=FALSE;}
+		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
+		{
+			CString sKeyKey;
+			CString sKeyFile;
+			CString sDataKey;
+			CString sDataFile;
+			sKeyKey.Format(_T("SelectKey%d"),iSelect+1);
+			sKeyFile.Format(_T("SelectFile%d"),iSelect+1);
+			GetPrivateProfileString(sSection,sKeyKey,_T(""),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+			sDataKey.Format(_T("%s"), szData);
+			GetPrivateProfileString(sSection,sKeyFile,_T(""),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+			sDataFile.Format(_T("%s"), szData);
+			if((sDataKey.GetLength()>0) && (sDataFile.GetLength()>0))
+			{
+				this->m_sSelectKeys[iExScene][iSelect].Format(_T("%s"), sDataKey);
+				this->m_sSelectFiles[iExScene][iSelect].Format(_T("%s"), sDataFile);
+			}
+		}
 	}
 
 
@@ -370,6 +388,40 @@ void AutomationInfo::SaveSettings()
 
 	}
 
+	
+	
+	for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
+	{
+		int iScene=MAX_NORMAL_THREAD+iExScene;
+		CString sSection;
+		sSection.Format(_T("ExOperation %d"), iExScene+1);
+
+		WritePrivateProfileString(sSection,_T("Hotkey"),m_OpeInfo[iScene].sHotkey, sFilePath);
+
+		sUseCtrl.Format(_T("%d"), m_OpeInfo[iScene].bUseCtrl);
+		sUseShift.Format(_T("%d"), m_OpeInfo[iScene].bUseShift);
+		sUseAlt.Format(_T("%d"), m_OpeInfo[iScene].bUseAlt);
+		sUseWin.Format(_T("%d"), m_OpeInfo[iScene].bUseWin);
+
+		WritePrivateProfileString(sSection,_T("UseCtrl"),sUseCtrl,sFilePath);
+		WritePrivateProfileString(sSection,_T("UseShift"),sUseShift,sFilePath);
+		WritePrivateProfileString(sSection,_T("UseAlt"),sUseAlt,sFilePath);
+		WritePrivateProfileString(sSection,_T("UseWin"),sUseWin,sFilePath);
+
+
+		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
+		{
+			CString sKeyKey;
+			CString sKeyFile;
+			CString sDataKey;
+			CString sDataFile;
+			sKeyKey.Format(_T("SelectKey%d"),iSelect+1);
+			sKeyFile.Format(_T("SelectFile%d"),iSelect+1);
+			WritePrivateProfileString(sSection,sKeyKey,this->m_sSelectKeys[iExScene][iSelect],sFilePath);
+			WritePrivateProfileString(sSection,sKeyFile,this->m_sSelectFiles[iExScene][iSelect],sFilePath);
+
+		}
+	}
 
 	WritePrivateProfileString(_T("Hotkey"),_T("EnableKey"),m_sHotkeyEnable,sFilePath);
 

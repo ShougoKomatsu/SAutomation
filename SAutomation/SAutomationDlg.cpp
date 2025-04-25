@@ -416,19 +416,16 @@ void CSAutomationDlg::Operate(int iScene)
 
 void CSAutomationDlg::SelectAndOperate(int iExScene)
 {
-	m_cDlgSelect.DoModal();
-	CString sFileName;
-	CString sss;
-	sss.Format(_T("%d"), iExScene);
-	AfxMessageBox(sss);
-	sFileName.Format(_T("test1.txt"));
-	AfxMessageBox(sFileName);
-	sss.Format(_T("MAX_NORMAL_THREAD+ iExScene = %d"), MAX_NORMAL_THREAD+ iExScene);
-	AfxMessageBox(sss);
+	for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
+	{
+		m_cDlgSelect.m_sSelectKeys[iSelect].Format(_T("%s"), g_Automation.m_sSelectKeys[iExScene][iSelect]);
+		m_cDlgSelect.m_sSelectFiles[iSelect].Format(_T("%s"), g_Automation.m_sSelectFiles[iExScene][iSelect]);
+	}
+	int iRet = m_cDlgSelect.DoModal();
+	if(iRet != IDOK){return;}
+
 	
-	OperationInfo* aaa= &(g_Automation.m_OpeInfo[MAX_NORMAL_THREAD+ iExScene]);
-	aaa->sFileName.Format(_T("%s"), sFileName);
-	SetSelection(iExScene, sFileName);
+	SetSelection(iExScene, m_cDlgSelect.m_sResultFileName);
 	Operate(MAX_NORMAL_THREAD+iExScene);
 }
 void CSAutomationDlg::SetSelection(int iExScene, CString sFilePath)
