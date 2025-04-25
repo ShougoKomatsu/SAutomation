@@ -37,18 +37,26 @@ END_MESSAGE_MAP()
 BOOL CSelectDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+	
+	CRect rectDlg;
+	CRect rectParent;
+	GetWindowRect(&rectDlg);
+	::GetWindowRect(g_hWnd,&rectParent);
+	CRect rectDisp;
+	SystemParametersInfo( SPI_GETWORKAREA, NULL, &rectDisp, NULL);
 
+	MoveWindow(rectDisp.Width()-rectDlg.Width(), rectDisp.Height()-rectDlg.Height()-rectParent.Height(),rectDlg.Width(),rectDlg.Height());
 
 	for(int iSelection=0;iSelection<MAX_SELECTION; iSelection++)
 	{
 
-		((CButton*)GetDlgItem(IDC_STATIC_SELECT_KEY_1+iSelection))->SetWindowText(_T(""));
+		((CButton*)GetDlgItem(IDC_BUTTON_SELECT_KEY_1+iSelection))->SetWindowText(_T(""));
 		((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelection))->SetWindowText(_T(""));
 
 		if(m_sSelectKeys[iSelection].GetLength()<=0){continue;}
 		if(m_sSelectFiles[iSelection].GetLength()<=0){continue;}
 		
-		((CButton*)GetDlgItem(IDC_STATIC_SELECT_KEY_1+iSelection))->SetWindowText(m_sSelectKeys[iSelection]);
+		((CButton*)GetDlgItem(IDC_BUTTON_SELECT_KEY_1+iSelection))->SetWindowText(m_sSelectKeys[iSelection]);
 		((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelection))->SetWindowText(m_sSelectFiles[iSelection]);
 		CString sTemp;
 		sTemp.Format(_T("%s"),m_sSelectKeys[iSelection]);
