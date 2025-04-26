@@ -36,7 +36,7 @@ void CSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SETTING_COMBO_LOG_LEVEL, m_comboLogLevel);
 	DDX_Text(pDX, IDC_SETTING_EDIT_SPEED, m_sEditSpeed);
 	DDX_Control(pDX, IDC_SETTING_SLIDER_SPEED, m_sliderSpeed);
-	DDX_Control(pDX, IDC_COMPACT_TAB_OPERATION, m_tab);
+//	DDX_Control(pDX, IDC_COMPACT_TAB_OPERATION, m_tab);
 }
 
 
@@ -82,7 +82,7 @@ BOOL CSettingDlg::OnInitDialog()
 	SystemParametersInfo( SPI_GETWORKAREA, NULL, &rectDisp, NULL);
 
 	MoveWindow(rectDisp.Width()-rectDlg.Width(), rectDisp.Height()-rectDlg.Height()-rectParent.Height(),rectDlg.Width(),rectDlg.Height());
-
+	
 	m_tab.SubclassDlgItem(IDC_COMPACT_TAB_OPERATION, this);
 
 	m_tab.InsertItem(0, _T("0 - 15"));
