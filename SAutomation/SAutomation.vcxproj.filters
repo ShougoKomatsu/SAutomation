@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Dialog">
+      <UniqueIdentifier>{13e86d86-f54c-4e00-a38f-b4b073a2a9ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Dialog">
+      <UniqueIdentifier>{38aca4f3-8ddb-431a-af6a-da61e45c929f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -39,9 +45,6 @@
     <ClInclude Include="SAutomation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SAutomationDlg.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -63,9 +66,6 @@
     <ClInclude Include="ImgProc.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InputDialog.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MouseAutomation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -73,9 +73,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SImgProc_ex.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TabItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Thread.h">
@@ -87,21 +84,27 @@
     <ClInclude Include="Window.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SettingDlg.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ClipBoard.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="SettingDlg.h">
+      <Filter>ヘッダー ファイル\Dialog</Filter>
+    </ClInclude>
     <ClInclude Include="SelectDlg.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="SAutomationDlg.h">
+      <Filter>ヘッダー ファイル\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDialog.h">
+      <Filter>ヘッダー ファイル\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="TabItem.h">
+      <Filter>ヘッダー ファイル\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SAutomation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SAutomationDlg.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -119,16 +122,10 @@
     <ClCompile Include="ImgProc.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InputDialog.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MouseAutomation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Perser.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TabItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Thread.cpp">
@@ -140,14 +137,23 @@
     <ClCompile Include="Window.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SettingDlg.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ClipBoard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SelectDlg.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingDlg.cpp">
+      <Filter>ソース ファイル\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDialog.cpp">
+      <Filter>ソース ファイル\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="SAutomationDlg.cpp">
+      <Filter>ソース ファイル\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="TabItem.cpp">
+      <Filter>ソース ファイル\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
