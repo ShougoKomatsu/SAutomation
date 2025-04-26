@@ -393,18 +393,10 @@ void CSettingDlg::OnSelchangeWindowName()
 void CSettingDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	int itab = m_tab.GetCurSel();
-	if(itab<4)
-	{
-		m_tabItem.ShowWindow(SW_SHOW);
-		m_tabItem.m_iSlot=itab;
-		m_tabItem.RefleshDialog(itab);
-		m_bNotModified = m_Automation.IsSameAs(&g_Automation);
-		SetTitleNotChanged( m_bNotModified );
-	}
-	else
-	{
-		m_tabItem.ShowWindow(SW_HIDE);
-	}
+	m_tabItem.m_iSlot=itab;
+	m_tabItem.RefleshDialog(itab);
+	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+	SetTitleNotChanged( m_bNotModified );
 	*pResult = 0;
 }
 

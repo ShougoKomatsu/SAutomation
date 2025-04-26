@@ -437,11 +437,19 @@ BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 	m_bMinimizeToTaskTray=autoInfoIn->m_bMinimizeToTaskTray;
 	m_sDir.Format(_T("%s"),autoInfoIn->m_sDir);
 
-	for(int i=0; i<MAX_NORMAL_THREAD; i++)
+	for(int i=0; i<MAX_THREAD; i++)
 	{
 		m_OpeInfo[i].Copy(&(autoInfoIn->m_OpeInfo[i]));
 	}
-	
+
+	for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)
+	{
+		for(int iSelection=0;iSelection<MAX_SELECTION; iSelection++)
+		{
+			m_sSelectKeys[iExSecene][iSelection].Format(_T("%s"),autoInfoIn->m_sSelectKeys[iExSecene][iSelection]);
+			m_sSelectFiles[iExSecene][iSelection].Format(_T("%s"),autoInfoIn->m_sSelectFiles[iExSecene][iSelection]);
+		}
+	}
 
 	return TRUE;
 }
@@ -481,14 +489,22 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 	{
 		return FALSE;
 	}
-	for(int i=0; i<MAX_NORMAL_THREAD; i++)
+	for(int i=0; i<MAX_THREAD; i++)
 	{
 		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE)
 		{
 			return FALSE;
 		}
 	}
-
+	
+	for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)
+	{
+		for(int iSelection=0;iSelection<MAX_SELECTION; iSelection++)
+		{
+			if(m_sSelectKeys[iExSecene][iSelection].Compare(autoInfoIn->m_sSelectKeys[iExSecene][iSelection]) != 0){return FALSE;};
+			if(m_sSelectFiles[iExSecene][iSelection].Compare(autoInfoIn->m_sSelectFiles[iExSecene][iSelection]) != 0){return FALSE;};
+		}
+	}
 
 	return TRUE;
 }

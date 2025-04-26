@@ -421,6 +421,7 @@ void CSAutomationDlg::SelectAndOperate(int iExScene)
 		m_cDlgSelect.m_sSelectKeys[iSelect].Format(_T("%s"), g_Automation.m_sSelectKeys[iExScene][iSelect]);
 		m_cDlgSelect.m_sSelectFiles[iSelect].Format(_T("%s"), g_Automation.m_sSelectFiles[iExScene][iSelect]);
 	}
+	m_cDlgSelect.m_iModeOperate=1;
 	int iRet = m_cDlgSelect.DoModal();
 	if(iRet != IDOK){return;}
 
