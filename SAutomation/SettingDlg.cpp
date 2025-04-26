@@ -89,6 +89,7 @@ BOOL CSettingDlg::OnInitDialog()
 	m_tab.InsertItem(1, _T("16 - 31"));
 	m_tab.InsertItem(3, _T("32 - 47"));
 	m_tab.InsertItem(3, _T("48 - 63"));
+	m_tab.InsertItem(4, _T("Ex 1 - 1"));
 	
 	m_tabItem.Create(IDD_DIALOG_TAB_ITEMS, &m_tab);
 	m_tabItem.m_autoInfo=&m_Automation;
@@ -392,11 +393,18 @@ void CSettingDlg::OnSelchangeWindowName()
 void CSettingDlg::OnTcnSelchangeTabOperation(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	int itab = m_tab.GetCurSel();
-
-	m_tabItem.m_iSlot=itab;
-	m_tabItem.RefleshDialog(itab);
-	m_bNotModified = m_Automation.IsSameAs(&g_Automation);
-	SetTitleNotChanged( m_bNotModified );
+	if(itab<4)
+	{
+		m_tabItem.ShowWindow(SW_SHOW);
+		m_tabItem.m_iSlot=itab;
+		m_tabItem.RefleshDialog(itab);
+		m_bNotModified = m_Automation.IsSameAs(&g_Automation);
+		SetTitleNotChanged( m_bNotModified );
+	}
+	else
+	{
+		m_tabItem.ShowWindow(SW_HIDE);
+	}
 	*pResult = 0;
 }
 
