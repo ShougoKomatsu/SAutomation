@@ -504,8 +504,6 @@ void AutomationInfo::Operate(int iScene)
 		if(dwResult != STATUS_WAIT_0){return;}
 	}
 	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
-	AfxMessageBox(g_Automation.m_OpeInfo[iScene].sFileName);
-	AfxMessageBox(g_sFilePath[iScene]);
 	int iParam[2];
 	iParam[1] = m_iLogLevel<<PARAM_LOGLEVEL_SHIFT;
 	iParam[0] = iScene+1;
