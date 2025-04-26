@@ -14,11 +14,6 @@ IMPLEMENT_DYNAMIC(CSelectDlg, CDialogEx)
 CSelectDlg::CSelectDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CSelectDlg::IDD, pParent)
 {
-	
-	for(int iSelect=0; iSelect<16; iSelect++)
-	{
-		m_combo[iSelect].ResetContent();
-	}
 }
 
 CSelectDlg::~CSelectDlg()
@@ -35,7 +30,11 @@ void CSelectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_6, (m_combo[5]));
 	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_7, (m_combo[6]));
 	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_8, (m_combo[7]));
-
+	
+	for(int iSelect=0; iSelect<16; iSelect++)
+	{
+		m_combo[iSelect].ResetContent();
+	}
 	CDialogEx::DoDataExchange(pDX);
 }
 
