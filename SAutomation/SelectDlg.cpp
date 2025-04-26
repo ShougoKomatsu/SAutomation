@@ -14,7 +14,11 @@ IMPLEMENT_DYNAMIC(CSelectDlg, CDialogEx)
 CSelectDlg::CSelectDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CSelectDlg::IDD, pParent)
 {
-
+	
+	for(int iSelect=0; iSelect<16; iSelect++)
+	{
+		m_combo[iSelect].ResetContent();
+	}
 }
 
 CSelectDlg::~CSelectDlg()

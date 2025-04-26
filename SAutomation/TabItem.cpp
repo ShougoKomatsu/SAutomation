@@ -15,7 +15,11 @@ IMPLEMENT_DYNAMIC(CTabItem, CDialogEx)
 CTabItem::CTabItem(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CTabItem::IDD, pParent)
 {
-
+	
+	for(int iScene=0; iScene<16; iScene++)
+	{
+		m_combo[iScene].ResetContent();
+	}
 }
 
 CTabItem::~CTabItem()
