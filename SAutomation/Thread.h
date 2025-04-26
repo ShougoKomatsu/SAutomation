@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 extern BOOL g_bHalt;
-#define MAX_EX_THREAD (1)
+#define MAX_EX_THREAD (16)
 #define MAX_NORMAL_THREAD (64)
 #define MAX_THREAD (MAX_NORMAL_THREAD+MAX_EX_THREAD)
 

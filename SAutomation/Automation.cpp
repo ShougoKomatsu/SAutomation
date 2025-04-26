@@ -175,104 +175,16 @@ ReturnValue GetInput(CStringArray* saData, CString* sReturnParam)
 
 ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 {
-	BYTE byDataLocal;
-	byDataLocal = 0;
 	*bUnicode = FALSE;
 	*tch = 0;
-	if(sData.CompareNoCase(_T("Ctrl"))==0)
+	*byData = 0x00;
+
+	DWORD dwRet= GetVKeyCode(sData);
+	if(dwRet >0)
 	{
-		*byData= VK_CONTROL;
+		*byData= dwRet;
 		return RETURN_NORMAL;
 	}
-	if(sData.CompareNoCase(_T("Shift"))==0){*byData= VK_SHIFT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Alt"))==0){*byData= VK_MENU;return RETURN_NORMAL;}
-
-	if(sData.CompareNoCase(_T("Å©"))==0){*byData= VK_LEFT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("<-"))==0){*byData= VK_LEFT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Left"))==0){*byData= VK_LEFT;return RETURN_NORMAL;}
-
-	if(sData.CompareNoCase(_T("Å™"))==0){*byData= VK_UP;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Up"))==0){*byData= VK_UP;return RETURN_NORMAL;}
-
-	if(sData.CompareNoCase(_T("Å®"))==0){*byData= VK_RIGHT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("->"))==0){*byData= VK_RIGHT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Right"))==0){*byData= VK_RIGHT;return RETURN_NORMAL;}
-
-	if(sData.CompareNoCase(_T("Å´"))==0){*byData= VK_DOWN;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Down"))==0){*byData= VK_DOWN;return RETURN_NORMAL;}
-
-
-	if(sData.CompareNoCase(_T("f1"))==0){*byData = VK_F1;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f2"))==0){*byData = VK_F2;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f3"))==0){*byData = VK_F3;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f4"))==0){*byData = VK_F4;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f5"))==0){*byData = VK_F5;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f6"))==0){*byData = VK_F6;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f7"))==0){*byData = VK_F7;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f8"))==0){*byData = VK_F8;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f9"))==0){*byData = VK_F9;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f10"))==0){*byData = VK_F10;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f11"))==0){*byData = VK_F11;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f12"))==0){*byData = VK_F12;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f13"))==0){*byData = VK_F13;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f14"))==0){*byData = VK_F14;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f15"))==0){*byData = VK_F15;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f16"))==0){*byData = VK_F16;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f17"))==0){*byData = VK_F17;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f18"))==0){*byData = VK_F18;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f19"))==0){*byData = VK_F19;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f20"))==0){*byData = VK_F20;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f21"))==0){*byData = VK_F21;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f22"))==0){*byData = VK_F22;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f23"))==0){*byData = VK_F23;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("f24"))==0){*byData = VK_F24;return RETURN_NORMAL;}
-	
-
-	if(sData.CompareNoCase(_T("LShift"))==0){*byData = VK_SHIFT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("RShift"))==0){*byData = VK_SHIFT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("LCtrl"))==0){*byData = VK_CONTROL;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("RCtrl"))==0){*byData = VK_CONTROL;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("LAlt"))==0){*byData = VK_MENU;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("RAlt"))==0){*byData = VK_MENU;return RETURN_NORMAL;}
-
-	if(sData.CompareNoCase(_T("Tab"))==0){*byData = VK_TAB;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Enter"))==0){*byData = VK_RETURN;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Return"))==0){*byData = VK_RETURN;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Space"))==0){*byData = VK_SPACE;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("BackSpace"))==0){*byData = VK_BACK;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Jp"))==0){*byData = 0xf3;return RETURN_NORMAL;}
-
-	if(sData.CompareNoCase(_T("PageUp"))==0){*byData = VK_PRIOR;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("PageDown"))==0){*byData = VK_NEXT;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("Home"))==0){*byData = VK_HOME;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("End"))==0){*byData = VK_END;return RETURN_NORMAL;}
-	if(sData.CompareNoCase(_T("PrintScreen"))==0){*byData = VK_SNAPSHOT;return RETURN_NORMAL;}
-
-	
-	if(sData.GetLength()==1)
-	{
-		char cChar;
-		cChar = sData.GetAt(0);
-		if(('0'<=cChar)&&(cChar <= '9'))
-		{
-			*byData = sData.GetAt(0);
-			*bUnicode = FALSE;
-			return RETURN_NORMAL;
-		}
-		if(('A' <= cChar) &&(cChar <= 'Z'))
-		{
-			*byData = sData.GetAt(0);
-			*bUnicode = FALSE;
-			return RETURN_NORMAL;
-		}
-		if(('a' <= cChar) &&(cChar <= 'z'))
-		{
-			*byData = sData.GetAt(0)-'a'+'A';
-			*bUnicode = FALSE;
-			return RETURN_NORMAL;
-		}
-	}
-
 
 	*bUnicode = TRUE;
 	*byData = 0x00;

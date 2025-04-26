@@ -117,6 +117,8 @@ BOOL ReadTextFile(CString sFilePath, CStringArray* saCommands)
 
 void SetComboItem(CComboBox* combo, CString sHotkey)
 {
+	if(combo->GetCount()<=0)
+	{
 	combo->ResetContent();
 	combo->AddString(_T(" "));
 	combo->AddString(_T("0"));
@@ -168,7 +170,7 @@ void SetComboItem(CComboBox* combo, CString sHotkey)
 	combo->AddString(_T("F11"));
 	combo->AddString(_T("F12"));
 	combo->AddString(_T("Insert"));
-
+	}
 
 	BOOL bFound;
 	bFound = FALSE;
@@ -437,11 +439,19 @@ BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 	m_bMinimizeToTaskTray=autoInfoIn->m_bMinimizeToTaskTray;
 	m_sDir.Format(_T("%s"),autoInfoIn->m_sDir);
 
-	for(int i=0; i<MAX_NORMAL_THREAD; i++)
+	for(int i=0; i<MAX_THREAD; i++)
 	{
 		m_OpeInfo[i].Copy(&(autoInfoIn->m_OpeInfo[i]));
 	}
-	
+
+	for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)
+	{
+		for(int iSelection=0;iSelection<MAX_SELECTION; iSelection++)
+		{
+			m_sSelectKeys[iExSecene][iSelection].Format(_T("%s"),autoInfoIn->m_sSelectKeys[iExSecene][iSelection]);
+			m_sSelectFiles[iExSecene][iSelection].Format(_T("%s"),autoInfoIn->m_sSelectFiles[iExSecene][iSelection]);
+		}
+	}
 
 	return TRUE;
 }
@@ -481,14 +491,22 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 	{
 		return FALSE;
 	}
-	for(int i=0; i<MAX_NORMAL_THREAD; i++)
+	for(int i=0; i<MAX_THREAD; i++)
 	{
 		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE)
 		{
 			return FALSE;
 		}
 	}
-
+	
+	for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)
+	{
+		for(int iSelection=0;iSelection<MAX_SELECTION; iSelection++)
+		{
+			if(m_sSelectKeys[iExSecene][iSelection].Compare(autoInfoIn->m_sSelectKeys[iExSecene][iSelection]) != 0){return FALSE;};
+			if(m_sSelectFiles[iExSecene][iSelection].Compare(autoInfoIn->m_sSelectFiles[iExSecene][iSelection]) != 0){return FALSE;};
+		}
+	}
 
 	return TRUE;
 }
@@ -700,6 +718,25 @@ DWORD GetVKeyCode(const CString sIn)
 	CString sInput;
 	sInput.Format(_T("%s"),sIn);
 	sInput.MakeLower();
+	
+	if(sInput.CompareNoCase(_T("Ctrl"))==0){return VK_CONTROL;}
+	if(sInput.CompareNoCase(_T("Shift"))==0){return VK_SHIFT;}
+	if(sInput.CompareNoCase(_T("Alt"))==0){return VK_MENU;}
+
+	if(sInput.CompareNoCase(_T("Å©"))==0){return VK_LEFT;}
+	if(sInput.CompareNoCase(_T("<-"))==0){return VK_LEFT;}
+	if(sInput.CompareNoCase(_T("Left"))==0){return VK_LEFT;}
+
+	if(sInput.CompareNoCase(_T("Å™"))==0){return VK_UP;}
+	if(sInput.CompareNoCase(_T("Up"))==0){return VK_UP;}
+
+	if(sInput.CompareNoCase(_T("Å®"))==0){return VK_RIGHT;}
+	if(sInput.CompareNoCase(_T("->"))==0){return VK_RIGHT;}
+	if(sInput.CompareNoCase(_T("Right"))==0){return VK_RIGHT;}
+
+	if(sInput.CompareNoCase(_T("Å´"))==0){return VK_DOWN;}
+	if(sInput.CompareNoCase(_T("Down"))==0){return VK_DOWN;}
+
 	if(sInput.GetLength()>=2)
 	{
 		if(sInput.CompareNoCase(_T("F1"))==0){return VK_F1;}
@@ -714,6 +751,39 @@ DWORD GetVKeyCode(const CString sIn)
 		if(sInput.CompareNoCase(_T("F10"))==0){return VK_F10;}
 		if(sInput.CompareNoCase(_T("F11"))==0){return VK_F11;}
 		if(sInput.CompareNoCase(_T("F12"))==0){return VK_F12;}
+		if(sInput.CompareNoCase(_T("f13"))==0){return VK_F13;}
+		if(sInput.CompareNoCase(_T("f14"))==0){return VK_F14;}
+		if(sInput.CompareNoCase(_T("f15"))==0){return VK_F15;}
+		if(sInput.CompareNoCase(_T("f16"))==0){return VK_F16;}
+		if(sInput.CompareNoCase(_T("f17"))==0){return VK_F17;}
+		if(sInput.CompareNoCase(_T("f18"))==0){return VK_F18;}
+		if(sInput.CompareNoCase(_T("f19"))==0){return VK_F19;}
+		if(sInput.CompareNoCase(_T("f20"))==0){return VK_F20;}
+		if(sInput.CompareNoCase(_T("f21"))==0){return VK_F21;}
+		if(sInput.CompareNoCase(_T("f22"))==0){return VK_F22;}
+		if(sInput.CompareNoCase(_T("f23"))==0){return VK_F23;}
+		if(sInput.CompareNoCase(_T("f24"))==0){return VK_F24;}
+
+		if(sInput.CompareNoCase(_T("LShift"))==0){return VK_SHIFT;}
+		if(sInput.CompareNoCase(_T("RShift"))==0){return VK_SHIFT;}
+		if(sInput.CompareNoCase(_T("LCtrl"))==0){return VK_CONTROL;}
+		if(sInput.CompareNoCase(_T("RCtrl"))==0){return VK_CONTROL;}
+		if(sInput.CompareNoCase(_T("LAlt"))==0){return VK_MENU;}
+		if(sInput.CompareNoCase(_T("RAlt"))==0){return VK_MENU;}
+
+		if(sInput.CompareNoCase(_T("Tab"))==0){return VK_TAB;}
+		if(sInput.CompareNoCase(_T("Enter"))==0){return VK_RETURN;}
+		if(sInput.CompareNoCase(_T("Return"))==0){return VK_RETURN;}
+		if(sInput.CompareNoCase(_T("Space"))==0){return VK_SPACE;}
+		if(sInput.CompareNoCase(_T("BackSpace"))==0){return VK_BACK;}
+		if(sInput.CompareNoCase(_T("Jp"))==0){return 0xf3;}
+
+		if(sInput.CompareNoCase(_T("PageUp"))==0){return VK_PRIOR;}
+		if(sInput.CompareNoCase(_T("PageDown"))==0){return VK_NEXT;}
+		if(sInput.CompareNoCase(_T("Home"))==0){return VK_HOME;}
+		if(sInput.CompareNoCase(_T("End"))==0){return VK_END;}
+		if(sInput.CompareNoCase(_T("PrintScreen"))==0){return VK_SNAPSHOT;}
+		
 		if(sInput.CompareNoCase(_T("Insert"))==0){return VK_INSERT;}
 
 	}

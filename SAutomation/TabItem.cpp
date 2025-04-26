@@ -15,7 +15,11 @@ IMPLEMENT_DYNAMIC(CTabItem, CDialogEx)
 CTabItem::CTabItem(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CTabItem::IDD, pParent)
 {
-
+	
+	for(int iScene=0; iScene<16; iScene++)
+	{
+		m_combo[iScene].ResetContent();
+	}
 }
 
 CTabItem::~CTabItem()
@@ -290,31 +294,81 @@ BOOL CTabItem::PreTranslateMessage(MSG* pMsg)
 
 void CTabItem::RefleshDialog(int iSlot)
 {
-	for(int iScene=0; iScene<16; iScene++)
+	if(iSlot<4)
 	{
-		m_sEditFileName[iScene].Format(_T("%s"),m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName);
+		for(int iScene=0; iScene<16; iScene++)
+		{
+			((CButton*)GetDlgItem(IDC_TAB_EDIT_FILE_00+iScene))->ShowWindow(SW_SHOW);
+		}
 
-		SetComboItem(&m_combo[iScene],m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sHotkey);
-		SetComboItemShift(&m_comboUseCtrl[iScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iScene]));
-		SetComboItemCtrl(&m_comboUseShift[iScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iScene]));
+		for(int iScene=0; iScene<16; iScene++)
+		{
+			m_sEditFileName[iScene].Format(_T("%s"),m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName);
 
-		CString sScene;
-		sScene.Format(_T("%d"),iSlot*16 + iScene);
-		((CButton*)GetDlgItem(IDC_TAB_STATIC_EX0+iScene))->SetWindowText(sScene);
+			SetComboItem(&m_combo[iScene],m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sHotkey);
+			SetComboItemShift(&m_comboUseCtrl[iScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iScene]));
+			SetComboItemCtrl(&m_comboUseShift[iScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iScene]));
+
+			CString sScene;
+			sScene.Format(_T("%d"),iSlot*16 + iScene);
+			((CButton*)GetDlgItem(IDC_TAB_STATIC_EX0+iScene))->SetWindowText(sScene);
+		}
 	}
+	else
+	{
+		for(int iScene=0; iScene<16; iScene++)
+		{
+			((CButton*)GetDlgItem(IDC_TAB_EDIT_FILE_00+iScene))->ShowWindow(SW_HIDE);
+		}
+
+		for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
+		{
+			m_sEditFileName[iExScene].Format(_T("%s"),m_autoInfo->m_OpeInfo[iSlot*16 + iExScene].sFileName);
+
+			SetComboItem(&m_combo[iExScene],m_autoInfo->m_OpeInfo[iSlot*16 + iExScene].sHotkey);
+			SetComboItemShift(&m_comboUseCtrl[iExScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iExScene]));
+			SetComboItemCtrl(&m_comboUseShift[iExScene], &(m_autoInfo->m_OpeInfo[iSlot*16 + iExScene]));
+
+			CString sScene;
+			sScene.Format(_T("Ex%d"),iExScene);
+			((CButton*)GetDlgItem(IDC_TAB_STATIC_EX0+iExScene))->SetWindowText(sScene);
+		}
+	}
+
 
 	UpdateData(FALSE);
 }
 void CTabItem::FileSelect(int iSlot, int iScene)
 {
-	CString sMacroFolderPath;
-	sMacroFolderPath.Format(_T("%s\\Macro"),m_autoInfo->m_sDir);
+	if(iSlot<4)
+	{
+		CString sMacroFolderPath;
+		sMacroFolderPath.Format(_T("%s\\Macro"),m_autoInfo->m_sDir);
 
-	CFileDialog cf(TRUE);
-	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
-	if(cf.DoModal()!=IDOK){ return;}
-	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName.Format(_T("%s"), cf.GetFileName());
+		CFileDialog cf(TRUE);
+		cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
+		if(cf.DoModal()!=IDOK){ return;}
+		m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName.Format(_T("%s"), cf.GetFileName());
+	}
+	else
+	{
 
+		m_cDlgSelect.m_iModeOperate=0;
+		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
+		{
+			m_cDlgSelect.m_sSelectKeys[iSelect].Format(_T("%s"), m_autoInfo->m_sSelectKeys[iScene][iSelect]);
+			m_cDlgSelect.m_sSelectFiles[iSelect].Format(_T("%s"), m_autoInfo->m_sSelectFiles[iScene][iSelect]);
+		}
+		int iRet = m_cDlgSelect.DoModal();
+		if(iRet == IDOK)
+		{
+			for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
+			{
+				m_autoInfo->m_sSelectFiles[iScene][iSelect].Format(_T("%s"),m_cDlgSelect.m_sSelectFiles[iSelect]);
+				m_autoInfo->m_sSelectKeys[iScene][iSelect].Format(_T("%s"),m_cDlgSelect.m_sSelectKeys[iSelect]);
+			}
+		}
+	}
 	*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
 	SetTitleNotChanged( *pbNotModified);
 }

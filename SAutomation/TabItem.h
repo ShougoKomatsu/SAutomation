@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include "SelectDlg.h"
 // CTabItem ダイアログ
 
 class CTabItem : public CDialogEx
@@ -9,6 +10,7 @@ class CTabItem : public CDialogEx
 public:
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CTabItem();
+	CSelectDlg m_cDlgSelect;
 	AutomationInfo* m_autoInfo;
 	void SetTitleNotChanged(BOOL bTF);
 	CWnd* pParentWnd;
