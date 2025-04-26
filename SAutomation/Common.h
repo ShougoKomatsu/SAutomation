@@ -172,3 +172,5 @@ void SetComboItem(CComboBox* combo, CString m_sHotkey);
 BOOL GetFileProperty(const CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime);
 const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
 
+
+DWORD GetVKeyCode(const CString sIn);

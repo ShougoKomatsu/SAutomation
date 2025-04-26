@@ -289,64 +289,24 @@ void AutomationInfo::ReadSettings()
 	for(int iScene= 0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		g_hThread[iScene] = NULL;
-		if(m_OpeInfo[iScene].sHotkey.GetLength()>=2)
-		{
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F1"))==0){m_OpeInfo[iScene].dwHotKey = VK_F1;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F2"))==0){m_OpeInfo[iScene].dwHotKey = VK_F2;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F3"))==0){m_OpeInfo[iScene].dwHotKey = VK_F3;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F4"))==0){m_OpeInfo[iScene].dwHotKey = VK_F4;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F5"))==0){m_OpeInfo[iScene].dwHotKey = VK_F5;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F6"))==0){m_OpeInfo[iScene].dwHotKey = VK_F6;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F7"))==0){m_OpeInfo[iScene].dwHotKey = VK_F7;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F8"))==0){m_OpeInfo[iScene].dwHotKey = VK_F8;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F9"))==0){m_OpeInfo[iScene].dwHotKey = VK_F9;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F10"))==0){m_OpeInfo[iScene].dwHotKey = VK_F10;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F11"))==0){m_OpeInfo[iScene].dwHotKey = VK_F11;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F12"))==0){m_OpeInfo[iScene].dwHotKey = VK_F12;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("Insert"))==0){m_OpeInfo[iScene].dwHotKey = VK_INSERT;}
 
-		}
-		else
-		{
-			if((char(m_OpeInfo[iScene].sHotkey.GetAt(0))>='a') && (char(m_OpeInfo[iScene].sHotkey.GetAt(0))<='z')){m_OpeInfo[iScene].dwHotKey = char(m_OpeInfo[iScene].sHotkey.GetAt(0))-'a'+0x41;}
-			if((char(m_OpeInfo[iScene].sHotkey.GetAt(0))>='0') && (char(m_OpeInfo[iScene].sHotkey.GetAt(0))<='9')){m_OpeInfo[iScene].dwHotKey = char(m_OpeInfo[iScene].sHotkey.GetAt(0))-'0'+0x30;}
-		}
-
+		
+		m_OpeInfo[iScene].dwHotKey = GetVKeyCode(m_OpeInfo[iScene].sHotkey);
 	}
 	
 	for(int iExScene= 0; iExScene<MAX_EX_THREAD; iExScene++)
 	{
 		int iScene=MAX_NORMAL_THREAD+iExScene;
 		g_hThread[iScene] = NULL;
-		if(m_OpeInfo[iScene].sHotkey.GetLength()>=2)
-		{
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F1"))==0){m_OpeInfo[iScene].dwHotKey = VK_F1;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F2"))==0){m_OpeInfo[iScene].dwHotKey = VK_F2;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F3"))==0){m_OpeInfo[iScene].dwHotKey = VK_F3;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F4"))==0){m_OpeInfo[iScene].dwHotKey = VK_F4;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F5"))==0){m_OpeInfo[iScene].dwHotKey = VK_F5;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F6"))==0){m_OpeInfo[iScene].dwHotKey = VK_F6;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F7"))==0){m_OpeInfo[iScene].dwHotKey = VK_F7;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F8"))==0){m_OpeInfo[iScene].dwHotKey = VK_F8;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F9"))==0){m_OpeInfo[iScene].dwHotKey = VK_F9;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F10"))==0){m_OpeInfo[iScene].dwHotKey = VK_F10;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F11"))==0){m_OpeInfo[iScene].dwHotKey = VK_F11;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("F12"))==0){m_OpeInfo[iScene].dwHotKey = VK_F12;}
-			if(m_OpeInfo[iScene].sHotkey.CompareNoCase(_T("Insert"))==0){m_OpeInfo[iScene].dwHotKey = VK_INSERT;}
+		
+		m_OpeInfo[iScene].dwHotKey = GetVKeyCode(m_OpeInfo[iScene].sHotkey);
 
-		}
-		else
-		{
-			if((char(m_OpeInfo[iScene].sHotkey.GetAt(0))>='a') && (char(m_OpeInfo[iScene].sHotkey.GetAt(0))<='z')){m_OpeInfo[iScene].dwHotKey = char(m_OpeInfo[iScene].sHotkey.GetAt(0))-'a'+0x41;}
-			if((char(m_OpeInfo[iScene].sHotkey.GetAt(0))>='0') && (char(m_OpeInfo[iScene].sHotkey.GetAt(0))<='9')){m_OpeInfo[iScene].dwHotKey = char(m_OpeInfo[iScene].sHotkey.GetAt(0))-'0'+0x30;}
-		}
 
 	}
 
 	if(m_sHotkeyEnable.GetLength()==1)
 	{
-		if((char(m_sHotkeyEnable.GetAt(0))>='a') && (char(m_sHotkeyEnable.GetAt(0))<='z')){m_dwHotKeyEnable = char(m_sHotkeyEnable.GetAt(0))-'a'+0x41;}
-		if((char(m_sHotkeyEnable.GetAt(0))>='0') && (char(m_sHotkeyEnable.GetAt(0))<='9')){m_dwHotKeyEnable = char(m_sHotkeyEnable.GetAt(0))-'0'+0x30;}
+		m_dwHotKeyEnable = GetVKeyCode(m_sHotkeyEnable);
 	}
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
@@ -735,4 +695,34 @@ const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg)
 		iPlace++;
 	}
 	return sOut;
+}
+
+DWORD GetVKeyCode(const CString sIn)
+{
+	CString sInput;
+	sInput.Format(_T("%s"),sIn);
+	sInput.MakeLower();
+	if(sInput.GetLength()>=2)
+	{
+		if(sInput.CompareNoCase(_T("F1"))==0){return VK_F1;}
+		if(sInput.CompareNoCase(_T("F2"))==0){return VK_F2;}
+		if(sInput.CompareNoCase(_T("F3"))==0){return VK_F3;}
+		if(sInput.CompareNoCase(_T("F4"))==0){return VK_F4;}
+		if(sInput.CompareNoCase(_T("F5"))==0){return VK_F5;}
+		if(sInput.CompareNoCase(_T("F6"))==0){return VK_F6;}
+		if(sInput.CompareNoCase(_T("F7"))==0){return VK_F7;}
+		if(sInput.CompareNoCase(_T("F8"))==0){return VK_F8;}
+		if(sInput.CompareNoCase(_T("F9"))==0){return VK_F9;}
+		if(sInput.CompareNoCase(_T("F10"))==0){return VK_F10;}
+		if(sInput.CompareNoCase(_T("F11"))==0){return VK_F11;}
+		if(sInput.CompareNoCase(_T("F12"))==0){return VK_F12;}
+		if(sInput.CompareNoCase(_T("Insert"))==0){return VK_INSERT;}
+
+	}
+	else
+	{
+		if((char(sInput.GetAt(0))>='a') && (char(sInput.GetAt(0))<='z')){return char(sInput.GetAt(0))-'a'+0x41;}
+		if((char(sInput.GetAt(0))>='0') && (char(sInput.GetAt(0))<='9')){return char(sInput.GetAt(0))-'0'+0x30;}
+	}
+	return -1;
 }

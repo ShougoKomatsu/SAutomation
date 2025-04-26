@@ -62,28 +62,7 @@ BOOL CSelectDlg::OnInitDialog()
 		sTemp.Format(_T("%s"),m_sSelectKeys[iSelection]);
 		sTemp.MakeLower();
 
-		if(sTemp.GetLength()>=2)
-		{
-			if(sTemp.CompareNoCase(_T("F1"))==0){m_dwHotKeys[iSelection] = VK_F1;}
-			if(sTemp.CompareNoCase(_T("F2"))==0){m_dwHotKeys[iSelection] = VK_F2;}
-			if(sTemp.CompareNoCase(_T("F3"))==0){m_dwHotKeys[iSelection] = VK_F3;}
-			if(sTemp.CompareNoCase(_T("F4"))==0){m_dwHotKeys[iSelection] = VK_F4;}
-			if(sTemp.CompareNoCase(_T("F5"))==0){m_dwHotKeys[iSelection] = VK_F5;}
-			if(sTemp.CompareNoCase(_T("F6"))==0){m_dwHotKeys[iSelection] = VK_F6;}
-			if(sTemp.CompareNoCase(_T("F7"))==0){m_dwHotKeys[iSelection] = VK_F7;}
-			if(sTemp.CompareNoCase(_T("F8"))==0){m_dwHotKeys[iSelection] = VK_F8;}
-			if(sTemp.CompareNoCase(_T("F9"))==0){m_dwHotKeys[iSelection] = VK_F9;}
-			if(sTemp.CompareNoCase(_T("F10"))==0){m_dwHotKeys[iSelection] = VK_F10;}
-			if(sTemp.CompareNoCase(_T("F11"))==0){m_dwHotKeys[iSelection] = VK_F11;}
-			if(sTemp.CompareNoCase(_T("F12"))==0){m_dwHotKeys[iSelection] = VK_F12;}
-			if(sTemp.CompareNoCase(_T("Insert"))==0){m_dwHotKeys[iSelection] = VK_INSERT;}
-
-		}
-		else
-		{
-			if((char(sTemp.GetAt(0))>='a') && (char(sTemp.GetAt(0))<='z')){m_dwHotKeys[iSelection] = char(sTemp.GetAt(0))-'a'+0x41;}
-			if((char(sTemp.GetAt(0))>='0') && (char(sTemp.GetAt(0))<='9')){m_dwHotKeys[iSelection] = char(sTemp.GetAt(0))-'0'+0x30;}
-		}
+		m_dwHotKeys[iSelection] = GetVKeyCode(sTemp);
 
 	}
 
