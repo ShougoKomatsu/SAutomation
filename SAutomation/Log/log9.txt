@@ -1,7 +1,13 @@
+<<<<<<< Updated upstream
+1 MsgBox(aaaa); 0
+2 exit 10
+=======
 1 wait ctrl off 0
 2 wait shift off 0
-3 VarCamera1=OpenCamera(Camera0327) 0
-4 VarImg1=VarCamera 0
-5 CloseCamera(VarCamera1) 0
-6 ClipBoard=VarImg1 -1
-iErrorTreat = 0 
+3 VarStr1=aaa 0
+4 VarCamera1=OpenCamera(Camera0327) 0
+5 VarImg1=VarCamera 0
+6 CloseCamera(VarCamera1) 0
+7 ClipBoard=VarImg1 0
+8 exit 10
+>>>>>>> Stashed changes

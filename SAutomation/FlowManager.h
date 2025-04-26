@@ -5,8 +5,8 @@
 
 
 #define MAX_LEVEL (1024)
-extern int g_iNowLevel[MAX_THREAD];
-extern int g_iProgramCounter[MAX_THREAD][MAX_LEVEL];
+extern int g_iNowLevel[MAX_NORMAL_THREAD];
+extern int g_iProgramCounter[MAX_NORMAL_THREAD][MAX_LEVEL];
 
 void ResetProgramCounter(int iScene);
 

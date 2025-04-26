@@ -84,11 +84,22 @@ struct OperationInfo
 void SetComboItem(CComboBox* combo, CString sHotkey);
 
 #include "thread.h"
+#define MAX_SELECTION (8)
 class AutomationInfo
 {
 public:
 	void Operate(int iScene);
-	AutomationInfo(){}
+	AutomationInfo()
+	{
+		for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)
+		{
+			for(int iSelection=0;iSelection<MAX_SELECTION; iSelection++)
+			{
+				m_sSelectKeys[iExSecene][iSelection].Format(_T(""));
+				m_sSelectFiles[iExSecene][iSelection].Format(_T(""));
+			}
+		}
+	}
 	BOOL Copy(AutomationInfo* autoInfoIn);
 
 	BOOL m_bEnableHotkey;
@@ -102,9 +113,13 @@ public:
 	void ReadSettings();
 	void SaveSettings();
 	CString m_sDir;
+	CString m_sSelectKeys[MAX_EX_THREAD][MAX_SELECTION];
+	CString m_sSelectFiles[MAX_EX_THREAD][MAX_SELECTION];
 	OperationInfo m_OpeInfo[MAX_THREAD];
 	BOOL IsSameAs(AutomationInfo* autoInfoIn);
-};
+};	
+
+
 
 
 #include "stdafx.h"

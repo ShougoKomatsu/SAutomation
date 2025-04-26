@@ -126,7 +126,7 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	{
 		ChangeIcon(IDI_ICON_RUNNING);
 	}
-
+	
 	return 0;
 }
 
@@ -235,7 +235,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 	
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
-		for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
 	}
 
 	SetTimer(TIMER_COMPACT_DISP_MOUSPOS,200, NULL);
@@ -327,9 +328,14 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 		{
 			int iKey;
 			iKey = (pMsg->lParam)>>16;
-			for(int iScene=0; iScene<MAX_THREAD; iScene++)
+			for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 			{
 				if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
+			}
+			for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
+			{
+				if(iKey == g_Automation.m_OpeInfo[MAX_NORMAL_THREAD+iExScene].dwHotKey){SelectAndOperate(iExScene);return TRUE;}
+
 			}
 			if(iKey == g_Automation.m_dwHotKeyEnable){ToggleEnable();return TRUE;}
 			if(iKey == VK_ESCAPE){g_bHalt = TRUE;}
@@ -349,7 +355,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)
 	{
-		for(int iScene = 0; iScene< MAX_THREAD; iScene++)
+		for(int iScene = 0; iScene< MAX_NORMAL_THREAD; iScene++)
 		{
 			if(g_hThread[iScene] == NULL){continue;}
 			if(g_iWatching == 0)
@@ -407,6 +413,26 @@ void CSAutomationDlg::Operate(int iScene)
 	g_Automation.Operate(iScene);
 }
 
+
+void CSAutomationDlg::SelectAndOperate(int iExScene)
+{
+	for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
+	{
+		m_cDlgSelect.m_sSelectKeys[iSelect].Format(_T("%s"), g_Automation.m_sSelectKeys[iExScene][iSelect]);
+		m_cDlgSelect.m_sSelectFiles[iSelect].Format(_T("%s"), g_Automation.m_sSelectFiles[iExScene][iSelect]);
+	}
+	int iRet = m_cDlgSelect.DoModal();
+	if(iRet != IDOK){return;}
+
+	
+	SetSelection(iExScene, m_cDlgSelect.m_sResultFileName);
+	Operate(MAX_NORMAL_THREAD+iExScene);
+}
+void CSAutomationDlg::SetSelection(int iExScene, CString sFilePath)
+{
+	g_Automation.m_OpeInfo[MAX_NORMAL_THREAD+ iExScene].sFileName.Format(_T("%s"), sFilePath);
+}
+
 BOOL CSAutomationDlg::DestroyWindow()
 {
 	g_bHalt = TRUE;
@@ -447,7 +473,8 @@ void CSAutomationDlg::ToggleEnable()
 	{
 		g_Automation.m_bEnableHotkey=TRUE;
 	}
-	for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
+	for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
 }
 
 BOOL CSAutomationDlg::ReHookWindowsHook()
@@ -468,7 +495,8 @@ void CSAutomationDlg::OnBnClickedButtonCompactExit()
 	
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
-		for(int iScene=0; iScene<MAX_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
+		for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
 	}
 }
 
