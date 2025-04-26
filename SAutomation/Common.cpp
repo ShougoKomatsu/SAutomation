@@ -510,7 +510,7 @@ void AutomationInfo::Operate(int iScene)
 	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
 
 	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
-
+	
 	while(iParam[0]!=0){Sleep(10);}
 	
 }
