@@ -355,7 +355,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	}
 	if(nIDEvent == TIMER_THREAD_WATCH)
 	{
-		for(int iScene = 0; iScene< MAX_NORMAL_THREAD; iScene++)
+		for(int iScene = 0; iScene< MAX_THREAD; iScene++)
 		{
 			if(g_hThread[iScene] == NULL){continue;}
 			if(g_iWatching == 0)
