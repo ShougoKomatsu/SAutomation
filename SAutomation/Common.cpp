@@ -117,6 +117,8 @@ BOOL ReadTextFile(CString sFilePath, CStringArray* saCommands)
 
 void SetComboItem(CComboBox* combo, CString sHotkey)
 {
+	if(combo->GetCount()<=0)
+	{
 	combo->ResetContent();
 	combo->AddString(_T(" "));
 	combo->AddString(_T("0"));
@@ -168,7 +170,7 @@ void SetComboItem(CComboBox* combo, CString sHotkey)
 	combo->AddString(_T("F11"));
 	combo->AddString(_T("F12"));
 	combo->AddString(_T("Insert"));
-
+	}
 
 	BOOL bFound;
 	bFound = FALSE;

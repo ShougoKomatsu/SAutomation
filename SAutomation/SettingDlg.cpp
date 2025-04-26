@@ -95,6 +95,11 @@ BOOL CSettingDlg::OnInitDialog()
 	m_tabItem.m_autoInfo=&m_Automation;
 	m_tabItem.pbNotModified=&m_bNotModified;
 	m_tabItem.pParentWnd=this;
+	
+	for(int iScene=0; iScene<16; iScene++)
+	{
+		m_tabItem.m_combo[iScene].ResetContent();
+	}
 	CRect rect;
 	m_tab.GetWindowRect(rect);
 	m_tab.AdjustRect(FALSE, rect);

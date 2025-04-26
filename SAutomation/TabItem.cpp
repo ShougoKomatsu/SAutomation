@@ -296,6 +296,7 @@ void CTabItem::RefleshDialog(int iSlot)
 		{
 			((CButton*)GetDlgItem(IDC_TAB_EDIT_FILE_00+iScene))->ShowWindow(SW_SHOW);
 		}
+
 		for(int iScene=0; iScene<16; iScene++)
 		{
 			m_sEditFileName[iScene].Format(_T("%s"),m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName);
