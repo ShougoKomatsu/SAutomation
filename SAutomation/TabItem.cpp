@@ -355,6 +355,14 @@ void CTabItem::FileSelect(int iSlot, int iScene)
 			m_cDlgSelect.m_sSelectFiles[iSelect].Format(_T("%s"), m_autoInfo->m_sSelectFiles[iScene][iSelect]);
 		}
 		int iRet = m_cDlgSelect.DoModal();
+		if(iRet == IDOK)
+		{
+			for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
+			{
+				m_autoInfo->m_sSelectFiles[iScene][iSelect].Format(_T("%s"),m_cDlgSelect.m_sSelectFiles[iSelect]);
+				m_autoInfo->m_sSelectKeys[iScene][iSelect].Format(_T("%s"),m_cDlgSelect.m_sSelectKeys[iSelect]);
+			}
+		}
 	}
 	*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
 	SetTitleNotChanged( *pbNotModified);

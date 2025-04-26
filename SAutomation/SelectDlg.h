@@ -8,6 +8,7 @@ class CSelectDlg : public CDialogEx
 	DECLARE_DYNAMIC(CSelectDlg)
 
 public:
+	CString m_sDir;
 	CString m_sResultFileName;
 	DWORD m_dwHotKeys[MAX_SELECTION];
 	CString m_sSelectKeys[MAX_SELECTION];
@@ -17,7 +18,8 @@ public:
 	int m_iModeOperate;
 // ダイアログ データ
 	enum { IDD = IDD_DIALOG_SELECT };
-
+	
+void FileSelect(int iSelect);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV サポート
 
@@ -43,4 +45,12 @@ public:
 	afx_msg void OnCbnSelchangeSelectCombo7();
 	afx_msg void OnCbnSelchangeSelectCombo8();
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedButtonSelectionFile1();
+	afx_msg void OnBnClickedButtonSelectionFile2();
+	afx_msg void OnBnClickedButtonSelectionFile3();
+	afx_msg void OnBnClickedButtonSelectionFile4();
+	afx_msg void OnBnClickedButtonSelectionFile5();
+	afx_msg void OnBnClickedButtonSelectionFile6();
+	afx_msg void OnBnClickedButtonSelectionFile7();
+	afx_msg void OnBnClickedButtonSelectionFile8();
 };
