@@ -65,7 +65,7 @@ BOOL CSelectDlg::OnInitDialog()
 		m_dwHotKeys[iSelection] = GetVKeyCode(sTemp);
 
 	}
-
+	SetForegroundWindow();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
 }
