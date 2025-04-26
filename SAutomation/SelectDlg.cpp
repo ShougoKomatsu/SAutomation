@@ -28,6 +28,14 @@ void CSelectDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CSelectDlg, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_1, &CSelectDlg::OnBnClickedButtonSelectKey1)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_2, &CSelectDlg::OnBnClickedButtonSelectKey2)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_3, &CSelectDlg::OnBnClickedButtonSelectKey3)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_4, &CSelectDlg::OnBnClickedButtonSelectKey4)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_5, &CSelectDlg::OnBnClickedButtonSelectKey5)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_6, &CSelectDlg::OnBnClickedButtonSelectKey6)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_7, &CSelectDlg::OnBnClickedButtonSelectKey7)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_8, &CSelectDlg::OnBnClickedButtonSelectKey8)
 END_MESSAGE_MAP()
 
 
@@ -87,10 +95,20 @@ BOOL CSelectDlg::PreTranslateMessage(MSG* pMsg)
 					return TRUE;
 				}
 			}
-					m_sResultFileName.Format(_T(""));
+			m_sResultFileName.Format(_T(""));
 			CDialog::OnCancel();
 			break;
 		}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
+
+
+void CSelectDlg::OnBnClickedButtonSelectKey1(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[0]); CDialog::OnOK();}
+void CSelectDlg::OnBnClickedButtonSelectKey2(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[1]); CDialog::OnOK();}
+void CSelectDlg::OnBnClickedButtonSelectKey3(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[2]); CDialog::OnOK();}
+void CSelectDlg::OnBnClickedButtonSelectKey4(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[3]); CDialog::OnOK();}
+void CSelectDlg::OnBnClickedButtonSelectKey5(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[4]); CDialog::OnOK();}
+void CSelectDlg::OnBnClickedButtonSelectKey6(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[5]); CDialog::OnOK();}
+void CSelectDlg::OnBnClickedButtonSelectKey7(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[6]); CDialog::OnOK();}
+void CSelectDlg::OnBnClickedButtonSelectKey8(){m_sResultFileName.Format(_T("%s"), m_sSelectFiles[7]); CDialog::OnOK();}

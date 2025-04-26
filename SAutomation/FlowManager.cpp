@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "FlowManager.h"
 
-int g_iNowLevel[MAX_NORMAL_THREAD];
-int g_iProgramCounter[MAX_NORMAL_THREAD][MAX_LEVEL];
+int g_iNowLevel[MAX_THREAD];
+int g_iProgramCounter[MAX_THREAD][MAX_LEVEL];
 
 
 void ResetProgramCounter(int iScene)

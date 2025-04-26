@@ -25,4 +25,12 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedButtonSelectKey1();
+	afx_msg void OnBnClickedButtonSelectKey2();
+	afx_msg void OnBnClickedButtonSelectKey3();
+	afx_msg void OnBnClickedButtonSelectKey4();
+	afx_msg void OnBnClickedButtonSelectKey5();
+	afx_msg void OnBnClickedButtonSelectKey6();
+	afx_msg void OnBnClickedButtonSelectKey7();
+	afx_msg void OnBnClickedButtonSelectKey8();
 };
