@@ -124,6 +124,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Variables.h" />
+    <ClInclude Include="Variables_Img.h" />
+    <ClInclude Include="Variables_Int.h" />
+    <ClInclude Include="Variables_Obj.h" />
+    <ClInclude Include="Variables_String.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +150,10 @@
     <ClCompile Include="TabItem.cpp" />
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="Variables.cpp" />
+    <ClCompile Include="Variables_Img.cpp" />
+    <ClCompile Include="Variables_Int.cpp" />
+    <ClCompile Include="Variables_Obj.cpp" />
+    <ClCompile Include="Variables_String.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
