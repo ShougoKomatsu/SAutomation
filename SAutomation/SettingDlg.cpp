@@ -89,7 +89,7 @@ BOOL CSettingDlg::OnInitDialog()
 	m_tab.InsertItem(1, _T("16 - 31"));
 	m_tab.InsertItem(3, _T("32 - 47"));
 	m_tab.InsertItem(3, _T("48 - 63"));
-	m_tab.InsertItem(4, _T("Ex 1 - 1"));
+	m_tab.InsertItem(4, _T("Ex 0 - 15"));
 	
 	m_tabItem.Create(IDD_DIALOG_TAB_ITEMS, &m_tab);
 	m_tabItem.m_autoInfo=&m_Automation;
