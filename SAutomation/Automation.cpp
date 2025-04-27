@@ -775,9 +775,6 @@ ReturnValue Input(CString sInputWithDblQuart)
 
 ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam)
 {
-
-	int iWaitOn;
-
 	BOOL bUnicode;
 	TCHAR tch;
 	ReturnValue iRet;

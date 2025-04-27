@@ -292,8 +292,6 @@ BOOL CALLBACK EnumChildProc( HWND hWnd, LPARAM lParam )
 ReturnValue ListDlgItems()
 {
 	CString sMes;
-	BOOL bRet;
-	int iCommandType;
 	HWND hwnd;
 	TCHAR tch[MAX_PATH];
 	hwnd=GetForegroundWindow();
@@ -302,7 +300,8 @@ ReturnValue ListDlgItems()
 	sMes.Format(_T(""));
 
 	int iCount = 0;
-	EnumChildWindows( hwnd, EnumChildProc, (LPARAM)&iCount );
+	BOOL bRet = EnumChildWindows( hwnd, EnumChildProc, (LPARAM)&iCount );
+	if(bRet != TRUE){return RETURN_FAILED;}
 
 	for(int i=0; i<iCount; i++)
 	{
