@@ -8,7 +8,7 @@ class CInputDialog : public CDialogEx
 	DECLARE_DYNAMIC(CInputDialog)
 
 public:
-		CStringArray m_saParam;
+	CStringArray m_saParam;
 	BOOL m_bInputMulti;
 	CString m_sMessage;
 	int m_iTimeOutMilliSec;
@@ -21,7 +21,7 @@ public:
 	CInputDialog(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CInputDialog();
 
-// ダイアログ データ
+	// ダイアログ データ
 	enum { IDD = IDD_DIALOG_INPUT };
 
 protected:
