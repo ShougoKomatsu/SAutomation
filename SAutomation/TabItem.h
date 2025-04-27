@@ -10,6 +10,7 @@ class CTabItem : public CDialogEx
 public:
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CTabItem();
+	BOOL m_bReset;
 	CSelectDlg m_cDlgSelect;
 	AutomationInfo* m_autoInfo;
 	void SetTitleNotChanged(BOOL bTF);

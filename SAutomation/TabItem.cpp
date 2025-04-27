@@ -15,6 +15,7 @@ IMPLEMENT_DYNAMIC(CTabItem, CDialogEx)
 CTabItem::CTabItem(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CTabItem::IDD, pParent)
 {
+	m_bReset=FALSE;
 }
 
 CTabItem::~CTabItem()
@@ -92,10 +93,16 @@ void CTabItem::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TAB_COMBO_HOTKEY_SHIFT_13, (m_comboUseShift[13]));
 	DDX_Control(pDX, IDC_TAB_COMBO_HOTKEY_SHIFT_14, (m_comboUseShift[14]));
 	DDX_Control(pDX, IDC_TAB_COMBO_HOTKEY_SHIFT_15, (m_comboUseShift[15]));
-	
-	for(int iScene=0; iScene<16; iScene++)
+
+	if(m_bReset==FALSE)
 	{
-		m_combo[iScene].ResetContent();
+		for(int iScene=0; iScene<16; iScene++)
+		{
+			m_combo[iScene].ResetContent();
+			m_comboUseCtrl[iScene].ResetContent();
+			m_comboUseShift[iScene].ResetContent();
+		}
+		m_bReset=TRUE;
 	}
 }
 

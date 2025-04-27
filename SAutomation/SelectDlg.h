@@ -8,6 +8,7 @@ class CSelectDlg : public CDialogEx
 	DECLARE_DYNAMIC(CSelectDlg)
 
 public:
+	BOOL m_bReset;
 	CString m_sDir;
 	CString m_sResultFileName;
 	DWORD m_dwHotKeys[MAX_SELECTION];

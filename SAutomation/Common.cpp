@@ -119,57 +119,57 @@ void SetComboItem(CComboBox* combo, CString sHotkey)
 {
 	if(combo->GetCount()<=0)
 	{
-	combo->ResetContent();
-	combo->AddString(_T(" "));
-	combo->AddString(_T("0"));
-	combo->AddString(_T("1"));
-	combo->AddString(_T("2"));
-	combo->AddString(_T("3"));
-	combo->AddString(_T("4"));
-	combo->AddString(_T("5"));
-	combo->AddString(_T("6"));
-	combo->AddString(_T("7"));
-	combo->AddString(_T("8"));
-	combo->AddString(_T("9"));
-	combo->AddString(_T("a"));
-	combo->AddString(_T("b"));
-	combo->AddString(_T("c"));
-	combo->AddString(_T("d"));
-	combo->AddString(_T("e"));
-	combo->AddString(_T("f"));
-	combo->AddString(_T("g"));
-	combo->AddString(_T("h"));
-	combo->AddString(_T("i"));
-	combo->AddString(_T("j"));
-	combo->AddString(_T("k"));
-	combo->AddString(_T("l"));
-	combo->AddString(_T("m"));
-	combo->AddString(_T("n"));
-	combo->AddString(_T("o"));
-	combo->AddString(_T("p"));
-	combo->AddString(_T("q"));
-	combo->AddString(_T("r"));
-	combo->AddString(_T("s"));
-	combo->AddString(_T("t"));
-	combo->AddString(_T("u"));
-	combo->AddString(_T("v"));
-	combo->AddString(_T("w"));
-	combo->AddString(_T("x"));
-	combo->AddString(_T("y"));
-	combo->AddString(_T("z"));
-	combo->AddString(_T("F1"));
-	combo->AddString(_T("F2"));
-	combo->AddString(_T("F3"));
-	combo->AddString(_T("F4"));
-	combo->AddString(_T("F5"));
-	combo->AddString(_T("F6"));
-	combo->AddString(_T("F7"));
-	combo->AddString(_T("F8"));
-	combo->AddString(_T("F9"));
-	combo->AddString(_T("F10"));
-	combo->AddString(_T("F11"));
-	combo->AddString(_T("F12"));
-	combo->AddString(_T("Insert"));
+		combo->ResetContent();
+		combo->AddString(_T(" "));
+		combo->AddString(_T("0"));
+		combo->AddString(_T("1"));
+		combo->AddString(_T("2"));
+		combo->AddString(_T("3"));
+		combo->AddString(_T("4"));
+		combo->AddString(_T("5"));
+		combo->AddString(_T("6"));
+		combo->AddString(_T("7"));
+		combo->AddString(_T("8"));
+		combo->AddString(_T("9"));
+		combo->AddString(_T("a"));
+		combo->AddString(_T("b"));
+		combo->AddString(_T("c"));
+		combo->AddString(_T("d"));
+		combo->AddString(_T("e"));
+		combo->AddString(_T("f"));
+		combo->AddString(_T("g"));
+		combo->AddString(_T("h"));
+		combo->AddString(_T("i"));
+		combo->AddString(_T("j"));
+		combo->AddString(_T("k"));
+		combo->AddString(_T("l"));
+		combo->AddString(_T("m"));
+		combo->AddString(_T("n"));
+		combo->AddString(_T("o"));
+		combo->AddString(_T("p"));
+		combo->AddString(_T("q"));
+		combo->AddString(_T("r"));
+		combo->AddString(_T("s"));
+		combo->AddString(_T("t"));
+		combo->AddString(_T("u"));
+		combo->AddString(_T("v"));
+		combo->AddString(_T("w"));
+		combo->AddString(_T("x"));
+		combo->AddString(_T("y"));
+		combo->AddString(_T("z"));
+		combo->AddString(_T("F1"));
+		combo->AddString(_T("F2"));
+		combo->AddString(_T("F3"));
+		combo->AddString(_T("F4"));
+		combo->AddString(_T("F5"));
+		combo->AddString(_T("F6"));
+		combo->AddString(_T("F7"));
+		combo->AddString(_T("F8"));
+		combo->AddString(_T("F9"));
+		combo->AddString(_T("F10"));
+		combo->AddString(_T("F11"));
+		combo->AddString(_T("F12"));
+		combo->AddString(_T("Insert"));
 	}
 
 	BOOL bFound;
@@ -535,12 +535,15 @@ void AutomationInfo::Operate(int iScene)
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 {
+	if(combo->GetCount()<=0)
+	{
 	combo->ResetContent();
 	combo->AddString(_T(" "));
 	combo->AddString(_T("Ctrl"));
 	combo->AddString(_T("Shift"));
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
+	}
 
 	const int NOTHING = 0;
 	const int CTRL = 1;
@@ -578,11 +581,14 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 
 void SetComboItemShift(CComboBox* combo,OperationInfo* op)
 {
+	if(combo->GetCount()<=0)
+	{
 	combo->ResetContent();
 	combo->AddString(_T(" "));
 	combo->AddString(_T("Shift"));
 	combo->AddString(_T("Alt"));
 	combo->AddString(_T("Win"));
+	}
 	
 	const int NOTHING = 0;
 	const int CTRL = 1;
