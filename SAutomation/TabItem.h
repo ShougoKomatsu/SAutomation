@@ -11,13 +11,14 @@ public:
 	CTabItem(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CTabItem();
 	BOOL m_bReset;
-	CSelectDlg m_cDlgSelect;
-	AutomationInfo* m_autoInfo;
-	void SetTitleNotChanged(BOOL bTF);
-	CWnd* pParentWnd;
-	BOOL* pbNotModified;
 	int m_iSlot;
 	CString m_sDir;
+
+	CSelectDlg m_cDlgSelect;
+	AutomationInfo* m_autoInfo;
+	CWnd* pParentWnd;
+	BOOL* pbNotModified;
+	void SetTitleNotChanged(BOOL bTF);
 	void RefleshDialog(int iSlot);
 	void UpdateData_My(BOOL bTF){UpdateData(bTF);}
 	void FileSelect(int iSlot, int iScene);

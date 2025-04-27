@@ -29,6 +29,7 @@ public:
 	CComboBox m_combo[MAX_SELECTION];
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedButtonSelectKey1();
 	afx_msg void OnBnClickedButtonSelectKey2();
 	afx_msg void OnBnClickedButtonSelectKey3();
@@ -45,7 +46,6 @@ public:
 	afx_msg void OnCbnSelchangeSelectCombo6();
 	afx_msg void OnCbnSelchangeSelectCombo7();
 	afx_msg void OnCbnSelchangeSelectCombo8();
-	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedButtonSelectionFile1();
 	afx_msg void OnBnClickedButtonSelectionFile2();
 	afx_msg void OnBnClickedButtonSelectionFile3();
