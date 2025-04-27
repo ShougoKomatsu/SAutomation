@@ -44,3 +44,6 @@ const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3);
 const CString NowDateTime(CString sArg);
 ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal);
 BOOL PerseFormat(CString sFormat, int* iFormatOut);
+
+const CString Int2Str(int iScene, CString sArg, CString sFormat);
+int Str2Int(int iScene, CString sArg);

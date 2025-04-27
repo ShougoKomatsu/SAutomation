@@ -423,3 +423,30 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 	(*iFormatOut)=iFormat;
 	return TRUE;
 }
+
+const CString Int2Str(int iScene, CString sArg, CString sFormat)
+{
+	int iSrc=GetIntValue(iScene, sArg);
+	LOG_OUTPUT_STR(iScene, _T("Format"), sFormat);
+
+	CString sOut;
+
+	int iFormat;
+	PerseFormat(sFormat, &iFormat);
+	switch(iFormat)
+	{
+	case FORMAT_SPECIFIER_DECIMAL+FORMAT_QUALIFIER_NOTHING+(0x00000000)+(0x00000000)+FORMAT_FLAG_NOTHING:
+		{
+			sOut.Format(_T("%d"), iSrc);
+			break;
+		}
+	}
+
+	return sOut;
+}
+int Str2Int(int iScene, CString sArg)
+{
+	CString sSrc;
+	sSrc.Format(_T("%s"),GetStrValue(iScene, sArg));
+	return _ttoi(sSrc);
+}

@@ -14,7 +14,7 @@
 
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 ●キーボード入力
-英数記号一文字, F1～F16, Ctrl, Shift, Alt, Tab, Space, Enter, BackSpace, PageDown, PageUp, Home, End, PrintScreen
+英数記号一文字, F1～F16, Ctrl, Shift, Alt, Tab, Space, Enter, BackSpace, PrintScreen, ScrollLock, Pause, Insert, Delete, Home, End, PageUp, PageDown
 ←, <-, left, ↑, up, →, ->, right, ↓, down
 Jp: 全角/半角切り替え
 
@@ -303,6 +303,9 @@ VarImg1～VarImg8
 
 画面全体のスクリーンショットを撮り画像型変数に代入する
 画像変数名=ScreenShot
+
+最前面ウィンドウのスクリーンショットを撮り画像型変数に代入する
+画像変数名=ScreenShotForeGroundWindow
 
 画像切り出し画像型変数に代入する
 画像変数名=CropImage(画像変数名, 範囲左上X, 範囲左上Y, 範囲右下X, 範囲右下Y)

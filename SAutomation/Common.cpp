@@ -784,13 +784,19 @@ DWORD GetVKeyCode(const CString sIn)
 		if(sInput.CompareNoCase(_T("BackSpace"))==0){return VK_BACK;}
 		if(sInput.CompareNoCase(_T("Jp"))==0){return 0xf3;}
 
-		if(sInput.CompareNoCase(_T("PageUp"))==0){return VK_PRIOR;}
-		if(sInput.CompareNoCase(_T("PageDown"))==0){return VK_NEXT;}
+		if(sInput.CompareNoCase(_T("PrintScreen"))==0){return VK_SNAPSHOT;}
+		if(sInput.CompareNoCase(_T("ScrollLock"))==0){return VK_SCROLL;}
+		if(sInput.CompareNoCase(_T("Pause"))==0){return VK_PAUSE;}
+		if(sInput.CompareNoCase(_T("NumLock"))==0){return VK_NUMLOCK;}
+
+		if(sInput.CompareNoCase(_T("Insert"))==0){return VK_INSERT;}
+		if(sInput.CompareNoCase(_T("Delete"))==0){return VK_DELETE;}
+
 		if(sInput.CompareNoCase(_T("Home"))==0){return VK_HOME;}
 		if(sInput.CompareNoCase(_T("End"))==0){return VK_END;}
-		if(sInput.CompareNoCase(_T("PrintScreen"))==0){return VK_SNAPSHOT;}
-		
-		if(sInput.CompareNoCase(_T("Insert"))==0){return VK_INSERT;}
+
+		if(sInput.CompareNoCase(_T("PageUp"))==0){return VK_PRIOR;}
+		if(sInput.CompareNoCase(_T("PageDown"))==0){return VK_NEXT;}
 
 	}
 	else
