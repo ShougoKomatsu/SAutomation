@@ -10,6 +10,7 @@ extern HANDLE g_hThread[MAX_THREAD];
 extern CString g_sFilePath[MAX_THREAD];
 extern int g_iLogLevel[MAX_THREAD];
 
+extern CString g_sCommand[MAX_THREAD];
 
 DWORD WINAPI GetKeyThread(LPVOID arg);
 

@@ -21,7 +21,6 @@
 // CSAutomationDlg ダイアログ
 
 
-
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -87,6 +86,7 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_EXIT, &CSAutomationDlg::OnBnClickedButtonCompactExit)
 	ON_WM_TIMER()
 	ON_MESSAGE(WM_DISP_STANDBY, &CSAutomationDlg::OnDispStandby)
+	ON_MESSAGE(WM_DISP_COMMAND, &CSAutomationDlg::OnDispCommand)
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_MINIMIZE, &CSAutomationDlg::OnBnClickedCompactButtonMinimize)
 	ON_WM_CREATE()
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_CLOSE, &CSAutomationDlg::OnBnClickedCompactButtonClose)
@@ -127,6 +127,12 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 		ChangeIcon(IDI_ICON_RUNNING);
 	}
 	
+	return 0;
+}
+
+LRESULT CSAutomationDlg::OnDispCommand(WPARAM wParam, LPARAM lParam)
+{
+	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(g_sCommand[wParam]);
 	return 0;
 }
 
