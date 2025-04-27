@@ -8,6 +8,7 @@ class CSettingDlg : public CDialogEx
 public:
 	CSettingDlg(CWnd* pParent = NULL);   // 標準コンストラクター
 	virtual ~CSettingDlg();
+	CString m_sDir;
 	CTabItem m_tabItem;
 //	BOOL ChangeIcon(int iIcon);
 	HICON m_hIconStandby;

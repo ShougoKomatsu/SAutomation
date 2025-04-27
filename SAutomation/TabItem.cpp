@@ -366,6 +366,7 @@ void CTabItem::FileSelect(int iSlot, int iScene)
 			m_cDlgSelect.m_sSelectKeys[iSelect].Format(_T("%s"), m_autoInfo->m_sSelectKeys[iScene][iSelect]);
 			m_cDlgSelect.m_sSelectFiles[iSelect].Format(_T("%s"), m_autoInfo->m_sSelectFiles[iScene][iSelect]);
 		}
+		m_cDlgSelect.m_sDir.Format(_T("%s"),this->m_sDir);
 		int iRet = m_cDlgSelect.DoModal();
 		if(iRet == IDOK)
 		{

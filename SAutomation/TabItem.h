@@ -17,6 +17,7 @@ public:
 	CWnd* pParentWnd;
 	BOOL* pbNotModified;
 	int m_iSlot;
+	CString m_sDir;
 	void RefleshDialog(int iSlot);
 	void UpdateData_My(BOOL bTF){UpdateData(bTF);}
 	void FileSelect(int iSlot, int iScene);
