@@ -21,7 +21,6 @@
 // CSAutomationDlg ダイアログ
 
 
-
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -87,6 +86,7 @@ BEGIN_MESSAGE_MAP(CSAutomationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_EXIT, &CSAutomationDlg::OnBnClickedButtonCompactExit)
 	ON_WM_TIMER()
 	ON_MESSAGE(WM_DISP_STANDBY, &CSAutomationDlg::OnDispStandby)
+	ON_MESSAGE(WM_DISP_COMMAND, &CSAutomationDlg::OnDispCommand)
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_MINIMIZE, &CSAutomationDlg::OnBnClickedCompactButtonMinimize)
 	ON_WM_CREATE()
 	ON_BN_CLICKED(IDC_COMPACT_BUTTON_CLOSE, &CSAutomationDlg::OnBnClickedCompactButtonClose)
@@ -121,12 +121,28 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	if(bRunningAny == FALSE)
 	{
 		ChangeIcon(IDI_ICON_STANDBY);
+		((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(_T(""));
+		((CButton*)GetDlgItem(IDC_COMPACT_EDIT_STEP))->SetWindowText(_T(""));
 	}
 	else
 	{
 		ChangeIcon(IDI_ICON_RUNNING);
 	}
 	
+	return 0;
+}
+
+LRESULT CSAutomationDlg::OnDispCommand(WPARAM wParam, LPARAM lParam)
+{
+	CString sCommand;
+	CString sStep;
+	InterlockedExchange(&g_lLockCommandDisplay, 1);
+	sStep.Format(_T("%d"), lParam);
+	sCommand.Format(_T("%s"), g_sCommand[wParam]);
+	InterlockedExchange(&g_lLockCommandDisplay, 0);
+	
+	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(sCommand);
+	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_STEP))->SetWindowText(sStep);
 	return 0;
 }
 

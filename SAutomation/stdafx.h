@@ -29,6 +29,7 @@
 
 #define WM_DISP_STANDBY (WM_APP + 10)
 #define WM_TRAYNOTIFY (WM_APP + 11)
+#define WM_DISP_COMMAND (WM_APP + 12)
 
 
 #ifndef _AFX_NO_OLE_SUPPORT

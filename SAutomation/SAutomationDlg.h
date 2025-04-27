@@ -134,6 +134,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnDispCommand(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnBnClickedButtonCompactExit();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	CString m_sEditCompactMouseR;
