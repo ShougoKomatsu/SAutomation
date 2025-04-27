@@ -280,10 +280,6 @@ ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData)
 
 ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 {
-	int iWaitOn;
-
-	int iTimeOut;
-
 	if(saData->GetCount()<=4){return RETURN_FAILED;}
 
 	CString sModelFilePath;

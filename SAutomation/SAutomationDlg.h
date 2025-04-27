@@ -75,9 +75,24 @@ extern CString g_sLogFilePath[MAX_THREAD];
 #define HOTKEY_SCENE_62 (72)
 #define HOTKEY_SCENE_63 (73)
 #define HOTKEY_SCENE_64 (74)
+#define HOTKEY_SCENE_65 (75)
+#define HOTKEY_SCENE_66 (76)
+#define HOTKEY_SCENE_67 (77)
+#define HOTKEY_SCENE_68 (78)
+#define HOTKEY_SCENE_69 (79)
+#define HOTKEY_SCENE_70 (80)
+#define HOTKEY_SCENE_71 (81)
+#define HOTKEY_SCENE_72 (82)
+#define HOTKEY_SCENE_73 (83)
+#define HOTKEY_SCENE_74 (84)
+#define HOTKEY_SCENE_75 (85)
+#define HOTKEY_SCENE_76 (86)
+#define HOTKEY_SCENE_77 (87)
+#define HOTKEY_SCENE_78 (88)
+#define HOTKEY_SCENE_79 (89)
 
 
-#define HOTKEY_ENABLE (80)
+#define HOTKEY_ENABLE (90)
 
 #define HOTKEY_ESCAPE (100)
 
@@ -96,13 +111,14 @@ public:
 	CBrush m_brRed;
 	CBrush m_brGreen;
 	CBrush m_brBlack;
-	BOOL ChangeIcon(int iIcon);
 	HICON m_hIconStandby;
 	HICON m_hIconRunning;
 	HICON m_hIconMinimize;
 	HICON m_hIconClose;
 	CSelectDlg m_cDlgSelect;
 	CSettingDlg m_cDlgSetting;
+	
+	BOOL ChangeIcon(int iIcon);
 	BOOL TrayNotifyIconMessage(DWORD dwMessage, int iIconID);
 	
 	void SelectAndOperate(int iExScene);
@@ -133,24 +149,24 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	CString m_sEditCompactMouseR;
+	CString m_sEditCompactMouseC;
+	CButton m_ButtonClose;
+	CButton m_ButtonMinimize;
+
 	afx_msg LRESULT OnDispStandby(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnDispCommand(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnBnClickedButtonCompactExit();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	CString m_sEditCompactMouseR;
-	CString m_sEditCompactMouseC;
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnBnClickedCompactButtonMinimize();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	CButton m_ButtonMinimize;
 	afx_msg void OnBnClickedCompactButtonClose();
-	CButton m_ButtonClose;
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	virtual BOOL DestroyWindow();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-
 	afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	virtual BOOL DestroyWindow();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

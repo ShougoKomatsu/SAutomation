@@ -508,6 +508,7 @@ BOOL CSAutomationDlg::ReHookWindowsHook()
 void CSAutomationDlg::OnBnClickedButtonCompactExit()
 {
 	CSettingDlg settingDlg;
+	settingDlg.m_sDir.Format(_T("%s"),g_sDir);
 	settingDlg.DoModal();
 	
 	if(g_Automation.m_bEnableHotkey==TRUE)

@@ -182,7 +182,7 @@ ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 	DWORD dwRet= GetVKeyCode(sData);
 	if(dwRet >0)
 	{
-		*byData= dwRet;
+		*byData= (BYTE)(dwRet);
 		return RETURN_NORMAL;
 	}
 
@@ -470,9 +470,9 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 
 	if(bUnicode == TRUE)
 	{
-		if(('0'<=tch) && (tch<='9')){byKey = tch;}
-		if(('a'<=tch) && (tch<='z')){byKey = tch;}
-		if(('A'<=tch) && (tch<='Z')){byKey = tch-'A'+'a';}
+		if(('0'<=tch) && (tch<='9')){byKey = (BYTE)(tch);}
+		if(('a'<=tch) && (tch<='z')){byKey = (BYTE)(tch);}
+		if(('A'<=tch) && (tch<='Z')){byKey = (BYTE)(tch-'A'+'a');}
 	}
 
 	short shKey;
@@ -775,9 +775,6 @@ ReturnValue Input(CString sInputWithDblQuart)
 
 ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam)
 {
-
-	int iWaitOn;
-
 	BOOL bUnicode;
 	TCHAR tch;
 	ReturnValue iRet;
@@ -808,9 +805,9 @@ ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringA
 		}
 		if(bUnicode == TRUE)
 		{
-			if(('0'<=tch) && (tch<='9')){byKeys[i] = tch;}
-			if(('a'<=tch) && (tch<='z')){byKeys[i] = tch;}
-			if(('A'<=tch) && (tch<='Z')){byKeys[i] = tch-'A'+'a';}
+			if(('0'<=tch) && (tch<='9')){byKeys[i] = (BYTE)(tch);}
+			if(('a'<=tch) && (tch<='z')){byKeys[i] = (BYTE)(tch);}
+			if(('A'<=tch) && (tch<='Z')){byKeys[i] = (BYTE)(tch-'A'+'a');}
 		}
 	}
 

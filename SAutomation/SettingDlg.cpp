@@ -84,18 +84,18 @@ BOOL CSettingDlg::OnInitDialog()
 	MoveWindow(rectDisp.Width()-rectDlg.Width(), rectDisp.Height()-rectDlg.Height()-rectParent.Height(),rectDlg.Width(),rectDlg.Height());
 	
 	m_tab.SubclassDlgItem(IDC_COMPACT_TAB_OPERATION, this);
-
+	
 	m_tab.InsertItem(0, _T("0 - 15"));
 	m_tab.InsertItem(1, _T("16 - 31"));
 	m_tab.InsertItem(3, _T("32 - 47"));
 	m_tab.InsertItem(3, _T("48 - 63"));
-	m_tab.InsertItem(4, _T("Ex 1 - 1"));
+	m_tab.InsertItem(4, _T("Ex 0 - 15"));
 	
 	m_tabItem.Create(IDD_DIALOG_TAB_ITEMS, &m_tab);
 	m_tabItem.m_autoInfo=&m_Automation;
 	m_tabItem.pbNotModified=&m_bNotModified;
 	m_tabItem.pParentWnd=this;
-	
+	m_tabItem.m_sDir.Format(_T("%s"),this->m_sDir);
 
 	CRect rect;
 	m_tab.GetWindowRect(rect);
