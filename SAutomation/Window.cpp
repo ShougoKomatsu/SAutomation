@@ -348,7 +348,7 @@ int GetDlgItem_My(CString sText, int iRank)
 	int iCount = 0;
 	EnumChildWindows( hwnd, EnumChildProc, (LPARAM)&iCount );
 
-	for(UINT i=0; i<iCount; i++)
+	for(int i=0; i<iCount; i++)
 	{
 		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
 		if(uiRet<=0){continue;}
