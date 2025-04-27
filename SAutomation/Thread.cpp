@@ -15,7 +15,7 @@
 HANDLE g_hThread[MAX_THREAD];
 
 int g_iSceneData[MAX_THREAD];
-
+extern long g_lLockCommandDisplay=0;
 
 CString g_sCommand[MAX_THREAD];
 CString g_sFilePath[MAX_THREAD];
@@ -146,8 +146,13 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		sWrite.Format(_T("%s "), saCommands.GetAt(i));
 		if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].WriteString(sWrite);}}
 		CString sReturnParam;
-		g_sCommand[iScene].Format(_T("%s"),  saCommands.GetAt(i));
-		PostMessage(g_hWnd,WM_DISP_COMMAND,iScene,0);
+		if(g_lLockCommandDisplay==0)
+		{
+			InterlockedExchange(&g_lLockCommandDisplay, 1);
+			g_sCommand[iScene].Format(_T("%s"),  saCommands.GetAt(i));
+			PostMessage(g_hWnd,WM_DISP_COMMAND,iScene,i);
+			InterlockedExchange(&g_lLockCommandDisplay, 0);
+		}
 		iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
 		sWrite.Format(_T("%d\n"), iRet);
 		if(g_iLogLevel[iScene]>=1){if(g_cf[iScene].m_hFile != INVALID_HANDLE_VALUE){ g_cf[iScene].WriteString(sWrite);}}

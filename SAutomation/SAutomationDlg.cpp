@@ -121,6 +121,8 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	if(bRunningAny == FALSE)
 	{
 		ChangeIcon(IDI_ICON_STANDBY);
+		((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(_T(""));
+		((CButton*)GetDlgItem(IDC_COMPACT_EDIT_STEP))->SetWindowText(_T(""));
 	}
 	else
 	{
@@ -132,7 +134,15 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 
 LRESULT CSAutomationDlg::OnDispCommand(WPARAM wParam, LPARAM lParam)
 {
-	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(g_sCommand[wParam]);
+	CString sCommand;
+	CString sStep;
+	InterlockedExchange(&g_lLockCommandDisplay, 1);
+	sStep.Format(_T("%d"), lParam);
+	sCommand.Format(_T("%s"), g_sCommand[wParam]);
+	InterlockedExchange(&g_lLockCommandDisplay, 0);
+	
+	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(sCommand);
+	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_STEP))->SetWindowText(sStep);
 	return 0;
 }
 
