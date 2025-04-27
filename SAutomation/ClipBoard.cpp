@@ -71,7 +71,7 @@ BOOL CopyToClipBoardStr(const CString sValue)
 	hGL = GlobalAlloc(GPTR, (sValue.GetLength()+1)*sizeof(TCHAR) );
 	if(hGL==NULL){return FALSE;}
 
-	_stprintf((TCHAR*)hGL, _T("%s"), sValue);
+	_stprintf_s((TCHAR*)hGL,(sValue.GetLength()+1), _T("%s"), sValue);
 	
 	HANDLE hResult;
 	hResult = SetClipboardData(CF_UNICODETEXT, hGL);
