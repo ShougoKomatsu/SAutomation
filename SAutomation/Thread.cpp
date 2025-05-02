@@ -96,7 +96,18 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	int iScene;
 	iScene = ((iData[0]-1)>>PARAM_SCENE_SHIFT)&PARAM_SCENE_MASK;
 	BOOL bRet;
-	bRet = ReadTextFile(g_sFilePath[iScene],&saCommands);
+	
+	bRet = ReadUTFFile(g_sFilePath[iScene], &saCommands);
+	if(bRet != TRUE)
+	{
+		ChangeMouseOrigin(0, 0);
+		PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
+		TerminateThread(hGetKey, 0);
+		TerminateThread(hGetStepKey, 0);
+		return 0;
+	}
+
+	bRet = CStringArrayTrim(&saCommands);
 	if(bRet != TRUE)
 	{
 		ChangeMouseOrigin(0, 0);
@@ -130,8 +141,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	if(g_iLogLevel[iScene]>=1)
 	{
 		BOOL bRet;
-		
-			g_utfW[iScene].OpenUTFFile(g_sFilePath[iScene],_T("w, ccs=UTF-8"));
+		bRet = g_utfW[iScene].OpenUTFFile(g_sFilePath[iScene],_T("w, ccs=UTF-8"));
 	}
 	ResetProgramCounter(iScene);
 	CString sWrite;
@@ -154,8 +164,10 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			PostMessage(g_hWnd,WM_DISP_COMMAND,iScene,i);
 			InterlockedExchange(&g_lLockCommandDisplay, 0);
 		}
+
 		iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
 		sWrite.Format(_T("%d\n"), iRet);
+
 		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
 		switch(iRet)
 		{

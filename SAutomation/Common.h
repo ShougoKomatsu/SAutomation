@@ -2,6 +2,27 @@
 
 #define SAFE_DELETE(v) if(v != NULL){delete [] v; v=NULL;}
 
+
+class UTFReaderWriter
+{
+public:
+	UTFReaderWriter();
+	~UTFReaderWriter();
+	BOOL Init();
+	BOOL OpenUTFFile(CString sFilePath, CString sAttribute);
+	BOOL CloseUTFFile();
+	BOOL WriteString(CString sLine);
+	BOOL ReadString(CString* sData);
+private:
+	FILE* m_f;
+	CStdioFile* m_cstdioF;
+
+
+};
+
+	BOOL ReadUTFFile(CString sFilePath, CStringArray* saData);
+
+
 enum ReturnValue
 {
 	RETURN_NORMAL=0,
@@ -82,8 +103,17 @@ struct OperationInfo
 };
 
 void SetComboItem(CComboBox* combo, CString sHotkey);
+void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
+void SetComboItemShift(CComboBox* combo,OperationInfo* op);
+
 
 #include "thread.h"
+#include "stdafx.h"
+#include "InputDialog.h"
+#include "MouseAutomation.h"
+
+extern UTFReaderWriter g_utfW[MAX_THREAD];
+
 #define MAX_SELECTION (8)
 class AutomationInfo
 {
@@ -122,11 +152,6 @@ public:
 
 
 
-#include "stdafx.h"
-#include "InputDialog.h"
-
-
-#include "MouseAutomation.h"
 
 
 
@@ -141,7 +166,6 @@ extern double g_dSpeedMult;
 
 extern int g_iWatching;
 
-//extern CStdioFile* g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
 extern int g_iClickDulation;
@@ -156,18 +180,12 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam);
 BOOL GetFileName(CString sFilePath, CString* sFileName);
 
 
-BOOL ReadUTFFile(CString sFilePath, CString* sData);
-BOOL ReadTextFile(CString sFilePath, CStringArray* saCommands);
+//BOOL ReadUTFFile(CString sFilePath, CString* sData);
+//BOOL ReadTextFile(CString sFilePath, CStringArray* saCommands);
 
 extern AutomationInfo g_Automation;
 extern CInputDialog g_cInput;
 
-
-void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
-
-void SetComboItemShift(CComboBox* combo,OperationInfo* op);
-
-void SetComboItem(CComboBox* combo, CString m_sHotkey);
 
 BOOL GetFileProperty(const CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime);
 const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
@@ -175,91 +193,4 @@ const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
 
 DWORD GetVKeyCode(const CString sIn);
 
-class UTFReaderWriter
-{
-public:
-	UTFReaderWriter()
-	{
-		m_f=NULL;
-		m_cstdioF=NULL;
-	}
-	~UTFReaderWriter()
-	{
-		Init();
-	}
-	BOOL Init()
-	{
-		if(m_cstdioF != NULL){m_cstdioF->Close(); delete m_cstdioF; m_cstdioF=NULL;}
-		if(m_f != NULL)
-		{
-			fclose(m_f);
-			m_f=NULL;
-		}
-		return TRUE;
-	}
-	BOOL OpenUTFFile(CString sFilePath, CString sAttribute)
-	{
-		Init();
-		try
-		{
-			errno_t err = _tfopen_s(&m_f, sFilePath ,sAttribute);
-			if(err!=0)
-			{
-				CString sss;
-				TCHAR tch[128];
-				mbstowcs(tch,strerror(err),128);
-				sss.Format(_T("%s"),tch);
-				AfxMessageBox(sss);
-				return FALSE;
-			}
-			m_cstdioF = new CStdioFile(m_f);
-		}
-		catch(CExpansionVector* e)
-		{
-			CString sss;
-			sss.Format(_T("%d"), e->GetSize());
-			AfxMessageBox(sss);
-			return FALSE;
-		}
-		return TRUE;
-	}
-	
-	BOOL CloseUTFFile()
-	{
-		Init();
-		return TRUE;
-	}
-	
-	BOOL WriteString(CString sLine)
-	{
-		if(m_cstdioF==NULL){return FALSE;}
-		
-		if((m_cstdioF)->m_hFile == INVALID_HANDLE_VALUE){return FALSE;}
-
-		(m_cstdioF)->WriteString(sLine);
-		return TRUE;
-	}
-	BOOL ReadUTFFile(CString sFilePath, CString* sData)
-	{
-		CFileFind cFind;
-		if(cFind.FindFile(sFilePath)==FALSE){return FALSE;}
-
-		CString sBuf=_T("");
-		CString sDocBuf=_T("");
-
-		BOOL bRet = this->OpenUTFFile(sFilePath, _T("r, ccs=UTF-8"));
-		if(bRet != TRUE){return FALSE;}
-
-		while(m_cstdioF->ReadString(sBuf)!= NULL){sDocBuf = sDocBuf + sBuf+_T("\x0d\x0a");}
-		this->CloseUTFFile();
-
-		sData->Format(_T("%s"), sDocBuf);
-		return TRUE;
-	}
-private:
-	FILE* m_f;
-	CStdioFile* m_cstdioF;
-
-
-};
-extern UTFReaderWriter g_utfW[MAX_THREAD];
+	BOOL CStringArrayTrim(CStringArray* saData);

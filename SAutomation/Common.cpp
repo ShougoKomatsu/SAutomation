@@ -15,15 +15,15 @@ int g_iWatching=0;
 HANDLE g_hHotkey[MAX_THREAD];
 
 //FILE* g_f[MAX_THREAD];
-UTFReaderWriter g_utfW[MAX_THREAD];
 //CStdioFile* g_cf[MAX_THREAD];
+UTFReaderWriter g_utfW[MAX_THREAD];
 CString g_sLogFilePath[MAX_THREAD];
 int g_iLogLevel[MAX_THREAD];
 double g_dSpeedMult=1.0;
 
 
 int g_iClickDulation = 50;
-	CInputDialog g_cInput;
+CInputDialog g_cInput;
 
 BOOL GetFileName(CString sFilePath, CString* sFileName)
 {
@@ -40,81 +40,6 @@ BOOL GetFileName(CString sFilePath, CString* sFileName)
 	if(iFoundPosLast==0){return FALSE;}
 	sFileName->Format(_T("%s"), sFilePath.Right(sFilePath.GetLength()-iFoundPosLast-1));
 	return TRUE;
-}
-
-BOOL ReadUTFFile(CString sFilePath, CString* sData)
-{
-	CFileFind cFind;
-	if(cFind.FindFile(sFilePath)==FALSE){return FALSE;}
-
-	FILE* f;
-	CString sBuf;
-	CString sDocBuf;
-
-	_tfopen_s(&f, sFilePath,_T("r, ccs=UTF-8"));
-	CStdioFile cstdioF(f);
-	while(cstdioF.ReadString(sBuf)!= NULL){sDocBuf = sDocBuf + sBuf+_T("\x0d\x0a");}
-	cstdioF.Close();
-	fclose(f);
-
-	sData->Format(_T("%s"), sDocBuf);
-	return TRUE;
-}
-
-
-BOOL ReadTextFile(CString sFilePath, CStringArray* saCommands)
-{
-	CFileFind cfind;
-	BOOL bRet;
-	bRet = cfind.FindFile(sFilePath);
-	cfind.Close();
-	if(bRet != TRUE){return FALSE;}
-	
-
-	saCommands->RemoveAll();
-	CString sFileDataRaw;
-	bRet = ReadUTFFile(sFilePath, &sFileDataRaw);
-	if(bRet != TRUE){return FALSE;}
-
-	unsigned long ulFileDataLength;
-	long lCR1;
-	long lCR2;
-
-	lCR1 = 0;
-	ulFileDataLength = sFileDataRaw.GetLength();
-	for(unsigned long ulPointer = 0; ulPointer<=ulFileDataLength; ulPointer++)
-	{
-		lCR2 = sFileDataRaw.Find(_T("\r"),lCR1);
-		if(lCR2<=0)
-		{
-			lCR2 = sFileDataRaw.Find(_T("\n"),lCR1);
-			if(lCR2<=0)
-			{
-				CString sBufTemp;
-				sBufTemp.Trim(_T("\r"));
-				sBufTemp.Trim(_T("\n"));
-				sBufTemp.Format(_T("%s"), sFileDataRaw.Mid(lCR1, sFileDataRaw.GetLength()-lCR1));
-				if(sBufTemp.GetLength()>0)
-				{
-					if(sBufTemp.GetLength()>0){saCommands->Add(sBufTemp);}
-				}
-				return TRUE;
-			}
-		}
-
-		CString sLineData;
-		sLineData.Format(_T("%s"), sFileDataRaw.Mid(lCR1, lCR2-lCR1));
-		sLineData.Trim(_T("\r"));
-		sLineData.Trim(_T("\n"));
-		if(sLineData.GetLength()>0)
-		{
-			if(sLineData.GetLength()>0){saCommands->Add(sLineData);}
-		}
-		lCR1=lCR2+1;
-	}
-
-	//‚±‚±‚É‚Í—ˆ‚È‚¢
-	return FALSE;
 }
 
 void SetComboItem(CComboBox* combo, CString sHotkey)
@@ -222,7 +147,7 @@ void AutomationInfo::ReadSettings()
 		else{m_OpeInfo[iScene].bUseWin=FALSE;}
 	}
 
-	
+
 	for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
 	{
 		int iScene=MAX_NORMAL_THREAD+iExScene;
@@ -289,23 +214,18 @@ void AutomationInfo::ReadSettings()
 	m_iLogLevel=_ttoi(szData);
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
-	
+
 	for(int iScene= 0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		g_hThread[iScene] = NULL;
-
-		
 		m_OpeInfo[iScene].dwHotKey = GetVKeyCode(m_OpeInfo[iScene].sHotkey);
 	}
-	
+
 	for(int iExScene= 0; iExScene<MAX_EX_THREAD; iExScene++)
 	{
 		int iScene=MAX_NORMAL_THREAD+iExScene;
 		g_hThread[iScene] = NULL;
-		
 		m_OpeInfo[iScene].dwHotKey = GetVKeyCode(m_OpeInfo[iScene].sHotkey);
-
-
 	}
 
 	if(m_sHotkeyEnable.GetLength()==1)
@@ -314,7 +234,7 @@ void AutomationInfo::ReadSettings()
 	}
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
-	
+
 	GetPrivateProfileString(_T("Common"),_T("MinimizeToTasktray"),_T("0"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
 	if(wcscmp(szData,_T("1"))==0){m_bMinimizeToTaskTray=TRUE;}
 	else{m_bMinimizeToTaskTray=FALSE;}
@@ -322,7 +242,7 @@ void AutomationInfo::ReadSettings()
 
 void AutomationInfo::SaveSettings()
 {
-	
+
 	CString sFilePath;
 	sFilePath.Format(_T("%s\\SAutomation.ini"), m_sDir); 
 
@@ -352,8 +272,8 @@ void AutomationInfo::SaveSettings()
 
 	}
 
-	
-	
+
+
 	for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
 	{
 		int iScene=MAX_NORMAL_THREAD+iExScene;
@@ -428,7 +348,7 @@ void AutomationInfo::SaveSettings()
 	CString sData;
 	sData.Format(_T("%d"),m_iLogLevel);
 	WritePrivateProfileString(_T("Common"),_T("LogLevel"),sData,sFilePath);
-	
+
 }
 BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 {
@@ -488,7 +408,7 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 	{
 		return FALSE;
 	}
-	
+
 	if(m_bMinimizeToTaskTray != autoInfoIn->m_bMinimizeToTaskTray)
 	{
 		return FALSE;
@@ -500,7 +420,7 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 			return FALSE;
 		}
 	}
-	
+
 	for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)
 	{
 		for(int iSelection=0;iSelection<MAX_SELECTION; iSelection++)
@@ -530,21 +450,21 @@ void AutomationInfo::Operate(int iScene)
 	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
 
 	g_hThread[iScene] = CreateThread(NULL, 0, CommandThread, (LPVOID)(iParam), 0, &dwThreadID);
-	
+
 	while(iParam[0]!=0){Sleep(10);}
-	
+
 }
 
 void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 {
 	if(combo->GetCount()<=0)
 	{
-	combo->ResetContent();
-	combo->AddString(_T(" "));
-	combo->AddString(_T("Ctrl"));
-	combo->AddString(_T("Shift"));
-	combo->AddString(_T("Alt"));
-	combo->AddString(_T("Win"));
+		combo->ResetContent();
+		combo->AddString(_T(" "));
+		combo->AddString(_T("Ctrl"));
+		combo->AddString(_T("Shift"));
+		combo->AddString(_T("Alt"));
+		combo->AddString(_T("Win"));
 	}
 
 	const int NOTHING = 0;
@@ -559,9 +479,9 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op)
 	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
 	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
 	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
-	
+
 	if(iKeyCount >= 3){combo->SetCurSel(0); return;}
-	
+
 	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
 	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
 	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
@@ -585,33 +505,33 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op)
 {
 	if(combo->GetCount()<=0)
 	{
-	combo->ResetContent();
-	combo->AddString(_T(" "));
-	combo->AddString(_T("Shift"));
-	combo->AddString(_T("Alt"));
-	combo->AddString(_T("Win"));
+		combo->ResetContent();
+		combo->AddString(_T(" "));
+		combo->AddString(_T("Shift"));
+		combo->AddString(_T("Alt"));
+		combo->AddString(_T("Win"));
 	}
-	
+
 	const int NOTHING = 0;
 	const int CTRL = 1;
 	const int SHIFT = 2;
 	const int ALT = 4;
 	const int WIN = 8;
-	
+
 	int iCombi = NOTHING;
 	int iKeyCount = 0;
 	if(op->bUseCtrl==TRUE){iKeyCount++;iCombi |= CTRL;}
 	if(op->bUseShift==TRUE){iKeyCount++;iCombi |= SHIFT;}
 	if(op->bUseAlt==TRUE){iKeyCount++;iCombi |= ALT;}
 	if(op->bUseWin==TRUE){iKeyCount++;iCombi |= WIN;}
-	
+
 	if(iKeyCount != 2){combo->SetCurSel(0); return;}
-	
+
 	if((iCombi&CTRL) == CTRL)	{iCombi -= CTRL;}
 	if((iCombi&SHIFT) == SHIFT) {if(iCombi != SHIFT){iCombi -= SHIFT;}}
 	if((iCombi&ALT) == ALT)		{if(iCombi != ALT){iCombi -= ALT;}}
 	if((iCombi&WIN) == WIN)		{if(iCombi != WIN){iCombi -= WIN;}}
-	
+
 	switch(iCombi)
 	{
 	case NOTHING:{combo->SetCurSel(0); return;}
@@ -663,8 +583,8 @@ BOOL GetFileProperty(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAcce
 	{
 		*ctLastWriteTime = FileData.ftLastWriteTime;
 	}
-	
-    FindClose(hFile);
+
+	FindClose(hFile);
 
 	return TRUE;
 }
@@ -673,7 +593,7 @@ BOOL GetFileProperty(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAcce
 const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg)
 {
 	CString sOut;
-	
+
 	int iPlace=0;
 	sOut.Format(_T(""));
 	while(iPlace<=sArg.GetLength())
@@ -726,7 +646,7 @@ DWORD GetVKeyCode(const CString sIn)
 	CString sInput;
 	sInput.Format(_T("%s"),sIn);
 	sInput.MakeLower();
-	
+
 	if(sInput.CompareNoCase(_T("Ctrl"))==0){return VK_CONTROL;}
 	if(sInput.CompareNoCase(_T("Shift"))==0){return VK_SHIFT;}
 	if(sInput.CompareNoCase(_T("Alt"))==0){return VK_MENU;}
@@ -807,4 +727,108 @@ DWORD GetVKeyCode(const CString sIn)
 		if((char(sInput.GetAt(0))>='0') && (char(sInput.GetAt(0))<='9')){return char(sInput.GetAt(0))-'0'+0x30;}
 	}
 	return -1;
+}
+
+UTFReaderWriter::UTFReaderWriter()
+{
+	m_f=NULL;
+	m_cstdioF=NULL;
+}
+UTFReaderWriter::~UTFReaderWriter()
+{
+	Init();
+}
+BOOL UTFReaderWriter::Init()
+{
+	if(m_cstdioF != NULL){m_cstdioF->Close(); delete m_cstdioF; m_cstdioF=NULL;}
+	if(m_f != NULL){fclose(m_f);m_f=NULL;}
+	return TRUE;
+}
+BOOL UTFReaderWriter::OpenUTFFile(CString sFilePath, CString sAttribute)
+{
+	Init();
+	try
+	{
+		errno_t err = _tfopen_s(&m_f, sFilePath ,sAttribute);
+		if(err != 0)
+		{
+			return FALSE;
+		}
+		m_cstdioF = new CStdioFile(m_f);
+	}
+	catch(CExpansionVector* e)
+	{
+		return FALSE;
+	}
+	return TRUE;
+}
+
+BOOL UTFReaderWriter::CloseUTFFile()
+{
+	Init();
+	return TRUE;
+}
+
+BOOL UTFReaderWriter::WriteString(CString sLine)
+{
+	if(m_cstdioF==NULL){return FALSE;}
+
+	if((m_cstdioF)->m_hFile == INVALID_HANDLE_VALUE){return FALSE;}
+
+	(m_cstdioF)->WriteString(sLine);
+	return TRUE;
+}
+BOOL UTFReaderWriter::ReadString(CString* sLine)
+{
+	if(m_cstdioF==NULL){return FALSE;}
+
+	if((m_cstdioF)->m_hFile == INVALID_HANDLE_VALUE){return FALSE;}
+	CString sBuf=_T("");
+	sLine->Format(_T(""));
+	BOOL bRet = m_cstdioF->ReadString(sBuf);
+	if(bRet != TRUE){return FALSE;}
+
+	sLine->Format(_T("%s"), sBuf);
+
+	return TRUE;
+}
+
+BOOL ReadUTFFile(CString sFilePath, CStringArray* saData)
+{
+	CFileFind cFind;
+	if(cFind.FindFile(sFilePath)==FALSE){return FALSE;}
+
+	CString sBuf=_T("");
+	saData->RemoveAll();
+
+	UTFReaderWriter utfR;
+	BOOL bRet = utfR.OpenUTFFile(sFilePath, _T("r, ccs=UTF-8"));
+	if(bRet != TRUE){return FALSE;}
+
+	while(utfR.ReadString(&sBuf)== TRUE)
+	{
+		if(sBuf.GetLength()>0){saData->Add(sBuf);}
+	}
+	utfR.CloseUTFFile();
+
+	return TRUE;
+}
+
+BOOL CStringArrayTrim(CStringArray* saData)
+{
+	CStringArray saDataLocal;
+	CString sDataLine;
+	saDataLocal.Copy(*saData);
+
+	saData->RemoveAll();
+	for(int i=0; i<saDataLocal.GetCount(); i++)
+	{
+		sDataLine.Format(_T("%s"), saDataLocal.GetAt(i));
+		sDataLine.Trim();
+		if(sDataLine.GetLength()>0)
+		{
+			saData->Add(sDataLine);
+		}
+	}
+	return TRUE;
 }

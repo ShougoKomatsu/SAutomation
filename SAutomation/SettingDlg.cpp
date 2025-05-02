@@ -63,7 +63,6 @@ BOOL CSettingDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	
 	LONG lExStyle = GetWindowLong(this->m_hWnd,GWL_EXSTYLE);
     lExStyle %= ~WS_EX_APPWINDOW;
     lExStyle |= WS_EX_TOOLWINDOW;
