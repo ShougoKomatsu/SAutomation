@@ -131,7 +131,7 @@ public:
 
 
 extern HHOOK g_hhook;
-
+	
 extern int g_iR;
 extern int g_iC;
 extern int g_iOriginR;
@@ -141,14 +141,14 @@ extern double g_dSpeedMult;
 
 extern int g_iWatching;
 
-extern CStdioFile* g_cf[MAX_THREAD];
+//extern CStdioFile* g_cf[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
 extern int g_iClickDulation;
 extern CString g_sDir;
-#define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene]->m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_cf[iScene]->WriteString(sWrite);}}
-#define LOG_OUTPUT_STR(iScene, sArg, sData) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene]->m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = %s> "),sArg, sData); g_cf[iScene]->WriteString(sWrite);}}	
-#define LOG_OUTPUT_POINT(iScene, sArg, pPoint) if(g_iLogLevel[iScene]>=5){if(g_cf[iScene]->m_hFile != INVALID_HANDLE_VALUE){ CString sWrite; sWrite.Format(_T("<%s = (%d, %d)> "),sArg.Left(8), (pPoint==NULL ? 0 : pPoint->r), (pPoint == NULL ? 0 : pPoint->c)); g_cf[iScene]->WriteString(sWrite);}}
+#define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_utfW[iScene].WriteString(sWrite); }
+#define LOG_OUTPUT_STR(iScene, sArg, sData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %s> "),sArg, sData); g_utfW[iScene].WriteString(sWrite);}	
+#define LOG_OUTPUT_POINT(iScene, sArg, pPoint) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = (%d, %d)> "),sArg.Left(8), (pPoint==NULL ? 0 : pPoint->r), (pPoint == NULL ? 0 : pPoint->c));g_utfW[iScene].WriteString(sWrite);}
 
 
 
@@ -174,3 +174,70 @@ const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
 
 
 DWORD GetVKeyCode(const CString sIn);
+
+class UTFReaderWriter
+{
+public:
+	UTFReaderWriter()
+	{
+		m_f=NULL;
+		m_cstdioF=NULL;
+	}
+	~UTFReaderWriter()
+	{
+		Init();
+	}
+	BOOL Init()
+	{
+		if(m_cstdioF != NULL){m_cstdioF->Close(); delete m_cstdioF; m_cstdioF=NULL;}
+		if(m_f != NULL){fclose(m_f);delete m_f; m_f=NULL;}
+		return TRUE;
+	}
+	BOOL OpenUTFFile(CString sFilePath, CString sAttribute)
+	{
+		Init();
+		errno_t err = _tfopen_s(&m_f, sFilePath ,sAttribute);
+//		if(err==0){}
+		m_cstdioF = new CStdioFile(m_f);
+		return TRUE;
+	}
+	
+	BOOL CloseUTFFile()
+	{
+		Init();
+		return TRUE;
+	}
+	
+	BOOL WriteString(CString sLine)
+	{
+		if(m_cstdioF==NULL){return FALSE;}
+		
+		if((m_cstdioF)->m_hFile == INVALID_HANDLE_VALUE){return FALSE;}
+
+		(m_cstdioF)->WriteString(sLine);
+		return TRUE;
+	}
+	BOOL ReadUTFFile(CString sFilePath, CString* sData)
+	{
+		CFileFind cFind;
+		if(cFind.FindFile(sFilePath)==FALSE){return FALSE;}
+
+		CString sBuf=_T("");
+		CString sDocBuf=_T("");
+
+		BOOL bRet = this->OpenUTFFile(sFilePath, _T("r, ccs=UTF-8"));
+		if(bRet != TRUE){return FALSE;}
+
+		while(m_cstdioF->ReadString(sBuf)!= NULL){sDocBuf = sDocBuf + sBuf+_T("\x0d\x0a");}
+		this->CloseUTFFile();
+
+		sData->Format(_T("%s"), sDocBuf);
+		return TRUE;
+	}
+private:
+	FILE* m_f;
+	CStdioFile* m_cstdioF;
+
+
+};
+extern UTFReaderWriter g_utfW[MAX_THREAD];
