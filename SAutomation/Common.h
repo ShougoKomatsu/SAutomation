@@ -146,7 +146,7 @@ extern CString g_sLogFilePath[MAX_THREAD];
 
 extern int g_iClickDulation;
 extern CString g_sDir;
-#define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_utfW[iScene].WriteString(sWrite); }
+#define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_utfW[iScene].WriteString(sWrite);}
 #define LOG_OUTPUT_STR(iScene, sArg, sData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %s> "),sArg, sData); g_utfW[iScene].WriteString(sWrite);}	
 #define LOG_OUTPUT_POINT(iScene, sArg, pPoint) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = (%d, %d)> "),sArg.Left(8), (pPoint==NULL ? 0 : pPoint->r), (pPoint == NULL ? 0 : pPoint->c));g_utfW[iScene].WriteString(sWrite);}
 
@@ -190,15 +190,37 @@ public:
 	BOOL Init()
 	{
 		if(m_cstdioF != NULL){m_cstdioF->Close(); delete m_cstdioF; m_cstdioF=NULL;}
-		if(m_f != NULL){fclose(m_f);delete m_f; m_f=NULL;}
+		if(m_f != NULL)
+		{
+			fclose(m_f);
+			m_f=NULL;
+		}
 		return TRUE;
 	}
 	BOOL OpenUTFFile(CString sFilePath, CString sAttribute)
 	{
 		Init();
-		errno_t err = _tfopen_s(&m_f, sFilePath ,sAttribute);
-//		if(err==0){}
-		m_cstdioF = new CStdioFile(m_f);
+		try
+		{
+			errno_t err = _tfopen_s(&m_f, sFilePath ,sAttribute);
+			if(err!=0)
+			{
+				CString sss;
+				TCHAR tch[128];
+				mbstowcs(tch,strerror(err),128);
+				sss.Format(_T("%s"),tch);
+				AfxMessageBox(sss);
+				return FALSE;
+			}
+			m_cstdioF = new CStdioFile(m_f);
+		}
+		catch(CExpansionVector* e)
+		{
+			CString sss;
+			sss.Format(_T("%d"), e->GetSize());
+			AfxMessageBox(sss);
+			return FALSE;
+		}
 		return TRUE;
 	}
 	
