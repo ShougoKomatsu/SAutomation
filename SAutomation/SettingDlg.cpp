@@ -228,7 +228,7 @@ void CSettingDlg::GetLogLavel(AutomationInfo* autoInfo)
 	}
 	else
 	{
-		TCHAR tch[32];
+		wchar_t tch[32];
 		m_comboLogLevel.GetLBText(m_comboLogLevel.GetCurSel(),tch);
 		if(wcscmp(tch,_T("OnlyCritical"))==0){autoInfo->m_iLogLevel=1;}
 		if(wcscmp(tch,_T("4"))==0){autoInfo->m_iLogLevel=2;}
@@ -244,7 +244,7 @@ BOOL CSettingDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 {
 	
 	CString sData;
-	TCHAR tch[32];
+	wchar_t tch[32];
 
 
 
@@ -294,7 +294,7 @@ void CSettingDlg::OnSelchangeCombo0Enable()
 	}
 
 	UpdateData(TRUE);
-	TCHAR tch[8];
+	wchar_t tch[8];
 	if(m_comboEnable.GetCurSel()<0){m_Automation.m_sHotkeyEnable.Format(_T(""));return;}
 	m_comboEnable.GetLBText(m_comboEnable.GetCurSel(),tch);
 
@@ -383,7 +383,7 @@ void CSettingDlg::OnBnClickedButton0WindowNameRefresh()
 
 void CSettingDlg::OnSelchangeWindowName()
 {
-	TCHAR tch[256];
+	wchar_t tch[256];
 	m_comboWindowName.GetLBText(m_comboWindowName.GetCurSel(),tch); 
 	CString sWindowName;
 	m_sTargetWindowName.Format(_T("%s"), tch);

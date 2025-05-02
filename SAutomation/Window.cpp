@@ -275,7 +275,7 @@ HWND g_hCtrlHandles[MAX_CTRL_NUM];
 
 BOOL CALLBACK EnumChildProc( HWND hWnd, LPARAM lParam )
 {
-	TCHAR   tch[ 1024 ];
+	wchar_t   tch[ 1024 ];
 	int  iCount = *(int*)lParam;
 
 	if(iCount>=MAX_CTRL_NUM){return FALSE;}
@@ -293,7 +293,7 @@ ReturnValue ListDlgItems()
 {
 	CString sMes;
 	HWND hwnd;
-	TCHAR tch[MAX_PATH];
+	wchar_t tch[MAX_PATH];
 	hwnd=GetForegroundWindow();
 	int iListLength;
 	iListLength=0;
@@ -338,7 +338,7 @@ int GetDlgItem_My(CString sText, int iRank)
 	HWND hwnd = GetForegroundWindow();
 	if(hwnd==NULL){return 0;}
 	
-	TCHAR tch[MAX_PATH];
+	wchar_t tch[MAX_PATH];
 	int iRankLocal=0;
 	int iRankNow=0;
 

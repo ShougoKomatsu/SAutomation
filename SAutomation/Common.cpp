@@ -57,7 +57,7 @@ void SetComboItem(CComboBox* combo, CString sHotkey)
 	bFound = FALSE;
 	for(int i=0; i<combo->GetCount(); i++)
 	{
-		TCHAR tch[8];
+		wchar_t tch[8];
 		combo->GetLBText(i, tch);
 		if(sHotkey.Compare(tch)==0){combo->SetCurSel(i); bFound = TRUE;break;}
 	}
@@ -66,22 +66,22 @@ void SetComboItem(CComboBox* combo, CString sHotkey)
 void AutomationInfo::ReadSettings()
 {
 
-	TCHAR szData[MAX_PATH];
+	wchar_t szData[MAX_PATH];
 	CString sFilePath;
 
 	sFilePath.Format(_T("%s\\SAutomation.ini"), m_sDir); 
 
-	GetPrivateProfileString(_T("Mouse"),_T("ClickDulation"),_T("50"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+	GetPrivateProfileString(_T("Mouse"),_T("ClickDulation"),_T("50"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 	g_iClickDulation = _ttoi(szData);
 
 	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		CString sSection;
 		sSection.Format(_T("Operation %d"), iScene+1);
-		GetPrivateProfileString(sSection,_T("FileName"),_T(""),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+		GetPrivateProfileString(sSection,_T("FileName"),_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 		m_OpeInfo[iScene].sFileName.Format(_T("%s"),szData);
 
-		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 		m_OpeInfo[iScene].sHotkey.Format(_T("%s"), szData);
 
 		GetPrivateProfileStringAsBool(sSection, _T("UseCtrl"), TRUE, &(m_OpeInfo[iScene].bUseCtrl), sFilePath);
@@ -96,10 +96,10 @@ void AutomationInfo::ReadSettings()
 		int iScene=MAX_NORMAL_THREAD+iExScene;
 		CString sSection;
 		sSection.Format(_T("ExOperation %d"), iExScene+1);
-		GetPrivateProfileString(sSection,_T("FileName"),_T(""),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+		GetPrivateProfileString(sSection,_T("FileName"),_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 		m_OpeInfo[iScene].sFileName.Format(_T("%s"),szData);
 
-		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 		m_OpeInfo[iScene].sHotkey.Format(_T("%s"), szData);
 		
 		GetPrivateProfileStringAsBool(sSection, _T("UseCtrl"), TRUE, &(m_OpeInfo[iScene].bUseCtrl), sFilePath);
@@ -116,9 +116,9 @@ void AutomationInfo::ReadSettings()
 			CString sDataFile;
 			sKeyKey.Format(_T("SelectKey%d"),iSelect+1);
 			sKeyFile.Format(_T("SelectFile%d"),iSelect+1);
-			GetPrivateProfileString(sSection,sKeyKey,_T(""),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+			GetPrivateProfileString(sSection,sKeyKey,_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 			sDataKey.Format(_T("%s"), szData);
-			GetPrivateProfileString(sSection,sKeyFile,_T(""),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+			GetPrivateProfileString(sSection,sKeyFile,_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 			sDataFile.Format(_T("%s"), szData);
 			if((sDataKey.GetLength()>0) && (sDataFile.GetLength()>0))
 			{
@@ -129,7 +129,7 @@ void AutomationInfo::ReadSettings()
 	}
 
 
-	GetPrivateProfileString(_T("Hotkey"),_T("EnableKey"),_T(" "),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+	GetPrivateProfileString(_T("Hotkey"),_T("EnableKey"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 	m_sHotkeyEnable.Format(_T("%s"), szData);
 
 	GetPrivateProfileStringAsBool(_T("Hotkey"), _T("Enable"), FALSE, &(m_bEnableHotkey), sFilePath);
@@ -138,7 +138,7 @@ void AutomationInfo::ReadSettings()
 	GetPrivateProfileStringAsBool(_T("Common"), _T("Log"), FALSE, &(m_bLog), sFilePath);
 
 
-	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
+	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
 	m_iLogLevel=_ttoi(szData);
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
@@ -163,47 +163,6 @@ void AutomationInfo::ReadSettings()
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
 	
-}
-
-
-BOOL WritePrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bValue, CString sFilePath)
-{
-	if(bValue == TRUE)
-	{
-		return WritePrivateProfileString(sSection,sKey,_T("TRUE"),sFilePath);
-	}
-	else
-	{
-		return WritePrivateProfileString(sSection,sKey,_T("FALSE"),sFilePath);
-	}
-	return FALSE;
-}
-
-BOOL GetPrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bDefault, BOOL* bValue, CString sFilePath)
-{
-
-	TCHAR szData[MAX_PATH];
-
-	if(bDefault==TRUE)
-	{
-		GetPrivateProfileString(sSection, sKey, _T("TRUE"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	}
-	else
-	{
-		GetPrivateProfileString(sSection, sKey, _T("FALSE"),szData,sizeof(szData)/sizeof(TCHAR),sFilePath);
-	}
-
-	
-	CString sTemp;
-	sTemp.Format(_T("%s"), szData);
-	if(sTemp.CompareNoCase(_T("TRUE"))==0){*bValue=TRUE; return TRUE;}
-	if(sTemp.CompareNoCase(_T("1"))==0){*bValue=TRUE; return TRUE;}
-
-	if(sTemp.CompareNoCase(_T("FALSE"))==0){*bValue=FALSE; return TRUE;}
-	if(sTemp.CompareNoCase(_T("0"))==0){*bValue=FALSE; return TRUE;}
-
-	*bValue=bDefault;
-	return FALSE;
 }
 
 
@@ -255,8 +214,7 @@ void AutomationInfo::SaveSettings()
 	}
 
 	WritePrivateProfileString(_T("Hotkey"),_T("EnableKey"), m_sHotkeyEnable, sFilePath);
-
-
+	
 	WritePrivateProfileStringAsBool(_T("Hotkey"),_T("Enable"),m_bEnableHotkey,sFilePath);
 	WritePrivateProfileStringAsBool(_T("Common"),_T("AutoMnimize"),m_bAutoMinimize,sFilePath);
 	WritePrivateProfileStringAsBool(_T("Common"),_T("Log"),m_bLog,sFilePath);
@@ -297,45 +255,18 @@ BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 
 BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 {
-	if(m_bEnableHotkey != autoInfoIn->m_bEnableHotkey)
-	{
-		return FALSE;
-	}
-	if(m_bAutoMinimize != autoInfoIn->m_bAutoMinimize)
-	{
-		return FALSE;
-	}
-	if(m_sHotkeyEnable.Compare(autoInfoIn->m_sHotkeyEnable) != 0)
-	{
-		return FALSE;
-	}
-	if(m_iLogLevel != autoInfoIn->m_iLogLevel)
-	{
-		return FALSE;
-	}
-	if(m_bLog != autoInfoIn->m_bLog)
-	{
-		return FALSE;
-	}
-	if(m_dwHotKeyEnable != autoInfoIn->m_dwHotKeyEnable)
-	{
-		return FALSE;
-	}
-	if(m_sDir.Compare(autoInfoIn->m_sDir) != 0)
-	{
-		return FALSE;
-	}
+	if(m_bEnableHotkey != autoInfoIn->m_bEnableHotkey){return FALSE;}
+	if(m_bAutoMinimize != autoInfoIn->m_bAutoMinimize){return FALSE;}
+	if(m_sHotkeyEnable.Compare(autoInfoIn->m_sHotkeyEnable) != 0){return FALSE;}
+	if(m_iLogLevel != autoInfoIn->m_iLogLevel){return FALSE;}
+	if(m_bLog != autoInfoIn->m_bLog){return FALSE;}
+	if(m_dwHotKeyEnable != autoInfoIn->m_dwHotKeyEnable){return FALSE;}
+	if(m_sDir.Compare(autoInfoIn->m_sDir) != 0){return FALSE;}
+	if(m_bMinimizeToTaskTray != autoInfoIn->m_bMinimizeToTaskTray){return FALSE;}
 
-	if(m_bMinimizeToTaskTray != autoInfoIn->m_bMinimizeToTaskTray)
-	{
-		return FALSE;
-	}
 	for(int i=0; i<MAX_THREAD; i++)
 	{
-		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE)
-		{
-			return FALSE;
-		}
+		if(m_OpeInfo[i].IsSameAs(&(autoInfoIn->m_OpeInfo[i])) == FALSE){return FALSE;}
 	}
 
 	for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)
@@ -748,4 +679,44 @@ BOOL CStringArrayTrim(CStringArray* saData)
 		}
 	}
 	return TRUE;
+}
+
+BOOL WritePrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bValue, CString sFilePath)
+{
+	if(bValue == TRUE)
+	{
+		return WritePrivateProfileString(sSection,sKey,_T("TRUE"),sFilePath);
+	}
+	else
+	{
+		return WritePrivateProfileString(sSection,sKey,_T("FALSE"),sFilePath);
+	}
+	return FALSE;
+}
+
+BOOL GetPrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bDefault, BOOL* bValue, CString sFilePath)
+{
+
+	wchar_t szData[MAX_PATH];
+
+	if(bDefault==TRUE)
+	{
+		GetPrivateProfileString(sSection, sKey, _T("TRUE"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+	}
+	else
+	{
+		GetPrivateProfileString(sSection, sKey, _T("FALSE"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+	}
+
+	
+	CString sTemp;
+	sTemp.Format(_T("%s"), szData);
+	if(sTemp.CompareNoCase(_T("TRUE"))==0){*bValue=TRUE; return TRUE;}
+	if(sTemp.CompareNoCase(_T("1"))==0){*bValue=TRUE; return TRUE;}
+
+	if(sTemp.CompareNoCase(_T("FALSE"))==0){*bValue=FALSE; return TRUE;}
+	if(sTemp.CompareNoCase(_T("0"))==0){*bValue=FALSE; return TRUE;}
+
+	*bValue=bDefault;
+	return FALSE;
 }

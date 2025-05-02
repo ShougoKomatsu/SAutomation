@@ -190,8 +190,8 @@ void CSelectDlg::OnBnClickedOk()
 		UpdateData(TRUE);
 		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 		{
-			TCHAR tchKey[16];
-			TCHAR tchFile[MAX_PATH];
+			wchar_t tchKey[16];
+			wchar_t tchFile[MAX_PATH];
 
 			m_combo[iSelect].GetLBText(m_combo[iSelect].GetCurSel(),tchKey);
 			((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelect))->GetWindowText(tchFile,MAX_PATH-1);

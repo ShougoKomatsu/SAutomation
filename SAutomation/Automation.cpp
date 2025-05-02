@@ -91,7 +91,7 @@ ReturnValue KeyDownAndUp(BYTE bySendKey)
 	return RETURN_NORMAL;
 }
 
-ReturnValue KeyDownAndUpUnicode(TCHAR tch)
+ReturnValue KeyDownAndUpUnicode(wchar_t tch)
 {
 	INPUT input[2];
 	input[0].type = INPUT_KEYBOARD;
@@ -112,7 +112,7 @@ ReturnValue KeyDownAndUpUnicode(TCHAR tch)
 	return RETURN_NORMAL;
 }
 
-ReturnValue KeyDownUnicode(TCHAR tch)
+ReturnValue KeyDownUnicode(wchar_t tch)
 {
 	INPUT input[1];
 	input[0].type = INPUT_KEYBOARD;
@@ -126,7 +126,7 @@ ReturnValue KeyDownUnicode(TCHAR tch)
 	return RETURN_NORMAL;
 }
 
-ReturnValue KeyUpUnicode(TCHAR tch)
+ReturnValue KeyUpUnicode(wchar_t tch)
 {
 	INPUT input[1];
 
@@ -173,7 +173,7 @@ ReturnValue GetInput(CStringArray* saData, CString* sReturnParam)
 	return RETURN_GOTO_BY_SWITCH;
 }
 
-ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
+ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, wchar_t* tch, BYTE* byData)
 {
 	*bUnicode = FALSE;
 	*tch = 0;
@@ -448,7 +448,7 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 
 	BYTE byKey;
 	BOOL bUnicode;
-	TCHAR tch;
+	wchar_t tch;
 	ReturnValue iRet;
 	int iTimeOutMillisec;
 	
@@ -504,7 +504,7 @@ ReturnValue KeyDownAndUp(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
-	TCHAR tch;
+	wchar_t tch;
 
 	GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &bySendKey);
 	if(bUnicode == TRUE){return KeyDownAndUpUnicode(tch);}
@@ -517,7 +517,7 @@ ReturnValue KeyDown(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
-	TCHAR tch;
+	wchar_t tch;
 
 	GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &bySendKey);
 	if(bUnicode == TRUE){return KeyDownUnicode(tch);}
@@ -531,7 +531,7 @@ ReturnValue KeyUp(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
-	TCHAR tch;
+	wchar_t tch;
 
 	GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &bySendKey);
 	if(bUnicode == TRUE){return KeyUpUnicode(tch);}
@@ -776,7 +776,7 @@ ReturnValue Input(CString sInputWithDblQuart)
 ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam)
 {
 	BOOL bUnicode;
-	TCHAR tch;
+	wchar_t tch;
 	ReturnValue iRet;
 	int iTimeOutMillisec;
 	BYTE* byKeys;

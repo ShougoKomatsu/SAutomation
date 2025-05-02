@@ -76,7 +76,7 @@ BOOL CInputDialog::PerseParameter()
 	m_iTimeOutMilliSec = _ttoi(m_saParam.GetAt(1));
 	for(int i=0; i<m_iKeyNum; i++)
 	{
-		TCHAR tch;
+		wchar_t tch;
 		BOOL bUnicode;
 		m_sLabel[i].Format(_T("%s"), m_saParam.GetAt(2+i*2));
 		GetKeyCode(m_saParam.GetAt(2+i*2+1),&bUnicode, &tch, &(m_byKey[i]));
