@@ -194,3 +194,4 @@ const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
 DWORD GetVKeyCode(const CString sIn);
 
 	BOOL CStringArrayTrim(CStringArray* saData);
+BOOL GetPrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bDefault, BOOL* bValue, CString sFilePath);
