@@ -31,14 +31,14 @@ void CSelectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_6, (m_combo[5]));
 	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_7, (m_combo[6]));
 	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_8, (m_combo[7]));
-	
+
 	if(m_bReset==FALSE)
 	{
-	for(int iSelect=0; iSelect<16; iSelect++)
-	{
-		m_combo[iSelect].ResetContent();
-	}
-	m_bReset=TRUE;
+		for(int iSelect=0; iSelect<8; iSelect++)
+		{
+			m_combo[iSelect].ResetContent();
+		}
+		m_bReset=TRUE;
 	}
 	CDialogEx::DoDataExchange(pDX);
 }
@@ -190,8 +190,8 @@ void CSelectDlg::OnBnClickedOk()
 		UpdateData(TRUE);
 		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 		{
-			TCHAR tchKey[16];
-			TCHAR tchFile[MAX_PATH];
+			wchar_t tchKey[16];
+			wchar_t tchFile[MAX_PATH];
 
 			m_combo[iSelect].GetLBText(m_combo[iSelect].GetCurSel(),tchKey);
 			((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelect))->GetWindowText(tchFile,MAX_PATH-1);

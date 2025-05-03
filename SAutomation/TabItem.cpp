@@ -385,7 +385,7 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 {
 	UpdateData(TRUE);
 
-	TCHAR tch[8];
+	wchar_t tch[8];
 	if(m_combo[iScene].GetCurSel()<0)
 	{
 		*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);

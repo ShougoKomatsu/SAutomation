@@ -15,7 +15,7 @@
 HANDLE g_hThread[MAX_THREAD];
 
 int g_iSceneData[MAX_THREAD];
-extern long g_lLockCommandDisplay=0;
+long g_lLockCommandDisplay=0;
 
 CString g_sCommand[MAX_THREAD];
 CString g_sFilePath[MAX_THREAD];

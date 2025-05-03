@@ -1,7 +1,10 @@
 #pragma once
 
+#include "stdafx.h"
+
 #define SAFE_DELETE(v) if(v != NULL){delete [] v; v=NULL;}
 
+#include "thread.h"
 
 class UTFReaderWriter
 {
@@ -20,7 +23,9 @@ private:
 
 };
 
-	BOOL ReadUTFFile(CString sFilePath, CStringArray* saData);
+BOOL ReadUTFFile(CString sFilePath, CStringArray* saData);
+extern UTFReaderWriter g_utfW[MAX_THREAD];
+extern CString g_sLogFilePath[MAX_THREAD];
 
 
 enum ReturnValue
@@ -107,12 +112,9 @@ void SetComboItemCtrl(CComboBox* combo, OperationInfo* op);
 void SetComboItemShift(CComboBox* combo,OperationInfo* op);
 
 
-#include "thread.h"
-#include "stdafx.h"
 #include "InputDialog.h"
 #include "MouseAutomation.h"
 
-extern UTFReaderWriter g_utfW[MAX_THREAD];
 
 #define MAX_SELECTION (8)
 class AutomationInfo
@@ -166,7 +168,6 @@ extern double g_dSpeedMult;
 
 extern int g_iWatching;
 
-extern CString g_sLogFilePath[MAX_THREAD];
 
 extern int g_iClickDulation;
 extern CString g_sDir;
@@ -193,4 +194,6 @@ const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg);
 
 DWORD GetVKeyCode(const CString sIn);
 
-	BOOL CStringArrayTrim(CStringArray* saData);
+BOOL CStringArrayTrim(CStringArray* saData);
+BOOL GetPrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bDefault, BOOL* bValue, CString sFilePath);
+BOOL WritePrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bValue, CString sFilePath);

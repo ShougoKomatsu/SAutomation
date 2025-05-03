@@ -160,7 +160,7 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 	{
 		if (dwAllProcessIds[i] == dwIgnoreProcessId){continue;}
 
-		TCHAR szProcessName[MAX_PATH] = _T("<unknown>");
+		wchar_t szProcessName[MAX_PATH] = _T("<unknown>");
 
 		HANDLE hProcess = NULL;
 		hProcess=OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwAllProcessIds[i]);
@@ -175,7 +175,7 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 			continue;
 		}
 
-		GetModuleBaseName(hProcess, hMod, szProcessName,sizeof(szProcessName) / sizeof(TCHAR));
+		GetModuleBaseName(hProcess, hMod, szProcessName,sizeof(szProcessName) / sizeof(wchar_t));
 
 		if (sTargetExeName.CompareNoCase(szProcessName)==0)
 		{
@@ -192,7 +192,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	
 	DWORD dwCurrentProcessId = GetCurrentProcessId();
 	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwCurrentProcessId);
-	TCHAR szModuleName[MAX_PATH];
+	wchar_t szModuleName[MAX_PATH];
 	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
 	//	AfxMessageBox(szModuleName);
 
@@ -226,8 +226,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 	SetTimer(TIMER_WAKE_UP, 100, NULL);
 	SetTimer(TIMER_REHOOK, 10000, NULL);
 	
-	TCHAR szData[MAX_PATH];
-	GetCurrentDirectory(sizeof(szData)/sizeof(TCHAR),szData);
+	wchar_t szData[MAX_PATH];
+	GetCurrentDirectory(sizeof(szData)/sizeof(wchar_t),szData);
 
 	g_Automation.m_sDir.Format(_T("%s"),szData);
 	g_sDir.Format(_T("%s"),szData);
