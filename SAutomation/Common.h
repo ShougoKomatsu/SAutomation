@@ -70,6 +70,10 @@ enum ErrTreatValue
 	ERROR_TREAT_GOTO=(2)
 };
 
+#define OPERATION_START_MODE_HOTKEY (0)
+#define OPERATION_START_MODE_STARTUP (1)
+#define OPERATION_START_MODE_PERIODICAL (2)
+
 struct OperationInfo
 {	
 	CString sHotkey;
@@ -77,6 +81,10 @@ struct OperationInfo
 	BOOL bUseShift;
 	BOOL bUseAlt;
 	BOOL bUseWin;
+	int m_iOperationMode;
+	BOOL m_bEnableHalt;
+
+
 	DWORD dwHotKey;
 	BOOL m_bRunning;
 	CString sFileName;
@@ -91,6 +99,8 @@ struct OperationInfo
 		bUseWin = opeInfoIn->bUseWin;
 		dwHotKey = opeInfoIn->dwHotKey;
 		m_bRunning = opeInfoIn->m_bRunning;
+		m_iOperationMode=opeInfoIn->m_iOperationMode;
+		m_bEnableHalt=opeInfoIn->m_bEnableHalt;
 	}
 
 	BOOL IsSameAs(OperationInfo* opeInfoIn)
@@ -103,6 +113,8 @@ struct OperationInfo
 		if(bUseWin != opeInfoIn->bUseWin){return FALSE;}
 		if(dwHotKey != opeInfoIn->dwHotKey){return FALSE;}
 		if(m_bRunning != opeInfoIn->m_bRunning){return FALSE;}
+		if(m_iOperationMode != opeInfoIn->m_iOperationMode){return FALSE;}
+		if(m_bEnableHalt != opeInfoIn->m_bEnableHalt){return FALSE;}
 		return TRUE;
 	}
 };

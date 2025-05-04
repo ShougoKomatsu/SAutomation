@@ -9,8 +9,7 @@
 #define TREAT_TO_EXIT_THREAD if(g_iLogLevel[iScene]>=1){g_utfW[iScene].CloseUTFFile();}g_bHalt = FALSE;\
 	ChangeMouseOrigin(0, 0);\
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);\
-	TerminateThread(hGetKey, 0);\
-	TerminateThread(hGetStepKey, 0);\
+//	TerminateThread(hGetKey, 0);TerminateThread(hGetStepKey, 0);
 
 HANDLE g_hThread[MAX_THREAD];
 
@@ -75,15 +74,15 @@ DWORD WINAPI GetStepKeyThread(LPVOID arg)
 
 DWORD WINAPI CommandThread(LPVOID arg)
 {
-	HANDLE hGetKey;
-	HANDLE hGetStepKey;
+//	HANDLE hGetKey;
+//	HANDLE hGetStepKey;
 	DWORD dwThreadID;
 	int* iSceneData;
 
 	ChangeMouseOrigin(0, 0);
 
-	hGetKey = CreateThread(NULL, 0, GetKeyThread, NULL, 0, &dwThreadID);
-	hGetStepKey = CreateThread(NULL, 0, GetStepKeyThread, NULL, 0, &dwThreadID);
+//	hGetKey = CreateThread(NULL, 0, GetKeyThread, NULL, 0, &dwThreadID);
+//	hGetStepKey = CreateThread(NULL, 0, GetStepKeyThread, NULL, 0, &dwThreadID);
 	CStringArray saCommands;
 	CString sErrorGotoLable;
 
@@ -102,8 +101,8 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	{
 		ChangeMouseOrigin(0, 0);
 		PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-		TerminateThread(hGetKey, 0);
-		TerminateThread(hGetStepKey, 0);
+//		TerminateThread(hGetKey, 0);
+//		TerminateThread(hGetStepKey, 0);
 		return 0;
 	}
 
@@ -112,8 +111,8 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	{
 		ChangeMouseOrigin(0, 0);
 		PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);
-		TerminateThread(hGetKey, 0);
-		TerminateThread(hGetStepKey, 0);
+//		TerminateThread(hGetKey, 0);
+//		TerminateThread(hGetStepKey, 0);
 		return 0;
 	}
 
