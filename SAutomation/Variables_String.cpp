@@ -448,5 +448,5 @@ int Str2Int(int iScene, CString sArg)
 {
 	CString sSrc;
 	sSrc.Format(_T("%s"),GetStrValue(iScene, sArg));
-	return _ttoi(sSrc);
+	return _wtoi(sSrc);
 }

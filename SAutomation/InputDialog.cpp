@@ -73,7 +73,7 @@ BOOL CInputDialog::PerseParameter()
 	m_byKey = new BYTE[m_iKeyNum];
 	m_sLabel = new CString[m_iKeyNum];
 	m_sMessage.Format(_T("%s"), m_saParam.GetAt(0));
-	m_iTimeOutMilliSec = _ttoi(m_saParam.GetAt(1));
+	m_iTimeOutMilliSec = _wtoi(m_saParam.GetAt(1));
 	for(int i=0; i<m_iKeyNum; i++)
 	{
 		wchar_t tch;

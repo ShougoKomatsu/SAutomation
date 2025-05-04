@@ -72,7 +72,7 @@ void AutomationInfo::ReadSettings()
 	sFilePath.Format(_T("%s\\SAutomation.ini"), m_sDir); 
 
 	GetPrivateProfileString(_T("Mouse"),_T("ClickDulation"),_T("50"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-	g_iClickDulation = _ttoi(szData);
+	g_iClickDulation = _wtoi(szData);
 
 	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
@@ -91,7 +91,7 @@ void AutomationInfo::ReadSettings()
 		
 		GetPrivateProfileStringAsBool(sSection, _T("DisableHalt"), FALSE, &(m_OpeInfo[iScene].m_bDisableHalt), sFilePath);
 		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].m_iOperationMode=_ttoi(szData);
+		m_OpeInfo[iScene].m_iOperationMode=_wtoi(szData);
 	}
 
 
@@ -113,7 +113,7 @@ void AutomationInfo::ReadSettings()
 		
 		GetPrivateProfileStringAsBool(sSection, _T("DisableHalt"), FALSE, &(m_OpeInfo[iScene].m_bDisableHalt), sFilePath);
 		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].m_iOperationMode=_ttoi(szData);
+		m_OpeInfo[iScene].m_iOperationMode=_wtoi(szData);
 
 		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 		{
@@ -146,7 +146,7 @@ void AutomationInfo::ReadSettings()
 
 
 	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-	m_iLogLevel=_ttoi(szData);
+	m_iLogLevel=_wtoi(szData);
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
 
