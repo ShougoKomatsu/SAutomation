@@ -71,7 +71,7 @@ enum ErrTreatValue
 };
 
 #define OPERATION_START_MODE_HOTKEY (0)
-#define OPERATION_START_MODE_STARTUP (1)
+#define OPERATION_START_MODE_AUTOSTART (1)
 #define OPERATION_START_MODE_PERIODICAL (2)
 
 struct OperationInfo

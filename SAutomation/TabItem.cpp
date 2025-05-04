@@ -194,6 +194,22 @@ BEGIN_MESSAGE_MAP(CTabItem, CDialogEx)
 	ON_BN_CLICKED(IDC_TAB_BUTTON_OPERATE_14, &CTabItem::OnBnClickedButtonOperate14)
 	ON_BN_CLICKED(IDC_TAB_BUTTON_OPERATE_15, &CTabItem::OnBnClickedButtonOperate15)
 	*/
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_00, &CTabItem::OnBnClickedTabCheckDisableHalt00)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_01, &CTabItem::OnBnClickedTabCheckDisableHalt01)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_02, &CTabItem::OnBnClickedTabCheckDisableHalt02)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_03, &CTabItem::OnBnClickedTabCheckDisableHalt03)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_04, &CTabItem::OnBnClickedTabCheckDisableHalt04)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_05, &CTabItem::OnBnClickedTabCheckDisableHalt05)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_06, &CTabItem::OnBnClickedTabCheckDisableHalt06)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_07, &CTabItem::OnBnClickedTabCheckDisableHalt07)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_08, &CTabItem::OnBnClickedTabCheckDisableHalt08)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_09, &CTabItem::OnBnClickedTabCheckDisableHalt09)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_10, &CTabItem::OnBnClickedTabCheckDisableHalt10)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_11, &CTabItem::OnBnClickedTabCheckDisableHalt11)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_12, &CTabItem::OnBnClickedTabCheckDisableHalt12)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_13, &CTabItem::OnBnClickedTabCheckDisableHalt13)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_14, &CTabItem::OnBnClickedTabCheckDisableHalt14)
+	ON_BN_CLICKED(IDC_TAB_CHECK_DISABLE_HALT_15, &CTabItem::OnBnClickedTabCheckDisableHalt15)
 END_MESSAGE_MAP()
 
 // CTabItem メッセージ ハンドラー
@@ -287,6 +303,23 @@ void CTabItem::OnSelchangeComboShift13(){UpdateHotkey(m_iSlot, 13);}
 void CTabItem::OnSelchangeComboShift14(){UpdateHotkey(m_iSlot, 14);}
 void CTabItem::OnSelchangeComboShift15(){UpdateHotkey(m_iSlot, 15);}
 
+void CTabItem::OnBnClickedTabCheckDisableHalt00(){UpdateHotkey(m_iSlot, 0);}
+void CTabItem::OnBnClickedTabCheckDisableHalt01(){UpdateHotkey(m_iSlot, 1);}
+void CTabItem::OnBnClickedTabCheckDisableHalt02(){UpdateHotkey(m_iSlot, 2);}
+void CTabItem::OnBnClickedTabCheckDisableHalt03(){UpdateHotkey(m_iSlot, 3);}
+void CTabItem::OnBnClickedTabCheckDisableHalt04(){UpdateHotkey(m_iSlot, 4);}
+void CTabItem::OnBnClickedTabCheckDisableHalt05(){UpdateHotkey(m_iSlot, 5);}
+void CTabItem::OnBnClickedTabCheckDisableHalt06(){UpdateHotkey(m_iSlot, 6);}
+void CTabItem::OnBnClickedTabCheckDisableHalt07(){UpdateHotkey(m_iSlot, 7);}
+void CTabItem::OnBnClickedTabCheckDisableHalt08(){UpdateHotkey(m_iSlot, 8);}
+void CTabItem::OnBnClickedTabCheckDisableHalt09(){UpdateHotkey(m_iSlot, 9);}
+void CTabItem::OnBnClickedTabCheckDisableHalt10(){UpdateHotkey(m_iSlot, 10);}
+void CTabItem::OnBnClickedTabCheckDisableHalt11(){UpdateHotkey(m_iSlot, 11);}
+void CTabItem::OnBnClickedTabCheckDisableHalt12(){UpdateHotkey(m_iSlot, 12);}
+void CTabItem::OnBnClickedTabCheckDisableHalt13(){UpdateHotkey(m_iSlot, 13);}
+void CTabItem::OnBnClickedTabCheckDisableHalt14(){UpdateHotkey(m_iSlot, 14);}
+void CTabItem::OnBnClickedTabCheckDisableHalt15(){UpdateHotkey(m_iSlot, 15);}
+
 BOOL CTabItem::PreTranslateMessage(MSG* pMsg)
 {
 	if(pMsg->message == WM_KEYDOWN)
@@ -306,6 +339,7 @@ void CTabItem::RefleshDialog(int iSlot)
 		for(int iScene=0; iScene<16; iScene++)
 		{
 			((CButton*)GetDlgItem(IDC_TAB_EDIT_FILE_00+iScene))->ShowWindow(SW_SHOW);
+			((CButton*)GetDlgItem(IDC_TAB_CHECK_DISABLE_HALT_00+iScene))->SetCheck(m_autoInfo->m_OpeInfo[iSlot*16 + iScene].m_bDisableHalt);
 		}
 
 		for(int iScene=0; iScene<16; iScene++)
@@ -326,6 +360,7 @@ void CTabItem::RefleshDialog(int iSlot)
 		for(int iScene=0; iScene<16; iScene++)
 		{
 			((CButton*)GetDlgItem(IDC_TAB_EDIT_FILE_00+iScene))->ShowWindow(SW_HIDE);
+			((CButton*)GetDlgItem(IDC_TAB_CHECK_DISABLE_HALT_00+iScene))->SetCheck(m_autoInfo->m_OpeInfo[iSlot*16 + iScene].m_bDisableHalt);
 		}
 
 		for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
@@ -455,6 +490,9 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 		if(wcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
 		if(wcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
 	}
+
+	
+	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].m_bDisableHalt = ((CButton*)GetDlgItem(IDC_TAB_CHECK_DISABLE_HALT_00+iScene))->GetCheck();
 	
 	*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
 	SetTitleNotChanged(*pbNotModified);
@@ -472,3 +510,5 @@ void CTabItem::SetTitleNotChanged(BOOL bTF)
 		pParentWnd->SetWindowText(_T("SAutomation"));
 	}
 }
+
+

@@ -127,4 +127,20 @@ public:
 	CComboBox m_comboUseShift[MAX_NORMAL_THREAD];
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedTabCheckDisableHalt00();
+	afx_msg void OnBnClickedTabCheckDisableHalt01();
+	afx_msg void OnBnClickedTabCheckDisableHalt02();
+	afx_msg void OnBnClickedTabCheckDisableHalt03();
+	afx_msg void OnBnClickedTabCheckDisableHalt04();
+	afx_msg void OnBnClickedTabCheckDisableHalt05();
+	afx_msg void OnBnClickedTabCheckDisableHalt06();
+	afx_msg void OnBnClickedTabCheckDisableHalt07();
+	afx_msg void OnBnClickedTabCheckDisableHalt08();
+	afx_msg void OnBnClickedTabCheckDisableHalt09();
+	afx_msg void OnBnClickedTabCheckDisableHalt10();
+	afx_msg void OnBnClickedTabCheckDisableHalt11();
+	afx_msg void OnBnClickedTabCheckDisableHalt12();
+	afx_msg void OnBnClickedTabCheckDisableHalt13();
+	afx_msg void OnBnClickedTabCheckDisableHalt14();
+	afx_msg void OnBnClickedTabCheckDisableHalt15();
 };

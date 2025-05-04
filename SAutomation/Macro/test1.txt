@@ -1,6 +1,7 @@
 ﻿
-MsgBox(aaaa);
+10000
 exit
+MsgBox(aaaa);
 wait ctrl off
 wait shift off
 VarStr1=aaa
