@@ -108,22 +108,22 @@ void CTabItem::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CTabItem, CDialogEx)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_00, &CTabItem::OnBnClickedButton00)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_01, &CTabItem::OnBnClickedButton01)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_02, &CTabItem::OnBnClickedButton02)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_03, &CTabItem::OnBnClickedButton03)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_04, &CTabItem::OnBnClickedButton04)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_05, &CTabItem::OnBnClickedButton05)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_06, &CTabItem::OnBnClickedButton06)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_07, &CTabItem::OnBnClickedButton07)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_08, &CTabItem::OnBnClickedButton08)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_09, &CTabItem::OnBnClickedButton09)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_10, &CTabItem::OnBnClickedButton10)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_11, &CTabItem::OnBnClickedButton11)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_12, &CTabItem::OnBnClickedButton12)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_13, &CTabItem::OnBnClickedButton13)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_14, &CTabItem::OnBnClickedButton14)
-	ON_BN_CLICKED(IDC_TAB_BUTTON_SELECT_FILE_15, &CTabItem::OnBnClickedButton15)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_00, &CTabItem::OnBnClickedButton00)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_01, &CTabItem::OnBnClickedButton01)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_02, &CTabItem::OnBnClickedButton02)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_03, &CTabItem::OnBnClickedButton03)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_04, &CTabItem::OnBnClickedButton04)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_05, &CTabItem::OnBnClickedButton05)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_06, &CTabItem::OnBnClickedButton06)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_07, &CTabItem::OnBnClickedButton07)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_08, &CTabItem::OnBnClickedButton08)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_09, &CTabItem::OnBnClickedButton09)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_10, &CTabItem::OnBnClickedButton10)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_11, &CTabItem::OnBnClickedButton11)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_12, &CTabItem::OnBnClickedButton12)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_13, &CTabItem::OnBnClickedButton13)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_14, &CTabItem::OnBnClickedButton14)
+	ON_BN_CLICKED(IDC_TAB_SELECT_BUTTON_FILE_15, &CTabItem::OnBnClickedButton15)
 	
 	ON_CBN_SELCHANGE(IDC_TAB_COMBO_HOTKEY_KEY_00, &CTabItem::OnSelchangeCombo00)
 	ON_CBN_SELCHANGE(IDC_TAB_COMBO_HOTKEY_KEY_01, &CTabItem::OnSelchangeCombo01)
@@ -352,7 +352,7 @@ void CTabItem::RefleshDialog(int iSlot)
 
 			CString sScene;
 			sScene.Format(_T("%d"),iSlot*16 + iScene);
-			((CButton*)GetDlgItem(IDC_TAB_STATIC_EX0+iScene))->SetWindowText(sScene);
+			((CButton*)GetDlgItem(IDC_TAB_STATIC_EX_00+iScene))->SetWindowText(sScene);
 		}
 	}
 	else
@@ -373,7 +373,7 @@ void CTabItem::RefleshDialog(int iSlot)
 
 			CString sScene;
 			sScene.Format(_T("Ex%d"),iExScene);
-			((CButton*)GetDlgItem(IDC_TAB_STATIC_EX0+iExScene))->SetWindowText(sScene);
+			((CButton*)GetDlgItem(IDC_TAB_STATIC_EX_00+iExScene))->SetWindowText(sScene);
 		}
 	}
 

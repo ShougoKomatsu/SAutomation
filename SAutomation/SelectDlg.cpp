@@ -23,14 +23,14 @@ CSelectDlg::~CSelectDlg()
 
 void CSelectDlg::DoDataExchange(CDataExchange* pDX)
 {
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_1, (m_combo[0]));
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_2, (m_combo[1]));
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_3, (m_combo[2]));
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_4, (m_combo[3]));
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_5, (m_combo[4]));
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_6, (m_combo[5]));
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_7, (m_combo[6]));
-	DDX_Control(pDX, IDC_COMBO_SELECT_KEY_8, (m_combo[7]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_1, (m_combo[0]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_2, (m_combo[1]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_3, (m_combo[2]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_4, (m_combo[3]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_5, (m_combo[4]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_6, (m_combo[5]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_7, (m_combo[6]));
+	DDX_Control(pDX, IDC_SELECT_COMBO_KEY_8, (m_combo[7]));
 
 	if(m_bReset==FALSE)
 	{
@@ -45,31 +45,31 @@ void CSelectDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CSelectDlg, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_1, &CSelectDlg::OnBnClickedButtonSelectKey1)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_2, &CSelectDlg::OnBnClickedButtonSelectKey2)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_3, &CSelectDlg::OnBnClickedButtonSelectKey3)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_4, &CSelectDlg::OnBnClickedButtonSelectKey4)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_5, &CSelectDlg::OnBnClickedButtonSelectKey5)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_6, &CSelectDlg::OnBnClickedButtonSelectKey6)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_7, &CSelectDlg::OnBnClickedButtonSelectKey7)
-	ON_BN_CLICKED(IDC_BUTTON_SELECT_KEY_8, &CSelectDlg::OnBnClickedButtonSelectKey8)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_1, &CSelectDlg::OnCbnSelchangeSelectCombo1)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_2, &CSelectDlg::OnCbnSelchangeSelectCombo2)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_3, &CSelectDlg::OnCbnSelchangeSelectCombo3)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_4, &CSelectDlg::OnCbnSelchangeSelectCombo4)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_5, &CSelectDlg::OnCbnSelchangeSelectCombo5)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_6, &CSelectDlg::OnCbnSelchangeSelectCombo6)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_7, &CSelectDlg::OnCbnSelchangeSelectCombo7)
-	ON_CBN_SELCHANGE(IDC_COMBO_SELECT_KEY_8, &CSelectDlg::OnCbnSelchangeSelectCombo8)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_1, &CSelectDlg::OnBnClickedButtonSelectKey1)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_2, &CSelectDlg::OnBnClickedButtonSelectKey2)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_3, &CSelectDlg::OnBnClickedButtonSelectKey3)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_4, &CSelectDlg::OnBnClickedButtonSelectKey4)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_5, &CSelectDlg::OnBnClickedButtonSelectKey5)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_6, &CSelectDlg::OnBnClickedButtonSelectKey6)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_7, &CSelectDlg::OnBnClickedButtonSelectKey7)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_KEY_8, &CSelectDlg::OnBnClickedButtonSelectKey8)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_1, &CSelectDlg::OnCbnSelchangeSelectCombo1)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_2, &CSelectDlg::OnCbnSelchangeSelectCombo2)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_3, &CSelectDlg::OnCbnSelchangeSelectCombo3)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_4, &CSelectDlg::OnCbnSelchangeSelectCombo4)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_5, &CSelectDlg::OnCbnSelchangeSelectCombo5)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_6, &CSelectDlg::OnCbnSelchangeSelectCombo6)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_7, &CSelectDlg::OnCbnSelchangeSelectCombo7)
+	ON_CBN_SELCHANGE(IDC_SELECT_COMBO_KEY_8, &CSelectDlg::OnCbnSelchangeSelectCombo8)
 	ON_BN_CLICKED(IDOK, &CSelectDlg::OnBnClickedOk)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE1, &CSelectDlg::OnBnClickedButtonSelectionFile1)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE2, &CSelectDlg::OnBnClickedButtonSelectionFile2)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE3, &CSelectDlg::OnBnClickedButtonSelectionFile3)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE4, &CSelectDlg::OnBnClickedButtonSelectionFile4)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE5, &CSelectDlg::OnBnClickedButtonSelectionFile5)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE6, &CSelectDlg::OnBnClickedButtonSelectionFile6)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE7, &CSelectDlg::OnBnClickedButtonSelectionFile7)
-	ON_BN_CLICKED(IDC_BUTTON_SELECTION_FILE8, &CSelectDlg::OnBnClickedButtonSelectionFile8)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_1, &CSelectDlg::OnBnClickedButtonSelectionFile1)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_2, &CSelectDlg::OnBnClickedButtonSelectionFile2)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_3, &CSelectDlg::OnBnClickedButtonSelectionFile3)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_4, &CSelectDlg::OnBnClickedButtonSelectionFile4)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_5, &CSelectDlg::OnBnClickedButtonSelectionFile5)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_6, &CSelectDlg::OnBnClickedButtonSelectionFile6)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_7, &CSelectDlg::OnBnClickedButtonSelectionFile7)
+	ON_BN_CLICKED(IDC_SELECT_BUTTON_SELECTFILE_8, &CSelectDlg::OnBnClickedButtonSelectionFile8)
 END_MESSAGE_MAP()
 
 
@@ -93,19 +93,19 @@ BOOL CSelectDlg::OnInitDialog()
 	{
 		if(m_iModeOperate==1)
 		{
-			((CButton*)GetDlgItem(IDC_BUTTON_SELECT_KEY_1+iSelection))->ShowWindow(SW_SHOW);
-			((CButton*)GetDlgItem(IDC_COMBO_SELECT_KEY_1+iSelection))->ShowWindow(SW_HIDE);
+			((CButton*)GetDlgItem(IDC_SELECT_BUTTON_KEY_1+iSelection))->ShowWindow(SW_SHOW);
+			((CButton*)GetDlgItem(IDC_SELECT_COMBO_KEY_1+iSelection))->ShowWindow(SW_HIDE);
 			((CButton*)GetDlgItem(IDOK))->ShowWindow(SW_HIDE);
 			for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 			{
-				((CButton*)GetDlgItem(IDC_BUTTON_SELECTION_FILE1 +iSelection))->ShowWindow(SW_HIDE);
+				((CButton*)GetDlgItem(IDC_SELECT_BUTTON_SELECTFILE_1 +iSelection))->ShowWindow(SW_HIDE);
 			}
 
 		}
 		else
 		{
-			((CButton*)GetDlgItem(IDC_BUTTON_SELECT_KEY_1+iSelection))->ShowWindow(SW_HIDE);
-			((CButton*)GetDlgItem(IDC_COMBO_SELECT_KEY_1+iSelection))->ShowWindow(SW_SHOW);
+			((CButton*)GetDlgItem(IDC_SELECT_BUTTON_KEY_1+iSelection))->ShowWindow(SW_HIDE);
+			((CButton*)GetDlgItem(IDC_SELECT_COMBO_KEY_1+iSelection))->ShowWindow(SW_SHOW);
 
 			for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 			{
@@ -114,14 +114,14 @@ BOOL CSelectDlg::OnInitDialog()
 
 		}
 
-		((CButton*)GetDlgItem(IDC_BUTTON_SELECT_KEY_1+iSelection))->SetWindowText(_T(""));
-		((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelection))->SetWindowText(_T(""));
+		((CButton*)GetDlgItem(IDC_SELECT_BUTTON_KEY_1+iSelection))->SetWindowText(_T(""));
+		((CButton*)GetDlgItem(IDC_SELECT_STATIC_FILENAME_1+iSelection))->SetWindowText(_T(""));
 
 		if(m_sSelectKeys[iSelection].GetLength()<=0){continue;}
 		if(m_sSelectFiles[iSelection].GetLength()<=0){continue;}
 		
-		((CButton*)GetDlgItem(IDC_BUTTON_SELECT_KEY_1+iSelection))->SetWindowText(m_sSelectKeys[iSelection]);
-		((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelection))->SetWindowText(m_sSelectFiles[iSelection]);
+		((CButton*)GetDlgItem(IDC_SELECT_BUTTON_KEY_1+iSelection))->SetWindowText(m_sSelectKeys[iSelection]);
+		((CButton*)GetDlgItem(IDC_SELECT_STATIC_FILENAME_1+iSelection))->SetWindowText(m_sSelectFiles[iSelection]);
 		CString sTemp;
 		sTemp.Format(_T("%s"),m_sSelectKeys[iSelection]);
 		sTemp.MakeLower();
@@ -194,7 +194,7 @@ void CSelectDlg::OnBnClickedOk()
 			wchar_t tchFile[MAX_PATH];
 
 			m_combo[iSelect].GetLBText(m_combo[iSelect].GetCurSel(),tchKey);
-			((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelect))->GetWindowText(tchFile,MAX_PATH-1);
+			((CButton*)GetDlgItem(IDC_SELECT_STATIC_FILENAME_1+iSelect))->GetWindowText(tchFile,MAX_PATH-1);
 
 			m_sSelectKeys[iSelect].Format(_T("%s"), tchKey);
 			m_sSelectFiles[iSelect].Format(_T("%s"), tchFile);
@@ -213,7 +213,7 @@ void CSelectDlg::FileSelect(int iSelect)
 	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
 	if(cf.DoModal()!=IDOK){ return;}
 
-		((CButton*)GetDlgItem(IDC_STATIC_SELECT_FILENAME_1+iSelect))->SetWindowText(cf.GetFileName());
+		((CButton*)GetDlgItem(IDC_SELECT_STATIC_FILENAME_1+iSelect))->SetWindowText(cf.GetFileName());
 
 }
 
