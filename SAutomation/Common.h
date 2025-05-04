@@ -82,13 +82,13 @@ struct OperationInfo
 	BOOL bUseAlt;
 	BOOL bUseWin;
 	int m_iOperationMode;
-	BOOL m_bEnableHalt;
+	BOOL m_bDisableHalt;
 
 
 	DWORD dwHotKey;
 	BOOL m_bRunning;
 	CString sFileName;
-	OperationInfo(){m_bRunning=FALSE;}
+	OperationInfo(){m_bDisableHalt=TRUE; m_bRunning=FALSE;}
 	void Copy(OperationInfo* opeInfoIn)
 	{
 		sHotkey.Format(_T("%s"),opeInfoIn->sHotkey);
@@ -100,7 +100,7 @@ struct OperationInfo
 		dwHotKey = opeInfoIn->dwHotKey;
 		m_bRunning = opeInfoIn->m_bRunning;
 		m_iOperationMode=opeInfoIn->m_iOperationMode;
-		m_bEnableHalt=opeInfoIn->m_bEnableHalt;
+		m_bDisableHalt=opeInfoIn->m_bDisableHalt;
 	}
 
 	BOOL IsSameAs(OperationInfo* opeInfoIn)
@@ -114,7 +114,7 @@ struct OperationInfo
 		if(dwHotKey != opeInfoIn->dwHotKey){return FALSE;}
 		if(m_bRunning != opeInfoIn->m_bRunning){return FALSE;}
 		if(m_iOperationMode != opeInfoIn->m_iOperationMode){return FALSE;}
-		if(m_bEnableHalt != opeInfoIn->m_bEnableHalt){return FALSE;}
+		if(m_bDisableHalt != opeInfoIn->m_bDisableHalt){return FALSE;}
 		return TRUE;
 	}
 };

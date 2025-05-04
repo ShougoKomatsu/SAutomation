@@ -86,12 +86,14 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	CStringArray saCommands;
 	CString sErrorGotoLable;
 
-	int iData[2];
+	int iData[3];
 	iData[0] = ((int*)arg)[0];
 	iData[1] = ((int*)arg)[1];
+	iData[2] = ((int*)arg)[2];
 	((int*)arg)[0] = 0;  
 	((int*)arg)[1] = 0;  
-
+	((int*)arg)[2] = 0;  
+	BOOL bDisableHalt=(BOOL)iData[2];
 	int iScene;
 	iScene = ((iData[0]-1)>>PARAM_SCENE_SHIFT)&PARAM_SCENE_MASK;
 	BOOL bRet;
@@ -144,6 +146,16 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	}
 	ResetProgramCounter(iScene);
 	CString sWrite;
+	BOOL* bHalt;
+
+	if(bDisableHalt==FALSE)
+	{
+		bHalt=&g_bHalt;
+	}
+	else
+	{
+		bHalt=NULL;
+	}
 
 	iListLength =(int) saCommands.GetCount();
 	for(int i=0; i<iListLength; i++)
@@ -151,7 +163,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		sWrite.Format(_T("%d "), i+1);
 		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
 		bExit = FALSE;
-		if(g_bHalt == TRUE){TREAT_TO_EXIT_THREAD; return 0;}
+		if(bHalt!=NULL){if(*bHalt == TRUE){TREAT_TO_EXIT_THREAD; return 0;}}
 
 		sWrite.Format(_T("%s "), saCommands.GetAt(i));
 		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
@@ -164,7 +176,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 			InterlockedExchange(&g_lLockCommandDisplay, 0);
 		}
 
-		iRet = OperateCommand(iSceneData, &g_bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
+		iRet = OperateCommand(iSceneData, bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
 		sWrite.Format(_T("%d\n"), iRet);
 
 		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}

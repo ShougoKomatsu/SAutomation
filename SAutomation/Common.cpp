@@ -88,6 +88,10 @@ void AutomationInfo::ReadSettings()
 		GetPrivateProfileStringAsBool(sSection, _T("UseShift"), TRUE, &(m_OpeInfo[iScene].bUseShift), sFilePath);
 		GetPrivateProfileStringAsBool(sSection, _T("UseAlt"), FALSE, &(m_OpeInfo[iScene].bUseAlt), sFilePath);
 		GetPrivateProfileStringAsBool(sSection, _T("UseWin"), FALSE, &(m_OpeInfo[iScene].bUseWin), sFilePath);
+		
+		GetPrivateProfileStringAsBool(sSection, _T("DisableHalt"), FALSE, &(m_OpeInfo[iScene].m_bDisableHalt), sFilePath);
+		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+		m_OpeInfo[iScene].m_iOperationMode=_ttoi(szData);
 	}
 
 
@@ -106,7 +110,10 @@ void AutomationInfo::ReadSettings()
 		GetPrivateProfileStringAsBool(sSection, _T("UseShift"), TRUE, &(m_OpeInfo[iScene].bUseShift), sFilePath);
 		GetPrivateProfileStringAsBool(sSection, _T("UseAlt"), FALSE, &(m_OpeInfo[iScene].bUseAlt), sFilePath);
 		GetPrivateProfileStringAsBool(sSection, _T("UseWin"), FALSE, &(m_OpeInfo[iScene].bUseWin), sFilePath);
-
+		
+		GetPrivateProfileStringAsBool(sSection, _T("DisableHalt"), FALSE, &(m_OpeInfo[iScene].m_bDisableHalt), sFilePath);
+		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+		m_OpeInfo[iScene].m_iOperationMode=_ttoi(szData);
 
 		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 		{
@@ -185,6 +192,12 @@ void AutomationInfo::SaveSettings()
 		WritePrivateProfileStringAsBool(sSection, _T("UseShift"), m_OpeInfo[iScene].bUseShift, sFilePath);
 		WritePrivateProfileStringAsBool(sSection, _T("UseAlt"), m_OpeInfo[iScene].bUseAlt, sFilePath);
 		WritePrivateProfileStringAsBool(sSection, _T("UseWin"), m_OpeInfo[iScene].bUseWin, sFilePath);
+
+		WritePrivateProfileStringAsBool(sSection, _T("DisableHalt"), m_OpeInfo[iScene].m_bDisableHalt, sFilePath);
+
+		CString sData;
+		sData.Format(_T("%d"),m_OpeInfo[iScene].m_iOperationMode);
+		WritePrivateProfileString(sSection,_T("OperationMode"),sData,sFilePath);
 	}
 
 
@@ -202,6 +215,12 @@ void AutomationInfo::SaveSettings()
 		WritePrivateProfileStringAsBool(sSection, _T("UseAlt"), m_OpeInfo[iScene].bUseAlt, sFilePath);
 		WritePrivateProfileStringAsBool(sSection, _T("UseWin"), m_OpeInfo[iScene].bUseWin, sFilePath);
 		
+		WritePrivateProfileStringAsBool(sSection, _T("DisableHalt"), m_OpeInfo[iScene].m_bDisableHalt, sFilePath);
+
+		CString sData;
+		sData.Format(_T("%d"),m_OpeInfo[iScene].m_iOperationMode);
+		WritePrivateProfileString(sSection,_T("OperationMode"),sData,sFilePath);
+
 		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 		{
 			CString sKeyKey;
@@ -292,7 +311,8 @@ void AutomationInfo::Operate(int iScene)
 		if(dwResult != STATUS_WAIT_0){return;}
 	}
 	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
-	int iParam[2];
+	int iParam[3];
+	iParam[2] = g_Automation.m_OpeInfo[iScene].m_bDisableHalt;
 	iParam[1] = m_iLogLevel<<PARAM_LOGLEVEL_SHIFT;
 	iParam[0] = iScene+1;
 	g_Automation.m_OpeInfo[iScene].m_bRunning=TRUE;
