@@ -168,15 +168,38 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		sWrite.Format(_T("%s "), saCommands.GetAt(i));
 		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
 		CString sReturnParam;
-		if(g_lLockCommandDisplay==0)
+		try
 		{
-			InterlockedExchange(&g_lLockCommandDisplay, 1);
-			g_sCommand[iScene].Format(_T("%s"),  saCommands.GetAt(i));
-			PostMessage(g_hWnd,WM_DISP_COMMAND,iScene,i);
-			InterlockedExchange(&g_lLockCommandDisplay, 0);
+			if(g_lLockCommandDisplay==0)
+			{
+				InterlockedExchange(&g_lLockCommandDisplay, 1);
+				g_sCommand[iScene].Format(_T("%s"),  saCommands.GetAt(i));
+				PostMessage(g_hWnd,WM_DISP_COMMAND,iScene,i);
+				InterlockedExchange(&g_lLockCommandDisplay, 0);
+			}
 		}
-
-		iRet = OperateCommand(iSceneData, bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
+		catch(CException* ce)
+		{
+			AfxMessageBox(saCommands.GetAt(i));
+			wchar_t wcMessage[64];
+			ce->GetErrorMessage(wcMessage,64);
+			AfxMessageBox(wcMessage);
+			TREAT_TO_EXIT_THREAD; 
+			return 0;
+		}
+		try
+		{
+			iRet = OperateCommand(iSceneData, bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
+		}
+		catch(CException* ce)
+		{
+			AfxMessageBox(saCommands.GetAt(i));
+			wchar_t wcMessage[64];
+			ce->GetErrorMessage(wcMessage,64);
+			AfxMessageBox(wcMessage);
+			TREAT_TO_EXIT_THREAD; 
+			return 0;
+		}
 		sWrite.Format(_T("%d\n"), iRet);
 
 		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}

@@ -136,13 +136,16 @@ LRESULT CSAutomationDlg::OnDispCommand(WPARAM wParam, LPARAM lParam)
 {
 	CString sCommand;
 	CString sStep;
-	InterlockedExchange(&g_lLockCommandDisplay, 1);
-	sStep.Format(_T("%d"), lParam);
-	sCommand.Format(_T("%s"), g_sCommand[wParam]);
-	InterlockedExchange(&g_lLockCommandDisplay, 0);
-	
-	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(sCommand);
-	((CButton*)GetDlgItem(IDC_COMPACT_EDIT_STEP))->SetWindowText(sStep);
+	if(g_lLockCommandDisplay==0)
+	{
+		InterlockedExchange(&g_lLockCommandDisplay, 1);
+		sStep.Format(_T("%d"), lParam);
+		sCommand.Format(_T("%s"), g_sCommand[wParam]);
+		InterlockedExchange(&g_lLockCommandDisplay, 0);
+
+		((CButton*)GetDlgItem(IDC_COMPACT_EDIT_COMMAND))->SetWindowText(sCommand);
+		((CButton*)GetDlgItem(IDC_COMPACT_EDIT_STEP))->SetWindowText(sStep);
+	}
 	return 0;
 }
 
