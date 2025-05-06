@@ -69,8 +69,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	//-------------------------------------------------------
 
-	if(sDataTrim.CompareNoCase(_T("MaxImize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("MinImize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Maximize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("Minimize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
 	//-------------------------------------------------------
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).Compare(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
