@@ -376,6 +376,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	{
 		for(int iScene = 0; iScene< MAX_THREAD; iScene++)
 		{
+			if(g_Automation.m_OpeInfo[iScene].m_bDisableHalt==TRUE){continue;}
 			if(g_hThread[iScene] == NULL){continue;}
 			if(g_iWatching == 0)
 			{
