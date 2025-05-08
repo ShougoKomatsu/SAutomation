@@ -93,7 +93,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 {
 	int iOperandSrc;
 	BOOL bRet = GetOperandIntSrc(sDataLocal, &iOperandSrc);
-	if(bRet != TRUE){return RETURN_FAILED;}
+	if(bRet != TRUE){return 0;}
 
 	CString sArg;
 
@@ -459,6 +459,36 @@ Point* GetPointValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
+ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
+{
+	int iOperandSrc;
+	BOOL bRet;
+	bRet = GetOperandRectSrc(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	switch(iOperandSrc)
+	{
+	case VARIABLE_RECT:
+		{
+			CRect* pRectSrc=(GetRectValuePointer(iScene, sDataLocal));
+			if(pRectSrc == NULL){return RETURN_FAILED;}
+
+			pRect->SetRect( pRectSrc->left,pRectSrc->top,pRectSrc->right,pRectSrc->bottom);
+			return RETURN_NORMAL;
+		}
+	case VARIABLE_RECT_FOREGROUND_WINDOW:
+		{
+			int iLeft;
+			int iTop; 
+			int iWidth;
+			int iHeight;
+			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
+			pRect->SetRect( iLeft, iTop, iLeft+iWidth-1, iTop+iHeight-1);
+			return RETURN_NORMAL;
+		}
+	}
+	return RETURN_FAILED;
+}
 
 ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 {
