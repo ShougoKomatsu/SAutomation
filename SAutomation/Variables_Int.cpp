@@ -30,6 +30,17 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 
 		return FALSE;
 	}
+	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0)
+	{
+		if(sDataTrim.Mid(8,1).Compare(_T(".")) != 0){return FALSE;}
+		if(sDataTrim.Right(5).CompareNoCase(_T("Width"))==0){*iCommandType=VARIABLE_RECT_WIDTH; return TRUE;}
+		if(sDataTrim.Right(6).CompareNoCase(_T("Height"))==0){*iCommandType=VARIABLE_RECT_HEIGHT; return TRUE;}
+		if(sDataTrim.Right(4).CompareNoCase(_T("Left"))==0){*iCommandType=VARIABLE_RECT_LEFT; return TRUE;}
+		if(sDataTrim.Right(3).CompareNoCase(_T("TOP"))==0){*iCommandType=VARIABLE_RECT_TOP; return TRUE;}
+		if(sDataTrim.Right(5).CompareNoCase(_T("Right"))==0){*iCommandType=VARIABLE_RECT_RIGHT; return TRUE;}
+		if(sDataTrim.Right(6).CompareNoCase(_T("BOTTOM"))==0){*iCommandType=VARIABLE_RECT_BOTTOM; return TRUE;}
+
+	}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0)
 	{
 		if(sDataTrim.Mid(8,1).SpanIncluding(_T("01234567")).Compare(sDataTrim.Mid(8,1))!=0){return FALSE;}
@@ -170,6 +181,73 @@ int GetIntValue(int iScene, CString sDataLocal)
 
 			return iSrc;
 		}
+		
+	case VARIABLE_RECT_WIDTH:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Width();}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}
+	case VARIABLE_RECT_HEIGHT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Height();}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_LEFT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->left;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_TOP:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->top;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_RIGHT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->right;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_BOTTOM:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->bottom;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}
 	case VARIABLE_IMG_VALUE:
 		{
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
@@ -283,6 +361,20 @@ int* GetIntValuePointer(int iScene, CString sArg)
 		if(sArg.Right(1).Compare(_T("/"))==0){if(sArg.Left(sArg.GetLength()-1).CompareNoCase(sVarName)==0){return &(g_iVar[iScene][iVarNameB1-1]);}}
 
 		if(sArg.CompareNoCase(sVarName)==0){return &(g_iVar[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
+CRect* GetRectValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(7).CompareNoCase(_T("VarRect"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarRect%d"), iVarNameB1);
+		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_rect[iScene][iVarNameB1-1]);}
 	}
 
 	return NULL;

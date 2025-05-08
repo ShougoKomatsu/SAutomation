@@ -80,6 +80,12 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_DIV_ITSELF_INT (10)
 #define VARIABLE_IMG_VALUE (11)
 #define VARIABLE_DLG_ITEM (12)
+#define VARIABLE_RECT_WIDTH (13)
+#define VARIABLE_RECT_HEIGHT (14)
+#define VARIABLE_RECT_LEFT (15)
+#define VARIABLE_RECT_TOP (16)
+#define VARIABLE_RECT_RIGHT (17)
+#define VARIABLE_RECT_BOTTOM (18)
 
 #define VARIABLE_STR (100)
 #define VARIABLE_COMBINE_STR (101)

@@ -19,3 +19,4 @@ BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType);
 Point* GetPointValuePointer(int iScene, CString sArg);
 
 ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal);
+CRect* GetRectValuePointer(int iScene, CString sArg);
