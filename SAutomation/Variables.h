@@ -23,6 +23,7 @@ extern CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 extern Object g_object[MAX_THREAD][MAX_VARIABLES];
+extern CRect g_rect[MAX_THREAD][MAX_VARIABLES];
 
 extern Camera g_camera;
 
@@ -129,6 +130,9 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_CAMERA_OPEN (601)
 #define VARIABLE_CAMERA_CLOSE (602)
 #define VARIABLE_CAMERA_GRAB (603)
+
+#define VARIABLE_RECT (700)
+#define VARIABLE_RECT_FOREGROUND_WINDOW (701)
 
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)

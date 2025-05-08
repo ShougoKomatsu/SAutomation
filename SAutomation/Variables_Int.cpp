@@ -43,6 +43,40 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 
 	return FALSE;
 }
+BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+
+	if(sDataTrim.Left(5).CompareNoCase(_T("Point")) == 0)
+	{
+		if(sDataTrim.Mid(5,1).Compare(_T("("))!=0){return FALSE;}
+		if(sDataTrim.Right(1).Compare(_T(")"))!=0){return FALSE;}
+		*iCommandType=VARIABLE_POINT_DIRECT; 
+		return TRUE;
+	}
+	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=VARIABLE_POINT; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("SearchResult"))==0){*iCommandType=VARIABLE_POINT_SEARCH_RESULT; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
+
+	return RETURN_FAILED;
+}
+
+BOOL GetOperandRectSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+
+
+	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0){*iCommandType=VARIABLE_RECT; return TRUE;}
+	if(sDataTrim.Left(16).CompareNoCase(_T("ForegroundWindow"))==0){*iCommandType=VARIABLE_RECT_FOREGROUND_WINDOW; return TRUE;}
+
+	return RETURN_FAILED;
+}
+
 
 int GetIntValue(int iScene, CString sDataLocal)
 {
@@ -317,27 +351,6 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 
 
 
-BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
-{
-	CString sDataTrim;
-	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-
-	if(sDataTrim.Left(5).CompareNoCase(_T("Point")) == 0)
-	{
-		if(sDataTrim.Mid(5,1).Compare(_T("("))!=0){return FALSE;}
-		if(sDataTrim.Right(1).Compare(_T(")"))!=0){return FALSE;}
-		*iCommandType=VARIABLE_POINT_DIRECT; 
-		return TRUE;
-	}
-	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=VARIABLE_POINT; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
-	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
-	if(sDataTrim.Left(12).CompareNoCase(_T("SearchResult"))==0){*iCommandType=VARIABLE_POINT_SEARCH_RESULT; return TRUE;}
-	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
-	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
-
-	return RETURN_FAILED;
-}
 
 
 Point* GetPointValuePointer(int iScene, CString sArg)

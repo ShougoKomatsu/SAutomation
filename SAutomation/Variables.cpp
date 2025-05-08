@@ -13,6 +13,7 @@ CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 Point g_point[MAX_THREAD][MAX_VARIABLES];
 Object g_object[MAX_THREAD][MAX_VARIABLES];
+CRect g_rect[MAX_THREAD][MAX_VARIABLES];
 Camera g_camera;
 
 
@@ -37,6 +38,7 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0){*iCommandType=VARIABLE_RECT; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		if(sDataTrim.Mid(8,1).SpanIncluding(_T("01234567")).Compare(sDataTrim.Mid(8,1))!=0){return FALSE;}
