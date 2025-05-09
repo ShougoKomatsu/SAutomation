@@ -285,7 +285,36 @@ ReturnValue MessageBox_My(int iScene, CStringArray* saData)
 		AfxMessageBox(sMes);
 		return RETURN_NORMAL;
 	}
+	bRet = GetOperandPointSrc(saData->GetAt(0), &iCommandType);
+	if(bRet == TRUE)
+	{
+		CString sData;
+		sData.Format(_T("%s.r"),saData->GetAt(0));
+		int iSrcR=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.c"),saData->GetAt(0));
+		int iSrcC=GetIntValue(iScene, sData);
 
+		sMes.Format(_T("(%d, %d)"),iSrcC, iSrcR);
+		AfxMessageBox(sMes);
+		return RETURN_NORMAL;
+	}
+	bRet = GetOperandRectSrc(saData->GetAt(0), &iCommandType);
+	if(bRet == TRUE)
+	{
+		CString sData;
+		sData.Format(_T("%s.top"),saData->GetAt(0));
+		int iSrcR1=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.left"),saData->GetAt(0));
+		int iSrcC1=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.bottom"),saData->GetAt(0));
+		int iSrcR2=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.right"),saData->GetAt(0));
+		int iSrcC2=GetIntValue(iScene, sData);
+
+		sMes.Format(_T("(%d, %d) - (%d, %d)"),iSrcC1, iSrcR1, iSrcC2, iSrcR2);
+		AfxMessageBox(sMes);
+		return RETURN_NORMAL;
+	}
 	bRet = GetOperandStrSrc(saData->GetAt(0), &iCommandType);
 	if(bRet == TRUE)
 	{
