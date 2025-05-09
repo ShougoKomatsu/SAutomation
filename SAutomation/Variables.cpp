@@ -224,6 +224,12 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 			if(pPointDst == NULL){return RETURN_FAILED;}
 			return SetPointValue(pPointDst, iScene, saData->GetAt(1));
 		}
+	case VARIABLE_RECT:
+		{
+			CRect* pRectDst = GetRectValuePointer(iScene, saData->GetAt(0));
+			if(pRectDst == NULL){return RETURN_FAILED;}
+			return SetRectValue(pRectDst, iScene, saData->GetAt(1));
+		}
 	case VARIABLE_CAMERA:
 		{
 			Camera* pCamera = GetCameraPointer(iScene, saData->GetAt(0));

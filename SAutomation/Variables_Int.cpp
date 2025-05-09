@@ -84,6 +84,7 @@ BOOL GetOperandRectSrc(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0){*iCommandType=VARIABLE_RECT; return TRUE;}
 	if(sDataTrim.Left(16).CompareNoCase(_T("ForegroundWindow"))==0){*iCommandType=VARIABLE_RECT_FOREGROUND_WINDOW; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_RECT_DLG_ITEM; return TRUE;}
 
 	return RETURN_FAILED;
 }
@@ -484,6 +485,31 @@ ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
 			int iHeight;
 			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
 			pRect->SetRect( iLeft, iTop, iLeft+iWidth-1, iTop+iHeight-1);
+			return RETURN_NORMAL;
+		}
+		
+	case VARIABLE_RECT_DLG_ITEM:
+		{
+			CString sText;
+			int iRank;
+			CString sArg;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			if(sArg.Left(6).CompareNoCase(_T("VarInt"))==0)
+			{
+				int iItem = GetIntValue(iScene, sArg);
+				GetWindowRect_My(iItem,pRect);
+				return RETURN_NORMAL;
+			}
+
+			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()<=0){iRank=0;}
+			else{iRank=GetIntValue(iScene,sArg);}
+			int iItem = GetDlgItem_My(sText, iRank);
+
+			GetWindowRect_My(iItem,pRect);
 			return RETURN_NORMAL;
 		}
 	}

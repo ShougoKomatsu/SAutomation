@@ -139,6 +139,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 
 #define VARIABLE_RECT (700)
 #define VARIABLE_RECT_FOREGROUND_WINDOW (701)
+#define VARIABLE_RECT_DLG_ITEM (702)
 
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)
