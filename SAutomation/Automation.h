@@ -71,7 +71,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 
 
 ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, wchar_t* tch, BYTE* byData);
-ReturnValue Input(CString sInputWithDblQuart);
+ReturnValue Input(int iScene, CString sInputWithDblQuart);
 
 ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam);
 #endif

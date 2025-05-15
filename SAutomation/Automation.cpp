@@ -628,7 +628,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_WINDOW_SIZE:{return WindowSize(*iSceneData, &saData);}
 	case COMMAND_WINDOW_POS:{return WindowPos(*iSceneData, &saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
-	case COMMAND_INPUT:{return Input(saData.GetAt(0));}
+	case COMMAND_INPUT:{return Input(*iSceneData, saData.GetAt(0));}
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
@@ -719,25 +719,29 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	}
 	return RETURN_FAILED;
 }
-ReturnValue Input(CString sInputWithDblQuart)
+#include "Variables_String.h"
+ReturnValue Input(int iScene, CString sInputWithDblQuart)
 {
+	CString sValue;
+	sValue.Format(_T("%s"),GetStrValue(iScene, sInputWithDblQuart));
+
 	int iPosL;
 	int iPosR;
-	for(int i=0; i<sInputWithDblQuart.GetLength(); i++)
+	for(int i=0; i<sValue.GetLength(); i++)
 	{
-		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='　'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosL=i+1;break;}
+		if(sValue.GetAt(i)==' '){continue;}
+		if(sValue.GetAt(i)=='\t'){continue;}
+		if(sValue.GetAt(i)=='　'){continue;}
+		if(sValue.GetAt(i)=='\"'){iPosL=i+1;break;}
 		iPosL=0; break;
 	}
-	for(int i=sInputWithDblQuart.GetLength()-1; i>=0; i--)
+	for(int i=sValue.GetLength()-1; i>=0; i--)
 	{
-		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='　'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosR=i-1;break;}
-		iPosR=sInputWithDblQuart.GetLength()-1; break;
+		if(sValue.GetAt(i)==' '){continue;}
+		if(sValue.GetAt(i)=='\t'){continue;}
+		if(sValue.GetAt(i)=='　'){continue;}
+		if(sValue.GetAt(i)=='\"'){iPosR=i-1;break;}
+		iPosR=sValue.GetLength()-1; break;
 	}
 	if(iPosL==iPosR)
 	{
@@ -745,17 +749,17 @@ ReturnValue Input(CString sInputWithDblQuart)
 	}
 	for(int i=iPosL; i<=iPosR; i++)
 	{
-		KeyDownAndUpUnicode(sInputWithDblQuart.GetAt(i));
+		KeyDownAndUpUnicode(sValue.GetAt(i));
 		/*
-		if((sInputWithDblQuart.GetAt(i)<=' ') && ( '~'<= sInputWithDblQuart.GetAt(i)))
+		if((sValue.GetAt(i)<=' ') && ( '~'<= sValue.GetAt(i)))
 		{
-		KeyDownUnicode(sInputWithDblQuart.GetAt(i));
-		KeyUpUnicode(sInputWithDblQuart.GetAt(i));
+		KeyDownUnicode(sValue.GetAt(i));
+		KeyUpUnicode(sValue.GetAt(i));
 		}
 		else
 		{
-		KeyDownUnicode(sInputWithDblQuart.GetAt(i));
-		KeyUpUnicode(sInputWithDblQuart.GetAt(i));
+		KeyDownUnicode(sValue.GetAt(i));
+		KeyUpUnicode(sValue.GetAt(i));
 			CString sTemp;
 		CStringArray saData;
 		sTemp.Format(_T("enter"));
@@ -768,7 +772,7 @@ ReturnValue Input(CString sInputWithDblQuart)
 		/*
 		CStringArray saData;
 		CString sTemp;
-		sTemp.Format(_T("%c"),sInputWithDblQuart.GetAt(i));
+		sTemp.Format(_T("%c"),sValue.GetAt(i));
 		saData.Add(sTemp);
 	KeyDownAndUp(&saData);
 	*/
