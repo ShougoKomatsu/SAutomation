@@ -743,7 +743,7 @@ ReturnValue Input(int iScene, CString sInputWithDblQuart)
 		if(sValue.GetAt(i)=='\"'){iPosR=i-1;break;}
 		iPosR=sValue.GetLength()-1; break;
 	}
-	if(iPosL==iPosR)
+	if(iPosL>iPosR)
 	{
 		return RETURN_FAILED;
 	}
