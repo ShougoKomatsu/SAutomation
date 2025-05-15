@@ -51,7 +51,8 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 		if((sDataTrim.Mid(10,6).Compare(_T("Value(")) == 0) && sDataTrim.Right(1).CompareNoCase(_T(")"))==0){*iCommandType = VARIABLE_IMG_VALUE; return TRUE;}
 		return FALSE;
 	}
-
+	
+	if(sDataTrim.Left(3).CompareNoCase(_T("Len"))==0){*iCommandType=VARIABLE_STR_LEN; return TRUE;}
 	return FALSE;
 }
 BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
@@ -334,6 +335,14 @@ int GetIntValue(int iScene, CString sDataLocal)
 			else{iRank=GetIntValue(iScene,sArg);}
 
 			return GetDlgItem_My(sText, iRank);
+		}
+	case VARIABLE_STR_LEN:
+		{
+			CString sText;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
+			
+			return sText.GetLength();
 		}
 	default:
 		{
