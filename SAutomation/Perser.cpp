@@ -129,6 +129,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if((sDataTrim.Left(3).CompareNoCase(_T("Run"))==0)){*iCommandType=COMMAND_RUN; return TRUE;}
 	if((sDataTrim.Left(5).CompareNoCase(_T("Input"))==0)){*iCommandType=COMMAND_OUTPUT_KEY; return TRUE;}
+	if((sDataTrim.Left(9).CompareNoCase(_T("OutputKey"))==0)){*iCommandType=COMMAND_OUTPUT_KEY; return TRUE;}
 
 	if(sDataTrim.Left(7).CompareNoCase(_T("WaitKey"))==0){*iCommandType=COMMAND_WAIT_KEY; return TRUE;}
 	if(sDataTrim.Left(13).CompareNoCase(_T("WaitEitherKey"))==0){*iCommandType=COMMAND_WAIT_EITHER_KEY; return TRUE;}
