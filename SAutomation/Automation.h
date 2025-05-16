@@ -28,7 +28,7 @@
 #define COMMAND_WINDOW_SIZE (COMMAND_COMMON + 14)
 #define COMMAND_WINDOW_POS (COMMAND_COMMON + 15)
 #define COMMAND_RUN (COMMAND_COMMON + 16)
-#define COMMAND_INPUT (COMMAND_COMMON + 17)
+#define COMMAND_OUTPUT_KEY (COMMAND_COMMON + 17)
 #define COMMAND_WAIT_KEY (COMMAND_COMMON + 18)
 #define COMMAND_MESSAGEBOX (COMMAND_COMMON + 19)
 #define COMMAND_LIST_DLG_ITEMS (COMMAND_COMMON + 20)
@@ -71,7 +71,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 
 
 ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, wchar_t* tch, BYTE* byData);
-ReturnValue Input(int iScene, CString sInputWithDblQuart);
+ReturnValue OutputKeys(int iScene, CString sInputWithDblQuart);
 
 ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam);
 #endif

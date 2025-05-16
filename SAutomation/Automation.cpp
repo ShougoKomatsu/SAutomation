@@ -628,7 +628,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_WINDOW_SIZE:{return WindowSize(*iSceneData, &saData);}
 	case COMMAND_WINDOW_POS:{return WindowPos(*iSceneData, &saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
-	case COMMAND_INPUT:{return Input(*iSceneData, saData.GetAt(0));}
+	case COMMAND_OUTPUT_KEY:{return OutputKeys(*iSceneData, saData.GetAt(0));}
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
@@ -720,7 +720,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	return RETURN_FAILED;
 }
 #include "Variables_String.h"
-ReturnValue Input(int iScene, CString sInputWithDblQuart)
+ReturnValue OutputKeys(int iScene, CString sInputWithDblQuart)
 {
 	CString sValue;
 	sValue.Format(_T("%s"),GetStrValue(iScene, sInputWithDblQuart));
