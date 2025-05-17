@@ -148,3 +148,5 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_SELF_SRC_MULT (3)
 #define VARIABLE_SELF_SRC_DIV (4)
 
+
+#include "Variables_Int.h"

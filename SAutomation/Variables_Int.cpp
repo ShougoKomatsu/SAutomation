@@ -390,6 +390,71 @@ CRect* GetRectValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
+const CRect GetRectValue(int iScene, CString sArg)
+{
+	CRect rectOutput;
+	int iOperandSrc;
+	rectOutput.SetRect(0,0,0,0);
+	BOOL bRet = GetOperandRectSrc(sArg, &iOperandSrc);
+	if(bRet != TRUE){return rectOutput;}
+
+
+	switch(iOperandSrc)
+	{
+	case VARIABLE_RECT:
+		{
+			CRect* pRect;
+			pRect = GetRectValuePointer(iScene, sArg);
+			rectOutput.CopyRect(pRect);
+			return rectOutput;
+		}
+	case VARIABLE_RECT_FOREGROUND_WINDOW:
+		{
+			int iLeft;
+			int iTop; 
+			int iWidth;
+			int iHeight;
+			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
+			rectOutput.SetRect( iLeft, iTop, iLeft+iWidth-1, iTop+iHeight-1);
+			return rectOutput;
+		}
+	case VARIABLE_RECT_DLG_ITEM:
+		{
+
+			CString sText;
+			int iRank;
+			CString sArgID;
+			CString sArgRank;
+			ExtractTokenInBracket(sArg,0,&sArgID);
+
+			if(sArgID.Left(6).CompareNoCase(_T("VarInt"))==0)
+			{
+				int iItem = GetIntValue(iScene, sArgID);
+				GetWindowRect_My(iItem,&rectOutput);
+				return rectOutput;
+			}
+
+			sText.Format(_T("%s"), GetStrValue(iScene,sArgID));
+
+			ExtractTokenInBracket(sArgID,1,&sArgRank);
+			if(sArg.GetLength()<=0){iRank=0;}
+			else{iRank=GetIntValue(iScene,sArg);}
+			int iItem = GetDlgItem_My(sText, iRank);
+
+			GetWindowRect_My(iItem,&rectOutput);
+			return rectOutput;
+		}
+	default:
+		{
+		}
+	}
+
+	return rectOutput;
+}
+
+
+
+
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
 	int iSrc1=GetIntValue(iScene, sArg1);
