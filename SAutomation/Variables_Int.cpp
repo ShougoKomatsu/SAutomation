@@ -390,13 +390,12 @@ CRect* GetRectValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
-const CRect GetRectValue(int iScene, CString sArg)
+BOOL GetRectValue(int iScene, CString sArg, CRect* rectOutput)
 {
-	CRect rectOutput;
 	int iOperandSrc;
-	rectOutput.SetRect(0,0,0,0);
+	rectOutput->SetRect(0,0,0,0);
 	BOOL bRet = GetOperandRectSrc(sArg, &iOperandSrc);
-	if(bRet != TRUE){return rectOutput;}
+	if(bRet != TRUE){return FALSE;}
 
 
 	switch(iOperandSrc)
@@ -405,8 +404,8 @@ const CRect GetRectValue(int iScene, CString sArg)
 		{
 			CRect* pRect;
 			pRect = GetRectValuePointer(iScene, sArg);
-			rectOutput.CopyRect(pRect);
-			return rectOutput;
+			rectOutput->CopyRect(pRect);
+			return TRUE;
 		}
 	case VARIABLE_RECT_FOREGROUND_WINDOW:
 		{
@@ -415,8 +414,8 @@ const CRect GetRectValue(int iScene, CString sArg)
 			int iWidth;
 			int iHeight;
 			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
-			rectOutput.SetRect( iLeft, iTop, iLeft+iWidth-1, iTop+iHeight-1);
-			return rectOutput;
+			rectOutput->SetRect( iLeft, iTop, iLeft+iWidth-1, iTop+iHeight-1);
+			return TRUE;
 		}
 	case VARIABLE_RECT_DLG_ITEM:
 		{
@@ -430,8 +429,8 @@ const CRect GetRectValue(int iScene, CString sArg)
 			if(sArgID.Left(6).CompareNoCase(_T("VarInt"))==0)
 			{
 				int iItem = GetIntValue(iScene, sArgID);
-				GetWindowRect_My(iItem,&rectOutput);
-				return rectOutput;
+				GetWindowRect_My(iItem,rectOutput);
+				return TRUE;
 			}
 
 			sText.Format(_T("%s"), GetStrValue(iScene,sArgID));
@@ -441,15 +440,15 @@ const CRect GetRectValue(int iScene, CString sArg)
 			else{iRank=GetIntValue(iScene,sArg);}
 			int iItem = GetDlgItem_My(sText, iRank);
 
-			GetWindowRect_My(iItem,&rectOutput);
-			return rectOutput;
+			GetWindowRect_My(iItem,rectOutput);
+			return TRUE;
 		}
 	default:
 		{
 		}
 	}
 
-	return rectOutput;
+	return FALSE;
 }
 
 
@@ -545,10 +544,11 @@ ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
 	{
 	case VARIABLE_RECT:
 		{
-			CRect* pRectSrc=(GetRectValuePointer(iScene, sDataLocal));
-			if(pRectSrc == NULL){return RETURN_FAILED;}
+			CRect rectSrc;
+			bRet = (GetRectValue(iScene, sDataLocal, &rectSrc));
+			if(bRet != TRUE){return RETURN_FAILED;}
 
-			pRect->SetRect( pRectSrc->left,pRectSrc->top,pRectSrc->right,pRectSrc->bottom);
+			pRect->CopyRect(&rectSrc);
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_RECT_FOREGROUND_WINDOW:

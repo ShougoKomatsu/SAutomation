@@ -23,4 +23,4 @@ CRect* GetRectValuePointer(int iScene, CString sArg);
 ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal);
 BOOL GetOperandRectSrc(CString sDataLine, int* iCommandType);
 
-const CRect GetRectValue(int iScene, CString sArg);
+BOOL GetRectValue(int iScene, CString sArg, CRect* rectOutput);

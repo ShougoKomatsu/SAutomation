@@ -280,13 +280,15 @@ ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData)
 
 ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 {
+	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
 	int iR0, iC0, iR1, iC1;
 	if(saData->GetCount()==2)
 	{
 		CRect rect;
-		rect = GetRectValue(iScene,  saData->GetAt(1));
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
 
 		iC0=rect.left;
 		iR0=rect.top;
@@ -318,7 +320,6 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	ImgRGB imgTarget;
 	ImgRGB imgMask;
 
-	BOOL bRet;
 	imgModel.Assign(sModelFilePath);
 	CString sMaskFilePath;
 	sMaskFilePath.Format(_T("%s"), sModelFilePath);
@@ -370,13 +371,15 @@ ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
 ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 {
 	
+	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
 	int iR0, iC0, iR1, iC1;
 	if(saData->GetCount()==2)
 	{
 		CRect rect;
-		rect = GetRectValue(iScene,  saData->GetAt(1));
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
 
 		iC0=rect.left;
 		iR0=rect.top;
@@ -391,10 +394,6 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 		iR1=GetIntValue(iScene, saData->GetAt(4));
 	}
 
-
-
-	
-	BOOL bRet;
 	CString sModelFilePath;
 	
 	CString sArg;
@@ -442,14 +441,15 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 
 ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
 {
-	
+	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
 	int iR0, iC0, iR1, iC1;
 	if(saData->GetCount()==2)
 	{
 		CRect rect;
-		rect = GetRectValue(iScene,  saData->GetAt(1));
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
 
 		iC0=rect.left;
 		iR0=rect.top;
@@ -464,9 +464,6 @@ ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
 		iR1=GetIntValue(iScene, saData->GetAt(4));
 	}
 
-
-
-	BOOL bRet;
 	CString sModelFilePath;
 	
 	CString sArg;
