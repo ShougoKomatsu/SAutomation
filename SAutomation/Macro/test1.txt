@@ -1,5 +1,5 @@
 ﻿
-10000
+waitcolor(R, 100,200, MousePos,  on, 1000)
 exit
 MsgBox(aaaa);
 wait ctrl off

@@ -522,7 +522,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 	int iOperandSrc;
 	BOOL bRet;
 	bRet = GetOperandPointSrc(sDataLocal, &iOperandSrc);
-	if(bRet != TRUE){return RETURN_FAILED;}
+	if(bRet != TRUE){return FALSE;}
 
 	switch(iOperandSrc)
 	{
@@ -532,7 +532,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			if(pPointSrc == NULL){return RETURN_FAILED;}
 
 			pPoint->Set( pPointSrc->c,pPointSrc->r);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_DIRECT:
 		{
@@ -545,14 +545,14 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			int iSrc2=GetIntValue(iScene, sArg2);
 
 			pPoint->Set(iSrc1, iSrc2);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_MOUSE_POS:
 		{
 
 			pPoint->Set(g_iC,g_iR);
 
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_OBJECT_CENTER:
 		{
@@ -581,7 +581,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			SAFE_DELETE(dA);
 			SAFE_DELETE(dR);
 			SAFE_DELETE(dC);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_FOREGROUND_WINDOW_LU:
 		{
@@ -591,7 +591,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			int iHeight;
 			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
 			pPoint->Set(iLeft,iTop);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_FOREGROUND_WINDOW_RD:
 		{
@@ -601,7 +601,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			int iHeight;
 			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
 			pPoint->Set(iLeft+iWidth-1,iTop+iHeight-1);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_SEARCH_RESULT:
 		{
@@ -661,7 +661,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			pPoint->Set(iFoundC, iFoundR);
 
 
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	}
 	return FALSE;

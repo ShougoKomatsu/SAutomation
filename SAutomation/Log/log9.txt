@@ -1,2 +1,2 @@
-﻿1 MsgBox(aaaa); 0
+﻿1 waitcolor(R, 100,200, MousePos,  on, 1000) 0
 2 exit 10
