@@ -202,6 +202,7 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 	int iTickMillisec;
 	if(saData->GetCount()<=2){return RETURN_FAILED;}
 	
+	BOOL bRet;
 	int iR0, iC0, iR1, iC1;
 	if(saData->GetCount()==2)
 	{
@@ -239,7 +240,6 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 	ImgRGB imgModelCropped;
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
-	BOOL bRet;
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();

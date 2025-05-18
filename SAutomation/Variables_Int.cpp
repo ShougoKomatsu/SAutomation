@@ -517,39 +517,7 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 
 
 
-
-
-Point* GetPointValuePointer(int iScene, CString sArg)
-{
-	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
-
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
-		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
-	}
-
-	return NULL;
-}
-
-ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
-{
-	int iOperandSrc;
-	BOOL bRet;
-	bRet = GetOperandRectSrc(sDataLocal, &iOperandSrc);
-	if(bRet != TRUE){return RETURN_FAILED;}
-
-	CRect rectSrc;
-	bRet = (GetRectValue(iScene, sDataLocal, &rectSrc));
-	if(bRet != TRUE){return RETURN_FAILED;}
-
-	pRect->CopyRect(&rectSrc);
-	return RETURN_NORMAL;
-
-}
-
-ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
+BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 {
 	int iOperandSrc;
 	BOOL bRet;
@@ -689,12 +657,60 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			}
 			//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
 
-			if(bRet != TRUE){return RETURN_FAILED;}
+			if(bRet != TRUE){return FALSE;}
 			pPoint->Set(iFoundC, iFoundR);
 
 
 			return RETURN_NORMAL;
 		}
 	}
-	return RETURN_FAILED;
+	return FALSE;
+}
+
+
+
+
+Point* GetPointValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
+		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
+ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
+{
+	int iOperandSrc;
+	BOOL bRet;
+	bRet = GetOperandRectSrc(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	CRect rectSrc;
+	bRet = (GetRectValue(iScene, sDataLocal, &rectSrc));
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	pRect->CopyRect(&rectSrc);
+	return RETURN_NORMAL;
+
+}
+
+ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
+{
+	int iOperandSrc;
+	BOOL bRet;
+	bRet = GetOperandPointSrc(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	Point pointSrc;
+	bRet = (GetPointValue(iScene, sDataLocal, &pointSrc));
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	pPoint->Set(pointSrc.c, pointSrc.r);
+	return RETURN_NORMAL;
 }
