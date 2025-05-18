@@ -200,15 +200,31 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 	int iTimeOutMillisec;
 	int iTickMillisec;
-	if(saData->GetCount()<=5){return RETURN_FAILED;}
-
+	if(saData->GetCount()<=2){return RETURN_FAILED;}
+	
 	int iR0, iC0, iR1, iC1;
+	if(saData->GetCount()==2)
+	{
+		CRect rect;
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
+
+		iC0=rect.left;
+		iR0=rect.top;
+		iC1=rect.right;
+		iR1=rect.bottom;
+	}
+	if(saData->GetCount()==5)
+	{
+		iC0=GetIntValue(iScene, saData->GetAt(1));
+		iR0=GetIntValue(iScene, saData->GetAt(2));
+		iC1=GetIntValue(iScene, saData->GetAt(3));
+		iR1=GetIntValue(iScene, saData->GetAt(4));
+	}
+
+
 
 	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
 
 	CString sArg;
 	sArg.Format(_T("%s"),GetStrValue(iScene, saData->GetAt(5)));
@@ -264,11 +280,32 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iWaitOn;
 
 	int iTimeOutMilliSec;
+	
+	BOOL bRet;
+	if(saData->GetCount()<3){return RETURN_FAILED;}
 
-	if(saData->GetCount()<=6){return RETURN_FAILED;}
+	int iR0, iC0, iR1, iC1;
+	if(saData->GetCount()==3)
+	{
+		CRect rect;
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
+
+		iC0=rect.left;
+		iR0=rect.top;
+		iC1=rect.right;
+		iR1=rect.bottom;
+	}
+	if(saData->GetCount()==6)
+	{
+		iC0=GetIntValue(iScene, saData->GetAt(1));
+		iR0=GetIntValue(iScene, saData->GetAt(2));
+		iC1=GetIntValue(iScene, saData->GetAt(3));
+		iR1=GetIntValue(iScene, saData->GetAt(4));
+	}
+
 
 	CString sModelFilePath;
-	int iR0, iC0, iR1, iC1;
 	
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
@@ -276,10 +313,6 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
-	iC0 = GetIntValue(iScene, saData->GetAt(1));
-	iR0 = GetIntValue(iScene, saData->GetAt(2));
-	iC1 = GetIntValue(iScene, saData->GetAt(3));
-	iR1 = GetIntValue(iScene, saData->GetAt(4));
 
 	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
 	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
@@ -296,7 +329,6 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	ImgRGB imgTarget;
 	ImgRGB imgMask;
 
-	BOOL bRet;
 	imgModel.Assign(sModelFilePath);
 	CString sMaskFilePath;
 	sMaskFilePath.Format(_T("%s"), sModelFilePath);
