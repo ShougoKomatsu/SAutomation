@@ -97,6 +97,7 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_STR_MID (107)
 #define VARIABLE_FOREGROUND_WINDOW_CLASS_NAME (108)
 #define VARIABLE_STR_LEN (109)
+#define VARIABLE_STR2INT (110)
 
 #define VARIABLE_IMG (200)
 #define VARIABLE_CROP_IMAGE (201)

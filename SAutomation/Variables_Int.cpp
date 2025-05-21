@@ -53,6 +53,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	}
 	
 	if(sDataTrim.Left(3).CompareNoCase(_T("Len"))==0){*iCommandType=VARIABLE_STR_LEN; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("Str2Int"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
 	return FALSE;
 }
 BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
@@ -343,6 +344,13 @@ int GetIntValue(int iScene, CString sDataLocal)
 			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
 			
 			return sText.GetLength();
+		}
+	case VARIABLE_STR2INT:
+		{
+			CString sText;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			
+			return Str2Int(iScene, sArg);
 		}
 	default:
 		{

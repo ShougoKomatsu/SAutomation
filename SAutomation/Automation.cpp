@@ -198,43 +198,53 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 	
 	int iWaitOn;
 
-	int iTimeOutMillisec;
+	int iTimeOutMilliSec;
 	int iTickMillisec;
 	if(saData->GetCount()<=2){return RETURN_FAILED;}
 	
 	BOOL bRet;
+
 	int iR0, iC0, iR1, iC1;
-	if(saData->GetCount()==2)
+	BOOL bSpecified=FALSE;
+	int iParamOffset;
+	if(bSpecified==FALSE)
 	{
 		CRect rect;
-		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
-		if(bRet != TRUE){return RETURN_FAILED;}
-
-		iC0=rect.left;
-		iR0=rect.top;
-		iC1=rect.right;
-		iR1=rect.bottom;
+		bRet =  GetRectValue(iScene, saData->GetAt(1), &rect);
+		if(bRet == TRUE)
+		{
+			bSpecified=TRUE;
+			iC0 = rect.left;
+			iR0 = rect.top;
+			iC1 = rect.right;
+			iR1 = rect.bottom;
+			iParamOffset=2;
+		}
 	}
-	if(saData->GetCount()==5)
+	
+	if(bSpecified==FALSE)
 	{
+		bSpecified=TRUE;
 		iC0=GetIntValue(iScene, saData->GetAt(1));
 		iR0=GetIntValue(iScene, saData->GetAt(2));
 		iC1=GetIntValue(iScene, saData->GetAt(3));
 		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iParamOffset=5;
 	}
 
 
 
 	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
+	
 
-	CString sArg;
-	sArg.Format(_T("%s"),GetStrValue(iScene, saData->GetAt(5)));
-	if(sArg.CompareNoCase(_T("on"))==0){iWaitOn=1;}
-	else if(sArg.CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(6));
-	if(iTimeOutMillisec==6){iTimeOutMillisec=-1;}
+
+	if(saData->GetCount()<=iParamOffset+1){iTimeOutMilliSec=-1;}
+	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
+	
 
 
 	ImgRGB imgModelCropped;
@@ -262,9 +272,9 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 		CropImage(&imgTarget, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC);
 		iRet=K_Sleep(Halt, Suspend, iTickMillisec);
 		if(iRet<0){return iRet;}
-		if(iTimeOutMillisec>=0)
+		if(iTimeOutMilliSec>=0)
 		{
-			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMillisec/g_dSpeedMult))
+			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMilliSec/g_dSpeedMult))
 			{
 				return RETURN_FAILED;
 			}
@@ -280,28 +290,37 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iWaitOn;
 
 	int iTimeOutMilliSec;
-	
+	int icount=saData->GetCount();
 	BOOL bRet;
 	if(saData->GetCount()<3){return RETURN_FAILED;}
 
+
 	int iR0, iC0, iR1, iC1;
-	if(saData->GetCount()==3)
+	BOOL bSpecified=FALSE;
+	int iParamOffset;
+	if(bSpecified==FALSE)
 	{
 		CRect rect;
-		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
-		if(bRet != TRUE){return RETURN_FAILED;}
-
-		iC0=rect.left;
-		iR0=rect.top;
-		iC1=rect.right;
-		iR1=rect.bottom;
+		bRet =  GetRectValue(iScene, saData->GetAt(1), &rect);
+		if(bRet == TRUE)
+		{
+			bSpecified=TRUE;
+			iC0 = rect.left;
+			iR0 = rect.top;
+			iC1 = rect.right;
+			iR1 = rect.bottom;
+			iParamOffset=2;
+		}
 	}
-	if(saData->GetCount()==6)
+	
+	if(bSpecified==FALSE)
 	{
+		bSpecified=TRUE;
 		iC0=GetIntValue(iScene, saData->GetAt(1));
 		iR0=GetIntValue(iScene, saData->GetAt(2));
 		iC1=GetIntValue(iScene, saData->GetAt(3));
 		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iParamOffset=5;
 	}
 
 
@@ -314,13 +333,13 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	sModelFilePath.Format(_T("%s"), sArg);
 
 
-	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
-	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
 
-	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
+	if(saData->GetCount()<=iParamOffset+1){iTimeOutMilliSec=-1;}
+	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
 	
 	
 
@@ -434,6 +453,7 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 		
 		if(bRegion == TRUE)
 		{
+			bSpecified=TRUE;
 			iC0 = GetIntValue(iScene, saData->GetAt(3));
 			iR0 = GetIntValue(iScene, saData->GetAt(4));
 			iC1 = GetIntValue(iScene, saData->GetAt(5));
@@ -442,6 +462,7 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 		}
 		else
 		{
+			bSpecified=TRUE;
 			iC0 = GetIntValue(iScene, saData->GetAt(3));
 			iR0 = GetIntValue(iScene, saData->GetAt(4));
 			iParamOffset=5;
