@@ -357,13 +357,18 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 
 	if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 	{
+		int iStart=iNextChar;
+		int iEnd=iNextChar;
 		int iDigit=1;
 		iNextChar++;
 		while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
 		{
 			iDigit++;
+			iEnd=iNextChar;
 			iNextChar++;
 		}
+		iDigit=_ttoi(sFormat.Mid(iStart, iEnd-iStart+1));
+
 		if(iDigit>=15){iDigit=15;}
 		iFormat+=(iDigit<<FORMAT_MIN_FIELD_SHIFT);
 	}
@@ -393,10 +398,9 @@ BOOL PerseFormat(CString sFormat, int* iFormatOut)
 
 	if(sFormat.Mid(iNextChar,1).Compare(_T("u"))==0)
 	{
-		iFormat+=FORMAT_FLAG_UNSIGNED;
+		iFormat+=FORMAT_SPECIFIER_UNSIGNED;
 	}
-
-	if(sFormat.Mid(iNextChar,1).Compare(_T("x"))==0)
+	else if(sFormat.Mid(iNextChar,1).Compare(_T("x"))==0)
 	{
 		iFormat+=FORMAT_SPECIFIER_SMALL_HEX;
 	}
@@ -433,13 +437,94 @@ const CString Int2Str(int iScene, CString sArg, CString sFormat)
 
 	int iFormat;
 	PerseFormat(sFormat, &iFormat);
-	switch(iFormat)
+
+	if(iFormat == FORMAT_SPECIFIER_DECIMAL+FORMAT_QUALIFIER_NOTHING+(0x00000000)+(0x00000000)+FORMAT_FLAG_NOTHING)
 	{
-	case FORMAT_SPECIFIER_DECIMAL+FORMAT_QUALIFIER_NOTHING+(0x00000000)+(0x00000000)+FORMAT_FLAG_NOTHING:
+		sOut.Format(_T("%d"), iSrc);
+		return sOut;
+	}
+
+	if((iFormat&FORMAT_SPECIFIER_DECIMAL)==FORMAT_SPECIFIER_DECIMAL)
+	{
+		if((iFormat&FORMAT_FLAG_MASK)==FORMAT_FLAG_ZERO)
 		{
-			sOut.Format(_T("%d"), iSrc);
-			break;
+			int iDigit=(iFormat&FORMAT_MIN_FIELD_MASK)>>FORMAT_MIN_FIELD_SHIFT;
+
+			switch(iDigit)
+			{
+			case 0:{sOut.Format(_T("%0d"), iSrc); return sOut;}
+			case 1:{sOut.Format(_T("%01d"), iSrc); return sOut;}
+			case 2:{sOut.Format(_T("%02d"), iSrc); return sOut;}
+			case 3:{sOut.Format(_T("%03d"), iSrc); return sOut;}
+			case 4:{sOut.Format(_T("%04d"), iSrc); return sOut;}
+			case 5:{sOut.Format(_T("%05d"), iSrc); return sOut;}
+			case 6:{sOut.Format(_T("%06d"), iSrc); return sOut;}
+			case 7:{sOut.Format(_T("%07d"), iSrc); return sOut;}
+			case 8:{sOut.Format(_T("%08d"), iSrc); return sOut;}
+			case 9:{sOut.Format(_T("%09d"), iSrc); return sOut;}
+			case 10:{sOut.Format(_T("%010d"), iSrc); return sOut;}
+			case 11:{sOut.Format(_T("%011d"), iSrc); return sOut;}
+			case 12:{sOut.Format(_T("%012d"), iSrc); return sOut;}
+			case 13:{sOut.Format(_T("%013d"), iSrc); return sOut;}
+			case 14:{sOut.Format(_T("%014d"), iSrc); return sOut;}
+			case 15:{sOut.Format(_T("%015d"), iSrc); return sOut;}
+			default:{sOut.Format(_T("")); return sOut;}
+			}
 		}
+		
+		if((iFormat&FORMAT_FLAG_MASK)==FORMAT_FLAG_SPACE)
+		{
+			int iDigit=(iFormat&FORMAT_MIN_FIELD_MASK)>>FORMAT_MIN_FIELD_SHIFT;
+
+			switch(iDigit)
+			{
+			case 0:{sOut.Format(_T("%d"), iSrc); return sOut;}
+			case 1:{sOut.Format(_T("%1d"), iSrc); return sOut;}
+			case 2:{sOut.Format(_T("%2d"), iSrc); return sOut;}
+			case 3:{sOut.Format(_T("%3d"), iSrc); return sOut;}
+			case 4:{sOut.Format(_T("%4d"), iSrc); return sOut;}
+			case 5:{sOut.Format(_T("%5d"), iSrc); return sOut;}
+			case 6:{sOut.Format(_T("%6d"), iSrc); return sOut;}
+			case 7:{sOut.Format(_T("%7d"), iSrc); return sOut;}
+			case 8:{sOut.Format(_T("%8d"), iSrc); return sOut;}
+			case 9:{sOut.Format(_T("%9d"), iSrc); return sOut;}
+			case 10:{sOut.Format(_T("%10d"), iSrc); return sOut;}
+			case 11:{sOut.Format(_T("%11d"), iSrc); return sOut;}
+			case 12:{sOut.Format(_T("%12d"), iSrc); return sOut;}
+			case 13:{sOut.Format(_T("%13d"), iSrc); return sOut;}
+			case 14:{sOut.Format(_T("%14d"), iSrc); return sOut;}
+			case 15:{sOut.Format(_T("%15d"), iSrc); return sOut;}
+			default:{sOut.Format(_T("")); return sOut;}
+			}
+		}
+	}
+	if((iFormat&FORMAT_SPECIFIER_DECIMAL)==FORMAT_SPECIFIER_UNSIGNED)
+	{
+		if((iFormat&FORMAT_FLAG_ZERO)==FORMAT_FLAG_ZERO)
+		{
+			int iDigit=(iFormat&FORMAT_MIN_FIELD_MASK)>>FORMAT_MIN_FIELD_SHIFT;
+
+			switch(iDigit)
+			{
+			case 0:{sOut.Format(_T("%0u"), iSrc); return sOut;}
+			case 1:{sOut.Format(_T("%01u"), iSrc); return sOut;}
+			case 2:{sOut.Format(_T("%02u"), iSrc); return sOut;}
+			case 3:{sOut.Format(_T("%03u"), iSrc); return sOut;}
+			case 4:{sOut.Format(_T("%04u"), iSrc); return sOut;}
+			case 5:{sOut.Format(_T("%05u"), iSrc); return sOut;}
+			case 6:{sOut.Format(_T("%06u"), iSrc); return sOut;}
+			case 7:{sOut.Format(_T("%07u"), iSrc); return sOut;}
+			case 8:{sOut.Format(_T("%08u"), iSrc); return sOut;}
+			case 9:{sOut.Format(_T("%09u"), iSrc); return sOut;}
+			case 10:{sOut.Format(_T("%010u"), iSrc); return sOut;}
+			case 11:{sOut.Format(_T("%011u"), iSrc); return sOut;}
+			case 12:{sOut.Format(_T("%012u"), iSrc); return sOut;}
+			case 13:{sOut.Format(_T("%013u"), iSrc); return sOut;}
+			case 14:{sOut.Format(_T("%014u"), iSrc); return sOut;}
+			case 15:{sOut.Format(_T("%015u"), iSrc); return sOut;}
+			default:{sOut.Format(_T("")); return sOut;}
+			}
+		}	
 	}
 
 	return sOut;
