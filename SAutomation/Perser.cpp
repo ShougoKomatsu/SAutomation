@@ -18,6 +18,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
 	
+	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
+
 	if(sDataTrim.CompareNoCase(_T("Å©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("<-"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("Left"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -171,7 +173,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(4).CompareNoCase(_T("Call"))==0){*iCommandType=COMMAND_CALL_SUB; return TRUE;}
 	if(sDataTrim.Left(3).CompareNoCase(_T("End Sub"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
 
-	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
 
 	return FALSE;
 }
