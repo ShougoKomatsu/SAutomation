@@ -349,8 +349,10 @@ int GetIntValue(int iScene, CString sDataLocal)
 		{
 			CString sText;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			
-			return Str2Int(iScene, sArg);
+
+			CString sSrc;
+			sSrc.Format(_T("%s"),GetStrValue(iScene, sArg));
+			return _wtoi(sSrc);
 		}
 	default:
 		{

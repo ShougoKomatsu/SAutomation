@@ -58,8 +58,6 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 void AssignInt(int iScene, CString sArg, int iInput);
 void AssignString(int iScene, CString sArg, CString sInput);
 
-const CString Int2Str(int iScene, CString sArg, CString sFormat);
-int Str2Int(int iScene, CString sArg);
 const CString NowDateTime(CString sArg);
 
 ReturnValue MessageBox_My(int iScene, CStringArray* saData);

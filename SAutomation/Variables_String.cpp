@@ -70,10 +70,17 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			CString sArg2;
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			
+			CString sFormat;
+			sFormat.Format(_T("%s"),GetStrValue(iScene, sArg1));
+			int iSrc=GetIntValue(iScene, sArg2);
+			CString sOut;
 
-			sOut.Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
+			sOut.Format(sFormat, iSrc);
+
 			return sOut;
 		}
 	case VARIABLE_NOW_DATE_TIME:
@@ -323,20 +330,3 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	return RETURN_NORMAL;
 }
 
-
-
-const CString Int2Str(int iScene, CString sArg, CString sFormat)
-{
-	int iSrc=GetIntValue(iScene, sArg);
-	LOG_OUTPUT_STR(iScene, _T("Format"), sFormat);
-
-	CString sOut;
-	sOut.Format(sFormat, iSrc);
-	return sOut;
-}
-int Str2Int(int iScene, CString sArg)
-{
-	CString sSrc;
-	sSrc.Format(_T("%s"),GetStrValue(iScene, sArg));
-	return _wtoi(sSrc);
-}
