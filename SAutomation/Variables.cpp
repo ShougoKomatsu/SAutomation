@@ -172,7 +172,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 }
 
 
-ReturnValue Flow_Assign(int iScene, CStringArray* saData)
+ReturnValue Flow_Assign(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	int iOperandDst = VARIABLE_UNDEFINED;
@@ -222,7 +222,7 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 		{
 			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
-			return SetPointValue(pPointDst, iScene, saData->GetAt(1));
+			return SetPointValue(sDir, pPointDst, iScene, saData->GetAt(1));
 		}
 	case VARIABLE_RECT:
 		{

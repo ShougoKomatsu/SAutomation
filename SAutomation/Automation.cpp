@@ -391,7 +391,7 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	return RETURN_NORMAL;
 }
 
-ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForColor(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
@@ -418,7 +418,7 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iParamOffset;
 	if(bSpecified==FALSE)
 	{
-		bRet =  GetPointValue(iScene, saData->GetAt(3), &point);
+		bRet =  GetPointValue(sDir, iScene, saData->GetAt(3), &point);
 		if(bRet == TRUE)
 		{
 			bSpecified=TRUE;
@@ -703,7 +703,7 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_WAIT_KEY:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_EITHER_KEY:{return WaitForEitherKeyOn(*iSceneData, Halt, Suspend, &saData, sReturnParam);}
 	case COMMAND_WAIT_IMG:{return WaitForImage(*iSceneData, Halt, Suspend, &saData);}
-	case COMMAND_WAIT_COLOR:{return WaitForColor(*iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_COLOR:{return WaitForColor(sDir, *iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(*iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
@@ -732,39 +732,39 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 		}
 	case COMMAND_VARIABLE_INT:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_STR:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_IMG:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_OBJ:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_POINT:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_RECT:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_CLIPBOARD:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_CAMERA:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_CAMERA_CLOSE:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_AREEQUAL_INT:
 		{

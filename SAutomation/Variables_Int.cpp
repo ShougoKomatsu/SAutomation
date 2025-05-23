@@ -527,7 +527,7 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 
 
 
-BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
+BOOL GetPointValue(CString sDir, int iScene, CString sDataLocal, Point* pPoint)
 {
 	int iOperandSrc;
 	BOOL bRet;
@@ -622,8 +622,8 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 
 			CString sArg;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 			sModelFilePath.Format(_T("%s"), sArg);
 
 			CString sC0, sR0, sC1, sR1;
@@ -710,7 +710,7 @@ ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
 
 }
 
-ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
+ReturnValue SetPointValue(CString sDir, Point* pPoint, int iScene, CString sDataLocal)
 {
 	int iOperandSrc;
 	BOOL bRet;
@@ -718,7 +718,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	Point pointSrc;
-	bRet = (GetPointValue(iScene, sDataLocal, &pointSrc));
+	bRet = (GetPointValue(sDir, iScene, sDataLocal, &pointSrc));
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	pPoint->Set(pointSrc.c, pointSrc.r);
