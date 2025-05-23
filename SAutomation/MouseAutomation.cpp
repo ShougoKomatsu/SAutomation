@@ -278,7 +278,7 @@ ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
+ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
@@ -310,8 +310,8 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
 
@@ -368,7 +368,7 @@ ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
 
 
 
-ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
+ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 {
 	
 	BOOL bRet;
@@ -398,8 +398,8 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
 	ImgRGB imgModel;
@@ -439,7 +439,7 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
+ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
@@ -468,8 +468,8 @@ ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
 	
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
 

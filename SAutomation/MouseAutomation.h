@@ -59,10 +59,10 @@ ReturnValue MouseMClick(UINT nX, UINT nY);
 ReturnValue MouseMClick(int iScene, CStringArray* saData);
 
 ReturnValue MoveMouseToItem(int iScene, CStringArray* saData);
-ReturnValue MoveMouseToImage(int iScene, CStringArray* saData);
+ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData);
 ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData);
-ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData);
+ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData);
 
-ReturnValue MouseLClickImage(int iScene, CStringArray* saData);
+ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData);
 
 void ChangeMouseOrigin(UINT uiX, UINT uiY);

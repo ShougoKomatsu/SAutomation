@@ -659,7 +659,7 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	int iCommandType=COMMAND_UNDEFINED;
 	BOOL bRet;
 	CStringArray saData;
-	bRet = PerseCommand(iSceneData, sDataLine, &iCommandType, &saData, g_sDir);
+	bRet = PerseCommand(iSceneData, sDataLine, &iCommandType, &saData, sDir);
 	if(iCommandType == COMMAND_NOTING){return RETURN_NORMAL;}
 	if(bRet != TRUE){return RETURN_FAILED;}
 
@@ -683,13 +683,13 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(*iSceneData, &saData);}
 							   
 	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:{return MouseSetOriginToWindow(*iSceneData, &saData);}
-	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(*iSceneData, &saData);}
+	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(sDir, *iSceneData, &saData);}
 
 
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(*iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(*iSceneData, &saData);}
-	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(*iSceneData, &saData);}
-	case COMMAND_MOUSE_L_CLICK_IMG:{return MouseLClickImage(*iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_L_CLICK_IMG:{return MouseLClickImage(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(*iSceneData, &saData);}
 
 	case COMMAND_WHEEL:{return MouseVWheel(*iSceneData, &saData);}

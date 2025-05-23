@@ -1,4 +1,4 @@
-﻿WaitImage(AVC_Origin.bmp,  300, 300, 1500, 1500,on, 10)
+﻿MouseLClickImage(AVC_Origin.bmp,  300, 300, 1500, 1500)
 
 VarInt1=10
 
