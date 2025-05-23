@@ -65,7 +65,7 @@
 #define COMMAND_VARIABLE_CAMERA_CLOSE (COMMAND_VARIABLE+12)
 #define COMMAND_VARIABLE_RECT (COMMAND_VARIABLE+13)
 
-ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
+ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 
 
 

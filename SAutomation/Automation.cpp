@@ -654,7 +654,7 @@ ReturnValue ScreenShotForegroundWindow(int iScene, CStringArray* saCommands)
 	return RETURN_NORMAL;
 }
 
-ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
+ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
 {
 	int iCommandType=COMMAND_UNDEFINED;
 	BOOL bRet;

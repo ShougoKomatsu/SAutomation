@@ -209,3 +209,4 @@ DWORD GetVKeyCode(const CString sIn);
 BOOL CStringArrayTrim(CStringArray* saData);
 BOOL GetPrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bDefault, BOOL* bValue, CString sFilePath);
 BOOL WritePrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bValue, CString sFilePath);
+BOOL GetDirectory(CString sFilePath, CString* sDir, CString* sFileName);
