@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Variables.h"
-ReturnValue Flow_WriteImage(int iScene, CStringArray* saData)
+
+
+ReturnValue Flow_WriteImage(CString sDir, int iScene, CStringArray* saData)
 {
 
 
@@ -12,7 +14,7 @@ ReturnValue Flow_WriteImage(int iScene, CStringArray* saData)
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(1)));
 	if(sArg.GetLength()<4){return RETURN_FAILED;}
-	if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg);sArg.Format(_T("%s\\%s"),g_sDir,sTemp);}
+	if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg);sArg.Format(_T("%s\\%s"),sDir,sTemp);}
 	sFilePath.Format(_T("%s"), sArg);
 
 

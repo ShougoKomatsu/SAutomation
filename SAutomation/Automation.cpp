@@ -788,7 +788,7 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 		}
 	case COMMAND_WRITE_IMAGE:
 		{
-			return Flow_WriteImage(*iSceneData, &saData);
+			return Flow_WriteImage(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_MESSAGEBOX:
 		{
