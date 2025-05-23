@@ -18,6 +18,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.GetLength()==1){*iCommandType = COMMAND_KEY_DOWN_UP; return TRUE;}
 	
+	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
+
 	if(sDataTrim.CompareNoCase(_T("Å©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("<-"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("Left"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -128,7 +130,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Right(2).CompareNoCase(_T("Up"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
 
 	if((sDataTrim.Left(3).CompareNoCase(_T("Run"))==0)){*iCommandType=COMMAND_RUN; return TRUE;}
-	if((sDataTrim.Left(5).CompareNoCase(_T("Input"))==0)){*iCommandType=COMMAND_INPUT; return TRUE;}
+	if((sDataTrim.Left(5).CompareNoCase(_T("Input"))==0)){*iCommandType=COMMAND_OUTPUT_KEY; return TRUE;}
+	if((sDataTrim.Left(9).CompareNoCase(_T("OutputKey"))==0)){*iCommandType=COMMAND_OUTPUT_KEY; return TRUE;}
 
 	if(sDataTrim.Left(7).CompareNoCase(_T("WaitKey"))==0){*iCommandType=COMMAND_WAIT_KEY; return TRUE;}
 	if(sDataTrim.Left(13).CompareNoCase(_T("WaitEitherKey"))==0){*iCommandType=COMMAND_WAIT_EITHER_KEY; return TRUE;}
@@ -154,6 +157,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=COMMAND_VARIABLE_IMG; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=COMMAND_VARIABLE_OBJ; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=COMMAND_VARIABLE_POINT; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0){*iCommandType=COMMAND_VARIABLE_RECT; return TRUE;}
 
 	if(sDataTrim.Left(7).CompareNoCase(_T("Compare"))==0){*iCommandType=COMMAND_COMPARE; return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("AreEqualInt"))==0){*iCommandType=COMMAND_AREEQUAL_INT; return TRUE;}
@@ -169,7 +173,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(4).CompareNoCase(_T("Call"))==0){*iCommandType=COMMAND_CALL_SUB; return TRUE;}
 	if(sDataTrim.Left(3).CompareNoCase(_T("End Sub"))==0){*iCommandType=COMMAND_END_SUB; return TRUE;}
 
-	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
 
 	return FALSE;
 }
@@ -829,7 +832,7 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType = iType;
 			return TRUE;
 		}
-	case COMMAND_INPUT:
+	case COMMAND_OUTPUT_KEY:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData->Add(sArg);
@@ -1011,6 +1014,17 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_VARIABLE_POINT:
+		{
+			if(sDataLocal.Find(_T("="))<0){return FALSE;}
+			
+			ExtractData(sDataLocal, _T("="), &sArg, &sDataLocal);
+			saData->Add(sArg);
+			saData->Add(sDataLocal);
+
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_VARIABLE_RECT:
 		{
 			if(sDataLocal.Find(_T("="))<0){return FALSE;}
 			

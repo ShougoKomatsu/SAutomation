@@ -280,10 +280,33 @@ ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData)
 
 ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 {
-	if(saData->GetCount()<=4){return RETURN_FAILED;}
+	BOOL bRet;
+	if(saData->GetCount()<2){return RETURN_FAILED;}
+
+	int iR0, iC0, iR1, iC1;
+	if(saData->GetCount()==2)
+	{
+		CRect rect;
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
+
+		iC0=rect.left;
+		iR0=rect.top;
+		iC1=rect.right;
+		iR1=rect.bottom;
+	}
+	if(saData->GetCount()==5)
+	{
+		iC0=GetIntValue(iScene, saData->GetAt(1));
+		iR0=GetIntValue(iScene, saData->GetAt(2));
+		iC1=GetIntValue(iScene, saData->GetAt(3));
+		iR1=GetIntValue(iScene, saData->GetAt(4));
+	}
+
+
+
 
 	CString sModelFilePath;
-	int iR0, iC0, iR1, iC1;
 
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
@@ -291,18 +314,12 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
-	iC0 = GetIntValue(iScene, saData->GetAt(1));
-	iR0 = GetIntValue(iScene, saData->GetAt(2));
-	iC1 = GetIntValue(iScene, saData->GetAt(3));
-	iR1 = GetIntValue(iScene, saData->GetAt(4));
-
 
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
 	ImgRGB imgMask;
 
-	BOOL bRet;
 	imgModel.Assign(sModelFilePath);
 	CString sMaskFilePath;
 	sMaskFilePath.Format(_T("%s"), sModelFilePath);
@@ -353,23 +370,37 @@ ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
 
 ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 {
-
-	if(saData->GetCount()<5){return RETURN_FAILED;}
 	
 	BOOL bRet;
-	CString sModelFilePath;
+	if(saData->GetCount()<2){return RETURN_FAILED;}
+
 	int iR0, iC0, iR1, iC1;
+	if(saData->GetCount()==2)
+	{
+		CRect rect;
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
+
+		iC0=rect.left;
+		iR0=rect.top;
+		iC1=rect.right;
+		iR1=rect.bottom;
+	}
+	if(saData->GetCount()==5)
+	{
+		iC0=GetIntValue(iScene, saData->GetAt(1));
+		iR0=GetIntValue(iScene, saData->GetAt(2));
+		iC1=GetIntValue(iScene, saData->GetAt(3));
+		iR1=GetIntValue(iScene, saData->GetAt(4));
+	}
+
+	CString sModelFilePath;
 	
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
 	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
 	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
-
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
@@ -410,12 +441,30 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 
 ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
 {
-
-	if(saData->GetCount()<5){return RETURN_FAILED;}
-	
 	BOOL bRet;
-	CString sModelFilePath;
+	if(saData->GetCount()<2){return RETURN_FAILED;}
+
 	int iR0, iC0, iR1, iC1;
+	if(saData->GetCount()==2)
+	{
+		CRect rect;
+		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		if(bRet != TRUE){return RETURN_FAILED;}
+
+		iC0=rect.left;
+		iR0=rect.top;
+		iC1=rect.right;
+		iR1=rect.bottom;
+	}
+	if(saData->GetCount()==5)
+	{
+		iC0=GetIntValue(iScene, saData->GetAt(1));
+		iR0=GetIntValue(iScene, saData->GetAt(2));
+		iC1=GetIntValue(iScene, saData->GetAt(3));
+		iR1=GetIntValue(iScene, saData->GetAt(4));
+	}
+
+	CString sModelFilePath;
 	
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
@@ -423,10 +472,6 @@ ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
 	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;

@@ -1,2 +1,1 @@
-﻿1 MsgBox(aaaa); 0
-2 exit 10
+﻿

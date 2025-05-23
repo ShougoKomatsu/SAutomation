@@ -198,32 +198,58 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 	
 	int iWaitOn;
 
-	int iTimeOutMillisec;
+	int iTimeOutMilliSec;
 	int iTickMillisec;
-	if(saData->GetCount()<=5){return RETURN_FAILED;}
+	if(saData->GetCount()<=2){return RETURN_FAILED;}
+	
+	BOOL bRet;
 
 	int iR0, iC0, iR1, iC1;
+	BOOL bSpecified=FALSE;
+	int iParamOffset;
+	if(bSpecified==FALSE)
+	{
+		CRect rect;
+		bRet =  GetRectValue(iScene, saData->GetAt(1), &rect);
+		if(bRet == TRUE)
+		{
+			bSpecified=TRUE;
+			iC0 = rect.left;
+			iR0 = rect.top;
+			iC1 = rect.right;
+			iR1 = rect.bottom;
+			iParamOffset=2;
+		}
+	}
+	
+	if(bSpecified==FALSE)
+	{
+		bSpecified=TRUE;
+		iC0=GetIntValue(iScene, saData->GetAt(1));
+		iR0=GetIntValue(iScene, saData->GetAt(2));
+		iC1=GetIntValue(iScene, saData->GetAt(3));
+		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iParamOffset=5;
+	}
+
+
 
 	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
-	iC0=GetIntValue(iScene, saData->GetAt(1));
-	iR0=GetIntValue(iScene, saData->GetAt(2));
-	iC1=GetIntValue(iScene, saData->GetAt(3));
-	iR1=GetIntValue(iScene, saData->GetAt(4));
+	
 
-	CString sArg;
-	sArg.Format(_T("%s"),GetStrValue(iScene, saData->GetAt(5)));
-	if(sArg.CompareNoCase(_T("on"))==0){iWaitOn=1;}
-	else if(sArg.CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
-	iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(6));
-	if(iTimeOutMillisec==6){iTimeOutMillisec=-1;}
+
+	if(saData->GetCount()<=iParamOffset+1){iTimeOutMilliSec=-1;}
+	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
+	
 
 
 	ImgRGB imgModelCropped;
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
-	BOOL bRet;
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
@@ -246,9 +272,9 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 		CropImage(&imgTarget, &imgModelCropped, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC);
 		iRet=K_Sleep(Halt, Suspend, iTickMillisec);
 		if(iRet<0){return iRet;}
-		if(iTimeOutMillisec>=0)
+		if(iTimeOutMilliSec>=0)
 		{
-			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMillisec/g_dSpeedMult))
+			if(GetTickCount64()>ullStartMilliSec+(iTimeOutMilliSec/g_dSpeedMult))
 			{
 				return RETURN_FAILED;
 			}
@@ -264,11 +290,41 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iWaitOn;
 
 	int iTimeOutMilliSec;
+	int icount=saData->GetCount();
+	BOOL bRet;
+	if(saData->GetCount()<3){return RETURN_FAILED;}
 
-	if(saData->GetCount()<=6){return RETURN_FAILED;}
+
+	int iR0, iC0, iR1, iC1;
+	BOOL bSpecified=FALSE;
+	int iParamOffset;
+	if(bSpecified==FALSE)
+	{
+		CRect rect;
+		bRet =  GetRectValue(iScene, saData->GetAt(1), &rect);
+		if(bRet == TRUE)
+		{
+			bSpecified=TRUE;
+			iC0 = rect.left;
+			iR0 = rect.top;
+			iC1 = rect.right;
+			iR1 = rect.bottom;
+			iParamOffset=2;
+		}
+	}
+	
+	if(bSpecified==FALSE)
+	{
+		bSpecified=TRUE;
+		iC0=GetIntValue(iScene, saData->GetAt(1));
+		iR0=GetIntValue(iScene, saData->GetAt(2));
+		iC1=GetIntValue(iScene, saData->GetAt(3));
+		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iParamOffset=5;
+	}
+
 
 	CString sModelFilePath;
-	int iR0, iC0, iR1, iC1;
 	
 	CString sArg;
 	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
@@ -276,18 +332,14 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
-	iC0 = GetIntValue(iScene, saData->GetAt(1));
-	iR0 = GetIntValue(iScene, saData->GetAt(2));
-	iC1 = GetIntValue(iScene, saData->GetAt(3));
-	iR1 = GetIntValue(iScene, saData->GetAt(4));
 
-	if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
-	else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("off"))==0){iWaitOn=0;}
 	else{return RETURN_FAILED;}
 
 
-	if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
+	if(saData->GetCount()<=iParamOffset+1){iTimeOutMilliSec=-1;}
+	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
 	
 	
 
@@ -296,7 +348,6 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	ImgRGB imgTarget;
 	ImgRGB imgMask;
 
-	BOOL bRet;
 	imgModel.Assign(sModelFilePath);
 	CString sMaskFilePath;
 	sMaskFilePath.Format(_T("%s"), sModelFilePath);
@@ -345,19 +396,11 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iWaitOn;
 
 	int iTimeOutMilliSec;
-
-	BOOL bRegion;
-	if((saData->GetCount()==8) || (saData->GetCount()==9)){bRegion = TRUE;}
-	else if((saData->GetCount()==6) || (saData->GetCount()==7)){bRegion = FALSE;}
-	else{return RETURN_FAILED;}
-
-	CString sModelFilePath;
-	int iR0, iC0, iR1, iC1;
-
+	
 	CString sArg;
 	CString sColor;
 	sColor.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	
+
 	if((sColor.CompareNoCase(_T("R"))!=0) && (sColor.CompareNoCase(_T("G"))!=0) && (sColor.CompareNoCase(_T("B"))!=0)){return RETURN_FAILED;}
 
 	int iLower;
@@ -365,41 +408,81 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iUpper;
 	iUpper = GetIntValue(iScene, saData->GetAt(2));
 
+	int iR0, iC0, iR1, iC1;
+	BOOL bRet;
+	Point point;
+	CRect rect;
 
-
-	if(bRegion == TRUE)
+	BOOL bRegion;
+	BOOL bSpecified=FALSE;
+	int iParamOffset;
+	if(bSpecified==FALSE)
 	{
-		iC0 = GetIntValue(iScene, saData->GetAt(3));
-		iR0 = GetIntValue(iScene, saData->GetAt(4));
-		iC1 = GetIntValue(iScene, saData->GetAt(5));
-		iR1 = GetIntValue(iScene, saData->GetAt(6));
-
-		if(saData->GetAt(7).CompareNoCase(_T("on"))==0){iWaitOn=1;}
-		else if(saData->GetAt(7).CompareNoCase(_T("off"))==0){iWaitOn=0;}
-		else{return RETURN_FAILED;}
-
-
-		if(saData->GetCount()==8){iTimeOutMilliSec=-1;}
-		else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(8));}
+		bRet =  GetPointValue(iScene, saData->GetAt(3), &point);
+		if(bRet == TRUE)
+		{
+			bSpecified=TRUE;
+			bRegion = FALSE;
+			iParamOffset=4;
+			iC0 = point.c;
+			iR0 = point.r;
+		}
 	}
-	else
+
+	if(bSpecified==FALSE)
 	{
-		iC0 = GetIntValue(iScene, saData->GetAt(3));
-		iR0 = GetIntValue(iScene, saData->GetAt(4));
-
-		if(saData->GetAt(5).CompareNoCase(_T("on"))==0){iWaitOn=1;}
-		else if(saData->GetAt(5).CompareNoCase(_T("off"))==0){iWaitOn=0;}
-		else{return RETURN_FAILED;}
-
-
-		if(saData->GetCount()==6){iTimeOutMilliSec=-1;}
-		else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(6));}
+		bRet =  GetRectValue(iScene, saData->GetAt(3), &rect);
+		if(bRet == TRUE)
+		{
+			bSpecified=TRUE;
+			bRegion = TRUE;
+			iParamOffset=4;
+			iC0 = rect.left;
+			iR0 = rect.top;
+			iC1 = rect.right;
+			iR1 = rect.bottom;
+		}
 	}
+
+	if(bSpecified==FALSE)
+	{
+
+		if((saData->GetCount()==8) || (saData->GetCount()==9)){bRegion = TRUE;}
+		else if((saData->GetCount()==6) || (saData->GetCount()==7)){bRegion = FALSE;}
+		else{return RETURN_FAILED;}
+		
+		if(bRegion == TRUE)
+		{
+			bSpecified=TRUE;
+			iC0 = GetIntValue(iScene, saData->GetAt(3));
+			iR0 = GetIntValue(iScene, saData->GetAt(4));
+			iC1 = GetIntValue(iScene, saData->GetAt(5));
+			iR1 = GetIntValue(iScene, saData->GetAt(6));
+			iParamOffset=7;
+		}
+		else
+		{
+			bSpecified=TRUE;
+			iC0 = GetIntValue(iScene, saData->GetAt(3));
+			iR0 = GetIntValue(iScene, saData->GetAt(4));
+			iParamOffset=5;
+		}
+	}
+
+	
+	if(saData->GetCount()<iParamOffset+0){return RETURN_FAILED;}
+
+	if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("on"))==0){iWaitOn=1;}
+	else if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("off"))==0){iWaitOn=0;}
+	else{return RETURN_FAILED;}
+
+
+	if(saData->GetCount()==iParamOffset+0){iTimeOutMilliSec=-1;}
+	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 	ImgRGB imgTarget;
-	BOOL bRet;
 	while(1)
 	{
 		Screenshot(&imgTarget);
@@ -628,7 +711,7 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	case COMMAND_WINDOW_SIZE:{return WindowSize(*iSceneData, &saData);}
 	case COMMAND_WINDOW_POS:{return WindowPos(*iSceneData, &saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
-	case COMMAND_INPUT:{return Input(saData.GetAt(0));}
+	case COMMAND_OUTPUT_KEY:{return OutputKeys(*iSceneData, saData.GetAt(0));}
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
@@ -664,6 +747,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 			return Flow_Assign(*iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_POINT:
+		{
+			return Flow_Assign(*iSceneData, &saData);
+		}
+	case COMMAND_VARIABLE_RECT:
 		{
 			return Flow_Assign(*iSceneData, &saData);
 		}
@@ -715,43 +802,47 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	}
 	return RETURN_FAILED;
 }
-ReturnValue Input(CString sInputWithDblQuart)
+#include "Variables_String.h"
+ReturnValue OutputKeys(int iScene, CString sInputWithDblQuart)
 {
+	CString sValue;
+	sValue.Format(_T("%s"),GetStrValue(iScene, sInputWithDblQuart));
+
 	int iPosL;
 	int iPosR;
-	for(int i=0; i<sInputWithDblQuart.GetLength(); i++)
+	for(int i=0; i<sValue.GetLength(); i++)
 	{
-		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='　'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosL=i+1;break;}
+		if(sValue.GetAt(i)==' '){continue;}
+		if(sValue.GetAt(i)=='\t'){continue;}
+		if(sValue.GetAt(i)=='　'){continue;}
+		if(sValue.GetAt(i)=='\"'){iPosL=i+1;break;}
 		iPosL=0; break;
 	}
-	for(int i=sInputWithDblQuart.GetLength()-1; i>=0; i--)
+	for(int i=sValue.GetLength()-1; i>=0; i--)
 	{
-		if(sInputWithDblQuart.GetAt(i)==' '){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\t'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='　'){continue;}
-		if(sInputWithDblQuart.GetAt(i)=='\"'){iPosR=i-1;break;}
-		iPosR=sInputWithDblQuart.GetLength()-1; break;
+		if(sValue.GetAt(i)==' '){continue;}
+		if(sValue.GetAt(i)=='\t'){continue;}
+		if(sValue.GetAt(i)=='　'){continue;}
+		if(sValue.GetAt(i)=='\"'){iPosR=i-1;break;}
+		iPosR=sValue.GetLength()-1; break;
 	}
-	if(iPosL==iPosR)
+	if(iPosL>iPosR)
 	{
 		return RETURN_FAILED;
 	}
 	for(int i=iPosL; i<=iPosR; i++)
 	{
-		KeyDownAndUpUnicode(sInputWithDblQuart.GetAt(i));
+		KeyDownAndUpUnicode(sValue.GetAt(i));
 		/*
-		if((sInputWithDblQuart.GetAt(i)<=' ') && ( '~'<= sInputWithDblQuart.GetAt(i)))
+		if((sValue.GetAt(i)<=' ') && ( '~'<= sValue.GetAt(i)))
 		{
-		KeyDownUnicode(sInputWithDblQuart.GetAt(i));
-		KeyUpUnicode(sInputWithDblQuart.GetAt(i));
+		KeyDownUnicode(sValue.GetAt(i));
+		KeyUpUnicode(sValue.GetAt(i));
 		}
 		else
 		{
-		KeyDownUnicode(sInputWithDblQuart.GetAt(i));
-		KeyUpUnicode(sInputWithDblQuart.GetAt(i));
+		KeyDownUnicode(sValue.GetAt(i));
+		KeyUpUnicode(sValue.GetAt(i));
 			CString sTemp;
 		CStringArray saData;
 		sTemp.Format(_T("enter"));
@@ -764,7 +855,7 @@ ReturnValue Input(CString sInputWithDblQuart)
 		/*
 		CStringArray saData;
 		CString sTemp;
-		sTemp.Format(_T("%c"),sInputWithDblQuart.GetAt(i));
+		sTemp.Format(_T("%c"),sValue.GetAt(i));
 		saData.Add(sTemp);
 	KeyDownAndUp(&saData);
 	*/

@@ -1,5 +1,9 @@
-﻿
-10000
+﻿WaitImage(AVC_Origin.bmp,  300, 300, 1500, 1500,on, 10)
+
+VarInt1=10
+
+VarStr1=Int2Str(VarInt1, %13s)
+
 exit
 MsgBox(aaaa);
 wait ctrl off

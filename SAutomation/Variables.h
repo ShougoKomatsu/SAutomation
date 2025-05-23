@@ -23,6 +23,7 @@ extern CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 extern Object g_object[MAX_THREAD][MAX_VARIABLES];
+extern CRect g_rect[MAX_THREAD][MAX_VARIABLES];
 
 extern Camera g_camera;
 
@@ -57,8 +58,6 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 void AssignInt(int iScene, CString sArg, int iInput);
 void AssignString(int iScene, CString sArg, CString sInput);
 
-const CString Int2Str(int iScene, CString sArg, CString sFormat);
-int Str2Int(int iScene, CString sArg);
 const CString NowDateTime(CString sArg);
 
 ReturnValue MessageBox_My(int iScene, CStringArray* saData);
@@ -79,6 +78,12 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_DIV_ITSELF_INT (10)
 #define VARIABLE_IMG_VALUE (11)
 #define VARIABLE_DLG_ITEM (12)
+#define VARIABLE_RECT_WIDTH (13)
+#define VARIABLE_RECT_HEIGHT (14)
+#define VARIABLE_RECT_LEFT (15)
+#define VARIABLE_RECT_TOP (16)
+#define VARIABLE_RECT_RIGHT (17)
+#define VARIABLE_RECT_BOTTOM (18)
 
 #define VARIABLE_STR (100)
 #define VARIABLE_COMBINE_STR (101)
@@ -89,6 +94,8 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_STR_RIGHT (106)
 #define VARIABLE_STR_MID (107)
 #define VARIABLE_FOREGROUND_WINDOW_CLASS_NAME (108)
+#define VARIABLE_STR_LEN (109)
+#define VARIABLE_STR2INT (110)
 
 #define VARIABLE_IMG (200)
 #define VARIABLE_CROP_IMAGE (201)
@@ -130,9 +137,15 @@ const CString StrCombine(int iScene, CString sArg1, CString sArg2);
 #define VARIABLE_CAMERA_CLOSE (602)
 #define VARIABLE_CAMERA_GRAB (603)
 
+#define VARIABLE_RECT (700)
+#define VARIABLE_RECT_FOREGROUND_WINDOW (701)
+#define VARIABLE_RECT_DLG_ITEM (702)
+
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)
 #define VARIABLE_SELF_SRC_SUB (2)
 #define VARIABLE_SELF_SRC_MULT (3)
 #define VARIABLE_SELF_SRC_DIV (4)
 
+
+#include "Variables_Int.h"

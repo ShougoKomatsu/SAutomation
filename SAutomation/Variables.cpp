@@ -13,6 +13,7 @@ CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 Point g_point[MAX_THREAD][MAX_VARIABLES];
 Object g_object[MAX_THREAD][MAX_VARIABLES];
+CRect g_rect[MAX_THREAD][MAX_VARIABLES];
 Camera g_camera;
 
 
@@ -37,6 +38,7 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarObj"))==0){*iCommandType=VARIABLE_OBJECT; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarStr"))==0){*iCommandType=VARIABLE_STR; return TRUE;}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0){*iCommandType=VARIABLE_RECT; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		if(sDataTrim.Mid(8,1).SpanIncluding(_T("01234567")).Compare(sDataTrim.Mid(8,1))!=0){return FALSE;}
@@ -126,7 +128,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		return RETURN_NORMAL;
 	}
 
-	if(saData->GetAt(1).Compare(_T(">="))==0)
+	if(saData->GetAt(2).Compare(_T(">="))==0)
 	{
 		if (iSrc1>=iSrc2)
 		{
@@ -136,7 +138,17 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		return RETURN_NORMAL;
 	}
 
-	if(saData->GetAt(1).Compare(_T("<="))==0)
+	if(saData->GetAt(1).Compare(_T("<"))==0)
+	{
+		if (iSrc1<iSrc2)
+		{
+			sReturnParam->Format(_T("%s"), saData->GetAt(3));
+			return RETURN_GOTO_BY_SWITCH;
+		}
+		return RETURN_NORMAL;
+	}
+
+	if(saData->GetAt(2).Compare(_T("<="))==0)
 	{
 		if (iSrc1<=iSrc2)
 		{
@@ -146,17 +158,7 @@ ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam
 		return RETURN_NORMAL;
 	}
 
-	if(saData->GetAt(1).Compare(_T("<="))==0)
-	{
-		if (iSrc1<=iSrc2)
-		{
-			sReturnParam->Format(_T("%s"), saData->GetAt(3));
-			return RETURN_GOTO_BY_SWITCH;
-		}
-		return RETURN_NORMAL;
-	}
-
-	if((saData->GetAt(1).Compare(_T("<>"))==0) || (saData->GetAt(1).Compare(_T("!="))==0))
+	if((saData->GetAt(2).Compare(_T("<>"))==0) || (saData->GetAt(2).Compare(_T("!="))==0))
 	{
 		if (iSrc1!=iSrc2)
 		{
@@ -222,6 +224,12 @@ ReturnValue Flow_Assign(int iScene, CStringArray* saData)
 			if(pPointDst == NULL){return RETURN_FAILED;}
 			return SetPointValue(pPointDst, iScene, saData->GetAt(1));
 		}
+	case VARIABLE_RECT:
+		{
+			CRect* pRectDst = GetRectValuePointer(iScene, saData->GetAt(0));
+			if(pRectDst == NULL){return RETURN_FAILED;}
+			return SetRectValue(pRectDst, iScene, saData->GetAt(1));
+		}
 	case VARIABLE_CAMERA:
 		{
 			Camera* pCamera = GetCameraPointer(iScene, saData->GetAt(0));
@@ -277,7 +285,36 @@ ReturnValue MessageBox_My(int iScene, CStringArray* saData)
 		AfxMessageBox(sMes);
 		return RETURN_NORMAL;
 	}
+	bRet = GetOperandPointSrc(saData->GetAt(0), &iCommandType);
+	if(bRet == TRUE)
+	{
+		CString sData;
+		sData.Format(_T("%s.r"),saData->GetAt(0));
+		int iSrcR=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.c"),saData->GetAt(0));
+		int iSrcC=GetIntValue(iScene, sData);
 
+		sMes.Format(_T("(%d, %d)"),iSrcC, iSrcR);
+		AfxMessageBox(sMes);
+		return RETURN_NORMAL;
+	}
+	bRet = GetOperandRectSrc(saData->GetAt(0), &iCommandType);
+	if(bRet == TRUE)
+	{
+		CString sData;
+		sData.Format(_T("%s.top"),saData->GetAt(0));
+		int iSrcR1=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.left"),saData->GetAt(0));
+		int iSrcC1=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.bottom"),saData->GetAt(0));
+		int iSrcR2=GetIntValue(iScene, sData);
+		sData.Format(_T("%s.right"),saData->GetAt(0));
+		int iSrcC2=GetIntValue(iScene, sData);
+
+		sMes.Format(_T("(%d, %d) - (%d, %d)"),iSrcC1, iSrcR1, iSrcC2, iSrcR2);
+		AfxMessageBox(sMes);
+		return RETURN_NORMAL;
+	}
 	bRet = GetOperandStrSrc(saData->GetAt(0), &iCommandType);
 	if(bRet == TRUE)
 	{

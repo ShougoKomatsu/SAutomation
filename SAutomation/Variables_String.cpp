@@ -70,10 +70,17 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			CString sArg2;
+
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
+			
+			CString sFormat;
+			sFormat.Format(_T("%s"),GetStrValue(iScene, sArg1));
+			int iSrc=GetIntValue(iScene, sArg2);
+			CString sOut;
 
-			sOut.Format(_T("%s"), Int2Str(iScene, sArg1, sArg2)); 
+			sOut.Format(sFormat, iSrc);
+
 			return sOut;
 		}
 	case VARIABLE_NOW_DATE_TIME:
@@ -323,130 +330,3 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	return RETURN_NORMAL;
 }
 
-
-
-BOOL PerseFormat(CString sFormat, int* iFormatOut)
-{
-	int iNextChar;
-
-	if(sFormat.Left(1).Compare(_T("%"))!=0){return FALSE;}
-	iNextChar = 1;
-
-	//フラグ - + 0
-	//最小フィールド幅
-	//.精度
-	//修飾子　h, l
-	//変換指定子 d, u x, X
-	(*iFormatOut)=0;
-	int iFormat=0;
-	if(sFormat.Mid(iNextChar,1).Compare(_T("-"))==0)
-	{
-		iFormat+=FORMAT_FLAG_SPACE;
-		iNextChar++;
-	}
-	else if(sFormat.Mid(iNextChar,1).Compare(_T("+"))==0)
-	{
-		iFormat+=FORMAT_FLAG_PLUS;
-		iNextChar++;
-	}
-	else if(sFormat.Mid(iNextChar,1).Compare(_T("0"))==0)
-	{
-		iFormat+=FORMAT_FLAG_ZERO;
-		iNextChar++;
-	}
-
-	if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
-	{
-		int iDigit=1;
-		iNextChar++;
-		while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
-		{
-			iDigit++;
-			iNextChar++;
-		}
-		if(iDigit>=15){iDigit=15;}
-		iFormat+=(iDigit<<FORMAT_MIN_FIELD_SHIFT);
-	}
-
-	BOOL bAccuracy=FALSE;
-	if(sFormat.Mid(iNextChar,1).Compare(_T("."))==0)
-	{
-		bAccuracy=TRUE;
-		iNextChar++;
-	}
-
-	if(bAccuracy==TRUE)
-	{
-		if(sFormat.Mid(iNextChar,1).SpanIncluding(_T("123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
-		{
-			int iDigit=1;
-			iNextChar++;
-			while(sFormat.Mid(iNextChar,1).SpanIncluding(_T("0123456789")).Compare(sFormat.Mid(iNextChar,1))==0)
-			{
-				iDigit++;
-				iNextChar++;
-			}
-			if(iDigit>=15){iDigit=15;}
-			iFormat+=(iDigit<<FORMAT_ACCURACY_SHIFT);
-		}
-	}
-
-	if(sFormat.Mid(iNextChar,1).Compare(_T("u"))==0)
-	{
-		iFormat+=FORMAT_FLAG_UNSIGNED;
-	}
-
-	if(sFormat.Mid(iNextChar,1).Compare(_T("x"))==0)
-	{
-		iFormat+=FORMAT_SPECIFIER_SMALL_HEX;
-	}
-	else if(sFormat.Mid(iNextChar,1).Compare(_T("X"))==0)
-	{
-		iFormat+=FORMAT_SPECIFIER_CAPITAL_HEX;
-	}
-	else if(sFormat.Mid(iNextChar,1).CompareNoCase(_T("d"))==0)
-	{
-		iFormat+=FORMAT_SPECIFIER_DECIMAL;
-	}
-	else if(sFormat.Mid(iNextChar,1).CompareNoCase(_T("f"))==0)
-	{
-		return FALSE;
-	}
-	else if(sFormat.Mid(iNextChar,1).CompareNoCase(_T("e"))==0)
-	{
-		return FALSE;
-	}
-	else
-	{
-		return FALSE;
-	}
-	(*iFormatOut)=iFormat;
-	return TRUE;
-}
-
-const CString Int2Str(int iScene, CString sArg, CString sFormat)
-{
-	int iSrc=GetIntValue(iScene, sArg);
-	LOG_OUTPUT_STR(iScene, _T("Format"), sFormat);
-
-	CString sOut;
-
-	int iFormat;
-	PerseFormat(sFormat, &iFormat);
-	switch(iFormat)
-	{
-	case FORMAT_SPECIFIER_DECIMAL+FORMAT_QUALIFIER_NOTHING+(0x00000000)+(0x00000000)+FORMAT_FLAG_NOTHING:
-		{
-			sOut.Format(_T("%d"), iSrc);
-			break;
-		}
-	}
-
-	return sOut;
-}
-int Str2Int(int iScene, CString sArg)
-{
-	CString sSrc;
-	sSrc.Format(_T("%s"),GetStrValue(iScene, sArg));
-	return _wtoi(sSrc);
-}

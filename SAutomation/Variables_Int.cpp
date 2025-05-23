@@ -30,6 +30,17 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 
 		return FALSE;
 	}
+	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0)
+	{
+		if(sDataTrim.Mid(8,1).Compare(_T(".")) != 0){return FALSE;}
+		if(sDataTrim.Right(5).CompareNoCase(_T("Width"))==0){*iCommandType=VARIABLE_RECT_WIDTH; return TRUE;}
+		if(sDataTrim.Right(6).CompareNoCase(_T("Height"))==0){*iCommandType=VARIABLE_RECT_HEIGHT; return TRUE;}
+		if(sDataTrim.Right(4).CompareNoCase(_T("Left"))==0){*iCommandType=VARIABLE_RECT_LEFT; return TRUE;}
+		if(sDataTrim.Right(3).CompareNoCase(_T("TOP"))==0){*iCommandType=VARIABLE_RECT_TOP; return TRUE;}
+		if(sDataTrim.Right(5).CompareNoCase(_T("Right"))==0){*iCommandType=VARIABLE_RECT_RIGHT; return TRUE;}
+		if(sDataTrim.Right(6).CompareNoCase(_T("BOTTOM"))==0){*iCommandType=VARIABLE_RECT_BOTTOM; return TRUE;}
+
+	}
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0)
 	{
 		if(sDataTrim.Mid(8,1).SpanIncluding(_T("01234567")).Compare(sDataTrim.Mid(8,1))!=0){return FALSE;}
@@ -40,15 +51,52 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 		if((sDataTrim.Mid(10,6).Compare(_T("Value(")) == 0) && sDataTrim.Right(1).CompareNoCase(_T(")"))==0){*iCommandType = VARIABLE_IMG_VALUE; return TRUE;}
 		return FALSE;
 	}
-
+	
+	if(sDataTrim.Left(3).CompareNoCase(_T("Len"))==0){*iCommandType=VARIABLE_STR_LEN; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("Str2Int"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
 	return FALSE;
 }
+BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+
+	if(sDataTrim.Left(5).CompareNoCase(_T("Point")) == 0)
+	{
+		if(sDataTrim.Mid(5,1).Compare(_T("("))!=0){return FALSE;}
+		if(sDataTrim.Right(1).Compare(_T(")"))!=0){return FALSE;}
+		*iCommandType=VARIABLE_POINT_DIRECT; 
+		return TRUE;
+	}
+	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=VARIABLE_POINT; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
+	if(sDataTrim.Left(12).CompareNoCase(_T("SearchResult"))==0){*iCommandType=VARIABLE_POINT_SEARCH_RESULT; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
+
+	return RETURN_FAILED;
+}
+
+BOOL GetOperandRectSrc(CString sDataLine, int* iCommandType)
+{
+	CString sDataTrim;
+	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
+
+
+	if(sDataTrim.Left(7).CompareNoCase(_T("VarRect"))==0){*iCommandType=VARIABLE_RECT; return TRUE;}
+	if(sDataTrim.Left(16).CompareNoCase(_T("ForegroundWindow"))==0){*iCommandType=VARIABLE_RECT_FOREGROUND_WINDOW; return TRUE;}
+	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_RECT_DLG_ITEM; return TRUE;}
+
+	return RETURN_FAILED;
+}
+
 
 int GetIntValue(int iScene, CString sDataLocal)
 {
 	int iOperandSrc;
 	BOOL bRet = GetOperandIntSrc(sDataLocal, &iOperandSrc);
-	if(bRet != TRUE){return RETURN_FAILED;}
+	if(bRet != TRUE){return 0;}
 
 	CString sArg;
 
@@ -132,6 +180,73 @@ int GetIntValue(int iScene, CString sDataLocal)
 			int iSrc;
 			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
 			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iHeight;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}
+		
+	case VARIABLE_RECT_WIDTH:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Width();}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}
+	case VARIABLE_RECT_HEIGHT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Height();}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_LEFT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->left;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_TOP:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->top;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_RIGHT:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->right;}
+			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
+
+			return iSrc;
+		}		
+	case VARIABLE_RECT_BOTTOM:
+		{
+			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
+
+			int iSrc;
+			CRect* pRect = GetRectValuePointer(iScene, sArg);			
+			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->bottom;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -222,6 +337,23 @@ int GetIntValue(int iScene, CString sDataLocal)
 
 			return GetDlgItem_My(sText, iRank);
 		}
+	case VARIABLE_STR_LEN:
+		{
+			CString sText;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
+			
+			return sText.GetLength();
+		}
+	case VARIABLE_STR2INT:
+		{
+			CString sText;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+
+			CString sSrc;
+			sSrc.Format(_T("%s"),GetStrValue(iScene, sArg));
+			return _wtoi(sSrc);
+		}
 	default:
 		{
 			if(sDataLocal.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataLocal)==0)
@@ -253,6 +385,84 @@ int* GetIntValuePointer(int iScene, CString sArg)
 
 	return NULL;
 }
+
+CRect* GetRectValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(7).CompareNoCase(_T("VarRect"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarRect%d"), iVarNameB1);
+		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_rect[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
+BOOL GetRectValue(int iScene, CString sArg, CRect* rectOutput)
+{
+	int iOperandSrc;
+	rectOutput->SetRect(0,0,0,0);
+	BOOL bRet = GetOperandRectSrc(sArg, &iOperandSrc);
+	if(bRet != TRUE){return FALSE;}
+
+
+	switch(iOperandSrc)
+	{
+	case VARIABLE_RECT:
+		{
+			CRect* pRect;
+			pRect = GetRectValuePointer(iScene, sArg);
+			rectOutput->CopyRect(pRect);
+			return TRUE;
+		}
+	case VARIABLE_RECT_FOREGROUND_WINDOW:
+		{
+			int iLeft;
+			int iTop; 
+			int iWidth;
+			int iHeight;
+			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
+			rectOutput->SetRect( iLeft, iTop, iLeft+iWidth-1, iTop+iHeight-1);
+			return TRUE;
+		}
+	case VARIABLE_RECT_DLG_ITEM:
+		{
+
+			CString sText;
+			int iRank;
+			CString sArgID;
+			CString sArgRank;
+			ExtractTokenInBracket(sArg,0,&sArgID);
+
+			if(sArgID.Left(6).CompareNoCase(_T("VarInt"))==0)
+			{
+				int iItem = GetIntValue(iScene, sArgID);
+				GetWindowRect_My(iItem,rectOutput);
+				return TRUE;
+			}
+
+			sText.Format(_T("%s"), GetStrValue(iScene,sArgID));
+
+			ExtractTokenInBracket(sArgID,1,&sArgRank);
+			if(sArg.GetLength()<=0){iRank=0;}
+			else{iRank=GetIntValue(iScene,sArg);}
+			int iItem = GetDlgItem_My(sText, iRank);
+
+			GetWindowRect_My(iItem,rectOutput);
+			return TRUE;
+		}
+	default:
+		{
+		}
+	}
+
+	return FALSE;
+}
+
+
+
 
 int IntAdd(int iScene, CString sArg1, CString sArg2)
 {
@@ -317,50 +527,12 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 
 
 
-BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
-{
-	CString sDataTrim;
-	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-
-	if(sDataTrim.Left(5).CompareNoCase(_T("Point")) == 0)
-	{
-		if(sDataTrim.Mid(5,1).Compare(_T("("))!=0){return FALSE;}
-		if(sDataTrim.Right(1).Compare(_T(")"))!=0){return FALSE;}
-		*iCommandType=VARIABLE_POINT_DIRECT; 
-		return TRUE;
-	}
-	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0){*iCommandType=VARIABLE_POINT; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("MousePos"))==0){*iCommandType=VARIABLE_POINT_MOUSE_POS; return TRUE;}
-	if(sDataTrim.Left(12).CompareNoCase(_T("ObjectCenter"))==0){*iCommandType=VARIABLE_POINT_OBJECT_CENTER; return TRUE;}
-	if(sDataTrim.Left(12).CompareNoCase(_T("SearchResult"))==0){*iCommandType=VARIABLE_POINT_SEARCH_RESULT; return TRUE;}
-	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
-	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
-
-	return RETURN_FAILED;
-}
-
-
-Point* GetPointValuePointer(int iScene, CString sArg)
-{
-	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
-
-	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
-	{
-		CString sVarName;
-		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
-		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
-	}
-
-	return NULL;
-}
-
-
-ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
+BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 {
 	int iOperandSrc;
 	BOOL bRet;
 	bRet = GetOperandPointSrc(sDataLocal, &iOperandSrc);
-	if(bRet != TRUE){return RETURN_FAILED;}
+	if(bRet != TRUE){return FALSE;}
 
 	switch(iOperandSrc)
 	{
@@ -370,7 +542,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			if(pPointSrc == NULL){return RETURN_FAILED;}
 
 			pPoint->Set( pPointSrc->c,pPointSrc->r);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_DIRECT:
 		{
@@ -383,14 +555,14 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			int iSrc2=GetIntValue(iScene, sArg2);
 
 			pPoint->Set(iSrc1, iSrc2);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_MOUSE_POS:
 		{
 
 			pPoint->Set(g_iC,g_iR);
 
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_OBJECT_CENTER:
 		{
@@ -419,7 +591,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			SAFE_DELETE(dA);
 			SAFE_DELETE(dR);
 			SAFE_DELETE(dC);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_FOREGROUND_WINDOW_LU:
 		{
@@ -429,7 +601,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			int iHeight;
 			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
 			pPoint->Set(iLeft,iTop);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_FOREGROUND_WINDOW_RD:
 		{
@@ -439,7 +611,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			int iHeight;
 			BOOL bRet = GetForegroundWindowPos(&iLeft, &iTop, &iWidth,  &iHeight);
 			pPoint->Set(iLeft+iWidth-1,iTop+iHeight-1);
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	case VARIABLE_POINT_SEARCH_RESULT:
 		{
@@ -495,12 +667,60 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 			}
 			//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
 
-			if(bRet != TRUE){return RETURN_FAILED;}
+			if(bRet != TRUE){return FALSE;}
 			pPoint->Set(iFoundC, iFoundR);
 
 
-			return RETURN_NORMAL;
+			return TRUE;
 		}
 	}
-	return RETURN_FAILED;
+	return FALSE;
+}
+
+
+
+
+Point* GetPointValuePointer(int iScene, CString sArg)
+{
+	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
+
+	for(int iVarNameB1=1; iVarNameB1<=MAX_VARIABLES; iVarNameB1++)
+	{
+		CString sVarName;
+		sVarName.Format(_T("VarPoint%d"), iVarNameB1);
+		if(sArg.Left(sVarName.GetLength()).CompareNoCase(sVarName)==0){return &(g_point[iScene][iVarNameB1-1]);}
+	}
+
+	return NULL;
+}
+
+ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
+{
+	int iOperandSrc;
+	BOOL bRet;
+	bRet = GetOperandRectSrc(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	CRect rectSrc;
+	bRet = (GetRectValue(iScene, sDataLocal, &rectSrc));
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	pRect->CopyRect(&rectSrc);
+	return RETURN_NORMAL;
+
+}
+
+ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
+{
+	int iOperandSrc;
+	BOOL bRet;
+	bRet = GetOperandPointSrc(sDataLocal, &iOperandSrc);
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	Point pointSrc;
+	bRet = (GetPointValue(iScene, sDataLocal, &pointSrc));
+	if(bRet != TRUE){return RETURN_FAILED;}
+
+	pPoint->Set(pointSrc.c, pointSrc.r);
+	return RETURN_NORMAL;
 }
