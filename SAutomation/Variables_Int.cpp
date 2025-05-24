@@ -504,14 +504,6 @@ int IntDiv(CString sDir, int iScene, CString sArg1, CString sArg2)
 }
 
 
-void AssignInt(CString sDir, int iScene, CString sArg, int iInput)
-{
-	int* piDst;
-	piDst = GetIntValuePointer(sDir, iScene, sArg);
-	if(piDst==NULL){return;}
-	*piDst=iInput;
-}
-
 ReturnValue SetIntValue(CString sDir, int iScene, int* iDstPointer, CString sDataLocal, int iSelfSrc)
 {	
 	int iOperandSrc;
