@@ -3,7 +3,6 @@
 
 #include "perser.h"
 #include "Window.h"
-#include "Variables_Obj.h"
 
 BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 {
