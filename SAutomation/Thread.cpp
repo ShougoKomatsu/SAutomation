@@ -148,7 +148,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		BOOL bRet;
 		bRet = g_utfW[iScene].OpenUTFFile(g_sFilePath[iScene],_T("w, ccs=UTF-8"));
 	}
-	ResetProgramCounter(iScene);
+	ResetProgramCounter(sDir, iScene);
 	CString sWrite;
 	BOOL* bHalt;
 

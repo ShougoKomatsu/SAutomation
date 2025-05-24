@@ -28,41 +28,41 @@ extern CRect g_rect[MAX_THREAD][MAX_VARIABLES];
 extern Camera g_camera;
 
 
-int GetIntValue(int iScene, CString sArg);
-int* GetIntValuePointer(int iScene, CString sArg);
+int GetIntValue(CString sDir, int iScene, CString sArg);
+int* GetIntValuePointer(CString sDir, int iScene, CString sArg);
 
-const CString GetStrValue(int iScene, CString sDataLocal);
-CString* GetStrValuePointer(int iScene, CString sArg);
-const CString GetStrValue(int iScene, CString sDataLocal);
+const CString GetStrValue(CString sDir, int iScene, CString sDataLocal);
+CString* GetStrValuePointer(CString sDir, int iScene, CString sArg);
+const CString GetStrValue(CString sDir, int iScene, CString sDataLocal);
 
-Object* GetObjValuePointer(int iScene, CString sArg);
-ImgRGB* GetImgValuePointer(int iScene, CString sArg);
-const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg);
+Object* GetObjValuePointer(CString sDir, int iScene, CString sArg);
+ImgRGB* GetImgValuePointer(CString sDir, int iScene, CString sArg);
+const ImgRGB* GetImgValuePointerConst(CString sDir, int iScene, CString sArg);
 
 
-Point* GetPointValuePointer(int iScene, CString sArg);
-//Point GetPointValue(int iScene, CString sArg);
+Point* GetPointValuePointer(CString sDir, int iScene, CString sArg);
+//Point GetPointValue(CString sDir, int iScene, CString sArg);
 
-int IntAdd(int iScene, CString sArg1, CString sArg2);
-int IntSub(int iScene, CString sArg1, CString sArg2);
-int IntMult(int iScene, CString sArg1, CString sArg2);
-int IntDiv(int iScene, CString sArg1, CString sArg2);
-BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2);
-BOOL IsStrEqual(int iScene, CString sArg1, CString sArg2);
+int IntAdd(CString sDir, int iScene, CString sArg1, CString sArg2);
+int IntSub(CString sDir, int iScene, CString sArg1, CString sArg2);
+int IntMult(CString sDir, int iScene, CString sArg1, CString sArg2);
+int IntDiv(CString sDir, int iScene, CString sArg1, CString sArg2);
+BOOL IsIntEqual(CString sDir, int iScene, CString sArg1, CString sArg2);
+BOOL IsStrEqual(CString sDir, int iScene, CString sArg1, CString sArg2);
 
 ReturnValue Flow_Assign(CString sDir, int iScene, CStringArray* saData);
-ReturnValue Flow_AreStrEqual(int iScene, CStringArray* saData, CString* sReturnParam);
-ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnParam);
-ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_AreStrEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_AreIntEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam);
+ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam);
 
-void AssignInt(int iScene, CString sArg, int iInput);
-void AssignString(int iScene, CString sArg, CString sInput);
+void AssignInt(CString sDir, int iScene, CString sArg, int iInput);
+void AssignString(CString sDir, int iScene, CString sArg, CString sInput);
 
 const CString NowDateTime(CString sArg);
 
-ReturnValue MessageBox_My(int iScene, CStringArray* saData);
+ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData);
 
-const CString StrCombine(int iScene, CString sArg1, CString sArg2);
+const CString StrCombine(CString sDir, int iScene, CString sArg1, CString sArg2);
 
 #define VARIABLE_UNDEFINED (-1)
 #define VARIABLE_INT (0)

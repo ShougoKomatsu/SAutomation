@@ -22,7 +22,7 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 	return TRUE;
 }
 
-Object* GetObjValuePointer(int iScene, CString sArg)
+Object* GetObjValuePointer(CString sDir, int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarObj"))!=0){return NULL;}
 
@@ -35,7 +35,7 @@ Object* GetObjValuePointer(int iScene, CString sArg)
 
 	return NULL;
 }
-ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
+ReturnValue SetObjValue(CString sDir, int iScene, Object* objectDst, CString sData)
 {
 	CString sArg;
 	CString sDummy;
@@ -51,7 +51,7 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 		{
 			Object* objSrc;
 			bRet = ExtractTokenInBracket(sData,0,&sArg);
-			objSrc=GetObjValuePointer(iScene, sArg);
+			objSrc=GetObjValuePointer(sDir, iScene, sArg);
 
 			objectDst->Copy(objSrc);
 			return RETURN_NORMAL;
@@ -68,10 +68,10 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,2,&sArg2);
 
 			ImgRGB* imgSrc;
-			imgSrc=GetImgValuePointer(iScene, sArg0);
+			imgSrc=GetImgValuePointer(sDir, iScene, sArg0);
 
-			BYTE byMin=GetIntValue(iScene, sArg1);
-			BYTE byMax=GetIntValue(iScene, sArg2);
+			BYTE byMin=GetIntValue(sDir, iScene, sArg1);
+			BYTE byMax=GetIntValue(sDir, iScene, sArg2);
 
 			Threshold(imgSrc, byMin, byMax, &objSrc);
 
@@ -86,9 +86,9 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,1,&sArg1);
 
 			Object* objSrc;
-			objSrc=GetObjValuePointer(iScene, sArg0);
+			objSrc=GetObjValuePointer(sDir, iScene, sArg0);
 
-			int iPolicy=GetIntValue(iScene, sArg1);
+			int iPolicy=GetIntValue(sDir, iScene, sArg1);
 
 			Connection(objSrc, objectDst, iPolicy);
 
@@ -102,9 +102,9 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,1,&sArg1);
 
 			Object* objSrc;
-			objSrc=GetObjValuePointer(iScene, sArg0);
+			objSrc=GetObjValuePointer(sDir, iScene, sArg0);
 
-			int iID=GetIntValue(iScene, sArg1);
+			int iID=GetIntValue(sDir, iScene, sArg1);
 			SelectObj(objSrc, iID, objectDst);
 
 			return RETURN_NORMAL;
@@ -121,12 +121,12 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,3,&sArg3);
 
 			Object* objSrc;
-			objSrc=GetObjValuePointer(iScene, sArg0);
+			objSrc=GetObjValuePointer(sDir, iScene, sArg0);
 			CString sFeature;
-			sFeature.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			sFeature.Format(_T("%s"), GetStrValue(sDir, iScene, sArg1));
 			double dMin ,dMax;
-			dMin=GetIntValue(iScene, sArg2);
-			dMax=GetIntValue(iScene, sArg3);
+			dMin=GetIntValue(sDir, iScene, sArg2);
+			dMax=GetIntValue(sDir, iScene, sArg3);
 
 			SelectShape(objSrc, objectDst,sFeature, dMin, dMax);
 
@@ -143,11 +143,11 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,2,&sArg2);
 
 			Object* objSrc;
-			objSrc=GetObjValuePointer(iScene, sArg0);
+			objSrc=GetObjValuePointer(sDir, iScene, sArg0);
 			CString sMode;
-			sMode.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			sMode.Format(_T("%s"), GetStrValue(sDir, iScene, sArg1));
 			CString sAscDsc;
-			sAscDsc.Format(_T("%s"), GetStrValue(iScene, sArg2));
+			sAscDsc.Format(_T("%s"), GetStrValue(sDir, iScene, sArg2));
 
 			SortRegion(objSrc, sMode, sAscDsc, objectDst);
 
@@ -165,10 +165,10 @@ ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData)
 			bRet = ExtractTokenInBracket(sData,3,&sArg3);
 
 			int iR0, iR1, iC0, iC1;
-			iC0=GetIntValue(iScene, sArg0);
-			iR0=GetIntValue(iScene, sArg1);
-			iC1=GetIntValue(iScene, sArg2);
-			iR1=GetIntValue(iScene, sArg3);
+			iC0=GetIntValue(sDir, iScene, sArg0);
+			iR0=GetIntValue(sDir, iScene, sArg1);
+			iC1=GetIntValue(sDir, iScene, sArg2);
+			iR1=GetIntValue(sDir, iScene, sArg3);
 
 			bRet = GenRectangle1(objectDst, iR0, iC0, iR1, iC1);
 			if(bRet != TRUE){return RETURN_FAILED;}

@@ -53,13 +53,13 @@ BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 }
 
 
-BOOL IsStrEqual(int iScene, CString sArg1, CString sArg2)
+BOOL IsStrEqual(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
 	CString sSrc1;
 	CString sSrc2;
 
-	sSrc1.Format(_T("%s"), GetStrValue(iScene, sArg1));
-	sSrc2.Format(_T("%s"), GetStrValue(iScene, sArg2));
+	sSrc1.Format(_T("%s"), GetStrValue(sDir, iScene, sArg1));
+	sSrc2.Format(_T("%s"), GetStrValue(sDir, iScene, sArg2));
 
 	if(sSrc1.Compare(sSrc2)==0)
 	{
@@ -68,10 +68,10 @@ BOOL IsStrEqual(int iScene, CString sArg1, CString sArg2)
 	return FALSE;
 }
 
-BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
+BOOL IsIntEqual(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
-	int iSrc1=GetIntValue(iScene, sArg1);
-	int iSrc2=GetIntValue(iScene, sArg2);
+	int iSrc1=GetIntValue(sDir, iScene, sArg1);
+	int iSrc2=GetIntValue(sDir, iScene, sArg2);
 
 	return (iSrc1==iSrc2);
 }
@@ -79,9 +79,9 @@ BOOL IsIntEqual(int iScene, CString sArg1, CString sArg2)
 
 
 
-ReturnValue Flow_AreStrEqual(int iScene, CStringArray* saData, CString* sReturnParam)
+ReturnValue Flow_AreStrEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
 {
-	if(IsStrEqual(iScene, saData->GetAt(0), saData->GetAt(1)))
+	if(IsStrEqual(sDir, iScene, saData->GetAt(0), saData->GetAt(1)))
 	{
 		sReturnParam->Format(_T("%s"), saData->GetAt(2));
 		return RETURN_GOTO_BY_SWITCH;
@@ -90,9 +90,9 @@ ReturnValue Flow_AreStrEqual(int iScene, CStringArray* saData, CString* sReturnP
 	return RETURN_NORMAL;
 }
 
-ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnParam)
+ReturnValue Flow_AreIntEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
 {
-	if(IsIntEqual(iScene, saData->GetAt(0), saData->GetAt(1)))
+	if(IsIntEqual(sDir, iScene, saData->GetAt(0), saData->GetAt(1)))
 	{
 		sReturnParam->Format(_T("%s"), saData->GetAt(2));
 		return RETURN_GOTO_BY_SWITCH;
@@ -101,11 +101,11 @@ ReturnValue Flow_AreIntEqual(int iScene, CStringArray* saData, CString* sReturnP
 	return RETURN_NORMAL;
 }
 
-ReturnValue Flow_Compare(int iScene, CStringArray* saData, CString* sReturnParam)
+ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
 {
 
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene,  saData->GetAt(2));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene,  saData->GetAt(2));
 
 
 	if((saData->GetAt(1).Compare(_T("="))==0) || (saData->GetAt(1).Compare(_T("=="))==0))
@@ -184,57 +184,57 @@ ReturnValue Flow_Assign(CString sDir, int iScene, CStringArray* saData)
 	{
 	case VARIABLE_POINT_SET_R:
 		{
-			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
+			Point* pPointDst = GetPointValuePointer(sDir, iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
-			return SetIntValue(&(pPointDst->r), iScene, saData->GetAt(1),iSelfSrc);
+			return SetIntValue(sDir, iScene, &(pPointDst->r), saData->GetAt(1),iSelfSrc);
 		}
 	case VARIABLE_POINT_SET_C:
 		{
-			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
+			Point* pPointDst = GetPointValuePointer(sDir, iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
-			return SetIntValue(&(pPointDst->c), iScene, saData->GetAt(1),iSelfSrc);
+			return SetIntValue(sDir, iScene, &(pPointDst->c), saData->GetAt(1),iSelfSrc);
 		}
 	case VARIABLE_INT:
 		{
-			int* piDst = GetIntValuePointer(iScene, saData->GetAt(0));
+			int* piDst = GetIntValuePointer(sDir, iScene, saData->GetAt(0));
 			if(piDst == NULL){return RETURN_FAILED;}
-			return SetIntValue(piDst, iScene, saData->GetAt(1),iSelfSrc);
+			return SetIntValue(sDir, iScene, piDst, saData->GetAt(1),iSelfSrc);
 		}
 	case VARIABLE_STR:
 		{
-			CString* psDst=GetStrValuePointer(iScene, saData->GetAt(0));
+			CString* psDst=GetStrValuePointer(sDir, iScene, saData->GetAt(0));
 			if(psDst == NULL){return RETURN_FAILED;}
-			return SetStrValue(psDst,iScene, saData->GetAt(1));
+			return SetStrValue(sDir, iScene, psDst, saData->GetAt(1));
 		}
 	case VARIABLE_IMG:
 		{
-			ImgRGB* pImgRGBDst = GetImgValuePointer(iScene, saData->GetAt(0));
+			ImgRGB* pImgRGBDst = GetImgValuePointer(sDir, iScene, saData->GetAt(0));
 			if(pImgRGBDst == NULL){return RETURN_FAILED;}
-			return SetImgValue(pImgRGBDst,iScene, saData->GetAt(1));
+			return SetImgValue(sDir, iScene, pImgRGBDst, saData->GetAt(1));
 		}
 	case VARIABLE_OBJECT:
 		{
-			Object* pObjDst = GetObjValuePointer(iScene, saData->GetAt(0));
+			Object* pObjDst = GetObjValuePointer(sDir, iScene, saData->GetAt(0));
 			if(pObjDst == NULL){return RETURN_FAILED;}
-			return SetObjValue(pObjDst,iScene, saData->GetAt(1));
+			return SetObjValue(sDir, iScene, pObjDst, saData->GetAt(1));
 		}
 	case VARIABLE_POINT:
 		{
-			Point* pPointDst = GetPointValuePointer(iScene, saData->GetAt(0));
+			Point* pPointDst = GetPointValuePointer(sDir, iScene, saData->GetAt(0));
 			if(pPointDst == NULL){return RETURN_FAILED;}
-			return SetPointValue(sDir, pPointDst, iScene, saData->GetAt(1));
+			return SetPointValue(sDir, iScene, pPointDst, saData->GetAt(1));
 		}
 	case VARIABLE_RECT:
 		{
-			CRect* pRectDst = GetRectValuePointer(iScene, saData->GetAt(0));
+			CRect* pRectDst = GetRectValuePointer(sDir, iScene, saData->GetAt(0));
 			if(pRectDst == NULL){return RETURN_FAILED;}
-			return SetRectValue(pRectDst, iScene, saData->GetAt(1));
+			return SetRectValue(sDir, iScene, pRectDst, saData->GetAt(1));
 		}
 	case VARIABLE_CAMERA:
 		{
-			Camera* pCamera = GetCameraPointer(iScene, saData->GetAt(0));
+			Camera* pCamera = GetCameraPointer(sDir, iScene, saData->GetAt(0));
 			if(pCamera == NULL){return RETURN_FAILED;}
-			return SetCameraValue(pCamera, iScene, saData->GetAt(1));
+			return SetCameraValue(sDir, iScene, pCamera, saData->GetAt(1));
 		}
 	case VARIABLE_CLIPBOARD:
 		{
@@ -243,7 +243,7 @@ ReturnValue Flow_Assign(CString sDir, int iScene, CStringArray* saData)
 			if(bRet == TRUE)
 			{
 				CString sValue;
-				sValue.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(1)));
+				sValue.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(1)));
 
 				bRet = CopyToClipBoardStr(sValue);
 				if(bRet != TRUE){return RETURN_FAILED;}
@@ -253,7 +253,7 @@ ReturnValue Flow_Assign(CString sDir, int iScene, CStringArray* saData)
 			bRet = GetOperandImgSrc(saData->GetAt(1),&iCmmandType);
 			if(bRet == TRUE)
 			{
-				ImgRGB* pImgRGBSrc = GetImgValuePointer(iScene, saData->GetAt(1));
+				ImgRGB* pImgRGBSrc = GetImgValuePointer(sDir, iScene, saData->GetAt(1));
 				if(pImgRGBSrc == NULL){return RETURN_FAILED;}
 
 				bRet = CopyToClipBoardImg(pImgRGBSrc);
@@ -270,7 +270,7 @@ ReturnValue Flow_Assign(CString sDir, int iScene, CStringArray* saData)
 	return RETURN_FAILED;
 }
 
-ReturnValue MessageBox_My(int iScene, CStringArray* saData)
+ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData)
 {
 
 	CString sMes;
@@ -279,7 +279,7 @@ ReturnValue MessageBox_My(int iScene, CStringArray* saData)
 	bRet = GetOperandIntSrc(saData->GetAt(0), &iCommandType);
 	if(bRet == TRUE)
 	{
-		int iSrc=GetIntValue(iScene, saData->GetAt(0));
+		int iSrc=GetIntValue(sDir, iScene, saData->GetAt(0));
 
 		sMes.Format(_T("%d"),iSrc);
 		AfxMessageBox(sMes);
@@ -290,9 +290,9 @@ ReturnValue MessageBox_My(int iScene, CStringArray* saData)
 	{
 		CString sData;
 		sData.Format(_T("%s.r"),saData->GetAt(0));
-		int iSrcR=GetIntValue(iScene, sData);
+		int iSrcR=GetIntValue(sDir, iScene, sData);
 		sData.Format(_T("%s.c"),saData->GetAt(0));
-		int iSrcC=GetIntValue(iScene, sData);
+		int iSrcC=GetIntValue(sDir, iScene, sData);
 
 		sMes.Format(_T("(%d, %d)"),iSrcC, iSrcR);
 		AfxMessageBox(sMes);
@@ -303,13 +303,13 @@ ReturnValue MessageBox_My(int iScene, CStringArray* saData)
 	{
 		CString sData;
 		sData.Format(_T("%s.top"),saData->GetAt(0));
-		int iSrcR1=GetIntValue(iScene, sData);
+		int iSrcR1=GetIntValue(sDir, iScene, sData);
 		sData.Format(_T("%s.left"),saData->GetAt(0));
-		int iSrcC1=GetIntValue(iScene, sData);
+		int iSrcC1=GetIntValue(sDir, iScene, sData);
 		sData.Format(_T("%s.bottom"),saData->GetAt(0));
-		int iSrcR2=GetIntValue(iScene, sData);
+		int iSrcR2=GetIntValue(sDir, iScene, sData);
 		sData.Format(_T("%s.right"),saData->GetAt(0));
-		int iSrcC2=GetIntValue(iScene, sData);
+		int iSrcC2=GetIntValue(sDir, iScene, sData);
 
 		sMes.Format(_T("(%d, %d) - (%d, %d)"),iSrcC1, iSrcR1, iSrcC2, iSrcR2);
 		AfxMessageBox(sMes);
@@ -319,7 +319,7 @@ ReturnValue MessageBox_My(int iScene, CStringArray* saData)
 	if(bRet == TRUE)
 	{
 		CString sSrc;
-		sSrc.Format(_T("%s"),GetStrValue(iScene, saData->GetAt(0)));
+		sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, saData->GetAt(0)));
 		AfxMessageBox(sSrc);
 		return RETURN_NORMAL;
 	}

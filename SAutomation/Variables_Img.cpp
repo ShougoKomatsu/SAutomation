@@ -37,7 +37,7 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 	
 	return TRUE;
 }
-ImgRGB* GetImgValuePointer(int iScene, CString sArg)
+ImgRGB* GetImgValuePointer(CString sDir, int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return NULL;}
 
@@ -51,7 +51,7 @@ ImgRGB* GetImgValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
-const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg)
+const ImgRGB* GetImgValuePointerConst(CString sDir, int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0){return NULL;}
 
@@ -65,7 +65,7 @@ const ImgRGB* GetImgValuePointerConst(int iScene, CString sArg)
 	return NULL;
 }
 
-ReturnValue SetCameraValue(Camera* cameraDst, int iScene, CString sData)
+ReturnValue SetCameraValue(CString sDir, int iScene, Camera* cameraDst, CString sData)
 {
 	CString sArg;
 	CString sDummy;
@@ -95,7 +95,7 @@ ReturnValue SetCameraValue(Camera* cameraDst, int iScene, CString sData)
 	}
 	return RETURN_FAILED;
 }
-ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
+ReturnValue SetImgValue(CString sDir, int iScene, ImgRGB* imgRGBDst, CString sData)
 {
 
 	CString sArg;
@@ -119,12 +119,12 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0)
 			{
 				CString sSrc;
-				sSrc.Format(_T("%s"),GetStrValuePointer(iScene, sArg));
+				sSrc.Format(_T("%s"),GetStrValuePointer(sDir, iScene, sArg));
 
 				pImgRGB->Assign(sSrc);
 				return RETURN_NORMAL;
 			}
-			pImgRGB->Assign(GetImgValuePointerConst(iScene, sArg));
+			pImgRGB->Assign(GetImgValuePointerConst(sDir, iScene, sArg));
 			return RETURN_NORMAL;
 		}
 	case VARIABLE_SCREENSHOT:
@@ -177,13 +177,13 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(bRet != TRUE){return RETURN_FAILED;} 
 
 
-			ImgRGB* pImgRGBIn=GetImgValuePointer(iScene, sArg0);
+			ImgRGB* pImgRGBIn=GetImgValuePointer(sDir, iScene, sArg0);
 			if(pImgRGBIn == NULL){return RETURN_FAILED;}
 
-			int iSrc1=GetIntValue(iScene, sArg1);
-			int iSrc2=GetIntValue(iScene, sArg2);
-			int iSrc3=GetIntValue(iScene, sArg3);
-			int iSrc4=GetIntValue(iScene, sArg4);
+			int iSrc1=GetIntValue(sDir, iScene, sArg1);
+			int iSrc2=GetIntValue(sDir, iScene, sArg2);
+			int iSrc3=GetIntValue(sDir, iScene, sArg3);
+			int iSrc4=GetIntValue(sDir, iScene, sArg4);
 
 			CropImage(pImgRGBIn, pImgRGB, iSrc2, iSrc1, iSrc4,  iSrc3);
 			return RETURN_NORMAL;
@@ -201,7 +201,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(bRet != TRUE){return RETURN_FAILED;} 
 
 
-			ImgRGB* pImgRGBIn=GetImgValuePointer(iScene, sArg0);
+			ImgRGB* pImgRGBIn=GetImgValuePointer(sDir, iScene, sArg0);
 			if(pImgRGBIn == NULL){return RETURN_FAILED;}
 
 			ImgRGB imgR, imgG, imgB;
@@ -226,10 +226,10 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 			if(bRet != TRUE){return RETURN_FAILED;} 
 
 
-			ImgRGB* pImgRGBIn=GetImgValuePointer(iScene, sArg0);
+			ImgRGB* pImgRGBIn=GetImgValuePointer(sDir, iScene, sArg0);
 			if(pImgRGBIn == NULL){return RETURN_FAILED;}
 
-			Object* objRegion=GetObjValuePointer(iScene, sArg1);
+			Object* objRegion=GetObjValuePointer(sDir, iScene, sArg1);
 			if(objRegion == NULL){return RETURN_FAILED;}
 
 			bRet = ReduceDomain(pImgRGBIn, objRegion, pImgRGB);
@@ -240,7 +240,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 		{
 
 			Camera* pCamera;
-			pCamera=GetCameraPointer(iScene,_T(""));
+			pCamera=GetCameraPointer(sDir, iScene,_T(""));
 
 			g_camera.GrabImage(pImgRGB);
 			return RETURN_NORMAL;
@@ -256,7 +256,7 @@ ReturnValue SetImgValue(ImgRGB* imgRGBDst, int iScene, CString sData)
 
 	return RETURN_FAILED;
 }
-Camera* GetCameraPointer(int iScene, CString sArg)
+Camera* GetCameraPointer(CString sDir, int iScene, CString sArg)
 {
 	return &g_camera;
 }

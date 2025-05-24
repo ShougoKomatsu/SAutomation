@@ -14,8 +14,8 @@ ReturnValue Minimize();
 
 BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam);
 ReturnValue SetWindowForward(CString sTargetName);
-ReturnValue WindowSize(int iScene, CStringArray* saData);
-ReturnValue WindowPos(int iScene, CStringArray* saData);
+ReturnValue WindowSize(CString sDir, int iScene, CStringArray* saData);
+ReturnValue WindowPos(CString sDir, int iScene, CStringArray* saData);
 
 BOOL GetWindowNameList(CStringArray* caNames);
 BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch=TRUE);
