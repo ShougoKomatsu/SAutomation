@@ -192,8 +192,9 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(sDir, iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Width();}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.Width();}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -203,8 +204,9 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(sDir, iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Height();}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.Height();}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -214,8 +216,9 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(sDir, iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->left;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.left;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -225,8 +228,9 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(sDir, iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->top;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.top;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -236,8 +240,9 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(sDir, iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->right;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.right;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -247,8 +252,9 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(sDir, iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->bottom;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.bottom;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;

@@ -57,9 +57,10 @@ ReturnValue MoveMouse(CString sDir, int iScene, CStringArray* saData)
 
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MoveMouse(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MoveMouse(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -75,9 +76,10 @@ ReturnValue MouseLDown(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseLDown(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseLDown(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -90,9 +92,10 @@ ReturnValue MouseRDown(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseRDown(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRDown(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -106,9 +109,10 @@ ReturnValue MouseMDown(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseMDown(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMDown(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -125,9 +129,10 @@ ReturnValue MouseLUp(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseLUp(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseLUp(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -141,9 +146,10 @@ ReturnValue MouseRUp(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseRUp(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRUp(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -157,9 +163,10 @@ ReturnValue MouseMUp(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseMUp(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMUp(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -201,9 +208,10 @@ ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseLClick(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseLClick(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -216,9 +224,10 @@ ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseRClick(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRClick(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
@@ -232,9 +241,10 @@ ReturnValue MouseMClick(CString sDir, int iScene, CStringArray* saData)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(sDir, iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseMClick(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMClick(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));

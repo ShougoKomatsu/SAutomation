@@ -119,7 +119,7 @@ ReturnValue SetImgValue(CString sDir, int iScene, ImgRGB* imgRGBDst, CString sDa
 			if(sArg.Left(6).CompareNoCase(_T("VarImg"))!=0)
 			{
 				CString sSrc;
-				sSrc.Format(_T("%s"),GetStrValuePointer(sDir, iScene, sArg));
+				sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, sArg));
 
 				pImgRGB->Assign(sSrc);
 				return RETURN_NORMAL;
