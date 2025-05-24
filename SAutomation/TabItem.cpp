@@ -390,7 +390,25 @@ void CTabItem::FileSelect(int iSlot, int iScene)
 		CFileDialog cf(TRUE);
 		cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
 		if(cf.DoModal()!=IDOK){ return;}
-		m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName.Format(_T("%s"), cf.GetFileName());
+
+
+		CString sFolder;
+		CString sFolderPath;
+		CString sFilePath;
+		CString sFileName;
+		sFilePath.Format(_T("%s"), cf.GetPathName());
+		GetDirectory(sFilePath,&sFolderPath,&sFileName);
+
+		if(sMacroFolderPath.CompareNoCase(sFolderPath)==0)
+		{
+			sFolder.Format(_T(""));
+		}
+		else
+		{
+			sFolder.Format(_T("%s\\"),sFolderPath.Right( sFolderPath.GetLength()-sMacroFolderPath.GetLength()-1));
+		}
+
+		m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sFileName.Format(_T("%s%s"), sFolder, sFileName);
 	}
 	else
 	{
