@@ -65,13 +65,13 @@
 #define COMMAND_VARIABLE_CAMERA_CLOSE (COMMAND_VARIABLE+12)
 #define COMMAND_VARIABLE_RECT (COMMAND_VARIABLE+13)
 
-ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
+ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam);
 
 
 
 
 ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, wchar_t* tch, BYTE* byData);
-ReturnValue OutputKeys(int iScene, CString sInputWithDblQuart);
+ReturnValue OutputKeys(CString sDir, int iScene, CString sInputWithDblQuart);
 
-ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam);
+ReturnValue WaitForEitherKeyOn(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam);
 #endif

@@ -32,15 +32,15 @@
 
 
 BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType);
-const CString GetStrValue(int iScene, CString sDataLocal);
-CString* GetStrValuePointer(int iScene, CString sArg);
+const CString GetStrValue(CString sDir, int iScene, CString sDataLocal);
+CString* GetStrValuePointer(CString sDir, int iScene, CString sArg);
 
 
 
-const CString StrCombine(int iScene, CString sArg1, CString sArg2);
-const CString StrLeft(int iScene, CString sArg1, CString sArg2);
-const CString StrRight(int iScene, CString sArg1, CString sArg2);
-const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3);
+const CString StrCombine(CString sDir, int iScene, CString sArg1, CString sArg2);
+const CString StrLeft(CString sDir, int iScene, CString sArg1, CString sArg2);
+const CString StrRight(CString sDir, int iScene, CString sArg1, CString sArg2);
+const CString StrMid(CString sDir, int iScene, CString sArg1, CString sArg2, CString sArg3);
 const CString NowDateTime(CString sArg);
-ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal);
+ReturnValue SetStrValue(CString sDir, int iScene, CString* sDstPointer, CString sDataLocal);
 BOOL PerseFormat(CString sFormat, int* iFormatOut);

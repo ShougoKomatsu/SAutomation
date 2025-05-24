@@ -193,7 +193,7 @@ ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, wchar_t* tch, BYTE* byData
 }
 
 
-ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForUpdate(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	
 	int iWaitOn;
@@ -210,7 +210,7 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 	if(bSpecified==FALSE)
 	{
 		CRect rect;
-		bRet =  GetRectValue(iScene, saData->GetAt(1), &rect);
+		bRet =  GetRectValue(sDir, iScene, saData->GetAt(1), &rect);
 		if(bRet == TRUE)
 		{
 			bSpecified=TRUE;
@@ -225,16 +225,16 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 	if(bSpecified==FALSE)
 	{
 		bSpecified=TRUE;
-		iC0=GetIntValue(iScene, saData->GetAt(1));
-		iR0=GetIntValue(iScene, saData->GetAt(2));
-		iC1=GetIntValue(iScene, saData->GetAt(3));
-		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
+		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
+		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
+		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
 		iParamOffset=5;
 	}
 
 
 
-	iTickMillisec = GetIntValue(iScene, saData->GetAt(0));
+	iTickMillisec = GetIntValue(sDir, iScene, saData->GetAt(0));
 	
 
 	if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("on"))==0){iWaitOn=1;}
@@ -243,7 +243,7 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 
 	if(saData->GetCount()<=iParamOffset+1){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
+	else {iTimeOutMilliSec = GetIntValue(sDir, iScene, saData->GetAt(iParamOffset+1));}
 	
 
 
@@ -285,7 +285,7 @@ ReturnValue WaitForUpdate(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray*
 
 }
 
-ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForImage(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
@@ -301,7 +301,7 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	if(bSpecified==FALSE)
 	{
 		CRect rect;
-		bRet =  GetRectValue(iScene, saData->GetAt(1), &rect);
+		bRet =  GetRectValue(sDir, iScene, saData->GetAt(1), &rect);
 		if(bRet == TRUE)
 		{
 			bSpecified=TRUE;
@@ -316,10 +316,10 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	if(bSpecified==FALSE)
 	{
 		bSpecified=TRUE;
-		iC0=GetIntValue(iScene, saData->GetAt(1));
-		iR0=GetIntValue(iScene, saData->GetAt(2));
-		iC1=GetIntValue(iScene, saData->GetAt(3));
-		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
+		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
+		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
+		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
 		iParamOffset=5;
 	}
 
@@ -327,9 +327,9 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	CString sModelFilePath;
 	
 	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
 
@@ -339,7 +339,7 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 
 	if(saData->GetCount()<=iParamOffset+1){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
+	else {iTimeOutMilliSec = GetIntValue(sDir, iScene, saData->GetAt(iParamOffset+1));}
 	
 	
 
@@ -391,7 +391,7 @@ ReturnValue WaitForImage(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	return RETURN_NORMAL;
 }
 
-ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForColor(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 	int iWaitOn;
 
@@ -399,14 +399,14 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	
 	CString sArg;
 	CString sColor;
-	sColor.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
+	sColor.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
 
 	if((sColor.CompareNoCase(_T("R"))!=0) && (sColor.CompareNoCase(_T("G"))!=0) && (sColor.CompareNoCase(_T("B"))!=0)){return RETURN_FAILED;}
 
 	int iLower;
-	iLower = GetIntValue(iScene, saData->GetAt(1));
+	iLower = GetIntValue(sDir, iScene, saData->GetAt(1));
 	int iUpper;
-	iUpper = GetIntValue(iScene, saData->GetAt(2));
+	iUpper = GetIntValue(sDir, iScene, saData->GetAt(2));
 
 	int iR0, iC0, iR1, iC1;
 	BOOL bRet;
@@ -418,7 +418,7 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 	int iParamOffset;
 	if(bSpecified==FALSE)
 	{
-		bRet =  GetPointValue(iScene, saData->GetAt(3), &point);
+		bRet =  GetPointValue(sDir, iScene, saData->GetAt(3), &point);
 		if(bRet == TRUE)
 		{
 			bSpecified=TRUE;
@@ -431,7 +431,7 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 	if(bSpecified==FALSE)
 	{
-		bRet =  GetRectValue(iScene, saData->GetAt(3), &rect);
+		bRet =  GetRectValue(sDir, iScene, saData->GetAt(3), &rect);
 		if(bRet == TRUE)
 		{
 			bSpecified=TRUE;
@@ -454,17 +454,17 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 		if(bRegion == TRUE)
 		{
 			bSpecified=TRUE;
-			iC0 = GetIntValue(iScene, saData->GetAt(3));
-			iR0 = GetIntValue(iScene, saData->GetAt(4));
-			iC1 = GetIntValue(iScene, saData->GetAt(5));
-			iR1 = GetIntValue(iScene, saData->GetAt(6));
+			iC0 = GetIntValue(sDir, iScene, saData->GetAt(3));
+			iR0 = GetIntValue(sDir, iScene, saData->GetAt(4));
+			iC1 = GetIntValue(sDir, iScene, saData->GetAt(5));
+			iR1 = GetIntValue(sDir, iScene, saData->GetAt(6));
 			iParamOffset=7;
 		}
 		else
 		{
 			bSpecified=TRUE;
-			iC0 = GetIntValue(iScene, saData->GetAt(3));
-			iR0 = GetIntValue(iScene, saData->GetAt(4));
+			iC0 = GetIntValue(sDir, iScene, saData->GetAt(3));
+			iR0 = GetIntValue(sDir, iScene, saData->GetAt(4));
 			iParamOffset=5;
 		}
 	}
@@ -478,7 +478,7 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 
 
 	if(saData->GetCount()==iParamOffset+0){iTimeOutMilliSec=-1;}
-	else {iTimeOutMilliSec = GetIntValue(iScene, saData->GetAt(iParamOffset+1));}
+	else {iTimeOutMilliSec = GetIntValue(sDir, iScene, saData->GetAt(iParamOffset+1));}
 
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
@@ -524,7 +524,7 @@ ReturnValue WaitForColor(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* 
 }
 
 
-ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
+ReturnValue WaitForKey(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData)
 {
 
 	int iWaitOn;
@@ -544,7 +544,7 @@ ReturnValue WaitForKey(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* sa
 
 	if(saData->GetCount()>=3)
 	{
-		iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(2));
+		iTimeOutMillisec = GetIntValue(sDir, iScene, saData->GetAt(2));
 	}
 	else
 	{
@@ -621,20 +621,20 @@ ReturnValue KeyUp(CStringArray* saData)
 
 	return KeyUp(bySendKey);
 }
-ReturnValue ScreenShot(int iScene, CStringArray* saCommands)
+ReturnValue ScreenShot(CString sDir, int iScene, CStringArray* saCommands)
 {
 	ImgRGB imgRGB;
 	Screenshot(&imgRGB);
 
 	CString sSrc;
-	sSrc.Format(_T("%s"),GetStrValue(iScene, saCommands->GetAt(0)));
+	sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, saCommands->GetAt(0)));
 
 	BOOL bRet=WriteImage(&imgRGB, sSrc);
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }
 
-ReturnValue ScreenShotForegroundWindow(int iScene, CStringArray* saCommands)
+ReturnValue ScreenShotForegroundWindow(CString sDir, int iScene, CStringArray* saCommands)
 {
 	ImgRGB imgRGB;
 	ImgRGB imgRGBCropped;
@@ -647,19 +647,19 @@ ReturnValue ScreenShotForegroundWindow(int iScene, CStringArray* saCommands)
 	GetForegroundWindowPos(&iLeft, &iTop, &iWidth, &iHeight);
 	CropImage(&imgRGB, &imgRGBCropped, iTop, iLeft, iTop+iHeight-1, iLeft+iWidth-1);
 	CString sSrc;
-	sSrc.Format(_T("%s"),GetStrValue(iScene, saCommands->GetAt(0)));
+	sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, saCommands->GetAt(0)));
 
 	BOOL bRet=WriteImage(&imgRGBCropped, sSrc);
 	if(bRet !=TRUE){return RETURN_FAILED;}
 	return RETURN_NORMAL;
 }
 
-ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
+ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLONG* Special1, CString sDataLine, CString* sReturnParam)
 {
 	int iCommandType=COMMAND_UNDEFINED;
 	BOOL bRet;
 	CStringArray saData;
-	bRet = PerseCommand(iSceneData, sDataLine, &iCommandType, &saData, g_sDir);
+	bRet = PerseCommand(iSceneData, sDataLine, &iCommandType, &saData, sDir);
 	if(iCommandType == COMMAND_NOTING){return RETURN_NORMAL;}
 	if(bRet != TRUE){return RETURN_FAILED;}
 
@@ -667,51 +667,51 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	{
 	case COMMAND_DELAY:
 		{
-			int iSrc=GetIntValue(*iSceneData, saData.GetAt(0));
+			int iSrc=GetIntValue(sDir, *iSceneData, saData.GetAt(0));
 			return K_Sleep(Halt, Suspend, iSrc);
 		}
-	case COMMAND_MOUSE_L_DOWN:{MoveMouse(*iSceneData, &saData);return MouseLDown(*iSceneData, &saData);}
-	case COMMAND_MOUSE_R_DOWN:{MoveMouse(*iSceneData, &saData);return MouseRDown(*iSceneData, &saData);}
-	case COMMAND_MOUSE_M_DOWN:{MoveMouse(*iSceneData, &saData);return MouseMDown(*iSceneData, &saData);}
+	case COMMAND_MOUSE_L_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseLDown(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseRDown(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseMDown(sDir, *iSceneData, &saData);}
 
-	case COMMAND_MOUSE_L_UP:{MoveMouse(*iSceneData, &saData);return MouseLUp(*iSceneData, &saData);}
-	case COMMAND_MOUSE_R_UP:{MoveMouse(*iSceneData, &saData);return MouseRUp(*iSceneData, &saData);}
-	case COMMAND_MOUSE_M_UP:{MoveMouse(*iSceneData, &saData);return MouseMUp(*iSceneData, &saData);}
+	case COMMAND_MOUSE_L_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseLUp(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseRUp(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseMUp(sDir, *iSceneData, &saData);}
 
-	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(*iSceneData, &saData);}
-	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(*iSceneData, &saData);}
-	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(*iSceneData, &saData);}
+	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(sDir, *iSceneData, &saData);}
 							   
-	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:{return MouseSetOriginToWindow(*iSceneData, &saData);}
-	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(*iSceneData, &saData);}
+	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:{return MouseSetOriginToWindow(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(sDir, *iSceneData, &saData);}
 
 
-	case COMMAND_MOUSE_MOVE:{return MoveMouse(*iSceneData, &saData);}
-	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(*iSceneData, &saData);}
-	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(*iSceneData, &saData);}
-	case COMMAND_MOUSE_L_CLICK_IMG:{return MouseLClickImage(*iSceneData, &saData);}
-	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(*iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE:{return MoveMouse(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_L_CLICK_IMG:{return MouseLClickImage(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(sDir, *iSceneData, &saData);}
 
-	case COMMAND_WHEEL:{return MouseVWheel(*iSceneData, &saData);}
+	case COMMAND_WHEEL:{return MouseVWheel(sDir, *iSceneData, &saData);}
 
 
 	case COMMAND_KEY_DOWN_UP:{return KeyDownAndUp(&saData);}
 	case COMMAND_KEY_DOWN:{return KeyDown(&saData);}
 	case COMMAND_KEY_UP:{return KeyUp(&saData);}
 
-	case COMMAND_WAIT:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
-	case COMMAND_WAIT_KEY:{return WaitForKey(*iSceneData, Halt, Suspend, &saData);}
-	case COMMAND_WAIT_EITHER_KEY:{return WaitForEitherKeyOn(*iSceneData, Halt, Suspend, &saData, sReturnParam);}
-	case COMMAND_WAIT_IMG:{return WaitForImage(*iSceneData, Halt, Suspend, &saData);}
-	case COMMAND_WAIT_COLOR:{return WaitForColor(*iSceneData, Halt, Suspend, &saData);}
-	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(*iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT:{return WaitForKey(sDir, *iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_KEY:{return WaitForKey(sDir, *iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_EITHER_KEY:{return WaitForEitherKeyOn(sDir, *iSceneData, Halt, Suspend, &saData, sReturnParam);}
+	case COMMAND_WAIT_IMG:{return WaitForImage(sDir,  *iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_COLOR:{return WaitForColor(sDir, *iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(sDir, *iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
 	case COMMAND_WINDOW_FORWARD:{return SetWindowForward(saData.GetAt(0));}
-	case COMMAND_WINDOW_SIZE:{return WindowSize(*iSceneData, &saData);}
-	case COMMAND_WINDOW_POS:{return WindowPos(*iSceneData, &saData);}
+	case COMMAND_WINDOW_SIZE:{return WindowSize(sDir, *iSceneData, &saData);}
+	case COMMAND_WINDOW_POS:{return WindowPos(sDir, *iSceneData, &saData);}
 	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
-	case COMMAND_OUTPUT_KEY:{return OutputKeys(*iSceneData, saData.GetAt(0));}
+	case COMMAND_OUTPUT_KEY:{return OutputKeys(sDir, *iSceneData, saData.GetAt(0));}
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
 	case COMMAND_EXIT:{return RETURN_END;}
 	case COMMAND_LABEL:{return RETURN_LABEL;}
@@ -732,67 +732,67 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 		}
 	case COMMAND_VARIABLE_INT:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_STR:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_IMG:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_OBJ:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_POINT:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_RECT:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_CLIPBOARD:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_CAMERA:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_VARIABLE_CAMERA_CLOSE:
 		{
-			return Flow_Assign(*iSceneData, &saData);
+			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_AREEQUAL_INT:
 		{
-			return Flow_AreIntEqual(*iSceneData, &saData, sReturnParam);
+			return Flow_AreIntEqual(sDir, *iSceneData, &saData, sReturnParam);
 		}
 	case COMMAND_AREEQUAL_STR:
 		{
-			return Flow_AreStrEqual(*iSceneData, &saData, sReturnParam);
+			return Flow_AreStrEqual(sDir, *iSceneData, &saData, sReturnParam);
 		}
 	case COMMAND_COMPARE:
 		{
-			return Flow_Compare(*iSceneData, &saData, sReturnParam);
+			return Flow_Compare(sDir, *iSceneData, &saData, sReturnParam);
 		}
 	case COMMAND_SCREENSHOT:
 		{
-			return ScreenShot(*iSceneData, &saData);
+			return ScreenShot(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_SCREENSHOT_FOREGROUND_WINDOW:
 		{
-			return ScreenShotForegroundWindow(*iSceneData, &saData);
+			return ScreenShotForegroundWindow(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_WRITE_IMAGE:
 		{
-			return Flow_WriteImage(*iSceneData, &saData);
+			return Flow_WriteImage(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_MESSAGEBOX:
 		{
-			return MessageBox_My(*iSceneData, &saData);
+			return MessageBox_My(sDir, *iSceneData, &saData);
 		}
 	case COMMAND_LIST_DLG_ITEMS:
 		{
@@ -803,10 +803,10 @@ ReturnValue OperateCommand(int* iSceneData, LPVOID Halt, LPVOID Suspend, LONGLON
 	return RETURN_FAILED;
 }
 #include "Variables_String.h"
-ReturnValue OutputKeys(int iScene, CString sInputWithDblQuart)
+ReturnValue OutputKeys(CString sDir, int iScene, CString sInputWithDblQuart)
 {
 	CString sValue;
-	sValue.Format(_T("%s"),GetStrValue(iScene, sInputWithDblQuart));
+	sValue.Format(_T("%s"),GetStrValue(sDir, iScene, sInputWithDblQuart));
 
 	int iPosL;
 	int iPosR;
@@ -864,7 +864,7 @@ ReturnValue OutputKeys(int iScene, CString sInputWithDblQuart)
 	return RETURN_NORMAL;
 }
 
-ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam)
+ReturnValue WaitForEitherKeyOn(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam)
 {
 	BOOL bUnicode;
 	wchar_t tch;
@@ -883,7 +883,7 @@ ReturnValue WaitForEitherKeyOn(int iScene, LPVOID Halt, LPVOID Suspend, CStringA
 	sLabels=new CString[iKeynum];
 	if(sLabels == NULL){SAFE_DELETE(byKeys); return RETURN_FAILED;}
 
-	iTimeOutMillisec = GetIntValue(iScene, saData->GetAt(0));
+	iTimeOutMillisec = GetIntValue(sDir, iScene, saData->GetAt(0));
 	for(int i=0; i<iKeynum; i++)
 	{
 		iRet = GetKeyCode(saData->GetAt(2*i+1), &bUnicode, &tch, &(byKeys[i]));

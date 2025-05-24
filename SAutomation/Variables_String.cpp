@@ -36,7 +36,7 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 	return TRUE;
 }
 
-const CString GetStrValue(int iScene, CString sDataLocal)
+const CString GetStrValue(CString sDir, int iScene, CString sDataLocal)
 {
 	CString sOut;
 	CString sArg;
@@ -53,14 +53,14 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
-			sOut.Format(_T("%s"), StrCombine(iScene, sArg1, sArg2)); 
+			sOut.Format(_T("%s"), StrCombine(sDir, iScene, sArg1, sArg2)); 
 			return sOut;
 		}
 	case VARIABLE_STR:
 		{
 			CString* psSrc;
 			CString sSrc;
-			psSrc=GetStrValuePointer(iScene, sDataLocal);
+			psSrc=GetStrValuePointer(sDir, iScene, sDataLocal);
 			if(psSrc==NULL){sSrc.Format(_T("%s"),sDataLocal);}else{sSrc.Format(_T("%s"),*psSrc);}
 			sOut.Format(_T("%s"),sSrc);
 			LOG_OUTPUT_STR(iScene, sDataLocal, sSrc);
@@ -75,8 +75,8 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			
 			CString sFormat;
-			sFormat.Format(_T("%s"),GetStrValue(iScene, sArg1));
-			int iSrc=GetIntValue(iScene, sArg2);
+			sFormat.Format(_T("%s"),GetStrValue(sDir, iScene, sArg1));
+			int iSrc=GetIntValue(sDir, iScene, sArg2);
 			CString sOut;
 
 			sOut.Format(sFormat, iSrc);
@@ -115,37 +115,37 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 		{
 			CString sArg1;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			sArg1.Format(_T("%s"), GetStrValue(sDir, iScene, sArg1));
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			int iArg2;
-			iArg2 = GetIntValue(iScene, sArg2);
+			iArg2 = GetIntValue(sDir, iScene, sArg2);
 			return sArg1.Left(iArg2);
 		}
 	case VARIABLE_STR_RIGHT:
 		{
 			CString sArg1;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			sArg1.Format(_T("%s"), GetStrValue(sDir, iScene, sArg1));
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			int iArg2;
-			iArg2 = GetIntValue(iScene, sArg2);
+			iArg2 = GetIntValue(sDir, iScene, sArg2);
 			return sArg1.Right(iArg2);
 		}
 	case VARIABLE_STR_MID:
 		{
 			CString sArg1;
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
-			sArg1.Format(_T("%s"), GetStrValue(iScene, sArg1));
+			sArg1.Format(_T("%s"), GetStrValue(sDir, iScene, sArg1));
 			CString sArg2;
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 			CString sArg3;
 			ExtractTokenInBracket(sDataLocal,2,&sArg3);
 			int iArg2;
-			iArg2 = GetIntValue(iScene, sArg2);
+			iArg2 = GetIntValue(sDir, iScene, sArg2);
 			int iArg3;
-			iArg3 = GetIntValue(iScene, sArg3);
+			iArg3 = GetIntValue(sDir, iScene, sArg3);
 			return sArg1.Mid(iArg2, iArg3);
 		}
 	case VARIABLE_CLIPBOARD:
@@ -220,7 +220,7 @@ const CString GetStrValue(int iScene, CString sDataLocal)
 	return sOut;
 }
 
-CString* GetStrValuePointer(int iScene, CString sArg)
+CString* GetStrValuePointer(CString sDir, int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarStr"))!=0){return NULL;}
 
@@ -235,49 +235,49 @@ CString* GetStrValuePointer(int iScene, CString sArg)
 }
 
 
-const CString StrCombine(int iScene, CString sArg1, CString sArg2)
+const CString StrCombine(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
 	CString sSrc1, sSrc2;
 
-	sSrc1.Format(_T("%s"),GetStrValue(iScene, sArg1));
-	sSrc2.Format(_T("%s"),GetStrValue(iScene, sArg2));
+	sSrc1.Format(_T("%s"),GetStrValue(sDir, iScene, sArg1));
+	sSrc2.Format(_T("%s"),GetStrValue(sDir, iScene, sArg2));
 
 	CString sTemp;
 	sTemp.Format(_T("%s%s"),sSrc1,sSrc2);
 	return sTemp;
 }
 
-const CString StrLeft(int iScene, CString sArg1, CString sArg2)
+const CString StrLeft(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
 	CString sSrc;
-	sSrc.Format(_T("%s"),GetStrValue(iScene, sArg1));
+	sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, sArg1));
 
-	int iSrc=GetIntValue(iScene, sArg2);
+	int iSrc=GetIntValue(sDir, iScene, sArg2);
 
 	CString sTemp;
 	sTemp.Format(_T("%"),sSrc.Left(iSrc));
 	return sTemp;
 }
 
-const CString StrRight(int iScene, CString sArg1, CString sArg2)
+const CString StrRight(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
 	CString sSrc;
-	sSrc.Format(_T("%s"),GetStrValue(iScene, sArg1));
+	sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, sArg1));
 
-	int iSrc=GetIntValue(iScene, sArg2);
+	int iSrc=GetIntValue(sDir, iScene, sArg2);
 
 	CString sTemp;
 	sTemp.Format(_T("%"),sSrc.Right(iSrc));
 	return sTemp;
 }
 
-const CString StrMid(int iScene, CString sArg1, CString sArg2, CString sArg3)
+const CString StrMid(CString sDir, int iScene, CString sArg1, CString sArg2, CString sArg3)
 {
 	CString sSrc;
-	sSrc.Format(_T("%s"),GetStrValue(iScene, sArg1));
+	sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, sArg1));
 
-	int iSrc1=GetIntValue(iScene, sArg2);
-	int iSrc2=GetIntValue(iScene, sArg3);
+	int iSrc1=GetIntValue(sDir, iScene, sArg2);
+	int iSrc2=GetIntValue(sDir, iScene, sArg3);
 
 	CString sTemp;
 	sTemp.Format(_T("%"),sSrc.Mid(iSrc1, iSrc2));
@@ -293,7 +293,7 @@ const CString NowDateTime(CString sArg)
 	
 	return ConvertTimeToString(st, sArg);
 }
-ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
+ReturnValue SetStrValue(CString sDir, int iScene, CString* sDstPointer, CString sDataLocal)
 {
 	CString sArg;
 	int iOperandSrc;
@@ -301,7 +301,7 @@ ReturnValue SetStrValue(CString* sDstPointer, int iScene, CString sDataLocal)
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CString sStrVal;
-	sStrVal.Format(_T("%s"),GetStrValue(iScene,sDataLocal));
+	sStrVal.Format(_T("%s"),GetStrValue(sDir, iScene,sDataLocal));
 
 	switch(iOperandSrc)
 	{

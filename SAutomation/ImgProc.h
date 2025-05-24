@@ -6,4 +6,4 @@
 #include "SImgProc_ex.h"
 #pragma comment(lib, "simgproc.lib")
 
-ReturnValue Flow_WriteImage(int iScene, CStringArray* saData);
+ReturnValue Flow_WriteImage(CString sDir, int iScene, CStringArray* saData);

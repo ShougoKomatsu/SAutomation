@@ -11,9 +11,9 @@ ReturnValue MouseVWheel(int iWheel)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MouseVWheel(int iScene, CStringArray* saData)
+ReturnValue MouseVWheel(CString sDir, int iScene, CStringArray* saData)
 {
-	int iSrc=GetIntValue(iScene, saData->GetAt(0));
+	int iSrc=GetIntValue(sDir, iScene, saData->GetAt(0));
 	return MouseVWheel(iSrc);
 }
 
@@ -46,7 +46,7 @@ ReturnValue MouseRUp(UINT nX, UINT nY){return MouseRUpAbs(nX + g_iOriginC, nY + 
 ReturnValue MouseMUp(UINT nX, UINT nY){return MouseMUpAbs(nX + g_iOriginC, nY + g_iOriginR);}
 
 
-ReturnValue MoveMouse(int iScene, CStringArray* saData)
+ReturnValue MoveMouse(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==1)
 	{
@@ -57,112 +57,119 @@ ReturnValue MoveMouse(int iScene, CStringArray* saData)
 
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MoveMouse(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MoveMouse(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 
 	return MoveMouse(iSrc1, iSrc2);
 }
 
 
-ReturnValue MouseLDown(int iScene, CStringArray* saData)
+ReturnValue MouseLDown(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseLDown(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseLDown(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseLDown(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseLDown(iSrc1, iSrc2);
 }
-ReturnValue MouseRDown(int iScene, CStringArray* saData)
+ReturnValue MouseRDown(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseRDown(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseRDown(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRDown(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseRDown(iSrc1, iSrc2);
 }
 
-ReturnValue MouseMDown(int iScene, CStringArray* saData)
+ReturnValue MouseMDown(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseMDown(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseMDown(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMDown(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseMDown(iSrc1, iSrc2);
 }
 
 
 
 
-ReturnValue MouseLUp(int iScene, CStringArray* saData)
+ReturnValue MouseLUp(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseLUp(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseLUp(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseLUp(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseLUp(iSrc1, iSrc2);
 }
 
-ReturnValue MouseRUp(int iScene, CStringArray* saData)
+ReturnValue MouseRUp(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseRUp(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseRUp(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRUp(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseRUp(iSrc1, iSrc2);
 }
 
-ReturnValue MouseMUp(int iScene, CStringArray* saData)
+ReturnValue MouseMUp(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseMUp(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseMUp(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMUp(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseMUp(iSrc1, iSrc2);
 }
 
@@ -194,50 +201,53 @@ ReturnValue MouseMClick(UINT nX, UINT nY)
 
 
 
-ReturnValue MouseLClick(int iScene, CStringArray* saData)
+ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseLClick(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseLClick(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseLClick(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseLClick(iSrc1, iSrc2);
 }
-ReturnValue MouseRClick(int iScene, CStringArray* saData)
+ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseRClick(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseRClick(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRClick(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseRClick(iSrc1, iSrc2);
 }
 
-ReturnValue MouseMClick(int iScene, CStringArray* saData)
+ReturnValue MouseMClick(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseMClick(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
 		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
-		Point* p(GetPointValuePointer(iScene,sArg));
-		if(p==NULL){return RETURN_FAILED;}
-		return MouseMClick(p->c,p->r);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMClick(point.c, point.r);
 	}
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseMClick(iSrc1, iSrc2);
 }
 
@@ -247,17 +257,17 @@ ReturnValue MoveMouseIncl(int iX, int iY)
 	return MoveMouse(g_iC+iX, g_iR+iY);
 }
 
-ReturnValue MoveMouseIncl(int iScene, CStringArray* saData)
+ReturnValue MoveMouseIncl(CString sDir, int iScene, CStringArray* saData)
 {
-	int iSrc1=GetIntValue(iScene, saData->GetAt(0));
-	int iSrc2=GetIntValue(iScene, saData->GetAt(1));
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MoveMouseIncl(iSrc1, iSrc2);
 }
 
 
 
 
-ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData)
+ReturnValue MouseSetOriginToWindow(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetAt(0).Compare(_T("Desktop"))==0)
 	{
@@ -278,7 +288,7 @@ ReturnValue MouseSetOriginToWindow(int iScene, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
+ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
@@ -287,7 +297,7 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	if(saData->GetCount()==2)
 	{
 		CRect rect;
-		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		bRet = GetRectValue(sDir, iScene,  saData->GetAt(1), &rect);
 		if(bRet != TRUE){return RETURN_FAILED;}
 
 		iC0=rect.left;
@@ -297,10 +307,10 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	}
 	if(saData->GetCount()==5)
 	{
-		iC0=GetIntValue(iScene, saData->GetAt(1));
-		iR0=GetIntValue(iScene, saData->GetAt(2));
-		iC1=GetIntValue(iScene, saData->GetAt(3));
-		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
+		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
+		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
+		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
 	}
 
 
@@ -309,9 +319,9 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 	CString sModelFilePath;
 
 	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
 
@@ -350,11 +360,11 @@ ReturnValue MouseSetOriginToImage(int iScene, CStringArray* saData)
 }
 
 
-ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
+ReturnValue MoveMouseToItem(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()<=0){return RETURN_FAILED;}
 	
-	int iItem = GetIntValue(iScene, saData->GetAt(0));
+	int iItem = GetIntValue(sDir, iScene, saData->GetAt(0));
 	CRect rect;
 	GetWindowRect_My(iItem,&rect);
 
@@ -368,7 +378,7 @@ ReturnValue MoveMouseToItem(int iScene, CStringArray* saData)
 
 
 
-ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
+ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 {
 	
 	BOOL bRet;
@@ -378,7 +388,7 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	if(saData->GetCount()==2)
 	{
 		CRect rect;
-		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		bRet = GetRectValue(sDir, iScene,  saData->GetAt(1), &rect);
 		if(bRet != TRUE){return RETURN_FAILED;}
 
 		iC0=rect.left;
@@ -388,18 +398,18 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	}
 	if(saData->GetCount()==5)
 	{
-		iC0=GetIntValue(iScene, saData->GetAt(1));
-		iR0=GetIntValue(iScene, saData->GetAt(2));
-		iC1=GetIntValue(iScene, saData->GetAt(3));
-		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
+		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
+		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
+		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
 	}
 
 	CString sModelFilePath;
 	
 	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
 	ImgRGB imgModel;
@@ -439,7 +449,7 @@ ReturnValue MoveMouseToImage(int iScene, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
+ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
@@ -448,7 +458,7 @@ ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
 	if(saData->GetCount()==2)
 	{
 		CRect rect;
-		bRet = GetRectValue(iScene,  saData->GetAt(1), &rect);
+		bRet = GetRectValue(sDir, iScene,  saData->GetAt(1), &rect);
 		if(bRet != TRUE){return RETURN_FAILED;}
 
 		iC0=rect.left;
@@ -458,18 +468,18 @@ ReturnValue MouseLClickImage(int iScene, CStringArray* saData)
 	}
 	if(saData->GetCount()==5)
 	{
-		iC0=GetIntValue(iScene, saData->GetAt(1));
-		iR0=GetIntValue(iScene, saData->GetAt(2));
-		iC1=GetIntValue(iScene, saData->GetAt(3));
-		iR1=GetIntValue(iScene, saData->GetAt(4));
+		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
+		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
+		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
+		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
 	}
 
 	CString sModelFilePath;
 	
 	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 	sModelFilePath.Format(_T("%s"), sArg);
 
 

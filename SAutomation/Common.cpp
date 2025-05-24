@@ -740,3 +740,40 @@ BOOL GetPrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bDefault
 	*bValue=bDefault;
 	return FALSE;
 }
+
+
+BOOL GetDirectory(CString sFilePath, CString* sDir, CString* sFileName)
+{
+	int iPlace1;
+	int iPlace2;
+
+	iPlace2=0;
+	while(1)
+	{
+		iPlace1 = sFilePath.Find(_T("\\"), iPlace2);
+		if(iPlace1<0)
+		{
+			break;
+		}
+		iPlace2=iPlace1+1;
+	}
+
+	if(iPlace2<=0)
+	{
+		sDir->Format(_T(""));
+		sFileName->Format(_T(""));
+		return FALSE;
+	}
+	iPlace2--;
+
+	if(sFilePath.GetLength()-iPlace2-1 <= 0)
+	{
+		sDir->Format(_T(""));
+		sFileName->Format(_T(""));
+		return FALSE;
+	}
+
+	sDir->Format(_T("%s"), sFilePath.Left(iPlace2));
+	sFileName->Format(_T("%s"), sFilePath.Right(sFilePath.GetLength()-iPlace2-1));
+	return TRUE;
+}

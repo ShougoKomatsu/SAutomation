@@ -1,5 +1,7 @@
-﻿WaitImage(AVC_Origin.bmp,  300, 300, 1500, 1500,on, 10)
+﻿VarPoint1=SearchResult(AVC_Origin.bmp,  300, 300, 1500, 1500)
 
+MsgBox(VarPoint1);
+exit
 VarInt1=10
 
 VarStr1=Int2Str(VarInt1, %13s)

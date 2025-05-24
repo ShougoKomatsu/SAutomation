@@ -92,7 +92,7 @@ BOOL GetOperandRectSrc(CString sDataLine, int* iCommandType)
 }
 
 
-int GetIntValue(int iScene, CString sDataLocal)
+int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 {
 	int iOperandSrc;
 	BOOL bRet = GetOperandIntSrc(sDataLocal, &iOperandSrc);
@@ -109,7 +109,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
-			return IntAdd(iScene, sArg1, sArg2);
+			return IntAdd(sDir, iScene, sArg1, sArg2);
 		}
 	case VARIABLE_SUB_INT:
 		{
@@ -118,7 +118,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
-			return IntSub(iScene, sArg1, sArg2);
+			return IntSub(sDir, iScene, sArg1, sArg2);
 		}
 	case VARIABLE_MULT_INT:
 		{
@@ -127,7 +127,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
-			return IntMult(iScene, sArg1, sArg2);
+			return IntMult(sDir, iScene, sArg1, sArg2);
 		}
 	case VARIABLE_DIV_INT:
 		{
@@ -136,38 +136,40 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
-			return IntDiv(iScene, sArg1, sArg2);
+			return IntDiv(sDir, iScene, sArg1, sArg2);
 		}
 	case VARIABLE_INT:
 		{
 			int iSrc;
 			int* piSrc;
 
-			piSrc=GetIntValuePointer(iScene, sDataLocal);
+			piSrc=GetIntValuePointer(sDir, iScene, sDataLocal);
 			if(piSrc==NULL){iSrc=_wtoi(sDataLocal);}else{ iSrc=(*piSrc);LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);}
 
 			return iSrc;
 		}
 	case VARIABLE_POINT_GET_R:
 		{
-			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
-			if(pPointSrc==NULL){return 0;}
-			LOG_OUTPUT_POINT(iScene, sDataLocal, pPointSrc);
-			return pPointSrc->r;
+			Point pointSrc;
+			bRet =  GetPointValue(sDir, iScene, sDataLocal, &pointSrc);
+			if(bRet != TRUE){return 0;}
+
+			return pointSrc.r;
 		}
 	case VARIABLE_POINT_GET_C:
 		{
-			Point* pPointSrc = GetPointValuePointer(iScene, sDataLocal);
-			if(pPointSrc==NULL){return 0;}
-			LOG_OUTPUT_POINT(iScene, sDataLocal, pPointSrc);
-			return pPointSrc->c;
+			Point pointSrc;
+			bRet =  GetPointValue(sDir, iScene, sDataLocal, &pointSrc);
+			if(bRet != TRUE){return 0;}
+
+			return pointSrc.c;
 		}
 	case VARIABLE_IMG_WIDTH:
 		{
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);			
+			ImgRGB* pimgRGB = GetImgValuePointer(sDir, iScene, sArg);			
 			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iWidth;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
@@ -178,7 +180,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			ImgRGB* pimgRGB = GetImgValuePointer(sDir, iScene, sArg);
 			if(pimgRGB == NULL){iSrc=0;} else{iSrc=pimgRGB->iHeight;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
@@ -190,8 +192,9 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Width();}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.Width();}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -201,8 +204,9 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->Height();}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.Height();}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -212,8 +216,9 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->left;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.left;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -223,8 +228,9 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->top;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.top;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -234,8 +240,9 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->right;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.right;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -245,8 +252,9 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
 
 			int iSrc;
-			CRect* pRect = GetRectValuePointer(iScene, sArg);			
-			if(pRect == NULL){iSrc=0;} else{iSrc=pRect->bottom;}
+			CRect rect;
+			bRet = GetRectValue(sDir, iScene, sArg, &rect);			
+			if(bRet == FALSE){iSrc=0;} else{iSrc=rect.bottom;}
 			LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);
 
 			return iSrc;
@@ -254,7 +262,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 	case VARIABLE_IMG_VALUE:
 		{
 			ExtractData(sDataLocal, _T("."), &sArg, &sDataLocal);
-			ImgRGB* pimgRGB = GetImgValuePointer(iScene, sArg);
+			ImgRGB* pimgRGB = GetImgValuePointer(sDir, iScene, sArg);
 			if(pimgRGB == NULL){return 0;}
 
 			int iTokenNum;
@@ -266,13 +274,13 @@ int GetIntValue(int iScene, CString sDataLocal)
 				ExtractTokenInBracket(sDataLocal,0,&sC);
 				ExtractTokenInBracket(sDataLocal,1,&sR);
 				int iR, iC;
-				iC=GetIntValue(iScene, sC);
-				iR=GetIntValue(iScene, sR);
+				iC=GetIntValue(sDir, iScene, sC);
+				iR=GetIntValue(sDir, iScene, sR);
 
 				CString sColorTemp;
 				ExtractTokenInBracket(sDataLocal,2,&sColorTemp);
 				CString sColor;
-				sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
+				sColor.Format(_T("%s"), GetStrValue(sDir, iScene, sColorTemp));
 
 				int iValueR, iValueG, iValueB;
 				GetValue(pimgRGB, iR, iC,&iValueR, &iValueG, &iValueB);
@@ -288,18 +296,18 @@ int GetIntValue(int iScene, CString sDataLocal)
 				int iC2;
 				int iR2;
 				ExtractTokenInBracket(sDataLocal,0,&sArg);
-				iC1=GetIntValue(iScene, sArg);
+				iC1=GetIntValue(sDir, iScene, sArg);
 				ExtractTokenInBracket(sDataLocal,1,&sArg);
-				iR1=GetIntValue(iScene, sArg);
+				iR1=GetIntValue(sDir, iScene, sArg);
 				ExtractTokenInBracket(sDataLocal,2,&sArg);
-				iC2=GetIntValue(iScene, sArg);
+				iC2=GetIntValue(sDir, iScene, sArg);
 				ExtractTokenInBracket(sDataLocal,3,&sArg);
-				iR2=GetIntValue(iScene, sArg);
+				iR2=GetIntValue(sDir, iScene, sArg);
 
 				CString sColorTemp;
 				ExtractTokenInBracket(sDataLocal,4,&sColorTemp);
 				CString sColor;
-				sColor.Format(_T("%s"), GetStrValue(iScene, sColorTemp));
+				sColor.Format(_T("%s"), GetStrValue(sDir, iScene, sColorTemp));
 
 				double dValueR, dValueG, dValueB;
 				GetValueInRegion(pimgRGB, iR1, iC1, iR2, iC2, &dValueR, &dValueG, &dValueB);
@@ -329,11 +337,11 @@ int GetIntValue(int iScene, CString sDataLocal)
 			CString sText;
 			int iRank;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
+			sText.Format(_T("%s"), GetStrValue(sDir, iScene,sArg));
 
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()<=0){iRank=0;}
-			else{iRank=GetIntValue(iScene,sArg);}
+			else{iRank=GetIntValue(sDir, iScene,sArg);}
 
 			return GetDlgItem_My(sText, iRank);
 		}
@@ -341,7 +349,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 		{
 			CString sText;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			sText.Format(_T("%s"), GetStrValue(iScene,sArg));
+			sText.Format(_T("%s"), GetStrValue(sDir, iScene,sArg));
 			
 			return sText.GetLength();
 		}
@@ -351,7 +359,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 
 			CString sSrc;
-			sSrc.Format(_T("%s"),GetStrValue(iScene, sArg));
+			sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, sArg));
 			return _wtoi(sSrc);
 		}
 	default:
@@ -366,7 +374,7 @@ int GetIntValue(int iScene, CString sDataLocal)
 	return 0;
 }
 
-int* GetIntValuePointer(int iScene, CString sArg)
+int* GetIntValuePointer(CString sDir, int iScene, CString sArg)
 {
 	if(sArg.Left(6).CompareNoCase(_T("VarInt"))!=0){return NULL;}
 
@@ -386,7 +394,7 @@ int* GetIntValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
-CRect* GetRectValuePointer(int iScene, CString sArg)
+CRect* GetRectValuePointer(CString sDir, int iScene, CString sArg)
 {
 	if(sArg.Left(7).CompareNoCase(_T("VarRect"))!=0){return NULL;}
 
@@ -400,7 +408,7 @@ CRect* GetRectValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
-BOOL GetRectValue(int iScene, CString sArg, CRect* rectOutput)
+BOOL GetRectValue(CString sDir, int iScene, CString sArg, CRect* rectOutput)
 {
 	int iOperandSrc;
 	rectOutput->SetRect(0,0,0,0);
@@ -413,7 +421,7 @@ BOOL GetRectValue(int iScene, CString sArg, CRect* rectOutput)
 	case VARIABLE_RECT:
 		{
 			CRect* pRect;
-			pRect = GetRectValuePointer(iScene, sArg);
+			pRect = GetRectValuePointer(sDir, iScene, sArg);
 			rectOutput->CopyRect(pRect);
 			return TRUE;
 		}
@@ -438,16 +446,16 @@ BOOL GetRectValue(int iScene, CString sArg, CRect* rectOutput)
 
 			if(sArgID.Left(6).CompareNoCase(_T("VarInt"))==0)
 			{
-				int iItem = GetIntValue(iScene, sArgID);
+				int iItem = GetIntValue(sDir, iScene, sArgID);
 				GetWindowRect_My(iItem,rectOutput);
 				return TRUE;
 			}
 
-			sText.Format(_T("%s"), GetStrValue(iScene,sArgID));
+			sText.Format(_T("%s"), GetStrValue(sDir, iScene,sArgID));
 
 			ExtractTokenInBracket(sArgID,1,&sArgRank);
 			if(sArg.GetLength()<=0){iRank=0;}
-			else{iRank=GetIntValue(iScene,sArg);}
+			else{iRank=GetIntValue(sDir, iScene,sArg);}
 			int iItem = GetDlgItem_My(sText, iRank);
 
 			GetWindowRect_My(iItem,rectOutput);
@@ -464,54 +472,54 @@ BOOL GetRectValue(int iScene, CString sArg, CRect* rectOutput)
 
 
 
-int IntAdd(int iScene, CString sArg1, CString sArg2)
+int IntAdd(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
-	int iSrc1=GetIntValue(iScene, sArg1);
-	int iSrc2=GetIntValue(iScene, sArg2);
+	int iSrc1=GetIntValue(sDir, iScene, sArg1);
+	int iSrc2=GetIntValue(sDir, iScene, sArg2);
 
 	return iSrc1+iSrc2;
 }
 
-int IntSub(int iScene, CString sArg1, CString sArg2)
+int IntSub(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
-	int iSrc1=GetIntValue(iScene, sArg1);
-	int iSrc2=GetIntValue(iScene, sArg2);
+	int iSrc1=GetIntValue(sDir, iScene, sArg1);
+	int iSrc2=GetIntValue(sDir, iScene, sArg2);
 
 	return iSrc1-iSrc2;
 }
-int IntMult(int iScene, CString sArg1, CString sArg2)
+int IntMult(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
-	int iSrc1=GetIntValue(iScene, sArg1);
-	int iSrc2=GetIntValue(iScene, sArg2);
+	int iSrc1=GetIntValue(sDir, iScene, sArg1);
+	int iSrc2=GetIntValue(sDir, iScene, sArg2);
 
 	return iSrc1*iSrc2;
 }
 
-int IntDiv(int iScene, CString sArg1, CString sArg2)
+int IntDiv(CString sDir, int iScene, CString sArg1, CString sArg2)
 {
-	int iSrc1=GetIntValue(iScene, sArg1);
-	int iSrc2=GetIntValue(iScene, sArg2);
+	int iSrc1=GetIntValue(sDir, iScene, sArg1);
+	int iSrc2=GetIntValue(sDir, iScene, sArg2);
 
 	return iSrc1/iSrc2;
 }
 
 
-void AssignInt(int iScene, CString sArg, int iInput)
+void AssignInt(CString sDir, int iScene, CString sArg, int iInput)
 {
 	int* piDst;
-	piDst = GetIntValuePointer(iScene, sArg);
+	piDst = GetIntValuePointer(sDir, iScene, sArg);
 	if(piDst==NULL){return;}
 	*piDst=iInput;
 }
 
-ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iSelfSrc)
+ReturnValue SetIntValue(CString sDir, int iScene, int* iDstPointer, CString sDataLocal, int iSelfSrc)
 {	
 	int iOperandSrc;
 	BOOL bRet = GetOperandIntSrc(sDataLocal, &iOperandSrc);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CString sArg;
-	int iSrcValue=GetIntValue(iScene, sDataLocal);
+	int iSrcValue=GetIntValue(sDir, iScene, sDataLocal);
 
 	switch(iSelfSrc)
 	{
@@ -527,7 +535,7 @@ ReturnValue SetIntValue(int* iDstPointer, int iScene, CString sDataLocal, int iS
 
 
 
-BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
+BOOL GetPointValue(CString sDir, int iScene, CString sDataLocal, Point* pPoint)
 {
 	int iOperandSrc;
 	BOOL bRet;
@@ -538,7 +546,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 	{
 	case VARIABLE_POINT:
 		{
-			Point* pPointSrc=(GetPointValuePointer(iScene, sDataLocal));
+			Point* pPointSrc=(GetPointValuePointer(sDir, iScene, sDataLocal));
 			if(pPointSrc == NULL){return RETURN_FAILED;}
 
 			pPoint->Set( pPointSrc->c,pPointSrc->r);
@@ -551,8 +559,8 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			ExtractTokenInBracket(sDataLocal,0,&sArg1);
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
-			int iSrc1=GetIntValue(iScene, sArg1);
-			int iSrc2=GetIntValue(iScene, sArg2);
+			int iSrc1=GetIntValue(sDir, iScene, sArg1);
+			int iSrc2=GetIntValue(sDir, iScene, sArg2);
 
 			pPoint->Set(iSrc1, iSrc2);
 			return TRUE;
@@ -573,7 +581,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			ExtractTokenInBracket(sDataLocal,1,&sArg2);
 
 			Object* objSrc;
-			objSrc=GetObjValuePointer(iScene, sArg1);
+			objSrc=GetObjValuePointer(sDir, iScene, sArg1);
 			int iLength;
 			iLength=objSrc->m_uiMaxLabel+1;
 			double* dA;
@@ -622,8 +630,8 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 
 			CString sArg;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }}
-			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Macro\\Model\\%s"), g_sDir,sTemp); }
+			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
+			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 			sModelFilePath.Format(_T("%s"), sArg);
 
 			CString sC0, sR0, sC1, sR1;
@@ -632,10 +640,10 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 			ExtractTokenInBracket(sDataLocal,3,&sC1);
 			ExtractTokenInBracket(sDataLocal,4,&sR1);
 
-			iC0=GetIntValue(iScene, sC0);
-			iR0=GetIntValue(iScene, sR0);
-			iC1=GetIntValue(iScene, sC1);
-			iR1=GetIntValue(iScene, sR1);
+			iC0=GetIntValue(sDir, iScene, sC0);
+			iR0=GetIntValue(sDir, iScene, sR0);
+			iC1=GetIntValue(sDir, iScene, sC1);
+			iR1=GetIntValue(sDir, iScene, sR1);
 
 			ImgRGB imgModel;
 			ImgRGB imgTarget;
@@ -680,7 +688,7 @@ BOOL GetPointValue(int iScene, CString sDataLocal, Point* pPoint)
 
 
 
-Point* GetPointValuePointer(int iScene, CString sArg)
+Point* GetPointValuePointer(CString sDir, int iScene, CString sArg)
 {
 	if(sArg.Left(8).CompareNoCase(_T("VarPoint"))!=0){return NULL;}
 
@@ -694,7 +702,7 @@ Point* GetPointValuePointer(int iScene, CString sArg)
 	return NULL;
 }
 
-ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
+ReturnValue SetRectValue(CString sDir, int iScene, CRect* pRect, CString sDataLocal)
 {
 	int iOperandSrc;
 	BOOL bRet;
@@ -702,7 +710,7 @@ ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	CRect rectSrc;
-	bRet = (GetRectValue(iScene, sDataLocal, &rectSrc));
+	bRet = (GetRectValue(sDir, iScene, sDataLocal, &rectSrc));
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	pRect->CopyRect(&rectSrc);
@@ -710,7 +718,7 @@ ReturnValue SetRectValue(CRect* pRect, int iScene, CString sDataLocal)
 
 }
 
-ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
+ReturnValue SetPointValue(CString sDir, int iScene, Point* pPoint, CString sDataLocal)
 {
 	int iOperandSrc;
 	BOOL bRet;
@@ -718,7 +726,7 @@ ReturnValue SetPointValue(Point* pPoint, int iScene, CString sDataLocal)
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	Point pointSrc;
-	bRet = (GetPointValue(iScene, sDataLocal, &pointSrc));
+	bRet = (GetPointValue(sDir, iScene, sDataLocal, &pointSrc));
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	pPoint->Set(pointSrc.c, pointSrc.r);

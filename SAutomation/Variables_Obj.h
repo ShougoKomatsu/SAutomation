@@ -4,5 +4,5 @@
 #include "common.h"
 
 BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType);
-Object* GetObjValuePointer(int iScene, CString sArg);
-ReturnValue SetObjValue(Object* objectDst, int iScene, CString sData);
+Object* GetObjValuePointer(CString sDir, int iScene, CString sArg);
+ReturnValue SetObjValue(CString sDir, int iScene, Object* objectDst, CString sData);

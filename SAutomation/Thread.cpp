@@ -98,6 +98,10 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	iScene = ((iData[0]-1)>>PARAM_SCENE_SHIFT)&PARAM_SCENE_MASK;
 	BOOL bRet;
 	
+	CString sDir;
+	CString sFileName;
+	bRet=GetDirectory(g_sFilePath[iScene], &sDir, &sFileName);
+
 	bRet = ReadUTFFile(g_sFilePath[iScene], &saCommands);
 	if(bRet != TRUE)
 	{
@@ -144,7 +148,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		BOOL bRet;
 		bRet = g_utfW[iScene].OpenUTFFile(g_sFilePath[iScene],_T("w, ccs=UTF-8"));
 	}
-	ResetProgramCounter(iScene);
+	ResetProgramCounter(sDir, iScene);
 	CString sWrite;
 	BOOL* bHalt;
 
@@ -189,7 +193,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		}
 		try
 		{
-			iRet = OperateCommand(iSceneData, bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
+			iRet = OperateCommand(sDir, iSceneData, bHalt, &g_bSuspend, &g_llStepIn, saCommands.GetAt(i), &sReturnParam);
 		}
 		catch(CException* ce)
 		{
