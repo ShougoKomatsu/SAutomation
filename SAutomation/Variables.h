@@ -29,7 +29,6 @@ extern Camera g_camera;
 
 ReturnValue Flow_Assign(CString sDir, int iScene, CStringArray* saData);
 ReturnValue Flow_AreStrEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam);
-ReturnValue Flow_AreIntEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam);
 ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam);
 
 

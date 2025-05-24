@@ -766,10 +766,6 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 		{
 			return Flow_Assign(sDir, *iSceneData, &saData);
 		}
-	case COMMAND_AREEQUAL_INT:
-		{
-			return Flow_AreIntEqual(sDir, *iSceneData, &saData, sReturnParam);
-		}
 	case COMMAND_AREEQUAL_STR:
 		{
 			return Flow_AreStrEqual(sDir, *iSceneData, &saData, sReturnParam);

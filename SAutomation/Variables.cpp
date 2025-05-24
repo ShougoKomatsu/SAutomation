@@ -90,17 +90,6 @@ ReturnValue Flow_AreStrEqual(CString sDir, int iScene, CStringArray* saData, CSt
 	return RETURN_NORMAL;
 }
 
-ReturnValue Flow_AreIntEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
-{
-	if(IsIntEqual(sDir, iScene, saData->GetAt(0), saData->GetAt(1)))
-	{
-		sReturnParam->Format(_T("%s"), saData->GetAt(2));
-		return RETURN_GOTO_BY_SWITCH;
-	}
-
-	return RETURN_NORMAL;
-}
-
 ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
 {
 
