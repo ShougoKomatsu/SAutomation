@@ -625,7 +625,6 @@ BOOL GetPointValue(CString sDir, int iScene, CString sDataLocal, Point* pPoint)
 			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
 			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
 			sModelFilePath.Format(_T("%s"), sArg);
-
 			CString sC0, sR0, sC1, sR1;
 			ExtractTokenInBracket(sDataLocal,1,&sC0);
 			ExtractTokenInBracket(sDataLocal,2,&sR0);

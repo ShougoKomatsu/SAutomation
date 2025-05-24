@@ -349,7 +349,9 @@ BOOL CSAutomationDlg::PreTranslateMessage(MSG* pMsg)
 			iKey = (pMsg->lParam)>>16;
 			for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 			{
-				if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){Operate(iScene);return TRUE;}
+				if(iKey == g_Automation.m_OpeInfo[iScene].dwHotKey){
+					Operate(iScene);
+					return TRUE;}
 			}
 			for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++)
 			{
