@@ -316,3 +316,31 @@ ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData)
 
 	return RETURN_FAILED;
 }
+
+BOOL GetRectData(CString sDir, int iScene, CStringArray* saData, int iStartIndex, int* iR0, int* iC0, int* iR1, int* iC1, int* iNextIndex)
+{
+	BOOL bRet;
+
+	CRect rect;
+	if(saData->GetCount()<=iStartIndex+0){return FALSE;}
+	bRet =  GetRectValue(sDir, iScene, saData->GetAt(iStartIndex), &rect);
+	if(bRet == TRUE)
+	{
+		*iC0 = rect.left;
+		*iR0 = rect.top;
+		*iC1 = rect.right;
+		*iR1 = rect.bottom;
+		*iNextIndex=iStartIndex+1;
+		return TRUE;
+	}
+	
+	if(saData->GetCount()<=iStartIndex+3){return FALSE;}
+	*iC0=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+0));
+	*iR0=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+1));
+	*iC1=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+2));
+	*iR1=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+3));
+	*iNextIndex=iStartIndex+4;
+	return TRUE;
+
+}
+

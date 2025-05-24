@@ -205,32 +205,8 @@ ReturnValue WaitForUpdate(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend,
 	BOOL bRet;
 
 	int iR0, iC0, iR1, iC1;
-	BOOL bSpecified=FALSE;
 	int iParamOffset;
-	if(bSpecified==FALSE)
-	{
-		CRect rect;
-		bRet =  GetRectValue(sDir, iScene, saData->GetAt(1), &rect);
-		if(bRet == TRUE)
-		{
-			bSpecified=TRUE;
-			iC0 = rect.left;
-			iR0 = rect.top;
-			iC1 = rect.right;
-			iR1 = rect.bottom;
-			iParamOffset=2;
-		}
-	}
-	
-	if(bSpecified==FALSE)
-	{
-		bSpecified=TRUE;
-		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
-		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
-		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
-		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
-		iParamOffset=5;
-	}
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iParamOffset);
 
 
 
@@ -296,32 +272,8 @@ ReturnValue WaitForImage(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, 
 
 
 	int iR0, iC0, iR1, iC1;
-	BOOL bSpecified=FALSE;
 	int iParamOffset;
-	if(bSpecified==FALSE)
-	{
-		CRect rect;
-		bRet =  GetRectValue(sDir, iScene, saData->GetAt(1), &rect);
-		if(bRet == TRUE)
-		{
-			bSpecified=TRUE;
-			iC0 = rect.left;
-			iR0 = rect.top;
-			iC1 = rect.right;
-			iR1 = rect.bottom;
-			iParamOffset=2;
-		}
-	}
-	
-	if(bSpecified==FALSE)
-	{
-		bSpecified=TRUE;
-		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
-		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
-		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
-		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
-		iParamOffset=5;
-	}
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iParamOffset);
 
 
 	CString sModelFilePath;
