@@ -299,11 +299,9 @@ ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData
 
 	CString sModelFilePath;
 
-	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-	sModelFilePath.Format(_T("%s"), sArg);
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 
 
@@ -370,11 +368,9 @@ ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 
 	CString sModelFilePath;
 	
-	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-	sModelFilePath.Format(_T("%s"), sArg);
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
@@ -424,11 +420,9 @@ ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData)
 
 	CString sModelFilePath;
 	
-	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-	sModelFilePath.Format(_T("%s"), sArg);
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 
 	ImgRGB imgModel;

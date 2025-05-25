@@ -777,3 +777,18 @@ BOOL GetDirectory(CString sFilePath, CString* sDir, CString* sFileName)
 	sFileName->Format(_T("%s"), sFilePath.Right(sFilePath.GetLength()-iPlace2-1));
 	return TRUE;
 }
+
+BOOL GetModelFilePath(CString sDir, CString sModel, CString* sModelFilePath)
+{
+	if(sModel.GetLength()>2)
+	{
+		if(sModel.Mid(1,1).Compare(_T(":")) == 0)
+		{
+			sModelFilePath->Format(_T("%s"), sModel);
+			return TRUE;
+		}
+	}
+
+	sModelFilePath->Format(_T("%s\\Model\\%s"), sDir,sModel); 
+	return TRUE;
+}
