@@ -504,14 +504,6 @@ int IntDiv(CString sDir, int iScene, CString sArg1, CString sArg2)
 }
 
 
-void AssignInt(CString sDir, int iScene, CString sArg, int iInput)
-{
-	int* piDst;
-	piDst = GetIntValuePointer(sDir, iScene, sArg);
-	if(piDst==NULL){return;}
-	*piDst=iInput;
-}
-
 ReturnValue SetIntValue(CString sDir, int iScene, int* iDstPointer, CString sDataLocal, int iSelfSrc)
 {	
 	int iOperandSrc;
@@ -630,9 +622,9 @@ BOOL GetPointValue(CString sDir, int iScene, CString sDataLocal, Point* pPoint)
 
 			CString sArg;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-			else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-			sModelFilePath.Format(_T("%s"), sArg);
+			CString sModel;
+			sModel.Format(_T("%s"), GetStrValue(sDir, iScene, sArg));
+			GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 			CString sC0, sR0, sC1, sR1;
 			ExtractTokenInBracket(sDataLocal,1,&sC0);

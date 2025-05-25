@@ -213,7 +213,24 @@ void CSelectDlg::FileSelect(int iSelect)
 	cf.m_ofn.lpstrInitialDir = sMacroFolderPath;
 	if(cf.DoModal()!=IDOK){ return;}
 
-		((CButton*)GetDlgItem(IDC_SELECT_STATIC_FILENAME_1+iSelect))->SetWindowText(cf.GetFileName());
+	CString sFolder;
+	CString sFolderPath;
+	CString sFilePath;
+	CString sFileName;
+	sFilePath.Format(_T("%s"), cf.GetPathName());
+	GetDirectory(sFilePath,&sFolderPath,&sFileName);
+
+	if(sMacroFolderPath.CompareNoCase(sFolderPath)==0)
+	{
+		sFolder.Format(_T(""));
+	}
+	else
+	{
+		sFolder.Format(_T("%s\\"),sFolderPath.Right( sFolderPath.GetLength()-sMacroFolderPath.GetLength()-1));
+	}
+	CString sText;
+	sText.Format(_T("%s%s"), sFolder, sFileName);
+	((CButton*)GetDlgItem(IDC_SELECT_STATIC_FILENAME_1+iSelect))->SetWindowText(sText);
 
 }
 

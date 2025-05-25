@@ -294,35 +294,14 @@ ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
 	int iR0, iC0, iR1, iC1;
-	if(saData->GetCount()==2)
-	{
-		CRect rect;
-		bRet = GetRectValue(sDir, iScene,  saData->GetAt(1), &rect);
-		if(bRet != TRUE){return RETURN_FAILED;}
-
-		iC0=rect.left;
-		iR0=rect.top;
-		iC1=rect.right;
-		iR1=rect.bottom;
-	}
-	if(saData->GetCount()==5)
-	{
-		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
-		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
-		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
-		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
-	}
-
-
-
+	int iNextIndex;
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iNextIndex);
 
 	CString sModelFilePath;
 
-	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-	sModelFilePath.Format(_T("%s"), sArg);
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 
 
@@ -376,8 +355,6 @@ ReturnValue MoveMouseToItem(CString sDir, int iScene, CStringArray* saData)
 }
 
 
-
-
 ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 {
 	
@@ -385,32 +362,15 @@ ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
 	int iR0, iC0, iR1, iC1;
-	if(saData->GetCount()==2)
-	{
-		CRect rect;
-		bRet = GetRectValue(sDir, iScene,  saData->GetAt(1), &rect);
-		if(bRet != TRUE){return RETURN_FAILED;}
+	int iNextIndex;
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iNextIndex);
 
-		iC0=rect.left;
-		iR0=rect.top;
-		iC1=rect.right;
-		iR1=rect.bottom;
-	}
-	if(saData->GetCount()==5)
-	{
-		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
-		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
-		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
-		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
-	}
 
 	CString sModelFilePath;
 	
-	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-	sModelFilePath.Format(_T("%s"), sArg);
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 	ImgRGB imgModel;
 	ImgRGB imgTarget;
@@ -455,32 +415,14 @@ ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData)
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
 	int iR0, iC0, iR1, iC1;
-	if(saData->GetCount()==2)
-	{
-		CRect rect;
-		bRet = GetRectValue(sDir, iScene,  saData->GetAt(1), &rect);
-		if(bRet != TRUE){return RETURN_FAILED;}
-
-		iC0=rect.left;
-		iR0=rect.top;
-		iC1=rect.right;
-		iR1=rect.bottom;
-	}
-	if(saData->GetCount()==5)
-	{
-		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
-		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
-		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
-		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
-	}
+	int iNextIndex;
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iNextIndex);
 
 	CString sModelFilePath;
 	
-	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-	sModelFilePath.Format(_T("%s"), sArg);
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 
 	ImgRGB imgModel;

@@ -1083,13 +1083,15 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			
+
+			saData->Add(_T("="));
+
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			
 			ExtractTokenInBracket(sDataLocal,2,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
-			*iCommandType = iType;
+			*iCommandType = COMMAND_COMPARE;
 			return TRUE;
 		}
 	case COMMAND_AREEQUAL_STR:

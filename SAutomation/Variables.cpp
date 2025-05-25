@@ -90,25 +90,15 @@ ReturnValue Flow_AreStrEqual(CString sDir, int iScene, CStringArray* saData, CSt
 	return RETURN_NORMAL;
 }
 
-ReturnValue Flow_AreIntEqual(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
-{
-	if(IsIntEqual(sDir, iScene, saData->GetAt(0), saData->GetAt(1)))
-	{
-		sReturnParam->Format(_T("%s"), saData->GetAt(2));
-		return RETURN_GOTO_BY_SWITCH;
-	}
-
-	return RETURN_NORMAL;
-}
-
 ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
 {
 
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene,  saData->GetAt(2));
+	CString sOperator;
+	sOperator.Format(_T("%s"),saData->GetAt(1));
 
-
-	if((saData->GetAt(1).Compare(_T("="))==0) || (saData->GetAt(1).Compare(_T("=="))==0))
+	if((sOperator.Compare(_T("="))==0) || (sOperator.Compare(_T("=="))==0))
 	{
 		if (iSrc1==iSrc2)
 		{
@@ -118,7 +108,7 @@ ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString
 		return RETURN_NORMAL;
 	}
 
-	if(saData->GetAt(1).Compare(_T(">"))==0)
+	if(sOperator.Compare(_T(">"))==0)
 	{
 		if (iSrc1>iSrc2)
 		{
@@ -128,7 +118,7 @@ ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString
 		return RETURN_NORMAL;
 	}
 
-	if(saData->GetAt(2).Compare(_T(">="))==0)
+	if(sOperator.Compare(_T(">="))==0)
 	{
 		if (iSrc1>=iSrc2)
 		{
@@ -138,7 +128,7 @@ ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString
 		return RETURN_NORMAL;
 	}
 
-	if(saData->GetAt(1).Compare(_T("<"))==0)
+	if(sOperator.Compare(_T("<"))==0)
 	{
 		if (iSrc1<iSrc2)
 		{
@@ -148,7 +138,7 @@ ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString
 		return RETURN_NORMAL;
 	}
 
-	if(saData->GetAt(2).Compare(_T("<="))==0)
+	if(sOperator.Compare(_T("<="))==0)
 	{
 		if (iSrc1<=iSrc2)
 		{
@@ -158,7 +148,7 @@ ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString
 		return RETURN_NORMAL;
 	}
 
-	if((saData->GetAt(2).Compare(_T("<>"))==0) || (saData->GetAt(2).Compare(_T("!="))==0))
+	if((sOperator.Compare(_T("<>"))==0) || (sOperator.Compare(_T("!="))==0))
 	{
 		if (iSrc1!=iSrc2)
 		{
@@ -326,3 +316,31 @@ ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData)
 
 	return RETURN_FAILED;
 }
+
+BOOL GetRectData(CString sDir, int iScene, CStringArray* saData, int iStartIndex, int* iR0, int* iC0, int* iR1, int* iC1, int* iNextIndex)
+{
+	BOOL bRet;
+
+	CRect rect;
+	if(saData->GetCount()<=iStartIndex+0){return FALSE;}
+	bRet =  GetRectValue(sDir, iScene, saData->GetAt(iStartIndex), &rect);
+	if(bRet == TRUE)
+	{
+		*iC0 = rect.left;
+		*iR0 = rect.top;
+		*iC1 = rect.right;
+		*iR1 = rect.bottom;
+		*iNextIndex=iStartIndex+1;
+		return TRUE;
+	}
+	
+	if(saData->GetCount()<=iStartIndex+3){return FALSE;}
+	*iC0=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+0));
+	*iR0=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+1));
+	*iC1=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+2));
+	*iR1=GetIntValue(sDir, iScene, saData->GetAt(iStartIndex+3));
+	*iNextIndex=iStartIndex+4;
+	return TRUE;
+
+}
+

@@ -205,32 +205,8 @@ ReturnValue WaitForUpdate(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend,
 	BOOL bRet;
 
 	int iR0, iC0, iR1, iC1;
-	BOOL bSpecified=FALSE;
 	int iParamOffset;
-	if(bSpecified==FALSE)
-	{
-		CRect rect;
-		bRet =  GetRectValue(sDir, iScene, saData->GetAt(1), &rect);
-		if(bRet == TRUE)
-		{
-			bSpecified=TRUE;
-			iC0 = rect.left;
-			iR0 = rect.top;
-			iC1 = rect.right;
-			iR1 = rect.bottom;
-			iParamOffset=2;
-		}
-	}
-	
-	if(bSpecified==FALSE)
-	{
-		bSpecified=TRUE;
-		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
-		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
-		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
-		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
-		iParamOffset=5;
-	}
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iParamOffset);
 
 
 
@@ -296,41 +272,15 @@ ReturnValue WaitForImage(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, 
 
 
 	int iR0, iC0, iR1, iC1;
-	BOOL bSpecified=FALSE;
 	int iParamOffset;
-	if(bSpecified==FALSE)
-	{
-		CRect rect;
-		bRet =  GetRectValue(sDir, iScene, saData->GetAt(1), &rect);
-		if(bRet == TRUE)
-		{
-			bSpecified=TRUE;
-			iC0 = rect.left;
-			iR0 = rect.top;
-			iC1 = rect.right;
-			iR1 = rect.bottom;
-			iParamOffset=2;
-		}
-	}
-	
-	if(bSpecified==FALSE)
-	{
-		bSpecified=TRUE;
-		iC0=GetIntValue(sDir, iScene, saData->GetAt(1));
-		iR0=GetIntValue(sDir, iScene, saData->GetAt(2));
-		iC1=GetIntValue(sDir, iScene, saData->GetAt(3));
-		iR1=GetIntValue(sDir, iScene, saData->GetAt(4));
-		iParamOffset=5;
-	}
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iParamOffset);
 
 
 	CString sModelFilePath;
 	
-	CString sArg;
-	sArg.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	if(sArg.GetLength()>2){if(sArg.Mid(1,1).Compare(_T(":")) != 0){CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }}
-	else{CString sTemp; sTemp.Format(_T("%s"), sArg); sArg.Format(_T("%s\\Model\\%s"), sDir,sTemp); }
-	sModelFilePath.Format(_T("%s"), sArg);
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
 
 
 	if(saData->GetAt(iParamOffset+0).CompareNoCase(_T("on"))==0){iWaitOn=1;}
@@ -765,10 +715,6 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_VARIABLE_CAMERA_CLOSE:
 		{
 			return Flow_Assign(sDir, *iSceneData, &saData);
-		}
-	case COMMAND_AREEQUAL_INT:
-		{
-			return Flow_AreIntEqual(sDir, *iSceneData, &saData, sReturnParam);
 		}
 	case COMMAND_AREEQUAL_STR:
 		{
