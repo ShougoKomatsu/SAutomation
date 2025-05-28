@@ -657,6 +657,7 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(sDir, *iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
+	case COMMAND_SET_WINDOW_ATTRIBUTE:{return SetWindowAttribute(sDir, *iSceneData, &saData);}
 	case COMMAND_WINDOW_FORWARD:{return SetWindowForward(saData.GetAt(0));}
 	case COMMAND_WINDOW_SIZE:{return WindowSize(sDir, *iSceneData, &saData);}
 	case COMMAND_WINDOW_POS:{return WindowPos(sDir, *iSceneData, &saData);}

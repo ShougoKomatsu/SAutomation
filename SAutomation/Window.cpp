@@ -72,6 +72,22 @@ ReturnValue Minimize()
 	ShowWindow( hwnd, SW_MINIMIZE );
 	return RETURN_NORMAL;
 }
+
+#include <dwmapi.h>
+
+#pragma comment(lib, "dwmapi.lib")
+ReturnValue SetWindowAttribute(CString sDir, int iScene, CStringArray* saData)
+{
+	int iAttribute = GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iParameter = GetIntValue(sDir, iScene, saData->GetAt(1));
+
+	HWND hwnd = GetForegroundWindow();
+	DWORD dwParameter = iParameter;
+
+	HRESULT hr = DwmSetWindowAttribute(hwnd, iAttribute, &dwParameter, sizeof(dwParameter));
+	if (SUCCEEDED(hr) != TRUE) {return RETURN_FAILED;}
+	return RETURN_NORMAL;
+}
 BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam)
 {
 	g_hWnds[g_iWnd]=hWnd;

@@ -73,6 +73,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.CompareNoCase(_T("Maximize"))==0){*iCommandType=COMMAND_MAXIMIZE; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("Minimize"))==0){*iCommandType=COMMAND_MINIMIZE; return TRUE;}
+	if(sDataTrim.Left(18).CompareNoCase(_T("SetWindowAttribute"))==0){*iCommandType=COMMAND_SET_WINDOW_ATTRIBUTE; return TRUE;}
 	//-------------------------------------------------------
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).Compare(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
@@ -794,6 +795,16 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		}
 	case COMMAND_MAXIMIZE:{*iCommandType=iType; return TRUE;}
 	case COMMAND_MINIMIZE:{*iCommandType=iType; return TRUE;}
+	case COMMAND_SET_WINDOW_ATTRIBUTE:
+		{
+			*iCommandType=iType;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			return TRUE;
+		}
 	case COMMAND_WINDOW_FORWARD:
 		{
 			*iCommandType=iType;

@@ -21,6 +21,7 @@ BOOL GetWindowNameList(CStringArray* caNames);
 BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch=TRUE);
 BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch = TRUE);
 
+ReturnValue SetWindowAttribute(CString sDir, int iScene, CStringArray* saData);
 
 const CString GetForegroundWindowName();
 const CString GetForegroundWindowClassName();
