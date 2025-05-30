@@ -78,11 +78,13 @@ ReturnValue Minimize()
 #pragma comment(lib, "dwmapi.lib")
 ReturnValue SetWindowAttribute(CString sDir, int iScene, CStringArray* saData)
 {
-	int iAttribute = GetIntValue(sDir, iScene, saData->GetAt(0));
-	int iParameter = GetIntValue(sDir, iScene, saData->GetAt(1));
 
-	HWND hwnd = GetForegroundWindow();
-	DWORD dwParameter = iParameter;
+
+	HWND hwnd=(HWND)GetIntValue(sDir, iScene, saData->GetAt(0));
+	if(hwnd==0){hwnd = GetForegroundWindow();}
+	
+	int iAttribute = GetIntValue(sDir, iScene, saData->GetAt(1));
+	DWORD dwParameter = GetIntValue(sDir, iScene, saData->GetAt(2));
 
 	HRESULT hr = DwmSetWindowAttribute(hwnd, iAttribute, &dwParameter, sizeof(dwParameter));
 	if (SUCCEEDED(hr) != TRUE) {return RETURN_FAILED;}
@@ -139,7 +141,21 @@ BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch)
 	return TRUE;
 }
 
+ReturnValue SendMessage_My(CString sDir, int iScene, CStringArray* saData)
+{
+	HWND hwnd;
+	UINT msg;
+	WPARAM wParam;
+	LPARAM lParam;
 
+	hwnd=(HWND)GetIntValue(sDir, iScene, saData->GetAt(0));
+	if(hwnd==0){hwnd = GetForegroundWindow();}
+
+	msg=(UINT)GetIntValue(sDir, iScene, saData->GetAt(1));
+	SendMessage(hwnd, msg, NULL, NULL);
+	
+	return RETURN_NORMAL;
+}
 ReturnValue SetWindowForward(CString sTargetName)
 {
 	BOOL bRet;

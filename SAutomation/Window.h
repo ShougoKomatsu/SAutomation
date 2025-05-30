@@ -31,3 +31,5 @@ BOOL GetForegroundWindowPos(int* iLeft, int* iTop, int* iWidth, int* iHeight);
 int GetDlgItem_My(CString sText, int iRank);
 BOOL GetWindowRect_My(UINT iID, CRect* rect);
 ReturnValue ListDlgItems();
+
+ReturnValue SendMessage_My(CString sDir, int iScene, CStringArray* saData);
