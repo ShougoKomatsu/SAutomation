@@ -141,6 +141,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(9).CompareNoCase(_T("WindowPos"))==0){*iCommandType=COMMAND_WINDOW_POS; return TRUE;}
 
 	if(sDataTrim.Left(13).CompareNoCase(_T("WindowForward"))==0){*iCommandType=COMMAND_WINDOW_FORWARD; return TRUE;}
+	if(sDataTrim.Left(11).CompareNoCase(_T("SendMessage"))==0){*iCommandType=COMMAND_SEND_MESSAGE; return TRUE;}
 	
 	if(sDataTrim.Left(7).CompareNoCase(_T("KeyDown"))==0){*iCommandType=COMMAND_KEY_DOWN; return TRUE;}
 	if(sDataTrim.Left(5).CompareNoCase(_T("KeyUp"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
@@ -803,6 +804,9 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 			ExtractTokenInBracket(sDataLocal,1,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,2,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
 			return TRUE;
 		}
 	case COMMAND_WINDOW_FORWARD:
@@ -810,6 +814,18 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType=iType;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData->Add(sArg);
+			return TRUE;
+		}
+	case COMMAND_SEND_MESSAGE:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			if((saData->GetCount())!=2){return FALSE;}
+			*iCommandType = iType;
 			return TRUE;
 		}
 	case COMMAND_WINDOW_SIZE:
