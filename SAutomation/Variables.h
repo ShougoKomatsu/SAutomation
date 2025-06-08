@@ -4,7 +4,7 @@
 #include "Thread.h"
 #include "ImgProc.h"
 #include "common.h"
-
+#include "Variables_Byte.h"
 struct Point
 {
 	int r;
@@ -23,6 +23,8 @@ extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 extern Point g_point[MAX_THREAD][MAX_VARIABLES];
 extern Object g_object[MAX_THREAD][MAX_VARIABLES];
 extern CRect g_rect[MAX_THREAD][MAX_VARIABLES];
+
+extern ByteVector g_bytes[MAX_THREAD][MAX_VARIABLES];
 
 extern Camera g_camera;
 
@@ -113,6 +115,9 @@ ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData);
 #define VARIABLE_RECT (700)
 #define VARIABLE_RECT_FOREGROUND_WINDOW (701)
 #define VARIABLE_RECT_DLG_ITEM (702)
+
+
+#define VARIABLE_BYTES (800)
 
 #define VARIABLE_SELF_SRC_NONE (0)
 #define VARIABLE_SELF_SRC_ADD (1)
