@@ -125,6 +125,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Variables.h" />
+    <ClInclude Include="Variables_Byte.h" />
     <ClInclude Include="Variables_Img.h" />
     <ClInclude Include="Variables_Int.h" />
     <ClInclude Include="Variables_Obj.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Variables_Int.cpp" />
     <ClCompile Include="Variables_Obj.cpp" />
     <ClCompile Include="Variables_String.cpp" />
+    <ClCompile Include="Variable_Byte.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>

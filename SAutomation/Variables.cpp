@@ -14,6 +14,7 @@ ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];
 Point g_point[MAX_THREAD][MAX_VARIABLES];
 Object g_object[MAX_THREAD][MAX_VARIABLES];
 CRect g_rect[MAX_THREAD][MAX_VARIABLES];
+ByteVector g_bytes[MAX_THREAD][MAX_VARIABLES];
 Camera g_camera;
 
 

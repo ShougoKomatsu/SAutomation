@@ -13,7 +13,7 @@ ReturnValue Maximize();
 ReturnValue Minimize();
 
 BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam);
-ReturnValue SetWindowForward(CString sTargetName);
+ReturnValue SetWindowForward(CString sDir, int iScene, CStringArray* saData);
 ReturnValue WindowSize(CString sDir, int iScene, CStringArray* saData);
 ReturnValue WindowPos(CString sDir, int iScene, CStringArray* saData);
 

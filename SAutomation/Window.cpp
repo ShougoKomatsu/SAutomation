@@ -156,10 +156,14 @@ ReturnValue SendMessage_My(CString sDir, int iScene, CStringArray* saData)
 	
 	return RETURN_NORMAL;
 }
-ReturnValue SetWindowForward(CString sTargetName)
+ReturnValue SetWindowForward(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	HWND hwnd;
+
+	CString sTargetName;
+	sTargetName.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+
 	bRet = GetHandleByName(sTargetName, &hwnd);
 	if(bRet != TRUE){return RETURN_FAILED;}
 	
