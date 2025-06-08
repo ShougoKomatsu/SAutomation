@@ -797,3 +797,23 @@ BOOL GetModelFilePath(CString sDir, CString sModel, CString* sModelFilePath)
 	sModelFilePath->Format(_T("%s\\Model\\%s"), sDir,sModel); 
 	return TRUE;
 }
+
+BOOL GetSoundFilePath(CString sDir, CString sModel, CString* sModelFilePath)
+{
+	if(sModel.GetLength()<=0){return FALSE;}
+
+	if(sModel.GetLength()<=2)
+	{
+		sModelFilePath->Format(_T("%s\\Sound\\%s"), sDir,sModel); 
+		return TRUE;
+	}
+
+	if(sModel.Mid(1,1).Compare(_T(":")) == 0)
+	{
+		sModelFilePath->Format(_T("%s"), sModel);
+		return TRUE;
+	}
+
+	sModelFilePath->Format(_T("%s\\Sound\\%s"), sDir,sModel); 
+	return TRUE;
+}

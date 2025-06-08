@@ -114,6 +114,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	if(sDataTrim.Left(17).CompareNoCase(_T("SetOriginToWindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
 	if(sDataTrim.Left(16).CompareNoCase(_T("SetOriginToImage"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE; return TRUE;}
+	if(sDataTrim.Left(9).CompareNoCase(_T("PlaySound"))==0){*iCommandType=COMMAND_PLAY_SOUND; return TRUE;}
 
 	//-------------------------------------------------------
 
@@ -807,6 +808,13 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 
 			ExtractTokenInBracket(sDataLocal,2,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
+			return TRUE;
+		}
+	case COMMAND_PLAY_SOUND:
+		{
+			*iCommandType=iType;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData->Add(sArg);
 			return TRUE;
 		}
 	case COMMAND_WINDOW_FORWARD:
