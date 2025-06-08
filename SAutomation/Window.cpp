@@ -166,8 +166,9 @@ ReturnValue SetWindowForward(CString sDir, int iScene, CStringArray* saData)
 
 	bRet = GetHandleByName(sTargetName, &hwnd);
 	if(bRet != TRUE){return RETURN_FAILED;}
-
-//	bRet = ShowWindow(g_hWnds[iTargetHandle], SW_SHOW);
+	
+	ShowWindow( hwnd, SW_MAXIMIZE );
+	bRet = ShowWindow(hwnd, SW_SHOW);
 //	if(bRet != TRUE){return -1;}
 	bRet = SetForegroundWindow(hwnd);
 //	if(bRet != TRUE){return -1;}

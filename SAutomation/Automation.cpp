@@ -8,7 +8,7 @@
 #include "ImgProc.h"
 #include "Variables.h"
 #include "InputDialog.h"
-
+#include "PlayMedia.h"
 
 
 
@@ -655,6 +655,9 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_WAIT_IMG:{return WaitForImage(sDir,  *iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_COLOR:{return WaitForColor(sDir, *iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(sDir, *iSceneData, Halt, Suspend, &saData);}
+	case COMMAND_PLAY_SOUND:{
+		return PlaySound_my(sDir, *iSceneData, &saData);
+							}
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
 	case COMMAND_SET_WINDOW_ATTRIBUTE:{return SetWindowAttribute(sDir, *iSceneData, &saData);}
