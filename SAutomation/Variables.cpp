@@ -18,7 +18,29 @@ ByteVector g_bytes[MAX_THREAD][MAX_VARIABLES];
 Camera g_camera;
 
 
+int GetOperandType(CString sDataLine)
+{
+	int iCommandType;
+	BOOL bRet;
+	bRet = GetOperandIntSrc(sDataLine, &iCommandType);
+	if(bRet == TRUE){return VARIABLE_INT;}
 
+	bRet = GetOperandImgSrc(sDataLine, &iCommandType);
+	if(bRet == TRUE){return VARIABLE_IMG;}
+
+	bRet = GetOperandObjSrc(sDataLine, &iCommandType);
+	if(bRet == TRUE){return VARIABLE_OBJECT;}
+
+	bRet = GetOperandPointSrc(sDataLine, &iCommandType);
+	if(bRet == TRUE){return VARIABLE_POINT;}
+
+	bRet = GetOperandRectSrc(sDataLine, &iCommandType);
+	if(bRet == TRUE){return VARIABLE_RECT;}
+
+	bRet = GetOperandStrSrc(sDataLine, &iCommandType);
+	if(bRet == TRUE){return VARIABLE_STR;}
+	return VARIABLE_UNDEFINED;
+}
 
 BOOL GetOperandDst(CString sDataLine, int* iCommandType, int* iSelfSrc)
 {
