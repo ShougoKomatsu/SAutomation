@@ -162,14 +162,31 @@ ReturnValue SetWindowForward(CString sDir, int iScene, CStringArray* saData)
 	HWND hwnd;
 
 	CString sTargetName;
-	sTargetName.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
 
-	bRet = GetHandleByName(sTargetName, &hwnd);
-	if(bRet != TRUE){return RETURN_FAILED;}
-	
-	ShowWindow( hwnd, SW_MAXIMIZE );
+	int iType = GetOperandType(saData->GetAt(0));
+
+	switch(iType)
+	{
+	case VARIABLE_INT:
+		{
+			hwnd = (HWND)GetIntValue(sDir, iScene, saData->GetAt(0));
+			break;
+		}
+	case VARIABLE_STR:
+		{
+			sTargetName.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+			bRet = GetHandleByName(sTargetName, &hwnd);
+			if(bRet != TRUE){return RETURN_FAILED;}
+			break;
+		}
+	default:
+		{
+			return RETURN_FAILED;
+		}
+	}
+
 	bRet = ShowWindow(hwnd, SW_SHOW);
-//	if(bRet != TRUE){return -1;}
+	//	if(bRet != TRUE){return -1;}
 	bRet = SetForegroundWindow(hwnd);
 //	if(bRet != TRUE){return -1;}
 

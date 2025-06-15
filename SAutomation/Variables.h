@@ -131,3 +131,4 @@ ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData);
 #include "Variables_Img.h"
 #include "Variables_String.h"
 BOOL GetRectData(CString sDir, int iScene, CStringArray* saData, int iStartIndex, int* iR0, int* iC0, int* iR1, int* iC1, int* iNextIndex);
+int GetOperandType(CString sDataLine);

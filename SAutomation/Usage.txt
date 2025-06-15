@@ -146,7 +146,8 @@ Wheel 整数
 ●ウィンドウ操作
 Maximize
 Minimaize
-Windowforward(ウインドウ名(部分一致))
+Windowforward(文字列 or 文字列型変数: ウインドウ名(部分一致))
+Windowforward(整数 or 整数型変数)
 WindowPos(整数, 整数)
 WindowSize(整数, 整数)
 Run(実行ファイルのパス)
