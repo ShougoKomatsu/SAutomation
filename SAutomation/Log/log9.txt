@@ -1,3 +1,4 @@
-﻿1 VarPoint1=SearchResult(AVC_Origin.bmp,  300, 300, 1500, 1500) 0
-2 MsgBox(VarPoint1); 0
-3 exit 10
+﻿1 VarInt1=ForegroundWindow 0
+2 3000 0
+3 WindowForward(VarInt1) 0
+4 MsgBox(VarPoint1); 

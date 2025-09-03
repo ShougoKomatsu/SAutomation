@@ -164,6 +164,10 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	iListLength =(int) saCommands.GetCount();
 	for(int i=0; i<iListLength; i++)
 	{
+		if(saCommands.GetAt(i).Left(1).Compare(_T("/"))==0){continue;}
+		if(saCommands.GetAt(i).Left(1).Compare(_T("'"))==0){continue;}
+		if(saCommands.GetAt(i).GetLength()<=0){continue;}
+
 		sWrite.Format(_T("%d "), i+1);
 		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
 		bExit = FALSE;
