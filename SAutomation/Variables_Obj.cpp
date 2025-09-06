@@ -17,8 +17,7 @@ BOOL GetOperandObjSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(10).CompareNoCase(_T("SortRegion"))==0){*iCommandType=VARIABLE_OBJECT_SORT_REGION; return TRUE;}
 	if(sDataTrim.Left(13).CompareNoCase(_T("GenRectangle1"))==0){*iCommandType=VARIABLE_OBJECT_GEN_RECTANGLE1; return TRUE;}
 
-	*iCommandType=VARIABLE_OBJECT;
-	return TRUE;
+	return FALSE;
 }
 
 Object* GetObjValuePointer(CString sDir, int iScene, CString sArg)

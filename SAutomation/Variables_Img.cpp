@@ -35,7 +35,7 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA_GRAB; return TRUE;}
 	
-	return TRUE;
+	return FALSE;
 }
 ImgRGB* GetImgValuePointer(CString sDir, int iScene, CString sArg)
 {

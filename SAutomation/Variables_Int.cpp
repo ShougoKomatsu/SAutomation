@@ -76,7 +76,7 @@ BOOL GetOperandPointSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowLU"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_LU; return TRUE;}
 	if(sDataTrim.Left(18).CompareNoCase(_T("ForegroundWindowRD"))==0){*iCommandType=VARIABLE_POINT_FOREGROUND_WINDOW_RD; return TRUE;}
 
-	return RETURN_FAILED;
+	return FALSE;
 }
 
 BOOL GetOperandRectSrc(CString sDataLine, int* iCommandType)
@@ -89,7 +89,7 @@ BOOL GetOperandRectSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(16).CompareNoCase(_T("ForegroundWindow"))==0){*iCommandType=VARIABLE_RECT_FOREGROUND_WINDOW; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_RECT_DLG_ITEM; return TRUE;}
 
-	return RETURN_FAILED;
+	return FALSE;
 }
 
 
