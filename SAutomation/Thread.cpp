@@ -152,6 +152,9 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	CString sWrite;
 	BOOL* bHalt;
 
+	sWrite.Format(_T("%s\n"), g_sFilePath[iScene]);
+	if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
+
 	if(bDisableHalt==FALSE)
 	{
 		bHalt=&g_bHalt;
