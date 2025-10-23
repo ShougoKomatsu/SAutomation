@@ -28,3 +28,5 @@ int IntAdd(CString sDir, int iScene, CString sArg1, CString sArg2);
 int IntSub(CString sDir, int iScene, CString sArg1, CString sArg2);
 int IntMult(CString sDir, int iScene, CString sArg1, CString sArg2);
 int IntDiv(CString sDir, int iScene, CString sArg1, CString sArg2);
+
+int ConvertStr2Int(CString sSrc);

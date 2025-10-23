@@ -20,6 +20,12 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_DLG_ITEM; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("ForegroundWindow"))==0){*iCommandType=VARIABLE_INT_FOREGROUND_WINDOW; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
+	
+	if(sDataTrim.Right(3).CompareNoCase(_T("sec"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
+	if(sDataTrim.Right(3).CompareNoCase(_T("min"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
+	if(sDataTrim.Right(4).CompareNoCase(_T("hour"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
+	if(sDataTrim.Right(3).CompareNoCase(_T("day"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
+
 	if(sDataTrim.Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		if(sDataTrim.GetLength() != 11){return FALSE;}
@@ -364,10 +370,9 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 		{
 			CString sText;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-
 			CString sSrc;
 			sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, sArg));
-			return _wtoi(sSrc);
+			return ConvertStr2Int(sSrc);
 		}
 	default:
 		{
@@ -380,6 +385,17 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 	}
 	return 0;
 }
+
+int ConvertStr2Int(CString sSrc)
+{
+	if(sSrc.Right(3).CompareNoCase(_T("sec"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-3)) *1000);}
+	if(sSrc.Right(3).CompareNoCase(_T("min"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-3)) *1000*60);}
+	if(sSrc.Right(4).CompareNoCase(_T("hour"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-4)) *1000*60*60);}
+	if(sSrc.Right(3).CompareNoCase(_T("day"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-3)) *1000*60*60*24);}
+	return _wtoi(sSrc);
+}
+
+
 
 int* GetIntValuePointer(CString sDir, int iScene, CString sArg)
 {
