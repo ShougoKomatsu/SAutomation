@@ -631,6 +631,11 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 				{	CString sTemp;sTemp.Format(_T("%s.c"),sArg);saData->Add(sTemp);sTemp.Format(_T("%s.r"),sArg);saData->Add(sTemp);*iCommandType = iType;return TRUE;}
 				return FALSE;
 			}
+			if(iCount==0)
+			{
+				*iCommandType = iType;
+				return TRUE;
+			}
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 
