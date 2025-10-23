@@ -330,7 +330,7 @@ BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken)
 		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
 	}
 	if(iOpenNum != iCloseNum){return FALSE;}
-	if((iOpenNum==0)&&(iIndexIn==0)){sToken->Format(_T("%s"),sInput); return TRUE;}
+	//if((iOpenNum==0)&&(iIndexIn==0)){sToken->Format(_T("%s"),sInput); return TRUE;}
 	if(iOpenNum==0){sToken->Format(_T("")); return TRUE;}
 
 	int iStart;
