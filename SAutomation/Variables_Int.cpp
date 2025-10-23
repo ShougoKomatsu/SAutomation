@@ -372,6 +372,7 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			CString sSrc;
 			sSrc.Format(_T("%s"),GetStrValue(sDir, iScene, sArg));
+			int iTest=ConvertStr2Int(sSrc);
 			return ConvertStr2Int(sSrc);
 		}
 	default:

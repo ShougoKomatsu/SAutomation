@@ -77,6 +77,10 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	//-------------------------------------------------------
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).Compare(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
+	if(sDataTrim.Right(3).CompareNoCase(_T("sec"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-3)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
+	if(sDataTrim.Right(3).CompareNoCase(_T("min"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-3)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
+	if(sDataTrim.Right(4).CompareNoCase(_T("hour"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-4)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
+	if(sDataTrim.Right(3).CompareNoCase(_T("day"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-3)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
 
 	//-------------------------------------------------------
 	if(sDataTrim.Left(12).CompareNoCase(_T("LMouse Click"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
@@ -326,6 +330,7 @@ BOOL ExtractTokenInBracket(CString sInput, int iIndexIn, CString* sToken)
 		if(sInput.Mid(i,1).Compare(_T(")"))==0){iCloseNum++;}
 	}
 	if(iOpenNum != iCloseNum){return FALSE;}
+	if((iOpenNum==0)&&(iIndexIn==0)){sToken->Format(_T("%s"),sInput); return TRUE;}
 	if(iOpenNum==0){sToken->Format(_T("")); return TRUE;}
 
 	int iStart;
