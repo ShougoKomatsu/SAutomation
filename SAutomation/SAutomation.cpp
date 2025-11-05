@@ -18,6 +18,7 @@ BEGIN_MESSAGE_MAP(CSAutomationApp, CWinApp)
 END_MESSAGE_MAP()
 
 
+CString g_sParam;
 // CSAutomationApp コンストラクション
 
 CSAutomationApp::CSAutomationApp()
@@ -51,6 +52,8 @@ BOOL CSAutomationApp::InitInstance()
 
 	CWinApp::InitInstance();
 
+	g_sParam.Format(_T("%s"),m_lpCmdLine); 
+	g_sParam.Trim();
 
 	AfxEnableControlContainer();
 

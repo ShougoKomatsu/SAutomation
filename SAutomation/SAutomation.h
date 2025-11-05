@@ -30,3 +30,4 @@ public:
 };
 
 extern CSAutomationApp theApp;
+extern CString g_sParam;
