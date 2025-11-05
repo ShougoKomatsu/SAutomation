@@ -16,6 +16,7 @@
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
 #define TIMER_REHOOK (103)
+
 #define ID_TRAY (1101)
 
 // CSAutomationDlg ダイアログ
@@ -259,15 +260,37 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if(cf.FindFile(sMacroFolderPath) != TRUE){_tmkdir(sMacroFolderPath);}
 	if(cf.FindFile(sLogFolderPath) != TRUE){_tmkdir(sLogFolderPath);}
 	if(cf.FindFile(sModelFolderPath) != TRUE){_tmkdir(sModelFolderPath);}
-	g_Automation.ReadSettings();
+
+	if(m_bNormalMode==TRUE)
+	{
+		g_Automation.ReadSettings();
+
+		if(g_Automation.m_bEnableHotkey==TRUE)
+		{
+			for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
+			for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
+		}
+	}
+	else
+	{
+
+		CString sSection;
+		g_Automation.m_OpeInfo[0].sFileName.Format(_T("%s"),g_sParam);
+
+		g_Automation.m_OpeInfo[0].sHotkey.Format(_T(""));
+
+		g_Automation.m_OpeInfo[0].bUseCtrl=FALSE;
+		g_Automation.m_OpeInfo[0].bUseShift=FALSE;
+		g_Automation.m_OpeInfo[0].bUseAlt=FALSE;
+		g_Automation.m_OpeInfo[0].bUseWin=FALSE;
+
+		g_Automation.m_OpeInfo[0].m_bDisableHalt=FALSE;
+		g_Automation.m_OpeInfo[0].m_iOperationMode=0;
+	}
+
 
 	g_bHalt = FALSE;
 
-	if(g_Automation.m_bEnableHotkey==TRUE)
-	{
-		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
-		for(int iExScene=0; iExScene<MAX_EX_THREAD; iExScene++){ResetHotkey(MAX_NORMAL_THREAD+iExScene);}
-	}
 
 	SetTimer(TIMER_COMPACT_DISP_MOUSPOS,200, NULL);
 	CRect rectDisp;
@@ -403,6 +426,11 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_WAKE_UP)
 	{
 		KillTimer(TIMER_WAKE_UP);
+		if(m_bNormalMode==FALSE)
+		{
+
+			Operate(0);
+		}
 		ReHookWindowsHook();
 		if(g_Automation.m_bAutoMinimize==TRUE)
 		{
