@@ -60,7 +60,7 @@ CSAutomationDlg::CSAutomationDlg(CWnd* pParent /*=NULL*/)
 	m_hIconRunning = AfxGetApp()->LoadIcon(IDI_ICON_RUNNING);
 	m_hIconMinimize = AfxGetApp()->LoadIcon(IDI_ICON_MINIMIZE);
 	m_hIconClose = AfxGetApp()->LoadIcon(IDI_ICON_CLOSE);
-	
+
 	m_brRed.CreateSolidBrush(RGB(255,75,0));
 	m_brGreen.CreateSolidBrush(RGB(64, 255, 89));
 	m_brBlack.CreateSolidBrush(RGB(0,0,0));
@@ -109,7 +109,7 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	g_hThread[wParam]=NULL;
 
 	g_Automation.m_OpeInfo[wParam].m_bRunning=FALSE;
-	
+
 	BOOL bRunningAny=FALSE;
 	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
@@ -128,7 +128,7 @@ LRESULT CSAutomationDlg::OnDispStandby(WPARAM wParam, LPARAM lParam)
 	{
 		ChangeIcon(IDI_ICON_RUNNING);
 	}
-	
+
 	return 0;
 }
 
@@ -199,36 +199,47 @@ BOOL CSAutomationDlg::OnInitDialog()
 	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
 	//	AfxMessageBox(szModuleName);
 
-//	CString sToken;
-//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
-//	ExtractToken(_T("aaa,bbb,ccc"),1,&sToken);
-//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
-//	CStringArray aaaa;
-//	aaaa.Add(_T("1234"));
-//	aaaa.Add(_T("%%d"));
-//	AfxMessageBox(Int2Str(0, _T("1234"),_T("%d")));
-	DWORD dwExeProcessIds[1024] = { 0 };
-	GetExeOtherProcessIds(szModuleName, dwExeProcessIds, dwCurrentProcessId);
-
-	if (dwExeProcessIds[0]>0)
+	//	CString sToken;
+	//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
+	//	ExtractToken(_T("aaa,bbb,ccc"),1,&sToken);
+	//	ExtractToken(_T("aaa,bbb,ccc"),2,&sToken);
+	//	CStringArray aaaa;
+	//	aaaa.Add(_T("1234"));
+	//	aaaa.Add(_T("%%d"));
+	//	AfxMessageBox(Int2Str(0, _T("1234"),_T("%d")));
+	if(g_sParam.GetLength()>0)
 	{
-		AfxMessageBox(_T("多重起動"));
-		//		return CDialogEx::DestroyWindow();
+		m_bNormalMode=FALSE;
+	}
+	else
+	{
+		m_bNormalMode=TRUE;
+	}
+	if(m_bNormalMode==TRUE)
+	{
+		DWORD dwExeProcessIds[1024] = { 0 };
+		GetExeOtherProcessIds(szModuleName, dwExeProcessIds, dwCurrentProcessId);
+
+		if (dwExeProcessIds[0]>0)
+		{
+			AfxMessageBox(_T("多重起動"));
+			//		return CDialogEx::DestroyWindow();
+		}
 	}
 
 	SetWindowText(_T("SAutomation"));
 	g_hWnd = this->m_hWnd;
-	
+
 	POINT p;
 	GetCursorPos(&p);
 	g_iR=p.y-g_iOriginR;
 	g_iC=p.x-g_iOriginC;
 	g_hhook = NULL;
-	
+
 	SetTimer(TIMER_THREAD_WATCH,200, NULL);
 	SetTimer(TIMER_WAKE_UP, 100, NULL);
 	SetTimer(TIMER_REHOOK, 10000, NULL);
-	
+
 	wchar_t szData[MAX_PATH];
 	GetCurrentDirectory(sizeof(szData)/sizeof(wchar_t),szData);
 
@@ -243,15 +254,15 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	CString sModelFolderPath;
 	sModelFolderPath.Format(_T("%s\\Macro\\Model"),g_Automation.m_sDir);
-	
+
 	CFileFind cf;
 	if(cf.FindFile(sMacroFolderPath) != TRUE){_tmkdir(sMacroFolderPath);}
 	if(cf.FindFile(sLogFolderPath) != TRUE){_tmkdir(sLogFolderPath);}
 	if(cf.FindFile(sModelFolderPath) != TRUE){_tmkdir(sModelFolderPath);}
 	g_Automation.ReadSettings();
-	
+
 	g_bHalt = FALSE;
-	
+
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
 		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
@@ -270,7 +281,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	::SetWindowPos(this->m_hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOSENDCHANGING | SWP_SHOWWINDOW);
 	SetIcon(m_hIconStandby, FALSE);
 	SetIcon(m_hIconStandby, TRUE);
-	
+
 	CRect rect;
 	GetClientRect(&rect);
 
@@ -305,7 +316,7 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 			break;
 		}
 	}
-	
+
 	TrayNotifyIconMessage(NIM_MODIFY, iIcon);
 
 	return TRUE;
@@ -316,7 +327,7 @@ void CSAutomationDlg::OnPaint()
 	CPaintDC dc(this); // device context for painting
 
 	CBrush* pOldBrush;
-	
+
 	if(m_bRunning==TRUE)
 	{
 		pOldBrush = dc.SelectObject(&m_brGreen);
@@ -447,7 +458,7 @@ void CSAutomationDlg::SelectAndOperate(int iExScene)
 	int iRet = m_cDlgSelect.DoModal();
 	if(iRet != IDOK){return;}
 
-	
+
 	SetSelection(iExScene, m_cDlgSelect.m_sResultFileName);
 	Operate(MAX_NORMAL_THREAD+iExScene);
 }
@@ -516,7 +527,7 @@ void CSAutomationDlg::OnBnClickedButtonCompactExit()
 	CSettingDlg settingDlg;
 	settingDlg.m_sDir.Format(_T("%s"),g_sDir);
 	settingDlg.DoModal();
-	
+
 	if(g_Automation.m_bEnableHotkey==TRUE)
 	{
 		for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++){ResetHotkey(iScene);}
@@ -561,17 +572,17 @@ void CSAutomationDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CSAutomationDlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	
+
 	m_bMoving=FALSE;
 	CDialogEx::OnLButtonUp(nFlags, point);
 }
 
-	void CSAutomationDlg::WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo)
-	{
-		CRect rect;
-		GetWindowRect(&rect);
-		MoveWindow(rect.left+ixTo-ixFrom, rect.top+iyTo-iyFrom,rect.Width(), rect.Height());
-	}
+void CSAutomationDlg::WinodowMove(int ixFrom, int iyFrom, int ixTo, int iyTo)
+{
+	CRect rect;
+	GetWindowRect(&rect);
+	MoveWindow(rect.left+ixTo-ixFrom, rect.top+iyTo-iyFrom,rect.Width(), rect.Height());
+}
 
 
 
@@ -586,7 +597,7 @@ HBRUSH CSAutomationDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CSAutomationDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialogEx::OnSize(nType, cx, cy);
-	
+
 	if (nType == SIZE_MINIMIZED)
 	{
 		if(g_Automation.m_bMinimizeToTaskTray==TRUE)
