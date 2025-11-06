@@ -216,6 +216,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 	{
 		m_bNormalMode=TRUE;
 	}
+	m_bRanOnce=FALSE;
+
 	if(m_bNormalMode==TRUE)
 	{
 		DWORD dwExeProcessIds[1024] = { 0 };
@@ -328,6 +330,7 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 	{
 	case IDI_ICON_STANDBY:
 		{
+			if(m_bNormalMode==FALSE){if(m_bRanOnce==TRUE){OnOK();}}
 			SetIcon(m_hIconStandby, FALSE);
 			m_bRunning=FALSE;
 			Invalidate();
@@ -430,6 +433,7 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 	if(nIDEvent == TIMER_LAUNCH)
 	{
 		KillTimer(TIMER_LAUNCH);
+		m_bRanOnce=TRUE;
 			Operate(0);
 	}
 	if(nIDEvent == TIMER_WAKE_UP)
