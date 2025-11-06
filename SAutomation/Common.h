@@ -132,7 +132,7 @@ void SetComboItemShift(CComboBox* combo,OperationInfo* op);
 class AutomationInfo
 {
 public:
-	void Operate(int iScene);
+	void Operate(int iScene, BOOL bNormalMode);
 	AutomationInfo()
 	{
 		for(int iExSecene=0; iExSecene<MAX_EX_THREAD; iExSecene++)

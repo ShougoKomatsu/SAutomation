@@ -16,7 +16,7 @@
 #define TIMER_THREAD_WATCH (101)
 #define TIMER_WAKE_UP (102)
 #define TIMER_REHOOK (103)
-
+#define TIMER_LAUNCH (104)
 #define ID_TRAY (1101)
 
 // CSAutomationDlg ダイアログ
@@ -275,7 +275,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	{
 
 		CString sSection;
-		g_Automation.m_OpeInfo[0].sFileName.Format(_T("%s"),g_sParam);
+		g_Automation.m_OpeInfo[0].sFileName.Format(_T("%s"),g_sParam.Mid(1,g_sParam.GetLength()-2));
 
 		g_Automation.m_OpeInfo[0].sHotkey.Format(_T(""));
 
@@ -313,6 +313,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 	cwnd->MoveWindow(rect.Width()-20,0,20,20);
 	cwnd=GetDlgItem(IDC_COMPACT_BUTTON_MINIMIZE);
 	cwnd->MoveWindow(rect.Width()-40,0,20,20);
+	if(m_bNormalMode==FALSE)
+	{
+	SetTimer(TIMER_LAUNCH,100,NULL);
+	}
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 例外 : OCX プロパティ ページは必ず FALSE を返します。
 }
@@ -423,14 +427,14 @@ void CSAutomationDlg::OnTimer(UINT_PTR nIDEvent)
 		}
 		if(g_iWatching==1){UnregisterHotKey(NULL, HOTKEY_ESCAPE); g_iWatching=0;}
 	}
+	if(nIDEvent == TIMER_LAUNCH)
+	{
+		KillTimer(TIMER_LAUNCH);
+			Operate(0);
+	}
 	if(nIDEvent == TIMER_WAKE_UP)
 	{
 		KillTimer(TIMER_WAKE_UP);
-		if(m_bNormalMode==FALSE)
-		{
-
-			Operate(0);
-		}
 		ReHookWindowsHook();
 		if(g_Automation.m_bAutoMinimize==TRUE)
 		{
@@ -471,7 +475,7 @@ void CSAutomationDlg::OnMouseMove(UINT nFlags, CPoint point)
 void CSAutomationDlg::Operate(int iScene)
 {
 	ChangeIcon(IDI_ICON_RUNNING);
-	g_Automation.Operate(iScene);
+	g_Automation.Operate(iScene,m_bNormalMode);
 }
 
 
