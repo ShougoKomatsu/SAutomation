@@ -24,6 +24,7 @@ private:
 };
 
 BOOL ReadUTFFile(CString sFilePath, CStringArray* saData);
+BOOL ReadMacroFile(CString sFilePath, CStringArray* saData);
 extern UTFReaderWriter g_utfW[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
 
