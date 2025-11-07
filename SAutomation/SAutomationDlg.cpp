@@ -244,10 +244,13 @@ BOOL CSAutomationDlg::OnInitDialog()
 	SetTimer(TIMER_REHOOK, 10000, NULL);
 
 	wchar_t szData[MAX_PATH];
-	GetCurrentDirectory(sizeof(szData)/sizeof(wchar_t),szData);
+	GetModuleFileName(NULL,szData,MAX_PATH);
+	CString sDir;
+	CString sFileName;
+	GetDirectory(szData, &sDir, &sFileName);
 
-	g_Automation.m_sDir.Format(_T("%s"),szData);
-	g_sDir.Format(_T("%s"),szData);
+	g_Automation.m_sDir.Format(_T("%s"),sDir);
+	g_sDir.Format(_T("%s"),sDir);
 
 	CString sMacroFolderPath;
 	sMacroFolderPath.Format(_T("%s\\Macro"),g_Automation.m_sDir);
