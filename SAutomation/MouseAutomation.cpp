@@ -175,25 +175,25 @@ ReturnValue MouseMUp(CString sDir, int iScene, CStringArray* saData)
 
 
 
-ReturnValue MouseLClick(UINT nX, UINT nY)
+ReturnValue MouseLClick(UINT nX, UINT nY, int iClickDulation)
 {
 	MoveMouse(nX, nY);
 	MouseLDown(nX, nY);
-	Sleep(g_iClickDulation);
+	Sleep(iClickDulation);
 	return MouseLUp(nX, nY);
 }
-ReturnValue MouseRClick(UINT nX, UINT nY)
+ReturnValue MouseRClick(UINT nX, UINT nY, int iClickDulation)
 {
 	MoveMouse(nX, nY);
 	MouseRDown(nX, nY);
-	Sleep(g_iClickDulation);
+	Sleep(iClickDulation);
 	return MouseRUp(nX, nY);
 }
-ReturnValue MouseMClick(UINT nX, UINT nY)
+ReturnValue MouseMClick(UINT nX, UINT nY, int iClickDulation)
 {
 	MoveMouse(nX, nY);
 	MouseMDown(nX, nY);
-	Sleep(g_iClickDulation);
+	Sleep(iClickDulation);
 	return MouseMUp(nX, nY);
 }
 
@@ -203,7 +203,7 @@ ReturnValue MouseMClick(UINT nX, UINT nY)
 
 ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseLClick(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseLClick(g_iC, g_iR, g_iClickDulation);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
@@ -211,11 +211,11 @@ ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData)
 		Point point;
 		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
 		if(bRet==FALSE){return RETURN_FAILED;}
-		return MouseLClick(point.c, point.r);
+		return MouseLClick(point.c, point.r, g_iClickDulation);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
-	return MouseLClick(iSrc1, iSrc2);
+	return MouseLClick(iSrc1, iSrc2, g_iClickDulation);
 }
 
 ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPVOID Halt, LPVOID Suspend)
@@ -229,18 +229,37 @@ ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPV
 		iTimeMillisec= GetIntValue(sDir, iScene, sArg);
 	}
 
+	int iClickDulation=g_iClickDulation;
+	if(saData->GetCount()>=2)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(1),_T(")"),&sArg,&sDummy);
+		iClickDulation= GetIntValue(sDir, iScene, sArg);
+	}
+	int iClickSleep = 1;
+	if(saData->GetCount()>=3)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(2),_T(")"),&sArg,&sDummy);
+		iClickSleep = GetIntValue(sDir, iScene, sArg);
+	}
+
 	ULONGLONG ullStartMilliSec;
 	ULONGLONG ullSuspendStartMilliSec;
 	ULONGLONG ullSuspendedMilliSec;
 	ullStartMilliSec = GetTickCount64();
 	ullSuspendedMilliSec=0;
 
-	MouseLClick(g_iC, g_iR);
-	Sleep(1);
-	while(GetTickCount64()<ullStartMilliSec+iTimeMillisec/g_dSpeedMult+ullSuspendedMilliSec)
+	MouseLClick(g_iC, g_iR, iClickDulation);
+	Sleep(iClickSleep);
+	while(1)
 	{
-		MouseLClick(g_iC, g_iR);
-		Sleep(1);
+		if(iTimeMillisec>=0)
+		{
+			if(GetTickCount64()>=ullStartMilliSec+iTimeMillisec/g_dSpeedMult+ullSuspendedMilliSec){break;}
+		}
+
+		MouseLClick(g_iC, g_iR, iClickDulation);
 		if(Halt != NULL){if((*(int*)Halt) == 1){return RETURN_HALT;}}
 		if(Suspend != NULL)
 		{
@@ -256,6 +275,7 @@ ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPV
 				continue;
 			}
 		}
+		Sleep(iClickSleep);
 	}
 	return RETURN_NORMAL;
 }
@@ -264,7 +284,7 @@ ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPV
 
 ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseRClick(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseRClick(g_iC, g_iR, g_iClickDulation);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
@@ -272,16 +292,16 @@ ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData)
 		Point point;
 		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
 		if(bRet==FALSE){return RETURN_FAILED;}
-		return MouseRClick(point.c, point.r);
+		return MouseRClick(point.c, point.r, g_iClickDulation);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
-	return MouseRClick(iSrc1, iSrc2);
+	return MouseRClick(iSrc1, iSrc2, g_iClickDulation);
 }
 
 ReturnValue MouseMClick(CString sDir, int iScene, CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseMClick(g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseMClick(g_iC, g_iR, g_iClickDulation);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
@@ -289,11 +309,11 @@ ReturnValue MouseMClick(CString sDir, int iScene, CStringArray* saData)
 		Point point;
 		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
 		if(bRet==FALSE){return RETURN_FAILED;}
-		return MouseMClick(point.c, point.r);
+		return MouseMClick(point.c, point.r, g_iClickDulation);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
-	return MouseMClick(iSrc1, iSrc2);
+	return MouseMClick(iSrc1, iSrc2, g_iClickDulation);
 }
 
 
