@@ -28,6 +28,8 @@
 #define COMMAND_MOUSE_MOVE_TO_ITEM (COMMAND_MOUSE+100+8)
 #define COMMAND_MOUSE_L_CLICK_IMG (COMMAND_MOUSE+100+9)
 
+#define COMMAND_MOUSE_L_REPEATCLICK (COMMAND_MOUSE+100+10)
+
 ReturnValue MouseLDownAbs(UINT nX, UINT nY);
 ReturnValue MouseLDown(CString sDir, int iScene, CStringArray* saData);
 ReturnValue MouseRDownAbs(UINT nX, UINT nY);
@@ -57,6 +59,8 @@ ReturnValue MouseRClick(UINT nX, UINT nY);
 ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData);
 ReturnValue MouseMClick(UINT nX, UINT nY);
 ReturnValue MouseMClick(CString sDir, int iScene, CStringArray* saData);
+
+ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPVOID Halt, LPVOID Suspend);
 
 ReturnValue MoveMouseToItem(CString sDir, int iScene, CStringArray* saData);
 ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData);

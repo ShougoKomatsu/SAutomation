@@ -217,6 +217,51 @@ ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData)
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
 	return MouseLClick(iSrc1, iSrc2);
 }
+
+ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPVOID Halt, LPVOID Suspend)
+{
+	int iTimeMillisec;
+	if(saData->GetCount()==0){iTimeMillisec=-1;}
+	if(saData->GetCount()>=1)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
+		iTimeMillisec= GetIntValue(sDir, iScene, sArg);
+	}
+
+	ULONGLONG ullStartMilliSec;
+	ULONGLONG ullSuspendStartMilliSec;
+	ULONGLONG ullSuspendedMilliSec;
+	ullStartMilliSec = GetTickCount64();
+	ullSuspendedMilliSec=0;
+
+	MouseLClick(g_iC, g_iR);
+	Sleep(1);
+	while(GetTickCount64()<ullStartMilliSec+iTimeMillisec/g_dSpeedMult+ullSuspendedMilliSec)
+	{
+		MouseLClick(g_iC, g_iR);
+		Sleep(1);
+		if(Halt != NULL){if((*(int*)Halt) == 1){return RETURN_HALT;}}
+		if(Suspend != NULL)
+		{
+			if((*(int*)Suspend) == 1)
+			{
+				ullSuspendStartMilliSec = GetTickCount64();
+				while((*(int*)Suspend) == 1)
+				{
+					if((*(int*)Halt) == 1){return RETURN_HALT;}
+					Sleep(1);
+				}
+				ullSuspendedMilliSec += GetTickCount64() - ullSuspendStartMilliSec;
+				continue;
+			}
+		}
+	}
+	return RETURN_NORMAL;
+}
+
+
+
 ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()==0){return MouseRClick(g_iC, g_iR);}
