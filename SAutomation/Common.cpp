@@ -688,6 +688,31 @@ BOOL ReadUTFFile(CString sFilePath, CStringArray* saData)
 
 	return TRUE;
 }
+BOOL ReadMacroFile(CString sFilePath, CStringArray* saData)
+{
+	CStringArray saDataL;
+	BOOL bRet = ReadUTFFile(sFilePath, &saDataL);
+	if(bRet != TRUE){return FALSE;}
+
+	int iMacroStart=0;
+	int iLineCount=saDataL.GetCount();
+	for(int i=0; i<iLineCount; i++)
+	{
+		CString sLine(saDataL.GetAt(i));
+		sLine.Trim();
+		if(sLine.CompareNoCase(_T("[macro]"))==0)
+		{
+			iMacroStart=i+1;
+		}
+	}
+	saData->RemoveAll();
+
+	for(int i=iMacroStart; i<iLineCount; i++)
+	{
+		saData->Add(saDataL.GetAt(i));
+	}
+	return TRUE;
+}
 
 BOOL CStringArrayTrim(CStringArray* saData)
 {

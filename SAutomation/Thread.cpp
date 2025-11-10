@@ -102,7 +102,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	CString sFileName;
 	bRet=GetDirectory(g_sFilePath[iScene], &sDir, &sFileName);
 
-	bRet = ReadUTFFile(g_sFilePath[iScene], &saCommands);
+	bRet = ReadMacroFile(g_sFilePath[iScene], &saCommands);
 	if(bRet != TRUE)
 	{
 		ChangeMouseOrigin(0, 0);
