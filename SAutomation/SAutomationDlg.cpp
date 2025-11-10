@@ -278,9 +278,10 @@ BOOL CSAutomationDlg::OnInitDialog()
 	}
 	else
 	{
+		CString sFilePath;
+		sFilePath.Format(_T("%s"),g_sParam.Mid(1,g_sParam.GetLength()-2));
 
-		CString sSection;
-		g_Automation.m_OpeInfo[0].sFileName.Format(_T("%s"),g_sParam.Mid(1,g_sParam.GetLength()-2));
+		g_Automation.m_OpeInfo[0].sFileName.Format(_T("%s"),sFilePath);
 
 		g_Automation.m_OpeInfo[0].sHotkey.Format(_T(""));
 
@@ -289,8 +290,24 @@ BOOL CSAutomationDlg::OnInitDialog()
 		g_Automation.m_OpeInfo[0].bUseAlt=FALSE;
 		g_Automation.m_OpeInfo[0].bUseWin=FALSE;
 
-		g_Automation.m_OpeInfo[0].m_bDisableHalt=FALSE;
-		g_Automation.m_OpeInfo[0].m_iOperationMode=0;
+		CString sSection;
+		sSection.Format(_T("Setting"));
+		GetPrivateProfileStringAsBool(sSection, _T("DisableHalt"), FALSE, &(g_Automation.m_OpeInfo[0].m_bDisableHalt), sFilePath);
+		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+		if(_tcslen(szData)>0){g_Automation.m_OpeInfo[0].m_iOperationMode=_wtoi(szData);}else{g_Automation.m_OpeInfo[0].m_iOperationMode=0;}
+
+		GetPrivateProfileStringAsBool(_T("Setting"), _T("Log"), FALSE, &(g_Automation.m_bLog), sFilePath);
+		if(g_Automation.m_bLog==FALSE)
+		{
+			g_Automation.m_iLogLevel=0;
+		}
+		else
+		{
+			GetPrivateProfileString(_T("Setting"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+			g_Automation.m_iLogLevel=_wtoi(szData);
+			if(g_Automation.m_iLogLevel<1){g_Automation.m_iLogLevel=1;}
+			if(g_Automation.m_iLogLevel>5){g_Automation.m_iLogLevel=5;}
+		}
 	}
 
 
