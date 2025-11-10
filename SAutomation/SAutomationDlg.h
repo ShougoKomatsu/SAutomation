@@ -102,6 +102,8 @@ class CSAutomationDlg : public CDialogEx
 public:
 	CSAutomationDlg(CWnd* pParent = NULL);	// 標準コンストラクター
 	~CSAutomationDlg();
+	BOOL m_bNormalMode;
+	BOOL m_bRanOnce;
 	BOOL m_bMoving;
 	BOOL m_iX;
 	BOOL m_iY;

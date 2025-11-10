@@ -299,7 +299,7 @@ BOOL AutomationInfo::IsSameAs(AutomationInfo* autoInfoIn)
 
 	return TRUE;
 }
-void AutomationInfo::Operate(int iScene)
+void AutomationInfo::Operate(int iScene, BOOL bNormalMode)
 {
 	ChangeMouseOrigin(0, 0);
 
@@ -310,7 +310,14 @@ void AutomationInfo::Operate(int iScene)
 		dwResult = WaitForSingleObject(g_hThread[iScene], 0);
 		if(dwResult != STATUS_WAIT_0){return;}
 	}
+	if(bNormalMode==TRUE)
+	{
 	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
+	}
+	else
+	{
+	g_sFilePath[iScene].Format(_T("%s"),g_Automation.m_OpeInfo[iScene].sFileName);
+	}
 	int iParam[3];
 	iParam[2] = g_Automation.m_OpeInfo[iScene].m_bDisableHalt;
 	iParam[1] = m_iLogLevel<<PARAM_LOGLEVEL_SHIFT;
