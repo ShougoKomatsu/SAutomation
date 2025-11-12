@@ -186,7 +186,7 @@ Windowforward(文字列 or 文字列型変数: ウインドウ名(部分一致))
 Windowforward(整数 or 整数型変数)
 WindowPos(整数, 整数)
 WindowSize(整数, 整数)
-Run(実行ファイルのパス)
+Run(実行ファイルのパス。".lnk", ".url", ".bat"ファイル等を使用することもできる)
 SendMessage(整数: ウィンドウハンドル, 整数: ウィンドウメッセージ)
 SetWindowAttribute(整数: ウィンドウハンドル, 整数: 属性, 整数: パラメータ)
 
