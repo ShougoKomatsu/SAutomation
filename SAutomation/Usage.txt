@@ -109,6 +109,10 @@ MouseMClick
 MouseMDown
 MouseMUp
 
+現在位置でクリック連打
+MouseLRepeatClick(持続時間（ミリ秒）, Down時間（ミリ秒）, Up時間（ミリ秒）)
+それぞれ整数変数名or整数値
+
 □最前面ウィンドウの指定IDの中心にマウスカーソルを移動させる
 MousePosToItem(整数変数名or整数値)
 
