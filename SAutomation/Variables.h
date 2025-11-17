@@ -59,6 +59,7 @@ ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData);
 #define VARIABLE_RECT_BOTTOM (18)
 #define VARIABLE_INT_FOREGROUND_WINDOW (19)
 #define VARIABLE_INT_RUN (20)
+#define VARIABLE_INT_WINDOW_HANDLE (21)
 
 #define VARIABLE_STR (100)
 #define VARIABLE_COMBINE_STR (101)
