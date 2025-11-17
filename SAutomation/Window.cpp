@@ -64,13 +64,24 @@ ReturnValue RunExe(CString sExePath)
 	si.cb=sizeof(si);
 	memset(&pi, NULL, sizeof(pi));
 
+	
 	wchar_t* szTmp;
 	szTmp = new wchar_t[wcslen(sExePath) + 1];
 	memset(szTmp, NULL, sizeof(szTmp)/sizeof(wchar_t));
 	wcscpy_s(szTmp, wcslen(sExePath) + 1, sExePath);
-
-	CreateProcess(NULL,  szTmp, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
+	SHELLEXECUTEINFO sei={0};
+	sei.cbSize=sizeof(SHELLEXECUTEINFO);
+	sei.fMask=SEE_MASK_NOCLOSEPROCESS;
+	sei.hwnd=NULL;
+	sei.lpVerb=NULL;
+	sei.lpFile=szTmp;
+	sei.lpParameters=NULL;
+	sei.lpDirectory=NULL;
+	sei.nShow=SW_NORMAL;
+	sei.hInstApp=NULL;
+	ShellExecuteEx(&sei);
 	SAFE_DELETE(szTmp);
+
 	return RETURN_NORMAL;
 }
 
