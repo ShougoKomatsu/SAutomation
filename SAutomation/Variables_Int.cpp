@@ -20,7 +20,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_DLG_ITEM; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("ForegroundWindow"))==0){*iCommandType=VARIABLE_INT_FOREGROUND_WINDOW; return TRUE;}
 	if(sDataTrim.Left(15).CompareNoCase(_T("GetWindowHandle"))==0){*iCommandType=VARIABLE_INT_WINDOW_HANDLE; return TRUE;}
-	if(sDataTrim.Left(3).CompareNoCase(_T("Run"))==0){*iCommandType=VARIABLE_INT_RUN; return TRUE;}
+//	if(sDataTrim.Left(3).CompareNoCase(_T("Run"))==0){*iCommandType=VARIABLE_INT_RUN; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 	
 	if(sDataTrim.Right(3).CompareNoCase(_T("sec"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
