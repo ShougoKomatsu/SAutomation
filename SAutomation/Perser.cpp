@@ -137,6 +137,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Right(2).CompareNoCase(_T("Up"))==0){*iCommandType=COMMAND_KEY_UP; return TRUE;}
 
 	if((sDataTrim.Left(3).CompareNoCase(_T("Run"))==0)){*iCommandType=COMMAND_RUN; return TRUE;}
+	if((sDataTrim.Left(4).CompareNoCase(_T("Kill"))==0)){*iCommandType=COMMAND_KILL; return TRUE;}
 	if((sDataTrim.Left(5).CompareNoCase(_T("Input"))==0)){*iCommandType=COMMAND_OUTPUT_KEY; return TRUE;}
 	if((sDataTrim.Left(9).CompareNoCase(_T("OutputKey"))==0)){*iCommandType=COMMAND_OUTPUT_KEY; return TRUE;}
 
@@ -872,6 +873,13 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_RUN:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			saData->Add(sArg);
+			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_KILL:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			saData->Add(sArg);

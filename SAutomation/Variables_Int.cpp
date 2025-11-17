@@ -19,6 +19,7 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(6).CompareNoCase(_T("DivInt"))==0){*iCommandType=VARIABLE_DIV_INT; return TRUE;}
 	if(sDataTrim.Left(7).CompareNoCase(_T("DlgItem"))==0){*iCommandType=VARIABLE_DLG_ITEM; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("ForegroundWindow"))==0){*iCommandType=VARIABLE_INT_FOREGROUND_WINDOW; return TRUE;}
+	if(sDataTrim.Left(3).CompareNoCase(_T("Run"))==0){*iCommandType=VARIABLE_INT_RUN; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
 	
 	if(sDataTrim.Right(3).CompareNoCase(_T("sec"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
@@ -357,6 +358,13 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			HWND hwnd = GetForegroundWindow();
 
 			return (int)hwnd;
+		}
+	case VARIABLE_INT_RUN:
+		{
+			HWND hWnd=NULL;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			RunExe2(sArg,&hWnd);
+			return (int)hWnd;
 		}
 	case VARIABLE_STR_LEN:
 		{

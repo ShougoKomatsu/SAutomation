@@ -37,6 +37,21 @@ BOOL isProcessExist(CString sExePath)
 	return FALSE;
 }
 
+ReturnValue KillExe(CString sDir, int iScene, CStringArray* saData)
+{
+	int iHandle=GetIntValue(sDir, iScene, saData->GetAt(0));
+	DWORD dwProcessID;
+	GetProcessIDByWindowHandle((HWND)iHandle, &dwProcessID);
+
+	HANDLE hProcess= OpenProcess(PROCESS_TERMINATE,FALSE, dwProcessID);
+
+	TerminateProcess(hProcess, 0);
+	CloseHandle(hProcess);
+
+
+	return RETURN_FAILED;
+}
+
 ReturnValue RunExe(CString sExePath)
 {
 	BOOL bAlreadyExist = FALSE;
@@ -59,6 +74,43 @@ ReturnValue RunExe(CString sExePath)
 	return RETURN_NORMAL;
 }
 
+ReturnValue RunExe2(CString sExePath, HWND* hWnd)
+{
+	BOOL bAlreadyExist = FALSE;
+	bAlreadyExist = isProcessExist(sExePath);
+	if(bAlreadyExist==TRUE){return RETURN_NORMAL;}
+
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+	memset(&si, NULL, sizeof(si));
+	si.cb=sizeof(si);
+	memset(&pi, NULL, sizeof(pi));
+
+	
+	wchar_t* szTmp;
+	szTmp = new wchar_t[wcslen(sExePath) + 1];
+	memset(szTmp, NULL, sizeof(szTmp)/sizeof(wchar_t));
+	wcscpy_s(szTmp, wcslen(sExePath) + 1, sExePath);
+	SHELLEXECUTEINFO sei={0};
+	sei.cbSize=sizeof(SHELLEXECUTEINFO);
+	sei.fMask=SEE_MASK_NOCLOSEPROCESS;
+	sei.hwnd=NULL;
+	sei.lpVerb=NULL;
+	sei.lpFile=szTmp;
+	sei.lpParameters=NULL;
+	sei.lpDirectory=NULL;
+	sei.nShow=SW_NORMAL;
+	sei.hInstApp=NULL;
+	ShellExecuteEx(&sei);
+	SAFE_DELETE(szTmp);
+
+	DWORD dwProcessID=GetProcessId(sei.hProcess);
+	
+	GetWindowHandleByProcessID(dwProcessID,hWnd);
+	CloseHandle(sei.hProcess);
+
+	return RETURN_NORMAL;
+}
 ReturnValue Maximize()
 {
 	HWND hwnd = GetForegroundWindow();
@@ -100,7 +152,7 @@ BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam)
 }
 
 
-BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch)
+BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch)
 {
 	WCHAR wszWindowName[MAX_PATH];
 	CString sWindowName;
@@ -128,11 +180,57 @@ BOOL GetHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch)
 	return FALSE;
 }
 
+BOOL GetProcessIDByWindowHandle(HWND hwnd,DWORD* dwProcessID)
+{
+	WCHAR wszWindowName[MAX_PATH];
+	CString sWindowName;
+
+	g_iWnd=0;
+	EnumWindows(EnumWindowsFunc, 0) ;
+
+	for(int i=0; i<g_iWnd; i++)
+	{
+		if(g_hWnds[i] == hwnd)
+		{
+			GetWindowThreadProcessId(g_hWnds[i],dwProcessID);
+
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+BOOL GetWindowHandleByProcessID(DWORD dwTargetID, HWND* hwnd)
+{
+	*hwnd=NULL;
+	WCHAR wszWindowName[MAX_PATH];
+	CString sWindowName;
+
+	g_iWnd=0;
+	EnumWindows(EnumWindowsFunc, 0) ;
+
+	int iTargetHandle;
+	BOOL bFound;
+	bFound = FALSE;
+	iTargetHandle=0;
+	for(int i=0; i<g_iWnd; i++)
+	{
+		DWORD dwProcessID;
+		GetWindowThreadProcessId(g_hWnds[i],&dwProcessID);
+		if(dwProcessID==dwTargetID)
+		{
+			*hwnd=g_hWnds[i];
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch)
 {
 	BOOL bRet;
 	HWND hwnd;
-	bRet = GetHandleByName(sTargetName, &hwnd, bPartialMatch);
+	bRet = GetWindowHandleByName(sTargetName, &hwnd, bPartialMatch);
 	if(bRet != TRUE){return FALSE;}
 
 	WINDOWINFO wi;
@@ -175,7 +273,7 @@ ReturnValue SetWindowForward(CString sDir, int iScene, CStringArray* saData)
 	case VARIABLE_STR:
 		{
 			sTargetName.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-			bRet = GetHandleByName(sTargetName, &hwnd);
+			bRet = GetWindowHandleByName(sTargetName, &hwnd);
 			if(bRet != TRUE){return RETURN_FAILED;}
 			break;
 		}
