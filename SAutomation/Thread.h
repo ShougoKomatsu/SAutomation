@@ -7,7 +7,8 @@ extern BOOL g_bHalt;
 #define MAX_THREAD (MAX_NORMAL_THREAD+MAX_EX_THREAD)
 
 extern HANDLE g_hThread[MAX_THREAD];
-extern CString g_sFilePath[MAX_THREAD];
+extern CString g_sLogFilePath[MAX_THREAD];
+extern CString g_sMacroFilePath[MAX_THREAD];
 extern FILE* g_f[MAX_THREAD];
 extern int g_iLogLevel[MAX_THREAD];
 

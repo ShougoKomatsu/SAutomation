@@ -14,7 +14,7 @@ int g_iWatching=0;
 
 HANDLE g_hHotkey[MAX_THREAD];
 UTFReaderWriter g_utfW[MAX_THREAD];
-CString g_sLogFilePath[MAX_THREAD];
+CString g_sMacroFilePath[MAX_THREAD];
 int g_iLogLevel[MAX_THREAD];
 double g_dSpeedMult=1.0;
 
@@ -312,11 +312,11 @@ void AutomationInfo::Operate(int iScene, BOOL bNormalMode)
 	}
 	if(bNormalMode==TRUE)
 	{
-	g_sFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
+	g_sMacroFilePath[iScene].Format(_T("%s\\Macro\\%s"),g_Automation.m_sDir, g_Automation.m_OpeInfo[iScene].sFileName);
 	}
 	else
 	{
-	g_sFilePath[iScene].Format(_T("%s"),g_Automation.m_OpeInfo[iScene].sFileName);
+	g_sMacroFilePath[iScene].Format(_T("%s"),g_Automation.m_OpeInfo[iScene].sFileName);
 	}
 	int iParam[3];
 	iParam[2] = g_Automation.m_OpeInfo[iScene].m_bDisableHalt;

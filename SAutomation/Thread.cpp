@@ -17,7 +17,7 @@ int g_iSceneData[MAX_THREAD];
 long g_lLockCommandDisplay=0;
 
 CString g_sCommand[MAX_THREAD];
-CString g_sFilePath[MAX_THREAD];
+CString g_sLogFilePath[MAX_THREAD];
 
 BOOL g_bHalt;
 BOOL g_bSuspend = FALSE;
@@ -100,9 +100,9 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	
 	CString sDir;
 	CString sFileName;
-	bRet=GetDirectory(g_sFilePath[iScene], &sDir, &sFileName);
+	bRet=GetDirectory(g_sMacroFilePath[iScene], &sDir, &sFileName);
 
-	bRet = ReadMacroFile(g_sFilePath[iScene], &saCommands);
+	bRet = ReadMacroFile(g_sMacroFilePath[iScene], &saCommands);
 	if(bRet != TRUE)
 	{
 		ChangeMouseOrigin(0, 0);
@@ -142,17 +142,17 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	CString sLabel;
 	BOOL bExit;
 	StopWatch sw;
-	g_sFilePath[iScene].Format(_T("%s\\Log\\log%d.txt"), g_sDir, iScene);
+	g_sLogFilePath[iScene].Format(_T("%s\\Log\\log%d.txt"), g_sDir, iScene);
 	if(g_iLogLevel[iScene]>=1)
 	{
 		BOOL bRet;
-		bRet = g_utfW[iScene].OpenUTFFile(g_sFilePath[iScene],_T("w, ccs=UTF-8"));
+		bRet = g_utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("w, ccs=UTF-8"));
 	}
 	ResetProgramCounter(sDir, iScene);
 	CString sWrite;
 	BOOL* bHalt;
 
-	sWrite.Format(_T("%s\n"), g_sFilePath[iScene]);
+	sWrite.Format(_T("%s\n"), g_sMacroFilePath[iScene]);
 	if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
 
 	if(bDisableHalt==FALSE)
