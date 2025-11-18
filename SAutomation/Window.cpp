@@ -52,9 +52,13 @@ ReturnValue KillExe(CString sDir, int iScene, CStringArray* saData)
 	return RETURN_FAILED;
 }
 
-ReturnValue RunExe(CString sExePath)
+
+ReturnValue RunExe(CString sDir, int iScene, CStringArray* saData, HWND* hWnd)
 {
 	BOOL bAlreadyExist = FALSE;
+
+	CString sExePath;
+	sExePath.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
 	bAlreadyExist = isProcessExist(sExePath);
 	if(bAlreadyExist==TRUE){return RETURN_NORMAL;}
 
@@ -82,38 +86,7 @@ ReturnValue RunExe(CString sExePath)
 	ShellExecuteEx(&sei);
 	SAFE_DELETE(szTmp);
 
-	return RETURN_NORMAL;
-}
-
-ReturnValue RunExe2(CString sExePath, HWND* hWnd)
-{
-	BOOL bAlreadyExist = FALSE;
-	bAlreadyExist = isProcessExist(sExePath);
-	if(bAlreadyExist==TRUE){return RETURN_NORMAL;}
-
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
-	memset(&si, NULL, sizeof(si));
-	si.cb=sizeof(si);
-	memset(&pi, NULL, sizeof(pi));
-
-	
-	wchar_t* szTmp;
-	szTmp = new wchar_t[wcslen(sExePath) + 1];
-	memset(szTmp, NULL, sizeof(szTmp)/sizeof(wchar_t));
-	wcscpy_s(szTmp, wcslen(sExePath) + 1, sExePath);
-	SHELLEXECUTEINFO sei={0};
-	sei.cbSize=sizeof(SHELLEXECUTEINFO);
-	sei.fMask=SEE_MASK_NOCLOSEPROCESS;
-	sei.hwnd=NULL;
-	sei.lpVerb=NULL;
-	sei.lpFile=szTmp;
-	sei.lpParameters=NULL;
-	sei.lpDirectory=NULL;
-	sei.nShow=SW_NORMAL;
-	sei.hInstApp=NULL;
-	ShellExecuteEx(&sei);
-	SAFE_DELETE(szTmp);
+	if(hWnd==NULL){return RETURN_NORMAL;}
 
 	DWORD dwProcessID=GetProcessId(sei.hProcess);
 	

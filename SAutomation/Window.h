@@ -7,10 +7,9 @@
 #define MAX_WINDOW_HANDLE (4096)
 BOOL isProcessExist(CString sExePath);
 
-ReturnValue RunExe(CString sExePath);
 ReturnValue KillExe(CString sDir, int iScene, CStringArray* saData);
 ReturnValue Maximize();
-ReturnValue RunExe2(CString sExePath, HWND* hwnd);
+ReturnValue RunExe(CString sDir, int iScene, CStringArray* saData, HWND* hwnd);
 
 ReturnValue Minimize();
 

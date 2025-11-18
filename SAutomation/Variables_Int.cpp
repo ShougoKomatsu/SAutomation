@@ -376,7 +376,10 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 		{
 			HWND hWnd=NULL;
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			RunExe2(sArg,&hWnd);
+			CStringArray saArg;
+			saArg.RemoveAll();
+			saArg.Add(sArg);
+			RunExe(sDir,iScene,&saArg,&hWnd);
 			return (int)hWnd;
 		}
 	case VARIABLE_STR_LEN:

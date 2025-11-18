@@ -666,7 +666,7 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_SEND_MESSAGE:{return SendMessage_My(sDir, *iSceneData, &saData);}
 	case COMMAND_WINDOW_SIZE:{return WindowSize(sDir, *iSceneData, &saData);}
 	case COMMAND_WINDOW_POS:{return WindowPos(sDir, *iSceneData, &saData);}
-	case COMMAND_RUN:{return RunExe(saData.GetAt(0));}
+	case COMMAND_RUN:{return RunExe(sDir, *iSceneData, &saData, NULL);}
 	case COMMAND_KILL:{return KillExe(sDir, *iSceneData, &saData);}
 	case COMMAND_OUTPUT_KEY:{return OutputKeys(sDir, *iSceneData, saData.GetAt(0));}
 	case COMMAND_NOTING:{return RETURN_NORMAL;}
