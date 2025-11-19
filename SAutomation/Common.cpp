@@ -849,3 +849,47 @@ BOOL GetSoundFilePath(CString sDir, CString sModel, CString* sModelFilePath)
 	sModelFilePath->Format(_T("%s\\Sound\\%s"), sDir,sModel); 
 	return TRUE;
 }
+
+	BOOL GetPrivateProfileStringUTF8(CString sSection, CString sKey, CString sDefault, CString* sResult, CString sFilePath)
+{
+
+	CStringArray saDataL;
+	BOOL bRet = ReadUTFFile(sFilePath, &saDataL);
+	if(bRet != TRUE){return FALSE;}
+
+	int iMacroStart=0;
+	int iLineCount=saDataL.GetCount();
+	CString sSectionTarget;
+	sSectionTarget.Format(_T("[%s]"), sSection);
+	int iSectionStart = -1;
+	for(int i=0; i<iLineCount; i++)
+	{
+		CString sLine(saDataL.GetAt(i));
+		sLine.Trim();
+		if(sLine.CompareNoCase(sSectionTarget)==0)
+		{
+			iSectionStart=i+1;
+			break;
+		}
+	}
+	if(iSectionStart<0){sResult->Format(_T("%s"), sDefault); return FALSE;}
+
+	for(int i=iSectionStart; i<iLineCount; i++)
+	{
+		CString sLine(saDataL.GetAt(i));
+		sLine.Trim();
+		if(sLine.Left(1).Compare(_T("["))==0){sResult->Format(_T("%s"), sDefault); return FALSE;}
+		if(sLine.Left(sKey.GetLength()).Compare(sKey)==0)
+		{
+			CString sTarget;
+			sTarget.Format(_T("%s"),sLine.Mid(sKey.GetLength()));
+			sTarget.Trim();
+			if(sTarget.GetLength()<=0){continue;}
+			if(sTarget.Left(1).Compare(_T("="))==0){sResult->Format(_T("%s"), sTarget.Mid(1)); return TRUE;}
+		}
+
+	}
+
+	sResult->Format(_T("%s"), sDefault);
+	return FALSE;
+}
