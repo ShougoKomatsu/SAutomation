@@ -136,7 +136,7 @@ BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam)
 }
 
 
-BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch)
+BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch, int iOrderB0)
 {
 	WCHAR wszWindowName[MAX_PATH];
 	CString sWindowName;
@@ -148,19 +148,21 @@ BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch)
 	BOOL bFound;
 	bFound = FALSE;
 	iTargetHandle=0;
+	int iNow=0;
 	for(int i=0; i<g_iWnd; i++)
 	{
 		GetWindowText(g_hWnds[i],wszWindowName,MAX_PATH);
 		sWindowName.Format(_T("%s"), wszWindowName);
 		if(bPartialMatch==TRUE)
 		{
-			if(sWindowName.Find(sTargetName)>=0){*hwnd = (g_hWnds[i]); return TRUE;}
+			if(sWindowName.Find(sTargetName)>=0){iNow++; *hwnd = (g_hWnds[i]); if(iOrderB0+1==iNow){ return TRUE;} }
 		}
 		else
 		{
-			if(sWindowName.Compare(sTargetName)==0){*hwnd = (g_hWnds[i]); return TRUE;}
+			if(sWindowName.Compare(sTargetName)==0){iNow++; *hwnd = (g_hWnds[i]); if(iOrderB0+1==iNow){ return TRUE;}}
 		}
 	}
+	if(iNow>0){return TRUE;}
 	return FALSE;
 }
 

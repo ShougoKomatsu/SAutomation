@@ -19,7 +19,7 @@ ReturnValue WindowSize(CString sDir, int iScene, CStringArray* saData);
 ReturnValue WindowPos(CString sDir, int iScene, CStringArray* saData);
 
 BOOL GetWindowNameList(CStringArray* caNames);
-BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch=TRUE);
+BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch=TRUE, int iOrderB0=0);
 BOOL GetWindowRectByName(CString sTargetName, RECT* rect, BOOL bPartialMatch = TRUE);
 BOOL GetWindowHandleByProcessID(DWORD dwTargetID, HWND* hwnd);
 BOOL GetProcessIDByWindowHandle(HWND hwnd,DWORD* dwProcessID);
