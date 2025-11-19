@@ -213,3 +213,4 @@ BOOL WritePrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bValue
 BOOL GetDirectory(CString sFilePath, CString* sDir, CString* sFileName);
 BOOL GetModelFilePath(CString sDir, CString sModel, CString* sModelFilePath);
 BOOL GetSoundFilePath(CString sDir, CString sModel, CString* sModelFilePath);
+BOOL GetPrivateProfileStringUTF8(CString sSection, CString sKey, CString sDefault, CString* sResult, CString sFilePath);
