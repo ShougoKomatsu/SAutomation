@@ -97,7 +97,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="res\icon1.ico" />
+    <None Include="res\icon2.ico" />
     <None Include="res\iconClose.ico" />
+    <None Include="res\iconMain.ico" />
     <None Include="res\iconMinimize.ico" />
     <None Include="res\iconRunning.ico" />
     <None Include="res\iconStandby.ico" />
