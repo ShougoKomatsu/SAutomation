@@ -123,6 +123,9 @@
     <ClInclude Include="PlayMedia.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Variables_Byte.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SAutomation.cpp">
@@ -189,6 +192,9 @@
       <Filter>ソース ファイル\Variable</Filter>
     </ClCompile>
     <ClCompile Include="PlayMedia.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Variable_Byte.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

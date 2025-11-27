@@ -69,22 +69,22 @@ ReturnValue RunExe(CString sDir, int iScene, CStringArray* saData, HWND* hWnd)
 	memset(&pi, NULL, sizeof(pi));
 
 	
-	wchar_t* szTmp;
-	szTmp = new wchar_t[wcslen(sExePath) + 1];
-	memset(szTmp, NULL, sizeof(szTmp)/sizeof(wchar_t));
-	wcscpy_s(szTmp, wcslen(sExePath) + 1, sExePath);
+	TCHAR* tchTmp;
+	tchTmp = new TCHAR[sExePath.GetLength() + 1];
+	memset(tchTmp, NULL, sizeof(tchTmp)/sizeof(TCHAR));
+	_tcscpy_s(tchTmp, sExePath.GetLength() + 1, sExePath);
 	SHELLEXECUTEINFO sei={0};
 	sei.cbSize=sizeof(SHELLEXECUTEINFO);
 	sei.fMask=SEE_MASK_NOCLOSEPROCESS;
 	sei.hwnd=NULL;
 	sei.lpVerb=NULL;
-	sei.lpFile=szTmp;
+	sei.lpFile=tchTmp;
 	sei.lpParameters=NULL;
 	sei.lpDirectory=NULL;
 	sei.nShow=SW_NORMAL;
 	sei.hInstApp=NULL;
 	ShellExecuteEx(&sei);
-	SAFE_DELETE(szTmp);
+	SAFE_DELETE(tchTmp);
 
 	if(hWnd==NULL){return RETURN_NORMAL;}
 
@@ -138,7 +138,7 @@ BOOL CALLBACK EnumWindowsFunc(HWND hWnd, LPARAM lParam)
 
 BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch, int iOrderB0)
 {
-	WCHAR wszWindowName[MAX_PATH];
+	TCHAR tszWindowName[MAX_PATH];
 	CString sWindowName;
 
 	g_iWnd=0;
@@ -151,8 +151,8 @@ BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch, 
 	int iNow=0;
 	for(int i=0; i<g_iWnd; i++)
 	{
-		GetWindowText(g_hWnds[i],wszWindowName,MAX_PATH);
-		sWindowName.Format(_T("%s"), wszWindowName);
+		GetWindowText(g_hWnds[i],tszWindowName,sizeof(tszWindowName)/sizeof(TCHAR));
+		sWindowName.Format(_T("%s"), tszWindowName);
 		if(bPartialMatch==TRUE)
 		{
 			if(sWindowName.Find(sTargetName)>=0){iNow++; *hwnd = (g_hWnds[i]); if(iOrderB0+1==iNow){ return TRUE;} }
@@ -168,7 +168,6 @@ BOOL GetWindowHandleByName(CString sTargetName, HWND* hwnd, BOOL bPartialMatch, 
 
 BOOL GetProcessIDByWindowHandle(HWND hwnd,DWORD* dwProcessID)
 {
-	WCHAR wszWindowName[MAX_PATH];
 	CString sWindowName;
 
 	g_iWnd=0;
@@ -189,7 +188,6 @@ BOOL GetProcessIDByWindowHandle(HWND hwnd,DWORD* dwProcessID)
 BOOL GetWindowHandleByProcessID(DWORD dwTargetID, HWND* hwnd)
 {
 	*hwnd=NULL;
-	WCHAR wszWindowName[MAX_PATH];
 	CString sWindowName;
 
 	g_iWnd=0;
@@ -282,7 +280,7 @@ BOOL GetWindowNameList(CStringArray* csNames)
 {
 	csNames->RemoveAll();
 
-	WCHAR wszWindowName[MAX_PATH];
+	TCHAR tszWindowName[MAX_PATH];
 	CString sWindowName;
 
 	g_iWnd=0;
@@ -294,17 +292,17 @@ BOOL GetWindowNameList(CStringArray* csNames)
 	iTargetHandle=0;
 	for(int i=0; i<g_iWnd; i++)
 	{
-		GetWindowText(g_hWnds[i],wszWindowName,MAX_PATH);
+		GetWindowText(g_hWnds[i],tszWindowName,sizeof(tszWindowName)/sizeof(TCHAR));
 		CRect	rect ;
 		GetWindowRect(g_hWnds[i],&rect) ;
 		if(rect.Width()<=1){continue;}
 
-		sWindowName.Format(_T("%s"), wszWindowName);
+		sWindowName.Format(_T("%s"), tszWindowName);
 
 
-		if(wcslen(wszWindowName)>0)
+		if(_tcslen(tszWindowName)>0)
 		{
-			csNames->Add(wszWindowName);
+			csNames->Add(tszWindowName);
 		}
 	}
 	return TRUE;
@@ -371,11 +369,11 @@ const CString GetForegroundWindowName()
 	HWND hwnd = GetForegroundWindow();
 	if(hwnd==NULL){return _T("");}
 
-	WCHAR wszWindowName[MAX_PATH];
-	GetWindowText(hwnd,wszWindowName,MAX_PATH);
+	TCHAR tchWindowName[MAX_PATH];
+	GetWindowText(hwnd,tchWindowName,sizeof(tchWindowName)/sizeof(TCHAR));
 	
 	CString sWindowName;
-	sWindowName.Format(_T("%s"), wszWindowName);
+	sWindowName.Format(_T("%s"), tchWindowName);
 	return sWindowName;
 }
 
@@ -384,11 +382,11 @@ const CString GetForegroundWindowClassName()
 	HWND hwnd = GetForegroundWindow();
 	if(hwnd==NULL){return _T("");}
 
-	WCHAR wszWindowName[MAX_PATH];
-	GetClassName(hwnd,wszWindowName,MAX_PATH);
+	TCHAR tchWindowName[MAX_PATH];
+	GetClassName(hwnd,tchWindowName,sizeof(tchWindowName)/sizeof(TCHAR));
 	
 	CString sWindowName;
-	sWindowName.Format(_T("%s"), wszWindowName);
+	sWindowName.Format(_T("%s"), tchWindowName);
 	return sWindowName;
 }
 
@@ -413,12 +411,12 @@ HWND g_hCtrlHandles[MAX_CTRL_NUM];
 
 BOOL CALLBACK EnumChildProc( HWND hWnd, LPARAM lParam )
 {
-	wchar_t   tch[ 1024 ];
+	TCHAR   tch[ 1024 ];
 	int  iCount = *(int*)lParam;
 
 	if(iCount>=MAX_CTRL_NUM){return FALSE;}
 
-	GetWindowText( hWnd, tch, sizeof(tch) ); 
+	GetWindowText( hWnd, tch, sizeof(tch)/sizeof(TCHAR) ); 
 	if(_tcslen(tch)<=0){return TRUE;}
 
 	g_hCtrlHandles[iCount]=hWnd;
@@ -431,7 +429,7 @@ ReturnValue ListDlgItems()
 {
 	CString sMes;
 	HWND hwnd;
-	wchar_t tch[MAX_PATH];
+	TCHAR tch[MAX_PATH];
 	hwnd=GetForegroundWindow();
 	int iListLength;
 	iListLength=0;
@@ -443,7 +441,7 @@ ReturnValue ListDlgItems()
 
 	for(int i=0; i<iCount; i++)
 	{
-		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
+		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, sizeof(tch)/sizeof(TCHAR));
 		int iID = GetDlgCtrlID(g_hCtrlHandles[i]);
 		if(uiRet<=0){continue;}
 		if(_tcslen(tch)<=0){continue;}
@@ -476,7 +474,7 @@ int GetDlgItem_My(CString sText, int iRank)
 	HWND hwnd = GetForegroundWindow();
 	if(hwnd==NULL){return 0;}
 	
-	wchar_t tch[MAX_PATH];
+	TCHAR tch[MAX_PATH];
 	int iRankLocal=0;
 	int iRankNow=0;
 
@@ -488,7 +486,7 @@ int GetDlgItem_My(CString sText, int iRank)
 
 	for(int i=0; i<iCount; i++)
 	{
-		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, MAX_PATH);
+		UINT uiRet = GetWindowText(g_hCtrlHandles[i], tch, sizeof(tch)/sizeof(TCHAR));
 		if(uiRet<=0){continue;}
 		if(_tcslen(tch)<=0){continue;}
 		CString sTemp;

@@ -228,13 +228,13 @@ void CSettingDlg::GetLogLavel(AutomationInfo* autoInfo)
 	}
 	else
 	{
-		wchar_t tch[32];
+		TCHAR tch[32];
 		m_comboLogLevel.GetLBText(m_comboLogLevel.GetCurSel(),tch);
-		if(wcscmp(tch,_T("OnlyCritical"))==0){autoInfo->m_iLogLevel=1;}
-		if(wcscmp(tch,_T("4"))==0){autoInfo->m_iLogLevel=2;}
-		if(wcscmp(tch,_T("3"))==0){autoInfo->m_iLogLevel=3;}
-		if(wcscmp(tch,_T("2"))==0){autoInfo->m_iLogLevel=4;}
-		if(wcscmp(tch,_T("All"))==0){autoInfo->m_iLogLevel=5;}
+		if(_tcscmp(tch,_T("OnlyCritical"))==0){autoInfo->m_iLogLevel=1;}
+		if(_tcscmp(tch,_T("4"))==0){autoInfo->m_iLogLevel=2;}
+		if(_tcscmp(tch,_T("3"))==0){autoInfo->m_iLogLevel=3;}
+		if(_tcscmp(tch,_T("2"))==0){autoInfo->m_iLogLevel=4;}
+		if(_tcscmp(tch,_T("All"))==0){autoInfo->m_iLogLevel=5;}
 	}
 	return;
 }
@@ -244,7 +244,7 @@ BOOL CSettingDlg::UpdateAutomationInfo(AutomationInfo* autoInfo)
 {
 	
 	CString sData;
-	wchar_t tch[32];
+	TCHAR tch[32];
 
 
 
@@ -294,12 +294,12 @@ void CSettingDlg::OnSelchangeCombo0Enable()
 	}
 
 	UpdateData(TRUE);
-	wchar_t tch[8];
+	TCHAR tch[8];
 	if(m_comboEnable.GetCurSel()<0){m_Automation.m_sHotkeyEnable.Format(_T(""));return;}
 	m_comboEnable.GetLBText(m_comboEnable.GetCurSel(),tch);
 
 	m_Automation.m_sHotkeyEnable.Format(_T("%s"), tch);
-	if(wcscmp(tch,_T(" "))==0){return;}
+	if(_tcscmp(tch,_T(" "))==0){return;}
 	if((tch[0]>='a') && (tch[0]<='z')){m_Automation.m_dwHotKeyEnable = char(tch[0])-'a'+0x41;}
 	if((tch[0]>='0') && (tch[0]<='9')){m_Automation.m_dwHotKeyEnable = char(tch[0])-'0'+0x30;}
 //	RegisterHotKey(NULL, HOTKEY_ENABLE, MOD_SHIFT | MOD_CONTROL | MOD_NOREPEAT, m_Automation.m_dwHotKeyEnable);
@@ -383,7 +383,7 @@ void CSettingDlg::OnBnClickedButton0WindowNameRefresh()
 
 void CSettingDlg::OnSelchangeWindowName()
 {
-	wchar_t tch[256];
+	TCHAR tch[256];
 	m_comboWindowName.GetLBText(m_comboWindowName.GetCurSel(),tch); 
 	CString sWindowName;
 	m_sTargetWindowName.Format(_T("%s"), tch);

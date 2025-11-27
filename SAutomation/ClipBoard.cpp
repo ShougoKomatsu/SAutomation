@@ -34,8 +34,8 @@ BOOL DispAvailableClipboardFormat()
 		case CF_MAX:{ sFormat.Format(_T("CF_MAX"));break;}
 		default:
 			{
-				wchar_t tchData[256];
-				int iRet = GetClipboardFormatName(iFormat, tchData, 255);
+				TCHAR tchData[256];
+				int iRet = GetClipboardFormatName(iFormat, tchData, sizeof(tchData)/sizeof(TCHAR)-1);
 				if(iRet>0)
 				{
 					sFormat.Format(_T("%s"),tchData);
@@ -68,10 +68,10 @@ BOOL CopyToClipBoardStr(const CString sValue)
 	if(bRet == FALSE){return FALSE;}
 	
 	HGLOBAL hGL;
-	hGL = GlobalAlloc(GPTR, (sValue.GetLength()+1)*sizeof(wchar_t) );
+	hGL = GlobalAlloc(GPTR, (sValue.GetLength()+1)*sizeof(TCHAR) );
 	if(hGL==NULL){return FALSE;}
 
-	_stprintf_s((wchar_t*)hGL,(sValue.GetLength()+1), _T("%s"), sValue);
+	_stprintf_s((TCHAR*)hGL,(sValue.GetLength()+1), _T("%s"), sValue);
 	
 	HANDLE hResult;
 	hResult = SetClipboardData(CF_UNICODETEXT, hGL);
