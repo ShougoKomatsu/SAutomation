@@ -16,7 +16,7 @@ struct Point
 	Point operator = (Point pIn){Set(pIn.c,pIn.r);}
 };
 
-#define MAX_VARIABLES (8)
+#define MAX_VARIABLES (128)
 extern int g_iVar[MAX_THREAD][MAX_VARIABLES];
 extern CString g_sVar[MAX_THREAD][MAX_VARIABLES];
 extern ImgRGB g_imgRGB[MAX_THREAD][MAX_VARIABLES];

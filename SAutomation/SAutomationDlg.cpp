@@ -164,7 +164,7 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 	{
 		if (dwAllProcessIds[i] == dwIgnoreProcessId){continue;}
 
-		wchar_t szProcessName[MAX_PATH] = _T("<unknown>");
+		TCHAR tszProcessName[MAX_PATH] = _T("<unknown>");
 
 		HANDLE hProcess = NULL;
 		hProcess=OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwAllProcessIds[i]);
@@ -179,9 +179,9 @@ VOID GetExeOtherProcessIds(CString sTargetExeName, DWORD* dwExeProcessIds, DWORD
 			continue;
 		}
 
-		GetModuleBaseName(hProcess, hMod, szProcessName,sizeof(szProcessName) / sizeof(wchar_t));
+		GetModuleBaseName(hProcess, hMod, tszProcessName,sizeof(tszProcessName) / sizeof(TCHAR));
 
-		if (sTargetExeName.CompareNoCase(szProcessName)==0)
+		if (sTargetExeName.CompareNoCase(tszProcessName)==0)
 		{
 			dwExeProcessIds[j] = dwAllProcessIds[i];
 			j++;
@@ -196,8 +196,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	DWORD dwCurrentProcessId = GetCurrentProcessId();
 	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,FALSE,dwCurrentProcessId);
-	wchar_t szModuleName[MAX_PATH];
-	GetModuleBaseName(hProcess, NULL, szModuleName, MAX_PATH);
+	TCHAR tszModuleName[MAX_PATH];
+	GetModuleBaseName(hProcess, NULL, tszModuleName, sizeof(tszModuleName)/sizeof(TCHAR));
 	//	AfxMessageBox(szModuleName);
 
 	//	CString sToken;
@@ -221,7 +221,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 	if(m_bNormalMode==TRUE)
 	{
 		DWORD dwExeProcessIds[1024] = { 0 };
-		GetExeOtherProcessIds(szModuleName, dwExeProcessIds, dwCurrentProcessId);
+		GetExeOtherProcessIds(tszModuleName, dwExeProcessIds, dwCurrentProcessId);
 
 		if (dwExeProcessIds[0]>0)
 		{
@@ -243,11 +243,11 @@ BOOL CSAutomationDlg::OnInitDialog()
 	SetTimer(TIMER_WAKE_UP, 100, NULL);
 	SetTimer(TIMER_REHOOK, 10000, NULL);
 
-	wchar_t szData[MAX_PATH];
-	GetModuleFileName(NULL,szData,MAX_PATH);
+	TCHAR tszData[MAX_PATH];
+	GetModuleFileName(NULL,tszData,sizeof(tszData)/sizeof(TCHAR));
 	CString sDir;
 	CString sFileName;
-	GetDirectory(szData, &sDir, &sFileName);
+	GetDirectory(tszData, &sDir, &sFileName);
 
 	g_Automation.m_sDir.Format(_T("%s"),sDir);
 	g_sDir.Format(_T("%s"),sDir);
@@ -298,7 +298,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 		if(sData.GetLength()>0){if(sData.CompareNoCase(_T("true"))==0){g_Automation.m_OpeInfo[0].m_bDisableHalt=TRUE;}}
 
 		GetPrivateProfileStringUTF8(sSection,_T("OperationMode"),_T(""),&sData,sFilePath);
-		if(sData.GetLength()>0){g_Automation.m_OpeInfo[0].m_iOperationMode=_wtoi(szData);}else{g_Automation.m_OpeInfo[0].m_iOperationMode=0;}
+		if(sData.GetLength()>0){g_Automation.m_OpeInfo[0].m_iOperationMode=_ttoi(tszData);}else{g_Automation.m_OpeInfo[0].m_iOperationMode=0;}
 
 		g_Automation.m_bLog=FALSE;
 		GetPrivateProfileStringUTF8(sSection,_T("Log"),_T(""),&sData,sFilePath);
@@ -311,7 +311,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 		else
 		{
 			GetPrivateProfileStringUTF8(sSection,_T("LogLevel"),_T("1"),&sData,sFilePath);
-			g_Automation.m_iLogLevel=_wtoi(szData);
+			g_Automation.m_iLogLevel=_ttoi(tszData);
 			if(g_Automation.m_iLogLevel<1){g_Automation.m_iLogLevel=1;}
 			if(g_Automation.m_iLogLevel>5){g_Automation.m_iLogLevel=5;}
 		}

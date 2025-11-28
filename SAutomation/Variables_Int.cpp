@@ -153,7 +153,7 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			int* piSrc;
 
 			piSrc=GetIntValuePointer(sDir, iScene, sDataLocal);
-			if(piSrc==NULL){iSrc=_wtoi(sDataLocal);}else{ iSrc=(*piSrc);LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);}
+			if(piSrc==NULL){iSrc=_ttoi(sDataLocal);}else{ iSrc=(*piSrc);LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);}
 
 			return iSrc;
 		}
@@ -339,7 +339,7 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			g_cInput.m_bInputMulti=TRUE;
 			g_cInput.m_saParam.Copy(saData);
 			g_cInput.DoModal();
-			return _wtoi(g_cInput.m_sReturnValue);
+			return _ttoi(g_cInput.m_sReturnValue);
 		}
 	case VARIABLE_DLG_ITEM:
 		{
@@ -403,7 +403,7 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 		{
 			if(sDataLocal.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataLocal)==0)
 			{
-				return _wtoi(sDataLocal);
+				return _ttoi(sDataLocal);
 			}
 			return 0;
 		}
@@ -413,11 +413,11 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 
 int ConvertStr2Int(CString sSrc)
 {
-	if(sSrc.Right(3).CompareNoCase(_T("sec"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-3)) *1000);}
-	if(sSrc.Right(3).CompareNoCase(_T("min"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-3)) *1000*60);}
-	if(sSrc.Right(4).CompareNoCase(_T("hour"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-4)) *1000*60*60);}
-	if(sSrc.Right(3).CompareNoCase(_T("day"))==0){return(_wtoi(sSrc.Left(sSrc.GetLength()-3)) *1000*60*60*24);}
-	return _wtoi(sSrc);
+	if(sSrc.Right(3).CompareNoCase(_T("sec"))==0){return(_ttoi(sSrc.Left(sSrc.GetLength()-3)) *1000);}
+	if(sSrc.Right(3).CompareNoCase(_T("min"))==0){return(_ttoi(sSrc.Left(sSrc.GetLength()-3)) *1000*60);}
+	if(sSrc.Right(4).CompareNoCase(_T("hour"))==0){return(_ttoi(sSrc.Left(sSrc.GetLength()-4)) *1000*60*60);}
+	if(sSrc.Right(3).CompareNoCase(_T("day"))==0){return(_ttoi(sSrc.Left(sSrc.GetLength()-3)) *1000*60*60*24);}
+	return _ttoi(sSrc);
 }
 
 

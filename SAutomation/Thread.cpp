@@ -192,9 +192,9 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		catch(CException* ce)
 		{
 			AfxMessageBox(saCommands.GetAt(i));
-			wchar_t wcMessage[64];
-			ce->GetErrorMessage(wcMessage,64);
-			AfxMessageBox(wcMessage);
+			TCHAR tchMessage[64];
+			ce->GetErrorMessage(tchMessage,sizeof(tchMessage)/sizeof(TCHAR));
+			AfxMessageBox(tchMessage);
 			TREAT_TO_EXIT_THREAD; 
 			return 0;
 		}
@@ -205,9 +205,9 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		catch(CException* ce)
 		{
 			AfxMessageBox(saCommands.GetAt(i));
-			wchar_t wcMessage[64];
-			ce->GetErrorMessage(wcMessage,64);
-			AfxMessageBox(wcMessage);
+			TCHAR tchMessage[64];
+			ce->GetErrorMessage(tchMessage,sizeof(tchMessage)/sizeof(TCHAR));
+			AfxMessageBox(tchMessage);
 			TREAT_TO_EXIT_THREAD; 
 			return 0;
 		}

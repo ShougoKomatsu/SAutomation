@@ -91,7 +91,7 @@ ReturnValue KeyDownAndUp(BYTE bySendKey)
 	return RETURN_NORMAL;
 }
 
-ReturnValue KeyDownAndUpUnicode(wchar_t tch)
+ReturnValue KeyDownAndUpUnicode(TCHAR tch)
 {
 	INPUT input[2];
 	input[0].type = INPUT_KEYBOARD;
@@ -112,7 +112,7 @@ ReturnValue KeyDownAndUpUnicode(wchar_t tch)
 	return RETURN_NORMAL;
 }
 
-ReturnValue KeyDownUnicode(wchar_t tch)
+ReturnValue KeyDownUnicode(TCHAR tch)
 {
 	INPUT input[1];
 	input[0].type = INPUT_KEYBOARD;
@@ -126,7 +126,7 @@ ReturnValue KeyDownUnicode(wchar_t tch)
 	return RETURN_NORMAL;
 }
 
-ReturnValue KeyUpUnicode(wchar_t tch)
+ReturnValue KeyUpUnicode(TCHAR tch)
 {
 	INPUT input[1];
 
@@ -173,7 +173,7 @@ ReturnValue GetInput(CStringArray* saData, CString* sReturnParam)
 	return RETURN_GOTO_BY_SWITCH;
 }
 
-ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, wchar_t* tch, BYTE* byData)
+ReturnValue GetKeyCode(CString sData, BOOL* bUnicode, TCHAR* tch, BYTE* byData)
 {
 	*bUnicode = FALSE;
 	*tch = 0;
@@ -481,7 +481,7 @@ ReturnValue WaitForKey(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CS
 
 	BYTE byKey;
 	BOOL bUnicode;
-	wchar_t tch;
+	TCHAR tch;
 	ReturnValue iRet;
 	int iTimeOutMillisec;
 	
@@ -537,7 +537,7 @@ ReturnValue KeyDownAndUp(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
-	wchar_t tch;
+	TCHAR tch;
 
 	GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &bySendKey);
 	if(bUnicode == TRUE){return KeyDownAndUpUnicode(tch);}
@@ -550,7 +550,7 @@ ReturnValue KeyDown(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
-	wchar_t tch;
+	TCHAR tch;
 
 	GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &bySendKey);
 	if(bUnicode == TRUE){return KeyDownUnicode(tch);}
@@ -564,7 +564,7 @@ ReturnValue KeyUp(CStringArray* saData)
 {
 	BYTE bySendKey;
 	BOOL bUnicode;
-	wchar_t tch;
+	TCHAR tch;
 
 	GetKeyCode(saData->GetAt(0), &bUnicode, &tch, &bySendKey);
 	if(bUnicode == TRUE){return KeyUpUnicode(tch);}
@@ -820,7 +820,7 @@ ReturnValue OutputKeys(CString sDir, int iScene, CString sInputWithDblQuart)
 ReturnValue WaitForEitherKeyOn(CString sDir, int iScene, LPVOID Halt, LPVOID Suspend, CStringArray* saData, CString* sReturnParam)
 {
 	BOOL bUnicode;
-	wchar_t tch;
+	TCHAR tch;
 	ReturnValue iRet;
 	int iTimeOutMillisec;
 	BYTE* byKeys;

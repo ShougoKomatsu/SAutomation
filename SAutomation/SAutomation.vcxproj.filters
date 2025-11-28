@@ -46,15 +46,6 @@
     <None Include="res\iconStandby.ico">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="res\icon1.ico">
-      <Filter>リソース ファイル</Filter>
-    </None>
-    <None Include="res\icon2.ico">
-      <Filter>リソース ファイル</Filter>
-    </None>
-    <None Include="res\iconMain.ico">
-      <Filter>リソース ファイル</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SAutomation.h">
@@ -111,6 +102,9 @@
     <ClInclude Include="InputDialog.h">
       <Filter>ヘッダー ファイル\Dialog</Filter>
     </ClInclude>
+    <ClInclude Include="TabItem.h">
+      <Filter>ヘッダー ファイル\Dialog</Filter>
+    </ClInclude>
     <ClInclude Include="Variables.h">
       <Filter>ヘッダー ファイル\Variable</Filter>
     </ClInclude>
@@ -131,9 +125,6 @@
     </ClInclude>
     <ClInclude Include="Variables_Byte.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TabItem.h">
-      <Filter>リソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

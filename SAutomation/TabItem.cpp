@@ -438,7 +438,7 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 {
 	UpdateData(TRUE);
 
-	wchar_t tch[8];
+	TCHAR tch[8];
 	if(m_combo[iScene].GetCurSel()<0)
 	{
 		*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
@@ -449,7 +449,7 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 	m_combo[iScene].GetLBText(m_combo[iScene].GetCurSel(),tch);
 
 	m_autoInfo->m_OpeInfo[iSlot*16 + iScene].sHotkey.Format(_T("%s"),tch);
-	if(wcscmp(tch,_T(" "))==0)
+	if(_tcscmp(tch,_T(" "))==0)
 	{
 		*pbNotModified = m_autoInfo->IsSameAs(&g_Automation);
 		SetTitleNotChanged(*pbNotModified);
@@ -493,20 +493,20 @@ void CTabItem::UpdateHotkey(int iSlot, int iScene)
 	else
 	{
 		m_comboUseCtrl[iScene].GetLBText(m_comboUseCtrl[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
+		if(_tcscmp(tch,_T("Ctrl"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
+		if(_tcscmp(tch,_T("Shift"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
+		if(_tcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
+		if(_tcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
 	}
 
 	if(m_comboUseShift[iScene].GetCurSel()<0){}
 	else
 	{
 		m_comboUseShift[iScene].GetLBText(m_comboUseShift[iScene].GetCurSel(),tch);
-		if(wcscmp(tch,_T("Ctrl"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
-		if(wcscmp(tch,_T("Shift"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
-		if(wcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
-		if(wcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
+		if(_tcscmp(tch,_T("Ctrl"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseCtrl=TRUE;}
+		if(_tcscmp(tch,_T("Shift"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseShift=TRUE;}
+		if(_tcscmp(tch,_T("Alt"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseAlt=TRUE;}
+		if(_tcscmp(tch,_T("Win"))==0){m_autoInfo->m_OpeInfo[iSlot*16 + iScene].bUseWin=TRUE;}
 	}
 
 	
