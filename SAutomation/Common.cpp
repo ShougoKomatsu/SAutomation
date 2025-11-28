@@ -57,7 +57,7 @@ void SetComboItem(CComboBox* combo, CString sHotkey)
 	bFound = FALSE;
 	for(int i=0; i<combo->GetCount(); i++)
 	{
-		wchar_t tch[8];
+		TCHAR tch[8];
 		combo->GetLBText(i, tch);
 		if(sHotkey.Compare(tch)==0){combo->SetCurSel(i); bFound = TRUE;break;}
 	}
@@ -66,23 +66,23 @@ void SetComboItem(CComboBox* combo, CString sHotkey)
 void AutomationInfo::ReadSettings()
 {
 
-	wchar_t szData[MAX_PATH];
+	TCHAR tszData[MAX_PATH];
 	CString sFilePath;
 
 	sFilePath.Format(_T("%s\\SAutomation.ini"), m_sDir); 
 
-	GetPrivateProfileString(_T("Mouse"),_T("ClickDulation"),_T("50"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-	g_iClickDulation = _wtoi(szData);
+	GetPrivateProfileString(_T("Mouse"),_T("ClickDulation"),_T("50"),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+	g_iClickDulation = _ttoi(tszData);
 
 	for(int iScene=0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
 		CString sSection;
 		sSection.Format(_T("Operation %d"), iScene+1);
-		GetPrivateProfileString(sSection,_T("FileName"),_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].sFileName.Format(_T("%s"),szData);
+		GetPrivateProfileString(sSection,_T("FileName"),_T(""),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+		m_OpeInfo[iScene].sFileName.Format(_T("%s"),tszData);
 
-		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].sHotkey.Format(_T("%s"), szData);
+		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+		m_OpeInfo[iScene].sHotkey.Format(_T("%s"), tszData);
 
 		GetPrivateProfileStringAsBool(sSection, _T("UseCtrl"), TRUE, &(m_OpeInfo[iScene].bUseCtrl), sFilePath);
 		GetPrivateProfileStringAsBool(sSection, _T("UseShift"), TRUE, &(m_OpeInfo[iScene].bUseShift), sFilePath);
@@ -90,8 +90,8 @@ void AutomationInfo::ReadSettings()
 		GetPrivateProfileStringAsBool(sSection, _T("UseWin"), FALSE, &(m_OpeInfo[iScene].bUseWin), sFilePath);
 		
 		GetPrivateProfileStringAsBool(sSection, _T("DisableHalt"), FALSE, &(m_OpeInfo[iScene].m_bDisableHalt), sFilePath);
-		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].m_iOperationMode=_wtoi(szData);
+		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+		m_OpeInfo[iScene].m_iOperationMode=_ttoi(tszData);
 	}
 
 
@@ -100,11 +100,11 @@ void AutomationInfo::ReadSettings()
 		int iScene=MAX_NORMAL_THREAD+iExScene;
 		CString sSection;
 		sSection.Format(_T("ExOperation %d"), iExScene+1);
-		GetPrivateProfileString(sSection,_T("FileName"),_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].sFileName.Format(_T("%s"),szData);
+		GetPrivateProfileString(sSection,_T("FileName"),_T(""),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+		m_OpeInfo[iScene].sFileName.Format(_T("%s"),tszData);
 
-		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].sHotkey.Format(_T("%s"), szData);
+		GetPrivateProfileString(sSection,_T("Hotkey"),_T(" "),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+		m_OpeInfo[iScene].sHotkey.Format(_T("%s"), tszData);
 		
 		GetPrivateProfileStringAsBool(sSection, _T("UseCtrl"), TRUE, &(m_OpeInfo[iScene].bUseCtrl), sFilePath);
 		GetPrivateProfileStringAsBool(sSection, _T("UseShift"), TRUE, &(m_OpeInfo[iScene].bUseShift), sFilePath);
@@ -112,8 +112,8 @@ void AutomationInfo::ReadSettings()
 		GetPrivateProfileStringAsBool(sSection, _T("UseWin"), FALSE, &(m_OpeInfo[iScene].bUseWin), sFilePath);
 		
 		GetPrivateProfileStringAsBool(sSection, _T("DisableHalt"), FALSE, &(m_OpeInfo[iScene].m_bDisableHalt), sFilePath);
-		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-		m_OpeInfo[iScene].m_iOperationMode=_wtoi(szData);
+		GetPrivateProfileString(sSection,_T("OperationMode"),_T(" "),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+		m_OpeInfo[iScene].m_iOperationMode=_ttoi(tszData);
 
 		for(int iSelect=0; iSelect<MAX_SELECTION; iSelect++)
 		{
@@ -123,10 +123,10 @@ void AutomationInfo::ReadSettings()
 			CString sDataFile;
 			sKeyKey.Format(_T("SelectKey%d"),iSelect+1);
 			sKeyFile.Format(_T("SelectFile%d"),iSelect+1);
-			GetPrivateProfileString(sSection,sKeyKey,_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-			sDataKey.Format(_T("%s"), szData);
-			GetPrivateProfileString(sSection,sKeyFile,_T(""),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-			sDataFile.Format(_T("%s"), szData);
+			GetPrivateProfileString(sSection,sKeyKey,_T(""),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+			sDataKey.Format(_T("%s"), tszData);
+			GetPrivateProfileString(sSection,sKeyFile,_T(""),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+			sDataFile.Format(_T("%s"), tszData);
 			if((sDataKey.GetLength()>0) && (sDataFile.GetLength()>0))
 			{
 				this->m_sSelectKeys[iExScene][iSelect].Format(_T("%s"), sDataKey);
@@ -136,8 +136,8 @@ void AutomationInfo::ReadSettings()
 	}
 
 
-	GetPrivateProfileString(_T("Hotkey"),_T("EnableKey"),_T(" "),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-	m_sHotkeyEnable.Format(_T("%s"), szData);
+	GetPrivateProfileString(_T("Hotkey"),_T("EnableKey"),_T(" "),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+	m_sHotkeyEnable.Format(_T("%s"), tszData);
 
 	GetPrivateProfileStringAsBool(_T("Hotkey"), _T("Enable"), FALSE, &(m_bEnableHotkey), sFilePath);
 	GetPrivateProfileStringAsBool(_T("Common"), _T("AutoMnimize"), FALSE, &(m_bAutoMinimize), sFilePath);
@@ -145,8 +145,8 @@ void AutomationInfo::ReadSettings()
 	GetPrivateProfileStringAsBool(_T("Common"), _T("Log"), FALSE, &(m_bLog), sFilePath);
 
 
-	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
-	m_iLogLevel=_wtoi(szData);
+	GetPrivateProfileString(_T("Common"),_T("LogLevel"),_T("1"),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+	m_iLogLevel=_ttoi(tszData);
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
 
@@ -439,7 +439,7 @@ LRESULT CALLBACK MouseHookProc(int code, WPARAM wParam, LPARAM lParam)
 
 BOOL GetFileProperty(CString sFilePath, CTime* ctCreationTime, CTime* ctLastAccessTime, CTime* ctLastWriteTime)
 {
-	WIN32_FIND_DATAW FileData;
+	WIN32_FIND_DATA FileData;
 
 	HANDLE hFile=FindFirstFile(sFilePath, &FileData);
 	if(hFile == INVALID_HANDLE_VALUE){return FALSE;}
@@ -749,20 +749,20 @@ BOOL WritePrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bValue
 BOOL GetPrivateProfileStringAsBool(CString sSection, CString sKey, BOOL bDefault, BOOL* bValue, CString sFilePath)
 {
 
-	wchar_t szData[MAX_PATH];
+	TCHAR tszData[MAX_PATH];
 
 	if(bDefault==TRUE)
 	{
-		GetPrivateProfileString(sSection, sKey, _T("TRUE"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+		GetPrivateProfileString(sSection, sKey, _T("TRUE"),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
 	}
 	else
 	{
-		GetPrivateProfileString(sSection, sKey, _T("FALSE"),szData,sizeof(szData)/sizeof(wchar_t),sFilePath);
+		GetPrivateProfileString(sSection, sKey, _T("FALSE"),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
 	}
 
 	
 	CString sTemp;
-	sTemp.Format(_T("%s"), szData);
+	sTemp.Format(_T("%s"), tszData);
 	if(sTemp.CompareNoCase(_T("TRUE"))==0){*bValue=TRUE; return TRUE;}
 	if(sTemp.CompareNoCase(_T("1"))==0){*bValue=TRUE; return TRUE;}
 
