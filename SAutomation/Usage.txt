@@ -189,6 +189,11 @@ WindowSize(整数, 整数)
 Run(実行ファイルのパス。".lnk", ".url", ".bat"ファイル等を使用することもできる)
 SendMessage(整数: ウィンドウハンドル, 整数: ウィンドウメッセージ)
 SetWindowAttribute(整数: ウィンドウハンドル, 整数: 属性, 整数: パラメータ)
+属性:DWMWINDOWATTRIBUTEの値。たとえば
+33: DWMWA_WINDOW_CORNER_PREFERENCE
+34: DWMWA_BORDER_COLOR
+36: DWMWA_TEXT_COLOR
+が使用できる場合が多い
 
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 ●実行制御
