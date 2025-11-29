@@ -10,7 +10,9 @@ BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;
 	sDataTrim.Format(_T("%s"),sDataLine.Trim(_T(" \t")));
-	
+
+	if((sDataTrim.Left(1).Compare(_T("\""))==0)&&(sDataTrim.Right(1).Compare(_T("\""))==0)){*iCommandType = VARIABLE_STR_DOUBLE_QUARTED; return TRUE;}
+
 	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType = VARIABLE_IMG; return FALSE;}
 
 	if(sDataTrim.Left(5).CompareNoCase(_T("Input"))==0){*iCommandType=VARIABLE_INPUT; return TRUE;}
@@ -46,6 +48,11 @@ const CString GetStrValue(CString sDir, int iScene, CString sDataLocal)
 
 	switch(iOperandSrc)
 	{
+	case VARIABLE_STR_DOUBLE_QUARTED:
+		{
+			sOut.Format(_T("%s"), sDataLocal.Mid(1,sDataLocal.GetLength()-2));
+			return sOut;
+		}
 	case VARIABLE_COMBINE_STR:
 		{
 			CString sArg1;

@@ -72,6 +72,7 @@ ReturnValue MessageBox_My(CString sDir, int iScene, CStringArray* saData);
 #define VARIABLE_FOREGROUND_WINDOW_CLASS_NAME (108)
 #define VARIABLE_STR_LEN (109)
 #define VARIABLE_STR2INT (110)
+#define VARIABLE_STR_DOUBLE_QUARTED (111)
 
 #define VARIABLE_IMG (200)
 #define VARIABLE_CROP_IMAGE (201)
