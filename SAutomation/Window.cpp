@@ -7,7 +7,7 @@
 HWND g_hWnds[MAX_WINDOW_HANDLE];
 int g_iWnd=0;
 
-BOOL isProcessExist(CString sExePath)
+BOOL isProcessExistByPath(CString sExePath)
 {
 	CString sExeName;
 	BOOL bRet;
@@ -59,7 +59,7 @@ ReturnValue RunExe(CString sDir, int iScene, CStringArray* saData, HWND* hWnd)
 
 	CString sExePath;
 	sExePath.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	bAlreadyExist = isProcessExist(sExePath);
+	bAlreadyExist = isProcessExistByPath(sExePath);
 	if(bAlreadyExist==TRUE){return RETURN_NORMAL;}
 
 	STARTUPINFO si;

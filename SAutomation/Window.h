@@ -5,7 +5,7 @@
 #include "Automation.h"
 
 #define MAX_WINDOW_HANDLE (4096)
-BOOL isProcessExist(CString sExePath);
+BOOL isProcessExistByPath(CString sExePath);
 
 ReturnValue KillExe(CString sDir, int iScene, CStringArray* saData);
 ReturnValue Maximize();
