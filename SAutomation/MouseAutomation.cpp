@@ -199,6 +199,78 @@ ReturnValue MouseMClick(UINT nX, UINT nY, int iClickDulation)
 
 
 
+ReturnValue MouseLDragAndDrop(UINT nXFrom, UINT nYFrom,UINT nXTo, UINT nYTo, int iClickTimeMilliSec, int iDragTimeMilliSec)
+{
+	MoveMouse(nXFrom, nYFrom);
+	MouseLDown(nXFrom, nYFrom);
+	Sleep(iClickTimeMilliSec);
+
+	MoveMouse(nXTo, nYTo);
+	Sleep(iDragTimeMilliSec);
+
+	MouseLUp(nXTo, nYTo);
+
+	return RETURN_NORMAL;
+}
+
+
+ReturnValue MouseLDragAndDrop(CString sDir, int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()<2){return RETURN_FAILED;}
+	int iXFrom, iYFrom, iXTo, iYTo;
+	int iNextArgIndex=0;
+
+	if(saData->GetAt(iNextArgIndex).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(iNextArgIndex),_T(","),&sArg,&sDummy);iNextArgIndex++;
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet != TRUE){return RETURN_FAILED;}
+		iXFrom=point.c;
+		iYFrom=point.r;
+	}
+	else
+	{
+		iXFrom=GetIntValue(sDir, iScene, saData->GetAt(iNextArgIndex));iNextArgIndex++;
+		iYFrom=GetIntValue(sDir, iScene, saData->GetAt(iNextArgIndex));iNextArgIndex++;
+	}
+
+	if(saData->GetCount()<=iNextArgIndex){return RETURN_FAILED;}
+	if(saData->GetAt(iNextArgIndex).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(iNextArgIndex),_T(","),&sArg,&sDummy);iNextArgIndex++;
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet != TRUE){return RETURN_FAILED;}
+		iXTo=point.c;
+		iYTo=point.r;
+	}
+	else
+	{
+		iXTo=GetIntValue(sDir, iScene, saData->GetAt(iNextArgIndex));iNextArgIndex++;
+		if(saData->GetCount()<=iNextArgIndex){return RETURN_FAILED;}
+		iYTo=GetIntValue(sDir, iScene, saData->GetAt(iNextArgIndex));iNextArgIndex++;
+	}
+	int iClickTimeMilliSec;
+	int iDragTimeMilliSec;
+
+	if(saData->GetCount()<=iNextArgIndex){iClickTimeMilliSec=50;}
+	else
+	{
+		iClickTimeMilliSec=GetIntValue(sDir, iScene, saData->GetAt(iNextArgIndex));iNextArgIndex++;
+		if(iClickTimeMilliSec<=0){iClickTimeMilliSec=50;}
+	}
+
+	if(saData->GetCount()<=iNextArgIndex){iDragTimeMilliSec=50;}
+	else
+	{
+		iDragTimeMilliSec=GetIntValue(sDir, iScene, saData->GetAt(iNextArgIndex));iNextArgIndex++;
+		if(iDragTimeMilliSec<=0){iDragTimeMilliSec=50;}
+	}
+	return MouseLDragAndDrop(iXFrom, iYFrom, iXTo, iYTo, iClickTimeMilliSec,  iDragTimeMilliSec);
+}
 
 
 ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData)

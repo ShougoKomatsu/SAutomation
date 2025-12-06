@@ -115,6 +115,10 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(14).CompareNoCase(_T("MousePosToItem"))==0){*iCommandType=COMMAND_MOUSE_MOVE_TO_ITEM; return TRUE;}
 	if((sDataTrim.Left(8).CompareNoCase(_T("MousePos"))==0) && (sDataTrim.Left(11).CompareNoCase(_T("MousePosRel"))!=0)){*iCommandType=COMMAND_MOUSE_MOVE; return TRUE;}
 
+	
+	if(sDataTrim.Left(17).CompareNoCase(_T("MouseLDragAndDrop"))==0){*iCommandType=COMMAND_MOUSE_L_DRAG_AND_DROP; return TRUE;}
+
+
 	if(sDataTrim.Left(5).CompareNoCase(_T("Wheel"))==0){*iCommandType=COMMAND_WHEEL; return TRUE;}
 
 	if(sDataTrim.Left(17).CompareNoCase(_T("SetOriginToWindow"))==0){*iCommandType=COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW; return TRUE;}
@@ -1025,6 +1029,34 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			ExtractTokenInBracket(sDataLocal,2,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
 			*iCommandType = iType;
+			return TRUE;
+		}
+	case COMMAND_MOUSE_L_DRAG_AND_DROP:
+		{
+			int iArgCount;
+			bRet = CountTokenInBracket(sDataLocal, &iArgCount);
+			if(iArgCount<2){return FALSE;}
+			*iCommandType = iType;
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			ExtractTokenInBracket(sDataLocal,1,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			if(iArgCount<3){return TRUE;}
+			ExtractTokenInBracket(sDataLocal,2,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			if(iArgCount<4){return TRUE;}
+			ExtractTokenInBracket(sDataLocal,3,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			
+			if(iArgCount<5){return TRUE;}
+			ExtractTokenInBracket(sDataLocal,4,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+
+			if(iArgCount<6){return TRUE;}
+			ExtractTokenInBracket(sDataLocal,5,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
 			return TRUE;
 		}
 	case COMMAND_MOUSE_MOVE_TO_ITEM:

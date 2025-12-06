@@ -642,6 +642,7 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_MOUSE_L_CLICK_IMG:{return MouseLClickImage(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_L_REPEATCLICK:{return MouseLRepeatClick(sDir, *iSceneData, &saData,Halt, Suspend);}
+	case COMMAND_MOUSE_L_DRAG_AND_DROP:{return MouseLDragAndDrop(sDir, *iSceneData, &saData);}
 
 	case COMMAND_WHEEL:{return MouseVWheel(sDir, *iSceneData, &saData);}
 
@@ -656,9 +657,8 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_WAIT_IMG:{return WaitForImage(sDir,  *iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_COLOR:{return WaitForColor(sDir, *iSceneData, Halt, Suspend, &saData);}
 	case COMMAND_WAIT_UPDATE:{return WaitForUpdate(sDir, *iSceneData, Halt, Suspend, &saData);}
-	case COMMAND_PLAY_SOUND:{
-		return PlaySound_my(sDir, *iSceneData, &saData);
-							}
+	case COMMAND_PLAY_SOUND:{return PlaySound_my(sDir, *iSceneData, &saData);}
+
 	case COMMAND_MAXIMIZE:{return Maximize();}
 	case COMMAND_MINIMIZE:{return Minimize();}
 	case COMMAND_SET_WINDOW_ATTRIBUTE:{return SetWindowAttribute(sDir, *iSceneData, &saData);}

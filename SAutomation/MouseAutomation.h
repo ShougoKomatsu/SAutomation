@@ -29,6 +29,10 @@
 #define COMMAND_MOUSE_L_CLICK_IMG (COMMAND_MOUSE+100+9)
 
 #define COMMAND_MOUSE_L_REPEATCLICK (COMMAND_MOUSE+100+10)
+#define COMMAND_MOUSE_R_REPEATCLICK (COMMAND_MOUSE+100+11)
+#define COMMAND_MOUSE_M_REPEATCLICK (COMMAND_MOUSE+100+12)
+
+#define COMMAND_MOUSE_L_DRAG_AND_DROP (COMMAND_MOUSE+100+13)
 
 ReturnValue MouseLDownAbs(UINT nX, UINT nY);
 ReturnValue MouseLDown(CString sDir, int iScene, CStringArray* saData);
@@ -68,5 +72,7 @@ ReturnValue MouseSetOriginToWindow(CString sDir, int iScene, CStringArray* saDat
 ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData);
 
 ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData);
+
+ReturnValue MouseLDragAndDrop(CString sDir, int iScene, CStringArray* saData);
 
 void ChangeMouseOrigin(UINT uiX, UINT uiY);
