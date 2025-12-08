@@ -628,9 +628,9 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_MOUSE_R_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseRUp(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_M_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseMUp(sDir, *iSceneData, &saData);}
 
-	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_L_CLICK:{return MouseClick(MOUSE_L_BUTTON, sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_CLICK:{return MouseClick(MOUSE_R_BUTTON, sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_CLICK:{return MouseClick(MOUSE_M_BUTTON, sDir, *iSceneData, &saData);}
 							   
 	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:{return MouseSetOriginToWindow(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(sDir, *iSceneData, &saData);}

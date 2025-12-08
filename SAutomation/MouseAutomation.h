@@ -66,13 +66,8 @@ ReturnValue MoveMouseIncl(CString sDir, int iScene, CStringArray* saData);
 ReturnValue MouseVWheel(int iWheel);
 ReturnValue MouseVWheel(CString sDir, int iScene, CStringArray* saData);
 
-ReturnValue MouseLClick(UINT nX, UINT nY, int iClickDulation);
-ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData);
-ReturnValue MouseRClick(UINT nX, UINT nY, int iClickDulation);
-ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData);
-ReturnValue MouseMClick(UINT nX, UINT nY, int iClickDulation);
-ReturnValue MouseMClick(CString sDir, int iScene, CStringArray* saData);
-
+ReturnValue MouseClick(MouseButton mouseButton, UINT nX, UINT nY, int iClickDulation);
+ReturnValue MouseClick(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData);
 ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPVOID Halt, LPVOID Suspend);
 
 ReturnValue MoveMouseToItem(CString sDir, int iScene, CStringArray* saData);
