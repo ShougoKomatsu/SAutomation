@@ -3,6 +3,13 @@
 
 #include "common.h"
 
+enum MouseButton
+{
+	MOUSE_L_BUTTON=1,
+	MOUSE_R_BUTTON=2,
+	MOUSE_M_BUTTON=3,
+};
+
 #define COMMAND_MOUSE_MOVE (COMMAND_MOUSE+1)
 #define COMMAND_MOUSE_L_DOWN (COMMAND_MOUSE+2)
 #define COMMAND_MOUSE_L_UP (COMMAND_MOUSE+3)
@@ -73,6 +80,6 @@ ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData
 
 ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData);
 
-ReturnValue MouseLDragAndDrop(CString sDir, int iScene, CStringArray* saData);
+ReturnValue MouseDragAndDrop(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData);
 
 void ChangeMouseOrigin(UINT uiX, UINT uiY);

@@ -197,24 +197,30 @@ ReturnValue MouseMClick(UINT nX, UINT nY, int iClickDulation)
 	return MouseMUp(nX, nY);
 }
 
-
-
-ReturnValue MouseLDragAndDrop(UINT nXFrom, UINT nYFrom,UINT nXTo, UINT nYTo, int iClickTimeMilliSec, int iDragTimeMilliSec)
+ReturnValue MouseDragAndDrop(MouseButton mouseButton, UINT nXFrom, UINT nYFrom,UINT nXTo, UINT nYTo, int iClickTimeMilliSec, int iDragTimeMilliSec)
 {
 	MoveMouse(nXFrom, nYFrom);
-	MouseLDown(nXFrom, nYFrom);
+	switch(mouseButton)
+	{
+	case MOUSE_L_BUTTON:{MouseLDown(nXFrom, nYFrom); break;}
+	case MOUSE_R_BUTTON:{MouseRDown(nXFrom, nYFrom); break;}
+	case MOUSE_M_BUTTON:{MouseMDown(nXFrom, nYFrom); break;}
+	}
 	Sleep(iClickTimeMilliSec);
 
 	MoveMouse(nXTo, nYTo);
 	Sleep(iDragTimeMilliSec);
 
-	MouseLUp(nXTo, nYTo);
-
+	switch(mouseButton)
+	{
+	case MOUSE_L_BUTTON:{MouseLUp(nXTo, nYTo); break;}
+	case MOUSE_R_BUTTON:{MouseRUp(nXTo, nYTo); break;}
+	case MOUSE_M_BUTTON:{MouseMUp(nXTo, nYTo);break;}
+	}
 	return RETURN_NORMAL;
 }
 
-
-ReturnValue MouseLDragAndDrop(CString sDir, int iScene, CStringArray* saData)
+ReturnValue MouseDragAndDrop(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData)
 {
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 	int iXFrom, iYFrom, iXTo, iYTo;
@@ -269,7 +275,7 @@ ReturnValue MouseLDragAndDrop(CString sDir, int iScene, CStringArray* saData)
 		iDragTimeMilliSec=GetIntValue(sDir, iScene, saData->GetAt(iNextArgIndex));iNextArgIndex++;
 		if(iDragTimeMilliSec<=0){iDragTimeMilliSec=50;}
 	}
-	return MouseLDragAndDrop(iXFrom, iYFrom, iXTo, iYTo, iClickTimeMilliSec,  iDragTimeMilliSec);
+	return MouseDragAndDrop(mouseButton, iXFrom, iYFrom, iXTo, iYTo, iClickTimeMilliSec,  iDragTimeMilliSec);
 }
 
 
