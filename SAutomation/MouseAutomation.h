@@ -40,6 +40,8 @@ enum MouseButton
 #define COMMAND_MOUSE_M_REPEATCLICK (COMMAND_MOUSE+100+12)
 
 #define COMMAND_MOUSE_L_DRAG_AND_DROP (COMMAND_MOUSE+100+13)
+#define COMMAND_MOUSE_R_DRAG_AND_DROP (COMMAND_MOUSE+100+14)
+#define COMMAND_MOUSE_M_DRAG_AND_DROP (COMMAND_MOUSE+100+15)
 
 ReturnValue MouseLDownAbs(UINT nX, UINT nY);
 ReturnValue MouseLDown(CString sDir, int iScene, CStringArray* saData);

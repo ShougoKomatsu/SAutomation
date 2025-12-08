@@ -643,6 +643,8 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_L_REPEATCLICK:{return MouseLRepeatClick(sDir, *iSceneData, &saData,Halt, Suspend);}
 	case COMMAND_MOUSE_L_DRAG_AND_DROP:{return MouseDragAndDrop(MOUSE_L_BUTTON, sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_DRAG_AND_DROP:{return MouseDragAndDrop(MOUSE_R_BUTTON, sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_DRAG_AND_DROP:{return MouseDragAndDrop(MOUSE_M_BUTTON, sDir, *iSceneData, &saData);}
 
 	case COMMAND_WHEEL:{return MouseVWheel(sDir, *iSceneData, &saData);}
 

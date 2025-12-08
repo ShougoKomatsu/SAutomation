@@ -117,6 +117,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	
 	if(sDataTrim.Left(17).CompareNoCase(_T("MouseLDragAndDrop"))==0){*iCommandType=COMMAND_MOUSE_L_DRAG_AND_DROP; return TRUE;}
+	if(sDataTrim.Left(17).CompareNoCase(_T("MouseRDragAndDrop"))==0){*iCommandType=COMMAND_MOUSE_R_DRAG_AND_DROP; return TRUE;}
+	if(sDataTrim.Left(17).CompareNoCase(_T("MouseMDragAndDrop"))==0){*iCommandType=COMMAND_MOUSE_M_DRAG_AND_DROP; return TRUE;}
 
 
 	if(sDataTrim.Left(5).CompareNoCase(_T("Wheel"))==0){*iCommandType=COMMAND_WHEEL; return TRUE;}
@@ -1032,6 +1034,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_MOUSE_L_DRAG_AND_DROP:
+	case COMMAND_MOUSE_R_DRAG_AND_DROP:
+	case COMMAND_MOUSE_M_DRAG_AND_DROP:
 		{
 			int iArgCount;
 			bRet = CountTokenInBracket(sDataLocal, &iArgCount);
