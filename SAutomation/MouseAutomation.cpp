@@ -294,7 +294,7 @@ ReturnValue MouseClick(MouseButton mouseButton, CString sDir, int iScene, CStrin
 	return MouseClick(mouseButton, iSrc1, iSrc2, g_iClickDulation);
 }
 
-ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPVOID Halt, LPVOID Suspend)
+ReturnValue MouseRepeatClick(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData,LPVOID Halt, LPVOID Suspend)
 {
 	int iTimeMillisec;
 	if(saData->GetCount()==0){iTimeMillisec=-1;}
@@ -326,7 +326,7 @@ ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPV
 	ullStartMilliSec = GetTickCount64();
 	ullSuspendedMilliSec=0;
 
-	MouseClick(MOUSE_L_BUTTON, g_iC, g_iR, iClickDulation);
+	MouseClick(mouseButton, g_iC, g_iR, iClickDulation);
 	Sleep(iClickSleep);
 	while(1)
 	{
@@ -335,7 +335,7 @@ ReturnValue MouseLRepeatClick(CString sDir, int iScene, CStringArray* saData,LPV
 			if(GetTickCount64()>=ullStartMilliSec+iTimeMillisec/g_dSpeedMult+ullSuspendedMilliSec){break;}
 		}
 
-		MouseClick(MOUSE_L_BUTTON, g_iC, g_iR, iClickDulation);
+		MouseClick(mouseButton, g_iC, g_iR, iClickDulation);
 		if(Halt != NULL){if((*(int*)Halt) == 1){return RETURN_HALT;}}
 		if(Suspend != NULL)
 		{

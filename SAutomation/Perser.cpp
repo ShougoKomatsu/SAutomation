@@ -101,6 +101,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(10).CompareNoCase(_T("MouseLDown"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("MouseLUp"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
 	if(sDataTrim.Left(17).CompareNoCase(_T("MouseLRepeatClick"))==0){*iCommandType=COMMAND_MOUSE_L_REPEATCLICK; return TRUE;}
+	if(sDataTrim.Left(17).CompareNoCase(_T("MouseRRepeatClick"))==0){*iCommandType=COMMAND_MOUSE_R_REPEATCLICK; return TRUE;}
+	if(sDataTrim.Left(17).CompareNoCase(_T("MouseMRepeatClick"))==0){*iCommandType=COMMAND_MOUSE_M_REPEATCLICK; return TRUE;}
 		
 	if(sDataTrim.Left(11).CompareNoCase(_T("MouseRClick"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK;  return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("MouseRDown"))==0){*iCommandType=COMMAND_MOUSE_R_DOWN; return TRUE;}
@@ -1023,6 +1025,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_MOUSE_L_REPEATCLICK:
+	case COMMAND_MOUSE_R_REPEATCLICK:
+	case COMMAND_MOUSE_M_REPEATCLICK:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}
