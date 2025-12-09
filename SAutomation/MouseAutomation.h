@@ -43,19 +43,11 @@ enum MouseButton
 #define COMMAND_MOUSE_R_DRAG_AND_DROP (COMMAND_MOUSE+100+14)
 #define COMMAND_MOUSE_M_DRAG_AND_DROP (COMMAND_MOUSE+100+15)
 
-ReturnValue MouseLDownAbs(UINT nX, UINT nY);
-ReturnValue MouseLDown(CString sDir, int iScene, CStringArray* saData);
-ReturnValue MouseRDownAbs(UINT nX, UINT nY);
-ReturnValue MouseRDown(CString sDir, int iScene, CStringArray* saData);
-ReturnValue MouseMDownAbs(UINT nX, UINT nY);
-ReturnValue MouseMDown(CString sDir, int iScene, CStringArray* saData);
+ReturnValue MouseDownAbs(MouseButton mouseButton, UINT nX, UINT nY);
+ReturnValue MouseDown(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData);
 
-ReturnValue MouseLUpAbs(UINT nX, UINT nY);
-ReturnValue MouseLUp(CString sDir, int iScene, CStringArray* saData);
-ReturnValue MouseRUpAbs(UINT nX, UINT nY);
-ReturnValue MouseRUp(CString sDir, int iScene, CStringArray* saData);
-ReturnValue MouseMUpAbs(UINT nX, UINT nY);
-ReturnValue MouseMUp(CString sDir, int iScene, CStringArray* saData);
+ReturnValue MouseUpAbs(MouseButton mouseButton, UINT nX, UINT nY);
+ReturnValue MouseUp(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData);
 
 ReturnValue MoveMouseAbs(UINT nX, UINT nY);
 ReturnValue MoveMouse(CString sDir, int iScene, CStringArray* saData);
@@ -75,7 +67,7 @@ ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData);
 ReturnValue MouseSetOriginToWindow(CString sDir, int iScene, CStringArray* saData);
 ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData);
 
-ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData);
+ReturnValue MouseClickImage(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData);
 
 ReturnValue MouseDragAndDrop(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData);
 
