@@ -28,7 +28,11 @@ ReturnValue MouseEvent(UINT uiEvent, UINT nX, UINT nY)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MoveMouseAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, nX, nY);}
+ReturnValue MoveMouseAbs(UINT nX, UINT nY)	
+{
+	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, nX, nY);
+}
+
 ReturnValue MouseDownAbs(MouseButton mouseButton, UINT nX, UINT nY)	
 {
 	switch(mouseButton)
@@ -314,7 +318,7 @@ ReturnValue MouseSetOriginToWindow(CString sDir, int iScene, CStringArray* saDat
 	return RETURN_NORMAL;
 }
 
-ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData)
+BOOL IsInRegion(CString sDir, int iScene, CStringArray* saData, 	int* iFoundR, int* iFoundC)
 {
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
@@ -346,18 +350,28 @@ ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 
-	int iFoundR, iFoundC;
 
 	Screenshot(&imgTarget);
 
 	if(bUseMask==TRUE)
 	{
-		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, iFoundR, iFoundC);
 	}
 	else
 	{
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, iFoundR, iFoundC);
 	}
+	if(bRet != TRUE){return RETURN_FAILED;}
+	return RETURN_NORMAL;
+
+}
+ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData)
+{
+	BOOL bRet;
+	if(saData->GetCount()<2){return RETURN_FAILED;}
+
+	int iFoundR, iFoundC;
+	bRet = IsInRegion(sDir, iScene, saData, &iFoundR, &iFoundC);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	ChangeMouseOrigin(iFoundC, iFoundR);
@@ -383,51 +397,11 @@ ReturnValue MoveMouseToItem(CString sDir, int iScene, CStringArray* saData)
 
 ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 {
-	
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
-	int iR0, iC0, iR1, iC1;
-	int iNextIndex;
-	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iNextIndex);
-
-
-	CString sModelFilePath;
-	
-	CString sModel;
-	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	GetModelFilePath(sDir, sModel, &sModelFilePath);
-
-	ImgRGB imgModel;
-	ImgRGB imgTarget;
-	ImgRGB imgMask;
-	imgModel.Assign(sModelFilePath);
-	
-	CString sMaskFilePath;
-	sMaskFilePath.Format(_T("%s"), sModelFilePath);
-	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
-	BOOL bUseMask;
-
-	bRet = imgMask.Assign(sMaskFilePath);
-	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
-
-
-	ULONGLONG ullStartMilliSec;
-	ullStartMilliSec = GetTickCount64();
-
 	int iFoundR, iFoundC;
-
-	Screenshot(&imgTarget);
-	if(bUseMask==TRUE)
-	{
-		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
-	}
-	else
-	{
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
-	}
-//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
-
+	bRet = IsInRegion(sDir, iScene, saData, &iFoundR, &iFoundC);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	MoveMouseAbs(iFoundC, iFoundR);
@@ -440,47 +414,8 @@ ReturnValue MouseClickImage(MouseButton mouseButton, CString sDir, int iScene, C
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
-	int iR0, iC0, iR1, iC1;
-	int iNextIndex;
-	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iNextIndex);
-
-	CString sModelFilePath;
-	
-	CString sModel;
-	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
-	GetModelFilePath(sDir, sModel, &sModelFilePath);
-
-
-	ImgRGB imgModel;
-	ImgRGB imgTarget;
-	ImgRGB imgMask;
-	imgModel.Assign(sModelFilePath);
-	
-	CString sMaskFilePath;
-	sMaskFilePath.Format(_T("%s"), sModelFilePath);
-	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
-	BOOL bUseMask;
-
-	bRet = imgMask.Assign(sMaskFilePath);
-	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
-
-
-	ULONGLONG ullStartMilliSec;
-	ullStartMilliSec = GetTickCount64();
-
 	int iFoundR, iFoundC;
-
-	Screenshot(&imgTarget);
-	if(bUseMask==TRUE)
-	{
-		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
-	}
-	else
-	{
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
-	}
-//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
-
+	bRet = IsInRegion(sDir, iScene, saData, &iFoundR, &iFoundC);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	MoveMouseAbs(iFoundC, iFoundR);
