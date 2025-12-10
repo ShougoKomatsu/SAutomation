@@ -141,8 +141,17 @@ MouseMClick
 MouseMDown
 MouseMUp
 
-現在位置でクリック連打
+□ドラッグアンドドロップ
+MouseLDragAndDrop(X_from, Y_from, X_to, Y_to, 移動までの時間（ミリ秒）, 移動後の時間(ミリ秒）)
+MouseRDragAndDrop(X_from, Y_from, X_to, Y_to, 移動までの時間（ミリ秒）, 移動後の時間(ミリ秒）)
+MouseMDragAndDrop(X_from, Y_from, X_to, Y_to, 移動までの時間（ミリ秒）, 移動後の時間(ミリ秒）)
+時間指定がない場合は、それぞれ50ミリ秒となる
+座標はそれぞれ座標型変数一つで表現可能
+
+□現在位置でクリック連打
 MouseLRepeatClick(持続時間（ミリ秒）, Down時間（ミリ秒）, Up時間（ミリ秒）)
+MouseRRepeatClick(持続時間（ミリ秒）, Down時間（ミリ秒）, Up時間（ミリ秒）)
+MouseMRepeatClick(持続時間（ミリ秒）, Down時間（ミリ秒）, Up時間（ミリ秒）)
 それぞれ整数変数名or整数値
 
 □最前面ウィンドウの指定IDの中心にマウスカーソルを移動させる
@@ -277,6 +286,8 @@ _mask.bmpが存在するとき、色差が_mask.bmpの各点の値以下の場�
 -------
 □画像の中心をクリックする
 MouseLClickImage(ファイル名, 探索領域左上X, 探索領域左上Y, 探索領域右下X, 探索領域右下X)
+MouseRClickImage(ファイル名, 探索領域左上X, 探索領域左上Y, 探索領域右下X, 探索領域右下X)
+MouseMClickImage(ファイル名, 探索領域左上X, 探索領域左上Y, 探索領域右下X, 探索領域右下X)
 ファイル名: 文字列。ファイルパスもしくはMacro\Model内のファイル名
 探索領域: 整数
 見つからないとエラー処理。
