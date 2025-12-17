@@ -93,7 +93,7 @@ Wait キー Off
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 ●ウェイト
 二桁以上の数字
-
+Delay(整数型変数名or整数値)
 
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 ●音楽再生
@@ -152,10 +152,10 @@ MouseMDragAndDrop(X_from, Y_from, X_to, Y_to, 移動までの時間（ミリ秒�
 MouseLRepeatClick(持続時間（ミリ秒）, Down時間（ミリ秒）, Up時間（ミリ秒）)
 MouseRRepeatClick(持続時間（ミリ秒）, Down時間（ミリ秒）, Up時間（ミリ秒）)
 MouseMRepeatClick(持続時間（ミリ秒）, Down時間（ミリ秒）, Up時間（ミリ秒）)
-それぞれ整数変数名or整数値
+それぞれ整数型変数名or整数値
 
 □最前面ウィンドウの指定IDの中心にマウスカーソルを移動させる
-MousePosToItem(整数変数名or整数値)
+MousePosToItem(整数型変数名or整数値)
 
 □マウスカーソルの原点を対象ウィンドウの左上にする
 SetOriginToWindow(ウインドウ名(部分一致))
