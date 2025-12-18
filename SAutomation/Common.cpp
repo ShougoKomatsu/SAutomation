@@ -516,6 +516,7 @@ const CString ConvertTimeToString(const SYSTEMTIME st, const CString sArg)
 	return sOut;
 }
 
+	
 DWORD GetVKeyCode(const CString sIn)
 {
 	CString sInput;
@@ -892,4 +893,112 @@ BOOL GetSoundFilePath(CString sDir, CString sModel, CString* sModelFilePath)
 
 	sResult->Format(_T("%s"), sDefault);
 	return FALSE;
+}
+	
+
+BOOL ExtractData(const CString sInput, const CString sDelim, CString* sOut, CString* sRemin)
+{
+	int iIndex;
+	CString sInputLocal;
+	sInputLocal.Format(_T("%s"), sInput);
+	iIndex=sInputLocal.Find(sDelim);
+	if(iIndex<0)
+	{
+		sOut->Format(_T("%s"),sInputLocal.Trim(_T(" \t")));
+		sRemin->Format(_T(""));
+	}
+	else
+	{
+		sOut->Format(_T("%s"),sInputLocal.Left(iIndex).Trim(_T(" \t")));
+		sRemin->Format(_T("%s"),sInputLocal.Right(sInputLocal.GetLength()-iIndex-1).Trim(_T(" \t")));
+	}
+	return TRUE;
+}
+
+
+BOOL IsValidMillisecTimeString(CString sTime)
+{
+	int iDayCount=0;
+	int iHourCount=0;
+	int iMinuteCount=0;
+	int iSecondCount=0;
+
+	int iDayPlace=-1;
+	int iHourPlace=-1;
+	int iMinutePlace=-1;
+	int iSecondPlace=-1;
+
+	CString sDataLocal;
+	sDataLocal.Format(_T("%s"), sTime);
+	sDataLocal.MakeLower();
+
+	for(int i=0; i<sTime.GetLength(); i++)
+	{
+		if(sDataLocal.GetAt(i)=='d'){iDayCount++;iDayPlace=i;}
+		if(sDataLocal.GetAt(i)=='h'){iHourCount++;iHourPlace=i;}
+		if(sDataLocal.GetAt(i)=='m'){iMinuteCount++;iMinutePlace=i;}
+		if(sDataLocal.GetAt(i)=='s'){iSecondCount++;iSecondPlace=i;}
+	}
+	if(iDayCount>=2){return FALSE;}
+	if(iHourCount>=2){return FALSE;}
+	if(iMinuteCount>=2){return FALSE;}
+	if(iSecondCount>=2){return FALSE;}
+
+	if(iDayPlace>=0)
+	{
+		if((iHourPlace>=0)&&(iDayPlace>iHourPlace)){return FALSE;}
+		if((iMinutePlace>=0)&&(iDayPlace>iMinutePlace)){return FALSE;}
+		if((iSecondPlace>=0)&&(iDayPlace>iSecondPlace)){return FALSE;}
+	}
+	
+	if(iHourPlace>=0)
+	{
+		if((iMinutePlace>=0)&&(iHourPlace>iMinutePlace)){return FALSE;}
+		if((iSecondPlace>=0)&&(iHourPlace>iSecondPlace)){return FALSE;}
+	}
+	
+	if(iMinutePlace>=0)
+	{
+		if((iSecondPlace>=0)&&(iMinutePlace>iSecondPlace)){return FALSE;}
+	}
+
+	return TRUE;
+}
+
+BOOL ConvertTimeStringToIntMilliSeconds(CString sTime, int* iMilliSeconds)
+{
+	BOOL bRet;
+	bRet = IsValidMillisecTimeString(sTime);
+	if(bRet != TRUE){return FALSE;}
+
+
+	int iDayCount=0;
+	int iHourCount=0;
+	int iMinuteCount=0;
+	int iSecondCount=0;
+
+	CString sDataLocal;
+	sDataLocal.Format(_T("%s"), sTime);
+	sDataLocal.MakeLower();
+	
+	for(int i=0; i<sTime.GetLength(); i++)
+	{
+		if(sDataLocal.GetAt(i)=='d'){iDayCount++;}
+		if(sDataLocal.GetAt(i)=='m'){iMinuteCount++;}
+		if(sDataLocal.GetAt(i)=='h'){iHourCount++;}
+		if(sDataLocal.GetAt(i)=='s'){iSecondCount++;}
+	}
+
+	CString sDays;
+	CString sHours;
+	CString sMinutes;
+	CString sSeconds;
+
+	if(iDayCount==1){ExtractData(sDataLocal,_T("d"),&sDays, &sDataLocal);}
+	if(iHourCount==1){ExtractData(sDataLocal,_T("h"),&sHours, &sDataLocal);}
+	if(iMinuteCount==1){ExtractData(sDataLocal,_T("m"),&sMinutes, &sDataLocal);}
+	if(iSecondCount==1){ExtractData(sDataLocal,_T("s"),&sSeconds, &sDataLocal);}
+
+	*iMilliSeconds=int(_ttof(sDays)*24*3600*1000+_ttof(sHours)*3600*1000+_ttof(sMinutes)*60*1000+_ttof(sSeconds)*1000+_ttoi(sDataLocal));
+	return TRUE;
 }

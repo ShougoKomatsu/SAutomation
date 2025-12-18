@@ -214,3 +214,7 @@ BOOL GetDirectory(CString sFilePath, CString* sDir, CString* sFileName);
 BOOL GetModelFilePath(CString sDir, CString sModel, CString* sModelFilePath);
 BOOL GetSoundFilePath(CString sDir, CString sModel, CString* sModelFilePath);
 BOOL GetPrivateProfileStringUTF8(CString sSection, CString sKey, CString sDefault, CString* sResult, CString sFilePath);
+
+BOOL ExtractData(const CString sInput, const CString sDelim, CString* sOut, CString* sRemin);
+	BOOL ConvertTimeStringToIntMilliSeconds(CString sTime, int* iMilliSeconds);
+	BOOL IsValidMillisecTimeString(CString sTime);

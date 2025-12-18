@@ -22,7 +22,9 @@ BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(15).CompareNoCase(_T("GetWindowHandle"))==0){*iCommandType=VARIABLE_INT_WINDOW_HANDLE; return TRUE;}
 //	if(sDataTrim.Left(3).CompareNoCase(_T("Run"))==0){*iCommandType=VARIABLE_INT_RUN; return TRUE;}
 	if(sDataTrim.SpanIncluding(_T("-0123456789")).CompareNoCase(sDataTrim)==0){*iCommandType = VARIABLE_INT; return TRUE;}
-	
+	if(IsValidMillisecTimeString(sDataTrim)==TRUE){*iCommandType=VARIABLE_INT_MILLISECONDS; return TRUE;}
+
+
 	if(sDataTrim.Right(3).CompareNoCase(_T("sec"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
 	if(sDataTrim.Right(3).CompareNoCase(_T("min"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
 	if(sDataTrim.Right(4).CompareNoCase(_T("hour"))==0){*iCommandType=VARIABLE_STR2INT; return TRUE;}
@@ -155,6 +157,19 @@ int GetIntValue(CString sDir, int iScene, CString sDataLocal)
 			piSrc=GetIntValuePointer(sDir, iScene, sDataLocal);
 			if(piSrc==NULL){iSrc=_ttoi(sDataLocal);}else{ iSrc=(*piSrc);LOG_OUTPUT_INT(iScene, sDataLocal, iSrc);}
 
+			return iSrc;
+		}
+	case VARIABLE_INT_MILLISECONDS:
+		{
+			int iSrc;
+//						CString sArg1;
+//			ExtractTokenInBracket(sDataLocal,0,&sArg1);
+			CString sTime;
+			sTime=GetStrValue(sDir, iScene, sDataLocal);
+
+
+			BOOL bRet = ConvertTimeStringToIntMilliSeconds(sTime,&iSrc);
+			if(bRet != TRUE){return 0;}
 			return iSrc;
 		}
 	case VARIABLE_POINT_GET_R:

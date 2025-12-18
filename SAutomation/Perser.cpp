@@ -77,6 +77,7 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	//-------------------------------------------------------
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).Compare(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
+	if(sDataTrim.Left(5).CompareNoCase(_T("Delay"))==0){*iCommandType = COMMAND_DELAY_FUNCTION; return TRUE;}
 	if(sDataTrim.Right(3).CompareNoCase(_T("sec"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-3)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
 	if(sDataTrim.Right(3).CompareNoCase(_T("min"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-3)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
 	if(sDataTrim.Right(4).CompareNoCase(_T("hour"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-4)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
@@ -196,25 +197,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	return FALSE;
 }
 
-
-BOOL ExtractData(const CString sInput, const CString sDelim, CString* sOut, CString* sRemin)
-{
-	int iIndex;
-	CString sInputLocal;
-	sInputLocal.Format(_T("%s"), sInput);
-	iIndex=sInputLocal.Find(sDelim);
-	if(iIndex<0)
-	{
-		sOut->Format(_T("%s"),sInputLocal.Trim(_T(" \t")));
-		sRemin->Format(_T(""));
-	}
-	else
-	{
-		sOut->Format(_T("%s"),sInputLocal.Left(iIndex).Trim(_T(" \t")));
-		sRemin->Format(_T("%s"),sInputLocal.Right(sInputLocal.GetLength()-iIndex-1).Trim(_T(" \t")));
-	}
-	return TRUE;
-}
 
 BOOL GetWaitParameter(CString sInput, CStringArray* saOut)
 {
@@ -560,6 +542,14 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 		{
 			saData->Add(sDataLocal);
 			*iCommandType=iType;
+			return TRUE;
+		}
+	case COMMAND_DELAY_FUNCTION:
+		{
+			ExtractTokenInBracket(sDataLocal,0,&sArg);
+			if(sArg.GetLength()>0){saData->Add(sArg);}
+			saData->Add(sArg);
+			*iCommandType=COMMAND_DELAY;
 			return TRUE;
 		}
 	case COMMAND_KEY_DOWN_UP:
