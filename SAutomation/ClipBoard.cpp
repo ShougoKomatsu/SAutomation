@@ -260,41 +260,13 @@ BOOL CopyFromClipBoardImg(ImgRGB* imgRGB)
 
 	LPVOID byData = GlobalLock(hResult);
 	if(byData==NULL){return FALSE;}
-	
-	for(int i=0; i<sizeof(bmih); i++)
-	{
-		((BYTE*)&bmih)[i] = ((BYTE*)byData)[i];
-	}
-	int iWidthLocal;
-	int iHeightLocal;
 
-	iWidthLocal = bmih.biWidth;
-	if(bmih.biHeight<0){iHeightLocal=-1*(bmih.biHeight);}
-	else{iHeightLocal=(bmih.biHeight);}
-
-	if(bmih.biClrUsed>0)
+	bRet = ReadBmpFromData(FALSE, (BYTE*)byData, imgRGB);
+	if(bRet == FALSE)
 	{
+		GlobalUnlock(hResult);
+		CloseClipboard();
 		return FALSE;
-	}
-
-	BYTE* byImgData;
-	byImgData = &(((BYTE*)(byData))[sizeof(BITMAPINFOHEADER)]);
-		
-	
-	int iFiller;
-
-	imgRGB->Set(iWidthLocal, iHeightLocal, CHANNEL_3_8RGB);
-	
-	iFiller = iWidthLocal%4;
-
-	for(int r=0; r<iHeightLocal; r++)
-	{
-		for(int c=0; c< iWidthLocal; c++)
-		{
-			(imgRGB->byImgB)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+0];
-			(imgRGB->byImgG)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+1];
-			(imgRGB->byImgR)[(imgRGB->iHeight - r -1) *imgRGB->iWidth+c]=byImgData[3*( r*iWidthLocal + c)+r*iFiller+2];
-		}
 	}
 
 	GlobalUnlock(hResult);
