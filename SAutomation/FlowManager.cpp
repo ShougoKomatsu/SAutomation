@@ -45,7 +45,7 @@ int SearchSubRoutine(CStringArray* saData, CString sLabel, int iScene)
 		CString sTemp;
 		sTemp.Format(_T("%s"), saData->GetAt(i));
 		sTemp.Trim(_T(" \t"));
-		if(sTemp.Left(3).CompareNoCase(_T("sub"))!=0){continue;}
+		if(sTemp.Left(4).CompareNoCase(_T("sub "))!=0){continue;}
 
 		CString sTrim;
 		sTrim.Format(_T("%s"), sTemp.Right(sTemp.GetLength()-4));

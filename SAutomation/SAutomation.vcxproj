@@ -115,7 +115,7 @@
     <ClInclude Include="ImgProc.h" />
     <ClInclude Include="InputDialog.h" />
     <ClInclude Include="MouseAutomation.h" />
-    <ClInclude Include="Perser.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="PlayMedia.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SAutomation.h" />
@@ -143,7 +143,7 @@
     <ClCompile Include="ImgProc.cpp" />
     <ClCompile Include="InputDialog.cpp" />
     <ClCompile Include="MouseAutomation.cpp" />
-    <ClCompile Include="Perser.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PlayMedia.cpp" />
     <ClCompile Include="SAutomation.cpp" />
     <ClCompile Include="SAutomationDlg.cpp" />

@@ -2,7 +2,7 @@
 #include "variables.h"
 
 
-#include "perser.h"
+#include "parser.h"
 #include "Window.h"
 #include "ClipBoard.h"
 #include "Variables_Img.h"

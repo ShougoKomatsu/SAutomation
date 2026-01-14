@@ -246,6 +246,8 @@ void AutomationInfo::SaveSettings()
 }
 BOOL AutomationInfo::Copy(AutomationInfo* autoInfoIn)
 {
+	if(autoInfoIn == NULL){return FALSE;}
+
 	m_bEnableHotkey=autoInfoIn->m_bEnableHotkey;
 	m_bAutoMinimize=autoInfoIn->m_bAutoMinimize;
 	m_sHotkeyEnable.Format(_T("%s"),autoInfoIn->m_sHotkeyEnable);

@@ -1,8 +1,8 @@
 
 #pragma once
 #include "stdafx.h"
-#ifndef PERSER_DEFINE
-#define PERSER_DEFINE
+#ifndef PARSER_DEFINE
+#define PARSER_DEFINE
 
 #include "MouseAutomation.h"
 
