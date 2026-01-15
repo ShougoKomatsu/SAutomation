@@ -262,7 +262,7 @@ const CString StrLeft(CString sDir, int iScene, CString sArg1, CString sArg2)
 	int iSrc=GetIntValue(sDir, iScene, sArg2);
 
 	CString sTemp;
-	sTemp.Format(_T("%"),sSrc.Left(iSrc));
+	sTemp.Format(_T("%s"),sSrc.Left(iSrc));
 	return sTemp;
 }
 
@@ -274,7 +274,7 @@ const CString StrRight(CString sDir, int iScene, CString sArg1, CString sArg2)
 	int iSrc=GetIntValue(sDir, iScene, sArg2);
 
 	CString sTemp;
-	sTemp.Format(_T("%"),sSrc.Right(iSrc));
+	sTemp.Format(_T("%s"),sSrc.Right(iSrc));
 	return sTemp;
 }
 
@@ -287,7 +287,7 @@ const CString StrMid(CString sDir, int iScene, CString sArg1, CString sArg2, CSt
 	int iSrc2=GetIntValue(sDir, iScene, sArg3);
 
 	CString sTemp;
-	sTemp.Format(_T("%"),sSrc.Mid(iSrc1, iSrc2));
+	sTemp.Format(_T("%s"),sSrc.Mid(iSrc1, iSrc2));
 	return sTemp;
 }
 

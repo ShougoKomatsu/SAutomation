@@ -13,7 +13,7 @@ struct Point
 	Point(Point* pPointIn){r=pPointIn->r; c=pPointIn->c;}
 	Point( int cIn,int rIn){Set(cIn,rIn);}
 	void Set(int cIn,int rIn){r=rIn; c=cIn;}
-	Point operator = (Point pIn){Set(pIn.c,pIn.r);}
+//	Point operator = (Point pIn){Set(pIn.c,pIn.r);}
 };
 
 #define MAX_VARIABLES (128)

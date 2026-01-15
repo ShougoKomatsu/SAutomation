@@ -113,6 +113,30 @@ ReturnValue Flow_AreStrEqual(CString sDir, int iScene, CStringArray* saData, CSt
 	return RETURN_NORMAL;
 }
 
+enum ComparisonType
+{
+	COMPARISON_UNDEFINED=-1,
+	COMPARISON_LESS=0,
+	COMPARISON_LESSEQUAL=1,
+	COMPARISON_EQUAL=2,
+	COMPARISON_LARGEEQUAL=3,
+	COMPARISON_LARGE=4,
+	COMPARISON_NOTEQUAL=5,
+};
+
+ComparisonType GetComparisonType(CString sOperator)
+{
+	if(sOperator.Compare(_T("<"))==0){return COMPARISON_LESS;}
+	if(sOperator.Compare(_T("<="))==0){return COMPARISON_LESSEQUAL;}
+	if(sOperator.Compare(_T("="))==0){return COMPARISON_EQUAL;}
+	if(sOperator.Compare(_T("=="))==0){return COMPARISON_EQUAL;}
+	if(sOperator.Compare(_T(">="))==0){return COMPARISON_LARGEEQUAL;}
+	if(sOperator.Compare(_T(">"))==0){return COMPARISON_LARGE;}
+	if(sOperator.Compare(_T("<>"))==0){return COMPARISON_NOTEQUAL;}
+	if(sOperator.Compare(_T("!="))==0){return COMPARISON_NOTEQUAL;}
+
+	return COMPARISON_UNDEFINED;
+}
 ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString* sReturnParam)
 {
 
@@ -121,66 +145,40 @@ ReturnValue Flow_Compare(CString sDir, int iScene, CStringArray* saData, CString
 	CString sOperator;
 	sOperator.Format(_T("%s"),saData->GetAt(1));
 
-	if((sOperator.Compare(_T("="))==0) || (sOperator.Compare(_T("=="))==0))
+	switch(GetComparisonType(sOperator))
 	{
-		if (iSrc1==iSrc2)
+	case COMPARISON_LESS:
 		{
-			sReturnParam->Format(_T("%s"), saData->GetAt(3));
-			return RETURN_GOTO_BY_SWITCH;
+			if (iSrc1 < iSrc2){sReturnParam->Format(_T("%s"), saData->GetAt(3));return RETURN_GOTO_BY_SWITCH;}
+			return RETURN_NORMAL;
 		}
-		return RETURN_NORMAL;
-	}
-
-	if(sOperator.Compare(_T(">"))==0)
-	{
-		if (iSrc1>iSrc2)
+	case COMPARISON_LESSEQUAL:
 		{
-			sReturnParam->Format(_T("%s"), saData->GetAt(3));
-			return RETURN_GOTO_BY_SWITCH;
+			if (iSrc1 <= iSrc2){sReturnParam->Format(_T("%s"), saData->GetAt(3));return RETURN_GOTO_BY_SWITCH;}
+			return RETURN_NORMAL;
 		}
-		return RETURN_NORMAL;
-	}
-
-	if(sOperator.Compare(_T(">="))==0)
-	{
-		if (iSrc1>=iSrc2)
+	case COMPARISON_EQUAL:
 		{
-			sReturnParam->Format(_T("%s"), saData->GetAt(3));
-			return RETURN_GOTO_BY_SWITCH;
+			if (iSrc1 == iSrc2){sReturnParam->Format(_T("%s"), saData->GetAt(3));return RETURN_GOTO_BY_SWITCH;}
+			return RETURN_NORMAL;
 		}
-		return RETURN_NORMAL;
-	}
-
-	if(sOperator.Compare(_T("<"))==0)
-	{
-		if (iSrc1<iSrc2)
+	case COMPARISON_LARGEEQUAL:
 		{
-			sReturnParam->Format(_T("%s"), saData->GetAt(3));
-			return RETURN_GOTO_BY_SWITCH;
+			if (iSrc1 >= iSrc2){sReturnParam->Format(_T("%s"), saData->GetAt(3));return RETURN_GOTO_BY_SWITCH;}
+			return RETURN_NORMAL;
 		}
-		return RETURN_NORMAL;
-	}
-
-	if(sOperator.Compare(_T("<="))==0)
-	{
-		if (iSrc1<=iSrc2)
+	case COMPARISON_LARGE:
 		{
-			sReturnParam->Format(_T("%s"), saData->GetAt(3));
-			return RETURN_GOTO_BY_SWITCH;
+			if (iSrc1 > iSrc2){sReturnParam->Format(_T("%s"), saData->GetAt(3));return RETURN_GOTO_BY_SWITCH;}
+			return RETURN_NORMAL;
 		}
-		return RETURN_NORMAL;
-	}
-
-	if((sOperator.Compare(_T("<>"))==0) || (sOperator.Compare(_T("!="))==0))
-	{
-		if (iSrc1!=iSrc2)
+	case COMPARISON_NOTEQUAL:
 		{
-			sReturnParam->Format(_T("%s"), saData->GetAt(3));
-			return RETURN_GOTO_BY_SWITCH;
+			if (iSrc1 != iSrc2){sReturnParam->Format(_T("%s"), saData->GetAt(3));return RETURN_GOTO_BY_SWITCH;}
+			return RETURN_NORMAL;
 		}
-		return RETURN_NORMAL;
+	default:{return RETURN_FAILED;}
 	}
-
 	return RETURN_FAILED;
 }
 
