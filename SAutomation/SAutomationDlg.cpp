@@ -7,6 +7,7 @@
 #include "SAutomation.h"
 #include "SAutomationDlg.h"
 #include "afxdialogex.h"
+#include "Logger.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -21,7 +22,7 @@
 
 // CSAutomationDlg ダイアログ
 
-
+HANDLE g_hLogThread;
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -316,6 +317,7 @@ BOOL CSAutomationDlg::OnInitDialog()
 		}
 	}
 
+	g_hLogThread = CreateThread(NULL, 0, LoggerThread, NULL, 0, NULL);
 
 	g_bHalt = FALSE;
 
@@ -356,7 +358,7 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 	{
 	case IDI_ICON_STANDBY:
 		{
-			if(m_bNormalMode==FALSE){if(m_bRanOnce==TRUE){OnOK();}}
+			if(m_bNormalMode==FALSE){if(m_bRanOnce==TRUE){g_bEndLogThread=TRUE; Sleep(100);CloseHandle(g_hLogThread);OnOK();}}
 			SetIcon(m_hIconStandby, FALSE);
 			m_bRunning=FALSE;
 			Invalidate();
@@ -616,6 +618,9 @@ int CSAutomationDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CSAutomationDlg::OnBnClickedCompactButtonClose()
 {
+	g_bEndLogThread=TRUE;
+	Sleep(100);
+	CloseHandle(g_hLogThread);
 	CDialogEx::OnOK();
 }
 

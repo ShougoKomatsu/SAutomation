@@ -18,7 +18,6 @@ CString g_sMacroFilePath[MAX_THREAD];
 int g_iLogLevel[MAX_THREAD];
 double g_dSpeedMult=1.0;
 
-
 int g_iClickDulation = 50;
 CInputDialog g_cInput;
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "FlowManager.h"
-
+#include "Logger.h"
 int g_iNowLevel[MAX_THREAD];
 int g_iProgramCounter[MAX_THREAD][MAX_LEVEL];
 
@@ -30,7 +30,7 @@ int SearchLable(CStringArray* saData, CString sLabel, int iScene)
 		{
 			CString sWrite;
 			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);
-			g_utfW[iScene].WriteString(sWrite);
+			SetLogQue(iScene, sWrite);
 		}
 		if(sTrim.CompareNoCase(sLabel)==0){return i;}
 	}
@@ -57,7 +57,7 @@ int SearchSubRoutine(CStringArray* saData, CString sLabel, int iScene)
 		{
 			CString sWrite;
 			sWrite.Format(_T("\"%s\", \"%s\"\n"), sTrim, sLabel);
-			g_utfW[iScene].WriteString(sWrite);
+			SetLogQue(iScene, sWrite);
 		}
 		if(sTrim.CompareNoCase(sLabel)==0){return i;}
 	}

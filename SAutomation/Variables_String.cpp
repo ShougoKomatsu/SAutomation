@@ -5,7 +5,7 @@
 #include "parser.h"
 #include "Variables_String.h"
 #include "ClipBoard.h"
-
+#include "Logger.h"
 BOOL GetOperandStrSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;

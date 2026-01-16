@@ -1,0 +1,9 @@
+#include "stdafx.h"
+#include "Common.h"
+#define MAX_SUBBUF 100
+#define MSG_LEN    256
+
+extern BOOL g_bEndLogThread;
+extern BOOL g_bClearFile[MAX_THREAD];
+BOOL SetLogQue(int iScene, CString sData);
+DWORD WINAPI LoggerThread(LPVOID);

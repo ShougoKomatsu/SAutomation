@@ -5,8 +5,8 @@
 #include "resource.h"
 #include "Variables.h"
 #include "FlowManager.h"
-
-#define TREAT_TO_EXIT_THREAD if(g_iLogLevel[iScene]>=1){g_utfW[iScene].CloseUTFFile();}g_bHalt = FALSE;\
+#include "Logger.h"
+#define TREAT_TO_EXIT_THREAD g_bHalt = FALSE;\
 	ChangeMouseOrigin(0, 0);\
 	PostMessage(g_hWnd,WM_DISP_STANDBY,iScene,0);\
 //	TerminateThread(hGetKey, 0);TerminateThread(hGetStepKey, 0);
@@ -143,17 +143,14 @@ DWORD WINAPI CommandThread(LPVOID arg)
 	BOOL bExit;
 	StopWatch sw;
 	g_sLogFilePath[iScene].Format(_T("%s\\Log\\log%d.txt"), g_sDir, iScene);
-	if(g_iLogLevel[iScene]>=1)
-	{
-		BOOL bRet;
-		bRet = g_utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("w, ccs=UTF-8"));
-	}
+	g_bClearFile[iScene]=TRUE;
+
 	ResetProgramCounter(sDir, iScene);
 	CString sWrite;
 	BOOL* bHalt;
 
 	sWrite.Format(_T("%s\n"), g_sMacroFilePath[iScene]);
-	if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
+	if(g_iLogLevel[iScene]>=1){SetLogQue(iScene, sWrite);}
 
 	if(bDisableHalt==FALSE)
 	{
@@ -172,12 +169,12 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		if(saCommands.GetAt(i).GetLength()<=0){continue;}
 
 		sWrite.Format(_T("%d "), i+1);
-		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
+		SetLogQue(iScene, sWrite);
 		bExit = FALSE;
 		if(bHalt!=NULL){if(*bHalt == TRUE){TREAT_TO_EXIT_THREAD; return 0;}}
 
 		sWrite.Format(_T("%s "), saCommands.GetAt(i));
-		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){SetLogQue(iScene, sWrite);}
 		CString sReturnParam;
 		try
 		{
@@ -213,7 +210,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		}
 		sWrite.Format(_T("%d\n"), iRet);
 
-		if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
+		if(g_iLogLevel[iScene]>=1){SetLogQue(iScene, sWrite);}
 		switch(iRet)
 		{
 		case RETURN_HALT:{TREAT_TO_EXIT_THREAD; return 0;}
@@ -235,7 +232,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		case RETURN_FAILED:
 			{
 				sWrite.Format(_T("iErrorTreat = %d %s\n"), iErrorTreat, sLabel);
-				if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
+				if(g_iLogLevel[iScene]>=1){SetLogQue(iScene, sWrite);}
 				switch(iErrorTreat)
 				{
 				case ERROR_TREAT_RESUME:{break;}
@@ -244,7 +241,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 						PerseLabelFromGotoStatement(saCommands.GetAt(i),&sLabel);
 						int iLabel = SearchLable(&saCommands,sLabel, iScene);
 						sWrite.Format(_T("iLabel = %d\n"), iLabel);
-						if(g_iLogLevel[iScene]>=1){g_utfW[iScene].WriteString(sWrite);}
+						if(g_iLogLevel[iScene]>=1){SetLogQue(iScene, sWrite);}
 						if(iLabel < 0){TREAT_TO_EXIT_THREAD; return 0;}
 
 						i=iLabel-1;
