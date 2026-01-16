@@ -7,5 +7,6 @@ extern int g_iCheckLogPeriodMilliSec;
 
 extern BOOL g_bEndLogThread;
 extern BOOL g_bClearFile[MAX_THREAD];
+extern BOOL g_bReadyToLog;
 BOOL SetLogQue(int iScene, CString sData);
 DWORD WINAPI LoggerThread(LPVOID);

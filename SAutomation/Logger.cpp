@@ -20,7 +20,8 @@ CRITICAL_SECTION csQue[MAX_QUE_SET];
 Message g_MainQue[MAX_QUE_SET*MAX_QUE];
 int g_iQuePos[MAX_QUE_SET] = {0};
 
-BOOL g_bEndLogThread=FALSE;
+BOOL g_bEndLogThread = FALSE;
+extern BOOL g_bReadyToLog = FALSE;
 int g_iWriteLogPeriodMilliSec=10000;
 int g_iCheckLogPeriodMilliSec=1000;
 
@@ -72,6 +73,18 @@ BOOL SetLogQue(int iScene, CString sData)
 	return bRet;
 }
 
+BOOL CheckNeedToWrite(int* iLogLevel, CStringArray* saToWrite)
+{
+	for(int iScene=0; iScene<MAX_THREAD; iScene++)
+	{
+		if(iLogLevel[iScene]<=0){continue;}
+		if(saToWrite[iScene].GetCount()>0)
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
 
 DWORD WINAPI LoggerThread(LPVOID) 
 {
@@ -79,15 +92,18 @@ DWORD WINAPI LoggerThread(LPVOID)
 	{
 		InitializeCriticalSection(&(csQue[iSet]));
 	}
-
+	
 	CStringArray saToWrite[MAX_THREAD];
-	Message mesToWrite[MAX_QUE_SET*MAX_QUE];
-	UTFReaderWriter utfW[MAX_THREAD];
-
 	for(int iScene=0; iScene<MAX_THREAD; iScene++)
 	{
 		saToWrite[iScene].RemoveAll();
 	}
+
+	g_bReadyToLog = TRUE;
+
+	Message mesToWrite[MAX_QUE_SET*MAX_QUE];
+	UTFReaderWriter utfW[MAX_THREAD];
+
 
 	DWORD timeLastWrote = GetTickCount();
 	DWORD timeLastCheck = GetTickCount();
@@ -99,8 +115,6 @@ DWORD WINAPI LoggerThread(LPVOID)
 			if(PopAllMain(iSet, &(mesToWrite[iSet*MAX_QUE_SET]), &(iNum[iSet])) != TRUE){break;}
 		}
 
-
-
 		for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 		{
 			for(int iQuePos=0; iQuePos<iNum[iSet]; iQuePos++)
@@ -108,7 +122,6 @@ DWORD WINAPI LoggerThread(LPVOID)
 				saToWrite[mesToWrite[iSet*MAX_QUE_SET + iQuePos].iScene].Add(mesToWrite[iSet*MAX_QUE_SET + iQuePos].sLogText);
 			}
 		}
-
 
 		DWORD now = GetTickCount();
 		if ((g_bEndLogThread==TRUE) || (now - timeLastWrote >= g_iWriteLogPeriodMilliSec))
@@ -136,22 +149,19 @@ DWORD WINAPI LoggerThread(LPVOID)
 				saToWrite[iScene].RemoveAll();
 			}
 
-			if(g_bEndLogThread==TRUE)
-			{
-				for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
-				{
-					DeleteCriticalSection(&(csQue[iSet]));
-				}
-				return 0;
-			}
-
 			timeLastWrote = now;
 		}
 
+
 		while(1)
 		{
-			if(g_bEndLogThread==TRUE)
+			if(g_bEndLogThread == TRUE)
 			{
+				if(CheckNeedToWrite(g_iLogLevel, saToWrite) == TRUE)
+				{
+					break;
+				}
+
 				for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 				{
 					DeleteCriticalSection(&(csQue[iSet]));

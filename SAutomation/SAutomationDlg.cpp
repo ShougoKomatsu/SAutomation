@@ -319,6 +319,8 @@ BOOL CSAutomationDlg::OnInitDialog()
 
 	g_hLogThread = CreateThread(NULL, 0, LoggerThread, NULL, 0, NULL);
 
+	while(g_bReadyToLog == FALSE){Sleep(10);}
+
 	g_bHalt = FALSE;
 
 
@@ -358,7 +360,7 @@ BOOL CSAutomationDlg::ChangeIcon(int iIcon)
 	{
 	case IDI_ICON_STANDBY:
 		{
-			if(m_bNormalMode==FALSE){if(m_bRanOnce==TRUE){g_bEndLogThread=TRUE; Sleep(100);CloseHandle(g_hLogThread);OnOK();}}
+			if(m_bNormalMode==FALSE){if(m_bRanOnce==TRUE){g_bEndLogThread=TRUE; WaitForSingleObject(g_hLogThread, INFINITE);CloseHandle(g_hLogThread) ;OnOK();}}
 			SetIcon(m_hIconStandby, FALSE);
 			m_bRunning=FALSE;
 			Invalidate();
@@ -619,7 +621,7 @@ int CSAutomationDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CSAutomationDlg::OnBnClickedCompactButtonClose()
 {
 	g_bEndLogThread=TRUE;
-	Sleep(100);
+	WaitForSingleObject(g_hLogThread, INFINITE);
 	CloseHandle(g_hLogThread);
 	CDialogEx::OnOK();
 }
