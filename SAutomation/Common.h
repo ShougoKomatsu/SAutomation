@@ -25,9 +25,8 @@ private:
 
 BOOL ReadUTFFile(CString sFilePath, CStringArray* saData);
 BOOL ReadMacroFile(CString sFilePath, CStringArray* saData);
-extern UTFReaderWriter g_utfW[MAX_THREAD];
 extern CString g_sLogFilePath[MAX_THREAD];
-
+extern int g_iLogLevel[MAX_THREAD];
 
 enum ReturnValue
 {
@@ -184,9 +183,9 @@ extern int g_iWatching;
 
 extern int g_iClickDulation;
 extern CString g_sDir;
-#define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); g_utfW[iScene].WriteString(sWrite);}
-#define LOG_OUTPUT_STR(iScene, sArg, sData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %s> "),sArg, sData); g_utfW[iScene].WriteString(sWrite);}	
-#define LOG_OUTPUT_POINT(iScene, sArg, pPoint) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = (%d, %d)> "),sArg.Left(8), (pPoint==NULL ? 0 : pPoint->r), (pPoint == NULL ? 0 : pPoint->c));g_utfW[iScene].WriteString(sWrite);}
+#define LOG_OUTPUT_INT(iScene, sArg, iData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %d> "),sArg, iData); SetLogQue(iScene, sWrite);}
+#define LOG_OUTPUT_STR(iScene, sArg, sData) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = %s> "),sArg, sData); SetLogQue(iScene, sWrite);}	
+#define LOG_OUTPUT_POINT(iScene, sArg, pPoint) if(g_iLogLevel[iScene]>=5){CString sWrite; sWrite.Format(_T("<%s = (%d, %d)> "),sArg.Left(8), (pPoint==NULL ? 0 : pPoint->r), (pPoint == NULL ? 0 : pPoint->c));SetLogQue(iScene, sWrite);}
 
 
 

@@ -114,6 +114,7 @@
     <ClInclude Include="FlowManager.h" />
     <ClInclude Include="ImgProc.h" />
     <ClInclude Include="InputDialog.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="MouseAutomation.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="PlayMedia.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="FlowManager.cpp" />
     <ClCompile Include="ImgProc.cpp" />
     <ClCompile Include="InputDialog.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MouseAutomation.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PlayMedia.cpp" />

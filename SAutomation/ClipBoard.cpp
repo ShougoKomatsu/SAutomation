@@ -249,7 +249,6 @@ const CString CopyFromClipBoardFilePath()
 BOOL CopyFromClipBoardImg(ImgRGB* imgRGB)
 {
 	BOOL bRet;
-	BITMAPINFOHEADER bmih;
 
 	bRet = OpenClipboard(g_hWnd);
 	if(bRet == FALSE){return FALSE;}

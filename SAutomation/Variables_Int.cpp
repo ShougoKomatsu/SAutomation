@@ -4,7 +4,7 @@
 #include "parser.h"
 #include "Window.h"
 #include "Variables_Int.h"
-
+#include "Logger.h"
 BOOL GetOperandIntSrc(CString sDataLine, int* iCommandType)
 {
 	CString sDataTrim;

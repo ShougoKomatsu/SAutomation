@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Common.h"
 #include "MouseAutomation.h"
+#include "Logger.h"
 CString g_sDir;
 AutomationInfo g_Automation;
 HHOOK g_hhook=NULL;
@@ -13,11 +14,9 @@ int g_iWatching=0;
 
 
 HANDLE g_hHotkey[MAX_THREAD];
-UTFReaderWriter g_utfW[MAX_THREAD];
 CString g_sMacroFilePath[MAX_THREAD];
 int g_iLogLevel[MAX_THREAD];
 double g_dSpeedMult=1.0;
-
 
 int g_iClickDulation = 50;
 CInputDialog g_cInput;
@@ -149,6 +148,12 @@ void AutomationInfo::ReadSettings()
 	m_iLogLevel=_ttoi(tszData);
 	if(m_iLogLevel<1){m_iLogLevel=1;}
 	if(m_iLogLevel>5){m_iLogLevel=5;}
+
+	GetPrivateProfileString(_T("Common"),_T("LogCheckPeriodMillisec"),_T("1000"),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+	g_iCheckLogPeriodMilliSec=_ttoi(tszData);
+
+	GetPrivateProfileString(_T("Common"),_T("LogWritePeriodMillisec"),_T("10000"),tszData,sizeof(tszData)/sizeof(TCHAR),sFilePath);
+	g_iWriteLogPeriodMilliSec=_ttoi(tszData);
 
 	for(int iScene= 0; iScene<MAX_NORMAL_THREAD; iScene++)
 	{
