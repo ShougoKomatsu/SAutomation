@@ -13,7 +13,6 @@ int g_iWatching=0;
 
 
 HANDLE g_hHotkey[MAX_THREAD];
-UTFReaderWriter g_utfW[MAX_THREAD];
 CString g_sMacroFilePath[MAX_THREAD];
 int g_iLogLevel[MAX_THREAD];
 double g_dSpeedMult=1.0;

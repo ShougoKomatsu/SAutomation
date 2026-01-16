@@ -13,24 +13,14 @@ struct Message
 	}
 };
 
-CRITICAL_SECTION csMainQue;
-CRITICAL_SECTION csSubQue;
-
+#define MAX_QUE_SET (10)
 #define MAX_QUE (1024)
-Message g_MainQue[MAX_QUE];
-int g_iMainQuePos = 0;
 
-Message g_SubQue[MAX_QUE];
-int g_iSubQuePos = 0;
+CRITICAL_SECTION csQue[MAX_QUE_SET];
+Message g_MainQue[MAX_QUE_SET*MAX_QUE];
+int g_iQuePos[MAX_QUE_SET] = {0};
 
-volatile LONG interlockFlag = 0;
-volatile LONG doneFlag = 0;
 BOOL g_bEndLogThread=FALSE;
-
-HANDLE hEventMsg;
-HANDLE hLogFile;
-
-
 
 enum QueStatus
 {
@@ -39,71 +29,39 @@ enum QueStatus
 	QUE_POP_NORMAL = 1,
 };
 
-BOOL PushSub(const Message* mes) 
+BOOL PushQue(int iSet, const Message* mes) 
 {
-	BOOL bRet = TryEnterCriticalSection(&csSubQue);
-	if(bRet != TRUE)
+	if(TryEnterCriticalSection(&(csQue[iSet])) != TRUE)
 	{
-		return FALSE;
+		if(iSet>=MAX_QUE_SET-1){return FALSE;}
+		return PushQue(iSet+1, mes);
 	}
 
-	if (g_iSubQuePos >= MAX_QUE) 
+	if (g_iQuePos[iSet] >= MAX_QUE) 
 	{
-		LeaveCriticalSection(&csSubQue);
-		return FALSE;
-    }
-	g_SubQue[g_iSubQuePos].Copy(mes);
-    g_iSubQuePos++;
-    LeaveCriticalSection(&csSubQue);
-    return TRUE;
-}
-
-BOOL PushMain(const Message* mes) 
-{
-    if(TryEnterCriticalSection(&csMainQue) != TRUE)
-	{
-		return PushSub(mes);
+		BOOL bRet = PushQue(iSet+1, mes);
+		LeaveCriticalSection(&(csQue[iSet]));
+		return bRet;
 	}
 
-    if (g_iMainQuePos >= MAX_QUE) 
-	{
-		BOOL bRet = PushSub(mes);
-        LeaveCriticalSection(&csMainQue);
-        return bRet;
-    }
-
-    g_MainQue[g_iMainQuePos].Copy(mes);
-    g_iMainQuePos++;
-    LeaveCriticalSection(&csMainQue);
-    return TRUE;
+	g_MainQue[iSet*MAX_QUE + g_iQuePos[iSet]].Copy(mes);
+	g_iQuePos[iSet]++;
+	LeaveCriticalSection(&(csQue[iSet]));
+	return TRUE;
 }
 
 
-QueStatus PopAllMain(Message* mes, int* iNum) 
+QueStatus PopAllMain(int iSet, Message* mes, int* iNum) 
 {
-	EnterCriticalSection(&csMainQue);
+	EnterCriticalSection(&(csQue[iSet]));
 	int i=0;
-	for(int i=0; i<g_iMainQuePos; i++)
+	for(int i=0; i<g_iQuePos[iSet]; i++)
 	{
-		mes[i].Copy(&(g_MainQue[i]));
+		mes[i].Copy(&(g_MainQue[iSet*MAX_QUE + i]));
 	}
-	*iNum=g_iMainQuePos;
-	g_iMainQuePos=0;
-	LeaveCriticalSection(&csMainQue);
-	return QUE_POP_NORMAL;
-}
-
-QueStatus PopAllSub(Message* mes, int* iNum) 
-{
-	EnterCriticalSection(&csSubQue);
-	int i=0;
-	for(int i=0; i<g_iSubQuePos; i++)
-	{
-		mes[i].Copy(&(g_SubQue[i]));
-	}
-	*iNum=g_iSubQuePos;
-	g_iSubQuePos=0;
-	LeaveCriticalSection(&csSubQue);
+	*iNum=g_iQuePos[iSet];
+	g_iQuePos[iSet]=0;
+	LeaveCriticalSection(&(csQue[iSet]));
 	return QUE_POP_NORMAL;
 }
 
@@ -115,44 +73,46 @@ BOOL SetLogQue(int iScene, CString sData)
 	Message mes;
 	mes.iScene=iScene;
 	mes.sLogText.Format(_T("%s"), sData);
-	bRet = PushMain(&mes);
-    SetEvent(hEventMsg);
+	bRet = PushQue(0, &mes);
 	return bRet;
 }
 
 
 DWORD WINAPI LoggerThread(LPVOID) 
 {
-    InitializeCriticalSection(&csMainQue);
-    InitializeCriticalSection(&csSubQue);
+	for(int i=0; i<MAX_QUE_SET; i++)
+	{
+		InitializeCriticalSection(&(csQue[i]));
+	}
 
 	BOOL bNeedToWrite[MAX_THREAD]={FALSE};
-	Message mesMain[MAX_QUE];
-	Message mesSub[MAX_QUE];
+	Message mesToWrite[MAX_QUE_SET*MAX_QUE];
+	UTFReaderWriter utfW[MAX_THREAD];
 
 	DWORD timeLastWrote = GetTickCount();
 	while (1) 
 	{
-		int iMain;
-		if(PopAllMain(mesMain,&iMain) != QUE_POP_NORMAL){break;}
+		int iNum[MAX_QUE_SET];
+		for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
+		{
+			if(PopAllMain(iSet, &(mesToWrite[iSet*MAX_QUE_SET]), &(iNum[iSet])) != QUE_POP_NORMAL){break;}
+		}
 
-		int iSub;
-		if(PopAllSub(mesSub,&iSub) != QUE_POP_NORMAL){break;}
-		
 		for(int iScene=0; iScene<MAX_THREAD; iScene++)
 		{
 			bNeedToWrite[iScene]=FALSE;
 		}
 
-		for(int i=0; i<iMain; i++)
+		for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 		{
-			bNeedToWrite[mesMain[i].iScene]=TRUE;
+			for(int i=0; i<iNum[iSet]; i++)
+			{
+				bNeedToWrite[mesToWrite[iSet*MAX_QUE_SET + i].iScene]=TRUE;
+			}
+
 		}
 
-		for(int i=0; i<iSub; i++)
-		{
-			bNeedToWrite[mesSub[i].iScene]=TRUE;
-		}
+
 
 		for(int iScene=0; iScene<MAX_THREAD; iScene++)
 		{
@@ -160,29 +120,29 @@ DWORD WINAPI LoggerThread(LPVOID)
 			if(bNeedToWrite[iScene] != TRUE){continue;}
 			if(g_bClearFile[iScene]==TRUE)
 			{
-				g_utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("w, ccs=UTF-8"));
+				utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("w, ccs=UTF-8"));
 				g_bClearFile[iScene]=FALSE;
 			}
 			else
 			{
-				g_utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("a, ccs=UTF-8"));
+				utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("a, ccs=UTF-8"));
 			}
 		}
-		for(int i=0; i<iMain; i++)
+		
+		for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 		{
-			g_utfW[mesMain[i].iScene].WriteString(mesMain[i].sLogText);
+			for(int i=0; i<iNum[iSet]; i++)
+			{
+			utfW[mesToWrite[iSet*MAX_QUE_SET + i].iScene].WriteString(mesToWrite[iSet*MAX_QUE_SET + i].sLogText);
+		}
 		}
 
-		for(int i=0; i<iSub; i++)
-		{
-			g_utfW[mesSub[i].iScene].WriteString(mesSub[i].sLogText);
-		}
 
 		for(int iScene=0; iScene<MAX_THREAD; iScene++)
 		{
 			if(g_iLogLevel[iScene]<=0){continue;}
 			if(bNeedToWrite[iScene] != TRUE){continue;}
-			g_utfW[iScene].CloseUTFFile();
+			utfW[iScene].CloseUTFFile();
 		}
 
 		while(1)
@@ -197,8 +157,10 @@ DWORD WINAPI LoggerThread(LPVOID)
 			Sleep(10);
 		}
 	}
-    DeleteCriticalSection(&csMainQue);
-    DeleteCriticalSection(&csSubQue);
+	for(int i=0; i<MAX_QUE_SET; i++)
+	{
+		DeleteCriticalSection(&(csQue[i]));
+	}
 	return 0;
 }
 
