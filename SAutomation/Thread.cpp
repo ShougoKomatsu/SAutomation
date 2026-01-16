@@ -292,7 +292,7 @@ DWORD WINAPI CommandThread(LPVOID arg)
 		g_llStepOut=1;
 		g_llStepIn=0;
 		if(bExit==TRUE){break;}
-	}
+	}	
 
 	TREAT_TO_EXIT_THREAD;
 	return 0;

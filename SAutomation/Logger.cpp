@@ -21,13 +21,8 @@ Message g_MainQue[MAX_QUE_SET*MAX_QUE];
 int g_iQuePos[MAX_QUE_SET] = {0};
 
 BOOL g_bEndLogThread=FALSE;
-
-enum QueStatus
-{
-	QUE_LOCKED = -1,
-	QUE_NO_QUE =0,
-	QUE_POP_NORMAL = 1,
-};
+int g_iWriteLogPeriodMilliSec=10000;
+int g_iCheckLogPeriodMilliSec=1000;
 
 BOOL PushQue(int iSet, const Message* mes) 
 {
@@ -51,18 +46,18 @@ BOOL PushQue(int iSet, const Message* mes)
 }
 
 
-QueStatus PopAllMain(int iSet, Message* mes, int* iNum) 
+BOOL PopAllMain(int iSet, Message* mes, int* iNum) 
 {
 	EnterCriticalSection(&(csQue[iSet]));
-	int i=0;
-	for(int i=0; i<g_iQuePos[iSet]; i++)
+	int iQuePos=0;
+	for(int iQuePos=0; iQuePos<g_iQuePos[iSet]; iQuePos++)
 	{
-		mes[i].Copy(&(g_MainQue[iSet*MAX_QUE + i]));
+		mes[iQuePos].Copy(&(g_MainQue[iSet*MAX_QUE + iQuePos]));
 	}
 	*iNum=g_iQuePos[iSet];
 	g_iQuePos[iSet]=0;
 	LeaveCriticalSection(&(csQue[iSet]));
-	return QUE_POP_NORMAL;
+	return TRUE;
 }
 
 
@@ -80,86 +75,95 @@ BOOL SetLogQue(int iScene, CString sData)
 
 DWORD WINAPI LoggerThread(LPVOID) 
 {
-	for(int i=0; i<MAX_QUE_SET; i++)
+	for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 	{
-		InitializeCriticalSection(&(csQue[i]));
+		InitializeCriticalSection(&(csQue[iSet]));
 	}
 
-	BOOL bNeedToWrite[MAX_THREAD]={FALSE};
+	CStringArray saToWrite[MAX_THREAD];
 	Message mesToWrite[MAX_QUE_SET*MAX_QUE];
 	UTFReaderWriter utfW[MAX_THREAD];
 
+	for(int iScene=0; iScene<MAX_THREAD; iScene++)
+	{
+		saToWrite[iScene].RemoveAll();
+	}
+
 	DWORD timeLastWrote = GetTickCount();
+	DWORD timeLastCheck = GetTickCount();
 	while (1) 
 	{
 		int iNum[MAX_QUE_SET];
 		for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 		{
-			if(PopAllMain(iSet, &(mesToWrite[iSet*MAX_QUE_SET]), &(iNum[iSet])) != QUE_POP_NORMAL){break;}
+			if(PopAllMain(iSet, &(mesToWrite[iSet*MAX_QUE_SET]), &(iNum[iSet])) != TRUE){break;}
 		}
 
-		for(int iScene=0; iScene<MAX_THREAD; iScene++)
-		{
-			bNeedToWrite[iScene]=FALSE;
-		}
+
 
 		for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 		{
-			for(int i=0; i<iNum[iSet]; i++)
+			for(int iQuePos=0; iQuePos<iNum[iSet]; iQuePos++)
 			{
-				bNeedToWrite[mesToWrite[iSet*MAX_QUE_SET + i].iScene]=TRUE;
-			}
-
-		}
-
-
-
-		for(int iScene=0; iScene<MAX_THREAD; iScene++)
-		{
-			if(g_iLogLevel[iScene]<=0){continue;}
-			if(bNeedToWrite[iScene] != TRUE){continue;}
-			if(g_bClearFile[iScene]==TRUE)
-			{
-				utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("w, ccs=UTF-8"));
-				g_bClearFile[iScene]=FALSE;
-			}
-			else
-			{
-				utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("a, ccs=UTF-8"));
+				saToWrite[mesToWrite[iSet*MAX_QUE_SET + iQuePos].iScene].Add(mesToWrite[iSet*MAX_QUE_SET + iQuePos].sLogText);
 			}
 		}
-		
-		for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
+
+
+		DWORD now = GetTickCount();
+		if ((g_bEndLogThread==TRUE) || (now - timeLastWrote >= g_iWriteLogPeriodMilliSec))
 		{
-			for(int i=0; i<iNum[iSet]; i++)
+			for(int iScene=0; iScene<MAX_THREAD; iScene++)
 			{
-			utfW[mesToWrite[iSet*MAX_QUE_SET + i].iScene].WriteString(mesToWrite[iSet*MAX_QUE_SET + i].sLogText);
-		}
-		}
+				if(g_iLogLevel[iScene]<=0){continue;}
+				if(saToWrite[iScene].GetCount()<=0){continue;}
 
+				if(g_bClearFile[iScene] == TRUE)
+				{
+					g_bClearFile[iScene]=FALSE;
+					utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("w, ccs=UTF-8"));
+				}
+				else
+				{
+					utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("a, ccs=UTF-8"));
+				}
 
-		for(int iScene=0; iScene<MAX_THREAD; iScene++)
-		{
-			if(g_iLogLevel[iScene]<=0){continue;}
-			if(bNeedToWrite[iScene] != TRUE){continue;}
-			utfW[iScene].CloseUTFFile();
+				for(int iQuePos=0; iQuePos<saToWrite[iScene].GetCount(); iQuePos++)
+				{
+					utfW[iScene].WriteString(saToWrite[iScene].GetAt(iQuePos));
+				}
+				utfW[iScene].CloseUTFFile();
+				saToWrite[iScene].RemoveAll();
+			}
+
+			if(g_bEndLogThread==TRUE)
+			{
+				break;
+			}
+
+			timeLastWrote = now;
 		}
 
 		while(1)
 		{
-			if(g_bEndLogThread==TRUE){break;}
-			DWORD now = GetTickCount();
-			if (now - timeLastWrote >= 1000) 
+			if(g_bEndLogThread==TRUE)
 			{
-				timeLastWrote = now;
+				break;
+			}
+
+			DWORD now = GetTickCount();
+			if (now - timeLastCheck >= g_iCheckLogPeriodMilliSec) 
+			{
+				timeLastCheck = now;
 				break;
 			}
 			Sleep(10);
 		}
 	}
-	for(int i=0; i<MAX_QUE_SET; i++)
+
+	for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
 	{
-		DeleteCriticalSection(&(csQue[i]));
+		DeleteCriticalSection(&(csQue[iSet]));
 	}
 	return 0;
 }
