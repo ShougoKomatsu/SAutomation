@@ -138,7 +138,11 @@ DWORD WINAPI LoggerThread(LPVOID)
 
 			if(g_bEndLogThread==TRUE)
 			{
-				break;
+				for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
+				{
+					DeleteCriticalSection(&(csQue[iSet]));
+				}
+				return 0;
 			}
 
 			timeLastWrote = now;
@@ -148,7 +152,11 @@ DWORD WINAPI LoggerThread(LPVOID)
 		{
 			if(g_bEndLogThread==TRUE)
 			{
-				break;
+				for(int iSet=0; iSet<MAX_QUE_SET; iSet++)
+				{
+					DeleteCriticalSection(&(csQue[iSet]));
+				}
+				return 0;
 			}
 
 			DWORD now = GetTickCount();
