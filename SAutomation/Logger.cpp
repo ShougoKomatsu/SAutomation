@@ -131,21 +131,31 @@ DWORD WINAPI LoggerThread(LPVOID)
 				if(g_iLogLevel[iScene]<=0){continue;}
 				if(saToWrite[iScene].GetCount()<=0){continue;}
 
+				CString sMode;
 				if(g_bClearFile[iScene] == TRUE)
 				{
 					g_bClearFile[iScene]=FALSE;
-					utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("w, ccs=UTF-8"));
+					sMode.Format(_T("w, ccs=UTF-8"));
 				}
 				else
 				{
-					utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],_T("a, ccs=UTF-8"));
+					sMode.Format(_T("a, ccs=UTF-8"));
 				}
 
-				for(int iQuePos=0; iQuePos<saToWrite[iScene].GetCount(); iQuePos++)
+				try
 				{
-					utfW[iScene].WriteString(saToWrite[iScene].GetAt(iQuePos));
+					utfW[iScene].OpenUTFFile(g_sLogFilePath[iScene],sMode);
+
+					for(int iQuePos=0; iQuePos<saToWrite[iScene].GetCount(); iQuePos++)
+					{
+						utfW[iScene].WriteString(saToWrite[iScene].GetAt(iQuePos));
+					}
+					utfW[iScene].CloseUTFFile();
 				}
-				utfW[iScene].CloseUTFFile();
+				catch(...)
+				{
+				}
+
 				saToWrite[iScene].RemoveAll();
 			}
 
