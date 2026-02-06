@@ -127,7 +127,7 @@ ReturnValue MouseClick(MouseButton mouseButton,  UINT nX, UINT nY, int iClickDul
 
 	Sleep(iClickDulation);
 	MouseUp(mouseButton, nX, nY);
-	return RETURN_FAILED;
+	return RETURN_NORMAL;
 }
 
 ReturnValue MouseDragAndDrop(MouseButton mouseButton, UINT nXFrom, UINT nYFrom,UINT nXTo, UINT nYTo, int iClickTimeMilliSec, int iDragTimeMilliSec)
