@@ -28,36 +28,22 @@ ReturnValue MouseEvent(UINT uiEvent, UINT nX, UINT nY)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MoveMouseAbs(UINT nX, UINT nY)	
-{
-	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, nX, nY);
-}
-
-ReturnValue MouseDownAbs(MouseButton mouseButton, UINT nX, UINT nY)	
-{
-	switch(mouseButton)
-	{
-	case MOUSE_L_BUTTON:{	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTDOWN, nX, nY);}
-	case MOUSE_R_BUTTON:{	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTDOWN, nX, nY);}
-	case MOUSE_M_BUTTON:{	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEDOWN, nX, nY);}
-	}
-	return RETURN_FAILED;
-}
-ReturnValue MouseUpAbs(MouseButton mouseButton, UINT nX, UINT nY)
-{
-	switch(mouseButton)
-	{
-	case MOUSE_L_BUTTON:{	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTUP, nX, nY);}
-	case MOUSE_R_BUTTON:{	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTUP, nX, nY);}
-	case MOUSE_M_BUTTON:{	return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEUP, nX, nY);}
-	}
-	return RETURN_FAILED;
-}
+ReturnValue MoveMouseAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MOVE, nX, nY);}
+ReturnValue MouseLDownAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTDOWN, nX, nY);}
+ReturnValue MouseRDownAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTDOWN, nX, nY);}
+ReturnValue MouseMDownAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEDOWN, nX, nY);}
+ReturnValue MouseLUpAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_LEFTUP, nX, nY);}
+ReturnValue MouseRUpAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_RIGHTUP, nX, nY);}
+ReturnValue MouseMUpAbs(UINT nX, UINT nY)	{return MouseEvent(MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_MIDDLEUP, nX, nY);}
 
 
 ReturnValue MoveMouse(UINT nX, UINT nY){return MoveMouseAbs(nX + g_iOriginC, nY + g_iOriginR);}
-ReturnValue MouseDown(MouseButton mouseButton, UINT nX, UINT nY){return MouseDownAbs(mouseButton, nX + g_iOriginC, nY + g_iOriginR);}
-ReturnValue MouseUp(MouseButton mouseButton, UINT nX, UINT nY){return MouseUpAbs(mouseButton, nX + g_iOriginC, nY + g_iOriginR);}
+ReturnValue MouseLDown(UINT nX, UINT nY){return MouseLDownAbs(nX + g_iOriginC, nY + g_iOriginR);}
+ReturnValue MouseRDown(UINT nX, UINT nY){return MouseRDownAbs(nX + g_iOriginC, nY + g_iOriginR);}
+ReturnValue MouseMDown(UINT nX, UINT nY){return MouseMDownAbs(nX + g_iOriginC, nY + g_iOriginR);}
+ReturnValue MouseLUp(UINT nX, UINT nY){return MouseLUpAbs(nX + g_iOriginC, nY + g_iOriginR);}
+ReturnValue MouseRUp(UINT nX, UINT nY){return MouseRUpAbs(nX + g_iOriginC, nY + g_iOriginR);}
+ReturnValue MouseMUp(UINT nX, UINT nY){return MouseMUpAbs(nX + g_iOriginC, nY + g_iOriginR);}
 
 
 ReturnValue MoveMouse(CString sDir, int iScene, CStringArray* saData)
@@ -83,9 +69,9 @@ ReturnValue MoveMouse(CString sDir, int iScene, CStringArray* saData)
 }
 
 
-ReturnValue MouseDown(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData)
+ReturnValue MouseLDown(CString sDir, int iScene, CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseDown(mouseButton, g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseLDown(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
@@ -93,18 +79,15 @@ ReturnValue MouseDown(MouseButton mouseButton, CString sDir, int iScene, CString
 		Point point;
 		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
 		if(bRet==FALSE){return RETURN_FAILED;}
-		return MouseDown(mouseButton, point.c, point.r);
+		return MouseLDown(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
-	return MouseDown(mouseButton, iSrc1, iSrc2);
+	return MouseLDown(iSrc1, iSrc2);
 }
-
-
-
-ReturnValue MouseUp(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData)
+ReturnValue MouseRDown(CString sDir, int iScene, CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseUp(mouseButton, g_iC, g_iR);}
+	if(saData->GetCount()==0){return MouseRDown(g_iC, g_iR);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
@@ -112,33 +95,127 @@ ReturnValue MouseUp(MouseButton mouseButton, CString sDir, int iScene, CStringAr
 		Point point;
 		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
 		if(bRet==FALSE){return RETURN_FAILED;}
-		return MouseUp(mouseButton, point.c, point.r);
+		return MouseRDown(point.c, point.r);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
-	return MouseUp(mouseButton, iSrc1, iSrc2);
+	return MouseRDown(iSrc1, iSrc2);
+}
+
+ReturnValue MouseMDown(CString sDir, int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseMDown(g_iC, g_iR);}
+	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMDown(point.c, point.r);
+	}
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
+	return MouseMDown(iSrc1, iSrc2);
 }
 
 
-ReturnValue MouseClick(MouseButton mouseButton,  UINT nX, UINT nY, int iClickDulation)
+
+
+ReturnValue MouseLUp(CString sDir, int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseLUp(g_iC, g_iR);}
+	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseLUp(point.c, point.r);
+	}
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
+	return MouseLUp(iSrc1, iSrc2);
+}
+
+ReturnValue MouseRUp(CString sDir, int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseRUp(g_iC, g_iR);}
+	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRUp(point.c, point.r);
+	}
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
+	return MouseRUp(iSrc1, iSrc2);
+}
+
+ReturnValue MouseMUp(CString sDir, int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseMUp(g_iC, g_iR);}
+	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMUp(point.c, point.r);
+	}
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
+	return MouseMUp(iSrc1, iSrc2);
+}
+
+
+ReturnValue MouseLClick(UINT nX, UINT nY, int iClickDulation)
 {
 	MoveMouse(nX, nY);
-	MouseDown(mouseButton, nX, nY);
-
+	MouseLDown(nX, nY);
 	Sleep(iClickDulation);
-	MouseUp(mouseButton, nX, nY);
-	return RETURN_NORMAL;
+	return MouseLUp(nX, nY);
+}
+ReturnValue MouseRClick(UINT nX, UINT nY, int iClickDulation)
+{
+	MoveMouse(nX, nY);
+	MouseRDown(nX, nY);
+	Sleep(iClickDulation);
+	return MouseRUp(nX, nY);
+}
+ReturnValue MouseMClick(UINT nX, UINT nY, int iClickDulation)
+{
+	MoveMouse(nX, nY);
+	MouseMDown(nX, nY);
+	Sleep(iClickDulation);
+	return MouseMUp(nX, nY);
 }
 
 ReturnValue MouseDragAndDrop(MouseButton mouseButton, UINT nXFrom, UINT nYFrom,UINT nXTo, UINT nYTo, int iClickTimeMilliSec, int iDragTimeMilliSec)
 {
 	MoveMouse(nXFrom, nYFrom);
-	MouseDown(mouseButton, nXFrom, nYFrom);
+	switch(mouseButton)
+	{
+	case MOUSE_L_BUTTON:{MouseLDown(nXFrom, nYFrom); break;}
+	case MOUSE_R_BUTTON:{MouseRDown(nXFrom, nYFrom); break;}
+	case MOUSE_M_BUTTON:{MouseMDown(nXFrom, nYFrom); break;}
+	}
 	Sleep(iClickTimeMilliSec);
 
 	MoveMouse(nXTo, nYTo);
 	Sleep(iDragTimeMilliSec);
-	MouseUp(mouseButton, nXTo, nYTo); 
+
+	switch(mouseButton)
+	{
+	case MOUSE_L_BUTTON:{MouseLUp(nXTo, nYTo); break;}
+	case MOUSE_R_BUTTON:{MouseRUp(nXTo, nYTo); break;}
+	case MOUSE_M_BUTTON:{MouseMUp(nXTo, nYTo);break;}
+	}
 	return RETURN_NORMAL;
 }
 
@@ -201,9 +278,10 @@ ReturnValue MouseDragAndDrop(MouseButton mouseButton, CString sDir, int iScene, 
 }
 
 
-ReturnValue MouseClick(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData)
+
+ReturnValue MouseLClick(CString sDir, int iScene, CStringArray* saData)
 {
-	if(saData->GetCount()==0){return MouseClick(mouseButton, g_iC, g_iR, g_iClickDulation);}
+	if(saData->GetCount()==0){return MouseLClick(g_iC, g_iR, g_iClickDulation);}
 	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
 	{
 		CString sArg, sDummy;
@@ -211,13 +289,12 @@ ReturnValue MouseClick(MouseButton mouseButton, CString sDir, int iScene, CStrin
 		Point point;
 		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
 		if(bRet==FALSE){return RETURN_FAILED;}
-		return MouseClick(mouseButton, point.c, point.r, g_iClickDulation);
+		return MouseLClick(point.c, point.r, g_iClickDulation);
 	}
 	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
 	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
-	return MouseClick(mouseButton, iSrc1, iSrc2, g_iClickDulation);
+	return MouseLClick(iSrc1, iSrc2, g_iClickDulation);
 }
-
 ReturnValue MouseRepeatClick(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData,LPVOID Halt, LPVOID Suspend)
 {
 	int iTimeMillisec;
@@ -250,7 +327,13 @@ ReturnValue MouseRepeatClick(MouseButton mouseButton, CString sDir, int iScene, 
 	ullStartMilliSec = GetTickCount64();
 	ullSuspendedMilliSec=0;
 
-	MouseClick(mouseButton, g_iC, g_iR, iClickDulation);
+	switch(mouseButton)
+	{
+	case MOUSE_L_BUTTON:{MouseLClick(g_iC, g_iR, iClickDulation);break;}
+	case MOUSE_R_BUTTON:{MouseRClick(g_iC, g_iR, iClickDulation);break;}
+	case MOUSE_M_BUTTON:{MouseMClick(g_iC, g_iR, iClickDulation);break;}
+	}
+	
 	Sleep(iClickSleep);
 	while(1)
 	{
@@ -259,7 +342,12 @@ ReturnValue MouseRepeatClick(MouseButton mouseButton, CString sDir, int iScene, 
 			if(GetTickCount64()>=ullStartMilliSec+iTimeMillisec/g_dSpeedMult+ullSuspendedMilliSec){break;}
 		}
 
-		MouseClick(mouseButton, g_iC, g_iR, iClickDulation);
+		switch(mouseButton)
+		{
+		case MOUSE_L_BUTTON:{MouseLClick(g_iC, g_iR, iClickDulation);break;}
+		case MOUSE_R_BUTTON:{MouseRClick(g_iC, g_iR, iClickDulation);break;}
+		case MOUSE_M_BUTTON:{MouseMClick(g_iC, g_iR, iClickDulation);break;}
+		}
 		if(Halt != NULL){if((*(int*)Halt) == 1){return RETURN_HALT;}}
 		if(Suspend != NULL)
 		{
@@ -280,6 +368,41 @@ ReturnValue MouseRepeatClick(MouseButton mouseButton, CString sDir, int iScene, 
 	return RETURN_NORMAL;
 }
 
+
+
+ReturnValue MouseRClick(CString sDir, int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseRClick(g_iC, g_iR, g_iClickDulation);}
+	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseRClick(point.c, point.r, g_iClickDulation);
+	}
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
+	return MouseRClick(iSrc1, iSrc2, g_iClickDulation);
+}
+
+ReturnValue MouseMClick(CString sDir, int iScene, CStringArray* saData)
+{
+	if(saData->GetCount()==0){return MouseMClick(g_iC, g_iR, g_iClickDulation);}
+	if(saData->GetAt(0).Left(8).CompareNoCase(_T("VarPoint"))==0)
+	{
+		CString sArg, sDummy;
+		ExtractData(saData->GetAt(0),_T(")"),&sArg,&sDummy);
+		Point point;
+		BOOL bRet = GetPointValue(sDir, iScene, sArg, &point);
+		if(bRet==FALSE){return RETURN_FAILED;}
+		return MouseMClick(point.c, point.r, g_iClickDulation);
+	}
+	int iSrc1=GetIntValue(sDir, iScene, saData->GetAt(0));
+	int iSrc2=GetIntValue(sDir, iScene, saData->GetAt(1));
+	return MouseMClick(iSrc1, iSrc2, g_iClickDulation);
+}
 
 
 ReturnValue MoveMouseIncl(int iX, int iY)
@@ -318,7 +441,7 @@ ReturnValue MouseSetOriginToWindow(CString sDir, int iScene, CStringArray* saDat
 	return RETURN_NORMAL;
 }
 
-BOOL IsInRegion(CString sDir, int iScene, CStringArray* saData, 	int* iFoundR, int* iFoundC)
+ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
@@ -350,28 +473,18 @@ BOOL IsInRegion(CString sDir, int iScene, CStringArray* saData, 	int* iFoundR, i
 	ULONGLONG ullStartMilliSec;
 	ullStartMilliSec = GetTickCount64();
 
+	int iFoundR, iFoundC;
 
 	Screenshot(&imgTarget);
 
 	if(bUseMask==TRUE)
 	{
-		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, iFoundR, iFoundC);
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 	}
 	else
 	{
-		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, iFoundR, iFoundC);
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
 	}
-	if(bRet != TRUE){return RETURN_FAILED;}
-	return RETURN_NORMAL;
-
-}
-ReturnValue MouseSetOriginToImage(CString sDir, int iScene, CStringArray* saData)
-{
-	BOOL bRet;
-	if(saData->GetCount()<2){return RETURN_FAILED;}
-
-	int iFoundR, iFoundC;
-	bRet = IsInRegion(sDir, iScene, saData, &iFoundR, &iFoundC);
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	ChangeMouseOrigin(iFoundC, iFoundR);
@@ -397,11 +510,51 @@ ReturnValue MoveMouseToItem(CString sDir, int iScene, CStringArray* saData)
 
 ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 {
+	
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
+	int iR0, iC0, iR1, iC1;
+	int iNextIndex;
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iNextIndex);
+
+
+	CString sModelFilePath;
+	
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
+
+	ImgRGB imgModel;
+	ImgRGB imgTarget;
+	ImgRGB imgMask;
+	imgModel.Assign(sModelFilePath);
+	
+	CString sMaskFilePath;
+	sMaskFilePath.Format(_T("%s"), sModelFilePath);
+	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
+	BOOL bUseMask;
+
+	bRet = imgMask.Assign(sMaskFilePath);
+	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
+
+
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
 	int iFoundR, iFoundC;
-	bRet = IsInRegion(sDir, iScene, saData, &iFoundR, &iFoundC);
+
+	Screenshot(&imgTarget);
+	if(bUseMask==TRUE)
+	{
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+	}
+	else
+	{
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+	}
+//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
+
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	MoveMouseAbs(iFoundC, iFoundR);
@@ -409,19 +562,58 @@ ReturnValue MoveMouseToImage(CString sDir, int iScene, CStringArray* saData)
 	return RETURN_NORMAL;
 }
 
-ReturnValue MouseClickImage(MouseButton mouseButton, CString sDir, int iScene, CStringArray* saData)
+ReturnValue MouseLClickImage(CString sDir, int iScene, CStringArray* saData)
 {
 	BOOL bRet;
 	if(saData->GetCount()<2){return RETURN_FAILED;}
 
+	int iR0, iC0, iR1, iC1;
+	int iNextIndex;
+	bRet = GetRectData(sDir, iScene, saData, 1, &iR0, &iC0, &iR1, &iC1, &iNextIndex);
+
+	CString sModelFilePath;
+	
+	CString sModel;
+	sModel.Format(_T("%s"), GetStrValue(sDir, iScene, saData->GetAt(0)));
+	GetModelFilePath(sDir, sModel, &sModelFilePath);
+
+
+	ImgRGB imgModel;
+	ImgRGB imgTarget;
+	ImgRGB imgMask;
+	imgModel.Assign(sModelFilePath);
+	
+	CString sMaskFilePath;
+	sMaskFilePath.Format(_T("%s"), sModelFilePath);
+	sMaskFilePath.Insert(sModelFilePath.GetLength()-4,_T("_mask"));
+	BOOL bUseMask;
+
+	bRet = imgMask.Assign(sMaskFilePath);
+	if(bRet == TRUE){bUseMask = TRUE;}else{bUseMask = FALSE;}
+
+
+	ULONGLONG ullStartMilliSec;
+	ullStartMilliSec = GetTickCount64();
+
 	int iFoundR, iFoundC;
-	bRet = IsInRegion(sDir, iScene, saData, &iFoundR, &iFoundC);
+
+	Screenshot(&imgTarget);
+	if(bUseMask==TRUE)
+	{
+		bRet = IsInRegionMask(&imgTarget, &imgModel, &imgMask, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+	}
+	else
+	{
+		bRet = IsInRegion(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, &iFoundR, &iFoundC);
+	}
+//	bRet = FindModelPyramid(&imgTarget, &imgModel, iR0+g_iOriginR, iC0+g_iOriginC, iR1+g_iOriginR, iC1+g_iOriginC, 80, &iFoundR, &iFoundC);
+
 	if(bRet != TRUE){return RETURN_FAILED;}
 
 	MoveMouseAbs(iFoundC, iFoundR);
-	MouseDownAbs(mouseButton, iFoundC, iFoundR);
+	MouseLDownAbs(iFoundC, iFoundR);
 	Sleep(g_iClickDulation);
-	return MouseUpAbs(mouseButton, iFoundC, iFoundR);
+	return MouseLUpAbs(iFoundC, iFoundR);
 
 	return RETURN_NORMAL;
 }

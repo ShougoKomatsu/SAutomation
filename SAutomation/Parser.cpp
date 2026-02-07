@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "Parser.h"
 
 #include "Automation.h"
@@ -20,15 +20,15 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	
 	if(sDataTrim.Right(1).CompareNoCase(_T(":"))==0){*iCommandType=COMMAND_LABEL; return TRUE;}
 
-	if(sDataTrim.CompareNoCase(_T("Å©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("¬Å¬©"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("<-"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("Left"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("Å™"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("¬Å¬™"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("Up"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("Å®"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("¬Å¬®"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("->"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("Right"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
-	if(sDataTrim.CompareNoCase(_T("Å´"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
+	if(sDataTrim.CompareNoCase(_T("¬Å¬´"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 	if(sDataTrim.CompareNoCase(_T("Down"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
 
 	if(sDataTrim.CompareNoCase(_T("PageUp"))==0){*iCommandType=COMMAND_KEY_DOWN_UP; return TRUE;}
@@ -77,7 +77,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 	//-------------------------------------------------------
 
 	if(sDataTrim.SpanIncluding(_T("0123456789")).Compare(sDataTrim)==0){*iCommandType = COMMAND_DELAY; return TRUE;}
-	if(sDataTrim.Left(5).CompareNoCase(_T("Delay"))==0){*iCommandType = COMMAND_DELAY_FUNCTION; return TRUE;}
 	if(sDataTrim.Right(3).CompareNoCase(_T("sec"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-3)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
 	if(sDataTrim.Right(3).CompareNoCase(_T("min"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-3)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
 	if(sDataTrim.Right(4).CompareNoCase(_T("hour"))==0){CString sDataTrimTemp; sDataTrim.Format(_T("%s"),sDataTrim.Left(sDataTrim.GetLength()-4)); if(sDataTrimTemp.SpanIncluding(_T("0123456789")).Compare(sDataTrimTemp)==0){*iCommandType = COMMAND_DELAY; return TRUE;}}
@@ -98,8 +97,8 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	
 	if(sDataTrim.Left(16).CompareNoCase(_T("MouseLClickImage"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK_IMG; return TRUE;}
-	if(sDataTrim.Left(16).CompareNoCase(_T("MouseRClickImage"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK_IMG; return TRUE;}
-	if(sDataTrim.Left(16).CompareNoCase(_T("MouseMClickImage"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK_IMG; return TRUE;}
+//	if(sDataTrim.Left(16).CompareNoCase(_T("MouseRClickImage"))==0){*iCommandType=COMMAND_MOUSE_R_CLICK_IMG; return TRUE;}
+//	if(sDataTrim.Left(16).CompareNoCase(_T("MouseMClickImage"))==0){*iCommandType=COMMAND_MOUSE_M_CLICK_IMG; return TRUE;}
 	if(sDataTrim.Left(11).CompareNoCase(_T("MouseLClick"))==0){*iCommandType=COMMAND_MOUSE_L_CLICK;  return TRUE;}
 	if(sDataTrim.Left(10).CompareNoCase(_T("MouseLDown"))==0){*iCommandType=COMMAND_MOUSE_L_DOWN; return TRUE;}
 	if(sDataTrim.Left(8).CompareNoCase(_T("MouseLUp"))==0){*iCommandType=COMMAND_MOUSE_L_UP; return TRUE;}
@@ -196,7 +195,6 @@ BOOL GetCommand(CString sDataLine, int* iCommandType)
 
 	return FALSE;
 }
-
 
 BOOL GetWaitParameter(CString sInput, CStringArray* saOut)
 {
@@ -544,14 +542,6 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			*iCommandType=iType;
 			return TRUE;
 		}
-	case COMMAND_DELAY_FUNCTION:
-		{
-			ExtractTokenInBracket(sDataLocal,0,&sArg);
-			if(sArg.GetLength()>0){saData->Add(sArg);}
-			saData->Add(sArg);
-			*iCommandType=COMMAND_DELAY;
-			return TRUE;
-		}
 	case COMMAND_KEY_DOWN_UP:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
@@ -828,8 +818,8 @@ BOOL PerseCommand(int* iSceneData, CString sDataLine, int* iCommandType, CString
 			return TRUE;
 		}
 	case COMMAND_MOUSE_L_CLICK_IMG:
-	case COMMAND_MOUSE_R_CLICK_IMG:
-	case COMMAND_MOUSE_M_CLICK_IMG:
+//	case COMMAND_MOUSE_R_CLICK_IMG:
+//	case COMMAND_MOUSE_M_CLICK_IMG:
 		{
 			ExtractTokenInBracket(sDataLocal,0,&sArg);
 			if(sArg.GetLength()>0){saData->Add(sArg);}

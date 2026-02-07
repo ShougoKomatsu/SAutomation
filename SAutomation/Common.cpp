@@ -925,6 +925,7 @@ BOOL ExtractData(const CString sInput, const CString sDelim, CString* sOut, CStr
 
 BOOL IsValidMillisecTimeString(CString sTime)
 {
+	if(sTime.Left(8).CompareNoCase(_T("VarPoint"))==0){return FALSE;}
 	int iDayCount=0;
 	int iHourCount=0;
 	int iMinuteCount=0;

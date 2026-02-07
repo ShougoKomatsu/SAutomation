@@ -1,4 +1,4 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "Automation.h"
 #include "windows.h"
 #include "Common.h"
@@ -620,17 +620,17 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 			int iSrc=GetIntValue(sDir, *iSceneData, saData.GetAt(0));
 			return K_Sleep(Halt, Suspend, iSrc);
 		}
-	case COMMAND_MOUSE_L_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseDown(MOUSE_L_BUTTON, sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_R_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseDown(MOUSE_R_BUTTON,sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_M_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseDown(MOUSE_M_BUTTON,sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_L_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseLDown(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseRDown(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_DOWN:{MoveMouse(sDir, *iSceneData, &saData);return MouseMDown(sDir, *iSceneData, &saData);}
 
-	case COMMAND_MOUSE_L_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseUp(MOUSE_L_BUTTON,sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_R_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseUp(MOUSE_R_BUTTON,sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_M_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseUp(MOUSE_M_BUTTON,sDir, *iSceneData, &saData);}
-
-	case COMMAND_MOUSE_L_CLICK:{return MouseClick(MOUSE_L_BUTTON, sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_R_CLICK:{return MouseClick(MOUSE_R_BUTTON, sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_M_CLICK:{return MouseClick(MOUSE_M_BUTTON, sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_L_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseLUp(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseRUp(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_UP:{MoveMouse(sDir, *iSceneData, &saData);return MouseMUp(sDir, *iSceneData, &saData);}
+							
+	case COMMAND_MOUSE_L_CLICK:{return MouseLClick(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_R_CLICK:{return MouseRClick(sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_M_CLICK:{return MouseMClick(sDir, *iSceneData, &saData);}
 							   
 	case COMMAND_MOUSE_SET_ORIGIN_TO_WINDOW:{return MouseSetOriginToWindow(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_SET_ORIGIN_TO_IMAGE:{return MouseSetOriginToImage(sDir, *iSceneData, &saData);}
@@ -639,9 +639,9 @@ ReturnValue OperateCommand(CString sDir, int* iSceneData, LPVOID Halt, LPVOID Su
 	case COMMAND_MOUSE_MOVE:{return MoveMouse(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_INCL:{return MoveMouseIncl(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_TO_IMG:{return MoveMouseToImage(sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_L_CLICK_IMG:{return MouseClickImage(MOUSE_L_BUTTON, sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_R_CLICK_IMG:{return MouseClickImage(MOUSE_R_BUTTON, sDir, *iSceneData, &saData);}
-	case COMMAND_MOUSE_M_CLICK_IMG:{return MouseClickImage(MOUSE_M_BUTTON, sDir, *iSceneData, &saData);}
+	case COMMAND_MOUSE_L_CLICK_IMG:{return MouseLClickImage(sDir, *iSceneData, &saData);}
+	//case COMMAND_MOUSE_R_CLICK_IMG:{return MouseClickImage(MOUSE_R_BUTTON, sDir, *iSceneData, &saData);}
+	//case COMMAND_MOUSE_M_CLICK_IMG:{return MouseClickImage(MOUSE_M_BUTTON, sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_MOVE_TO_ITEM:{return MoveMouseToItem(sDir, *iSceneData, &saData);}
 	case COMMAND_MOUSE_L_REPEATCLICK:{return MouseRepeatClick(MOUSE_L_BUTTON, sDir, *iSceneData, &saData,Halt, Suspend);}
 	case COMMAND_MOUSE_R_REPEATCLICK:{return MouseRepeatClick(MOUSE_R_BUTTON, sDir, *iSceneData, &saData,Halt, Suspend);}
@@ -773,7 +773,7 @@ ReturnValue OutputKeys(CString sDir, int iScene, CString sInputWithDblQuart)
 	{
 		if(sValue.GetAt(i)==' '){continue;}
 		if(sValue.GetAt(i)=='\t'){continue;}
-		if(sValue.GetAt(i)=='Å@'){continue;}
+		if(sValue.GetAt(i)=='¬Å@'){continue;}
 		if(sValue.GetAt(i)=='\"'){iPosL=i+1;break;}
 		iPosL=0; break;
 	}
@@ -781,7 +781,7 @@ ReturnValue OutputKeys(CString sDir, int iScene, CString sInputWithDblQuart)
 	{
 		if(sValue.GetAt(i)==' '){continue;}
 		if(sValue.GetAt(i)=='\t'){continue;}
-		if(sValue.GetAt(i)=='Å@'){continue;}
+		if(sValue.GetAt(i)=='¬Å@'){continue;}
 		if(sValue.GetAt(i)=='\"'){iPosR=i-1;break;}
 		iPosR=sValue.GetLength()-1; break;
 	}
