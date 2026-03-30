@@ -34,6 +34,7 @@ BOOL GetOperandImgSrc(CString sDataLine, int* iCommandType)
 	if(sDataTrim.Left(10).CompareNoCase(_T("Decompose3"))==0){*iCommandType=VARIABLE_IMG_DECOMPOSE; return TRUE;}
 	if(sDataTrim.Right(4).CompareNoCase(_T(".bmp"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 	if(sDataTrim.Left(9).CompareNoCase(_T("VarCamera"))==0){*iCommandType=VARIABLE_CAMERA_GRAB; return TRUE;}
+	if(sDataTrim.Left(6).CompareNoCase(_T("VarImg"))==0){*iCommandType=VARIABLE_IMG; return TRUE;}
 	
 	return FALSE;
 }

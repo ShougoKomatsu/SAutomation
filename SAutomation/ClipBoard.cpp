@@ -260,7 +260,7 @@ BOOL CopyFromClipBoardImg(ImgRGB* imgRGB)
 	LPVOID byData = GlobalLock(hResult);
 	if(byData==NULL){return FALSE;}
 
-	bRet = ReadBmpFromData(FALSE, (BYTE*)byData, imgRGB);
+//	bRet = ReadBmpFromData(FALSE, (BYTE*)byData, imgRGB);
 	if(bRet == FALSE)
 	{
 		GlobalUnlock(hResult);
